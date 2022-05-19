@@ -110,7 +110,7 @@ const [newRestaurant_url, setNewRestaurant_url] = useState(null);
         textInputProps={{
           autoCorrect: false,
             autoCapitalize: false,
-            maxLength: 10,
+            maxLength: 30,
         }}
         hintInput={'name of place'}
         initValueTextInput={""}
