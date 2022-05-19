@@ -1,10 +1,9 @@
-import {View, Text, Alert} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
-import uuid from 'react-native-uuid'
-import Dialog from 'react-native-dialog';
+import uuid from 'react-native-uuid';
 import DialogInput from 'react-native-dialog-input';
 
 
@@ -49,15 +48,32 @@ export default function Main() {
   const [newmarkerCoordinate, setNewmarkerCoordinate] = useState(null);
   const makeNewMarker = (coordinate, title) => {
     setDialogVisible(true)
+    const key = 'markers%' + uuid.v4()
     return (
       <Marker
         coordinate={coordinate}
         title={title}
         description={"want some food in here?"}
-        key={'markers%' + uuid.v4()}
+        key={key}
+        onPress={() => {
+          setSelectedMarker(
+            {
+              coordinate: coordinate,
+              title: title,
+              key: key,
+            }
+          );
+        }}
       />
     );
   }
+
+// selected marker info
+  const [selectedMarker, setSelectedMarker] = useState({
+    coordinate: '',
+    title: 'restaurant',
+    key: 'markers%',
+  });
 
  // get marker name dialog
   const [dialogVisible, setDialogVisible] = useState(false); 
@@ -65,9 +81,7 @@ export default function Main() {
  // return 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-          <Text style={styles.titleText}>MY APPLICATION</Text>
-      </View>
+
       <DialogInput
         isDialogVisible={dialogVisible}
         title={"Enter a title for this place"}
@@ -90,6 +104,14 @@ export default function Main() {
         }}
       />
 
+
+
+      <View style={styles.header}>
+          <Text style={styles.titleText}>MY APPLICATION</Text>
+      </View>
+
+
+      
       <View style={styles.map} >
         {location && (
           <MapView
@@ -112,6 +134,23 @@ export default function Main() {
         )}
       </View>
 
+
+
+
+      <View style={styles.restaurantList}>
+          <View style={styles.locationInfoContainer}>
+              <Text style={styles.normalText}>
+                {selectedMarker.title}
+              </Text>
+              <TouchableOpacity
+                style={styles.locationInfoButton}
+              >
+                <Text style={styles.normalText}>
+                add foods here
+                </Text>
+              </TouchableOpacity>
+          </View>
+      </View>
     </View>
-    );  // return
+  );  // return
 }
