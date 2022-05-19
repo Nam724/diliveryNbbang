@@ -31,28 +31,28 @@ export const styles = StyleSheet.create({
         fontSize:width*0.04, // 40
         color: colorPack.text_light,
     },
+// CONTAINER STYLES
     container:{
         width: width,
         height: height,
         backgroundColor:colorPack.representative,
         flexDirection: 'column',
-        paddingVertical: height * 0.05,
+        paddingVertical: height * 100/2000,
     },
     header:{
-        height: 0.04 * height,
+        height: height * 80/2000,
         width: width,
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
     },
-
-// CONTAINER STYLES
     map:{
-        height: height * 0.505,
+        height: height * 1000/2000,
         width: width,
     },
-    restaurantList: {
-        height: height * 810/2000,
+    restaurantContainer: {
+        height: height * 710/2000,
+        backgroundColor: colorPack.deactivated,
     },
     locationInfoContainer:{
         height: height * 106/2000,
@@ -62,4 +62,15 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',    
     },
+    restaurantListContainer:{
+        height: height * 604/2000,
+    },
+    restaurantList:{
+        height: height * 150/2000,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: width * 30/1000,
+    },
+
   });

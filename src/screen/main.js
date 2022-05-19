@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
 import * as Location from 'expo-location';
@@ -8,9 +8,11 @@ import DialogInput from 'react-native-dialog-input';
 
 
 export default function Main() {
-  // get location
+
+// MAP
+// get location
   const [location, setLocation] = useState(
-    {latitude: 37.4219525, longitude: -122.0837251, latitudeDelta: 0.0922, longitudeDelta: 0.0421}
+    {latitude: 35.572676, longitude: 129.188191, latitudeDelta: 0.003, longitudeDelta: 0.003}
   ); // {latitude: 37.4219525, longitude: -122.0837251}
 
   const [errorMsg, setErrorMsg] = useState(null);
@@ -24,13 +26,12 @@ export default function Main() {
         }
   
         let location = await Location.getCurrentPositionAsync({});
-        let _locationdict = {
+        setLocation({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
-        }
-        setLocation(_locationdict);
+        });
       })();
   }, []); 
 
@@ -43,7 +44,8 @@ export default function Main() {
   }
   console.log(location)
 
-// get log pressed location and add marker
+//MARKER
+  // get log pressed location and add marker
   const [markers, setMarkers] = useState([]);
   const [newmarkerCoordinate, setNewmarkerCoordinate] = useState(null);
   const makeNewMarker = (coordinate, title) => {
@@ -77,6 +79,11 @@ export default function Main() {
 
  // get marker name dialog
   const [dialogVisible, setDialogVisible] = useState(false); 
+
+
+
+
+
 
  // return 
   return (
@@ -135,21 +142,31 @@ export default function Main() {
       </View>
 
 
+      <View style={styles.restaurantContainer}>
 
 
-      <View style={styles.restaurantList}>
           <View style={styles.locationInfoContainer}>
-              <Text style={styles.normalText}>
+              <Text style={styles.highlightText}>
                 {selectedMarker.title}
               </Text>
               <TouchableOpacity
                 style={styles.locationInfoButton}
+                onPressOut={() => {
+                  console.log('add foods here!');
+                }}
               >
                 <Text style={styles.normalText}>
                 add foods here
                 </Text>
               </TouchableOpacity>
           </View>
+            
+          <ScrollView style={styles.restaurantListContainer}>
+
+          </ScrollView>
+
+
+
       </View>
     </View>
   );  // return
