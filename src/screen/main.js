@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
 import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
 import * as Location from 'expo-location';
@@ -42,15 +42,22 @@ export default function Main() {
   else if (location) {
     text = JSON.stringify(location);
   }
-  console.log(location)
+  // console.log(location)
 
 //MARKER
   // get log pressed location and add marker
   const [markers, setMarkers] = useState([]);
   const [newmarkerCoordinate, setNewmarkerCoordinate] = useState(null);
   const makeNewMarker = (coordinate, title) => {
-    setDialogVisible(true)
+    setDialogVisible_marker(true)
     const key = 'markers%' + uuid.v4()
+    setSelectedMarker(
+      {
+        coordinate: coordinate,
+        title: title,
+        key: key,
+      }
+    );
     return (
       <Marker
         coordinate={coordinate}
@@ -78,11 +85,18 @@ export default function Main() {
   });
 
  // get marker name dialog
-  const [dialogVisible, setDialogVisible] = useState(false); 
+  const [dialogVisible_marker, setDialogVisible_marker] = useState(false); 
 
+// RESTAURANT LIST
+const [restaurantList, setRestaurantList] = useState([]);
 
+// get restaurant list
+const [dialogVisible_restaurant, setDialogVisible_restaurant] = useState(false);
 
-
+const [newRestaurant, setNewRestaurant] = useState({});
+const [newRestaurant_name, setNewRestaurant_name] = useState(null);
+const [newRestaurant_fee, setNewRestaurant_fee] = useState(null);
+const [newRestaurant_url, setNewRestaurant_url] = useState(null);
 
 
  // return 
@@ -90,7 +104,7 @@ export default function Main() {
     <View style={styles.container}>
 
       <DialogInput
-        isDialogVisible={dialogVisible}
+        isDialogVisible={dialogVisible_marker}
         title={"Enter a title for this place"}
         dialogStyle={{backgroundColor: 'white', borderRadius: 20}}
         textInputProps={{
@@ -104,19 +118,102 @@ export default function Main() {
         cancelText={'cancel'}
         submitInput={(title) => {
           setMarkers([...markers, makeNewMarker(newmarkerCoordinate, title)]);
-          setDialogVisible(false);
+          setDialogVisible_marker(false);
         }}
         closeDialog={() => {
-          setDialogVisible(false);
+          setDialogVisible_marker(false);
         }}
       />
+
+
+
+
+
+      <Modal animationType='fade'
+      transparent={true}
+      visible={dialogVisible_restaurant}
+      onRequestClose={() => {
+        setDialogVisible_restaurant(false);
+      }}
+      >
+      <Pressable style={{
+        flex:1,
+        backgroundColor:'transparent',
+      }}
+      onPress={()=>setDialogVisible_restaurant(false)}
+      />
+
+        <View style={styles.restaurantInfoContainerModal}>
+
+          <Text style={[styles.titleText,{marginTop:20}]}>{`Make new restaurant in ${selectedMarker.title}!`}</Text>
+
+          
+          <View style={styles.getRestaurantInfoModal}>
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{'restaurant name'}</Text>
+            <TextInput style={styles.inputText}
+            onChangeText={(text) =>
+              setNewRestaurant_name(text)
+            }
+            />
+          </View>
+
+          <View style={styles.getRestaurantInfoModal}>
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{'delivery Fee(won)'}</Text>
+            <TextInput style={styles.inputText}
+            onChangeText={(text) => setNewRestaurant_fee(text)}
+            keyboardType='numeric'
+            />
+          </View>
+
+          <View style={styles.getRestaurantInfoModal}>
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{'url'}</Text>
+            <TextInput style={styles.inputText}
+            onChangeText={(text) => setNewRestaurant_url(text)}
+            />
+          </View>
+
+          <View style={styles.buttonContainerModal}>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => 
+                { setDialogVisible_restaurant(false);
+                  setNewRestaurant_fee(null);
+                  setNewRestaurant_name(null);
+                  setNewRestaurant_url(null);
+                }}>
+              <Text style={styles.highlightText}>{'Close'}</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => 
+                {
+                  setDialogVisible_restaurant(false);
+                  let _newRestaurant = {
+                    name: newRestaurant_name,
+                    fee: newRestaurant_fee,
+                    url: newRestaurant_url,
+                  }
+                  setNewRestaurant_fee(null);
+                  setNewRestaurant_name(null);
+                  setNewRestaurant_url(null);
+                  setNewRestaurant(_newRestaurant);
+                  // console.log(_newRestaurant)
+                }}>
+              <Text style={styles.highlightText}>{'Submit'}</Text>
+            </TouchableOpacity>
+          </View>
+          
+        </View>
+      </Modal>
+
+
 
 
 
       <View style={styles.header}>
           <Text style={styles.titleText}>MY APPLICATION</Text>
       </View>
-
 
       
       <View style={styles.map} >
@@ -133,7 +230,7 @@ export default function Main() {
 
           onLongPress={(e) => {
             setNewmarkerCoordinate(e.nativeEvent.coordinate);
-            setDialogVisible(true);
+            setDialogVisible_marker(true);
           }}
           >
           {markers}
@@ -152,17 +249,22 @@ export default function Main() {
               <TouchableOpacity
                 style={styles.locationInfoButton}
                 onPressOut={() => {
-                  console.log('add foods here!');
+                  {
+                    if(selectedMarker.key!=='markers%'){
+                      setDialogVisible_restaurant(true);
+                    }
+                  }
+                  // console.log('add foods here!');
                 }}
               >
                 <Text style={styles.normalText}>
-                add foods here
+                {selectedMarker.key=='markers%'?'select pin':'add foods here'}
                 </Text>
               </TouchableOpacity>
           </View>
             
           <ScrollView style={styles.restaurantListContainer}>
-
+            {restaurantList}
           </ScrollView>
 
 
@@ -171,3 +273,4 @@ export default function Main() {
     </View>
   );  // return
 }
+

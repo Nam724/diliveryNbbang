@@ -18,18 +18,21 @@ export const styles = StyleSheet.create({
 // TEXT STYLES
     titleText:{
         // fontFamily:'Arial',
-        fontSize:width*0.04, // 40
+        fontSize:width*0.05, // 40
         color: colorPack.text_title,
+        textAlign:'center',
     },
     normalText:{
         // fontFamily:'Arial',
-        fontSize:width*0.03, // 30
+        fontSize:width*0.04, // 30
         color: colorPack.text,
+        textAlign:'center',
     },
     highlightText:{
         // fontFamily:'Arial',
-        fontSize:width*0.04, // 40
+        fontSize:width*0.05, // 40
         color: colorPack.text_light,
+        textAlign:'center',
     },
 // CONTAINER STYLES
     container:{
@@ -52,7 +55,8 @@ export const styles = StyleSheet.create({
     },
     restaurantContainer: {
         height: height * 710/2000,
-        backgroundColor: colorPack.deactivated,
+        width:width,
+        backgroundColor: colorPack.highlight_dark,
     },
     locationInfoContainer:{
         height: height * 106/2000,
@@ -73,4 +77,53 @@ export const styles = StyleSheet.create({
         paddingHorizontal: width * 30/1000,
     },
 
+
+
+// modal
+    restaurantInfoModal:{
+        
+    },
+    restaurantInfoContainerModal:{
+        position:'absolute',
+        marginTop: height * 180/2000,
+        height: height * 1000/2000,
+        width:width,
+        backgroundColor: colorPack.deactivated,
+        alignItems:'center',
+        flexDirection:'column',
+        justifyContent:'space-between',
+        paddingBottom: height * 100/2000,
+    },
+    buttonContainerModal:{
+        height: height * 60/2000,
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'stretch',
+    },
+    modalButton:{
+        height: height * 60/2000,
+        width: width * 360/1000,
+        marginHorizontal: width * 30/1000,
+        // backgroundColor: colorPack.highlight_light,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    getRestaurantInfoModal:{
+        height: height * 100/2000,
+        width:width,
+        // backgroundColor: colorPack.highlight_dark,
+        alignItems:'center',
+    },
+    inputText:{
+        height: height * 60/2000,
+        width: width * 560/1000,
+        marginVertical: height * 20/2000,
+        alignItems:'center',
+        justifyContent:'center',
+        borderColor: colorPack.highlight_dark,
+        borderWidth: height* 5/2000,
+        paddingHorizontal: width * 30/1000,
+        color: colorPack.text,
+        textAlign:'center',
+    },
   });
