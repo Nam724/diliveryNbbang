@@ -9,7 +9,7 @@ import MapView from 'react-native-maps';
 
 export default function Main() {
     // get location
-    const [location, setLocation] = useState(null);
+    const [location, setLocation] = useState(null); // {latitude: 37.4219525, longitude: -122.0837251}
     const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
@@ -21,8 +21,11 @@ export default function Main() {
           }
     
           let location = await Location.getCurrentPositionAsync({});
-          setLocation(location);
-          console.log(location);
+          let _locationdict = {
+            'latitude': location.coords.latitude,
+            'longitude': location.coords.longitude,
+          }
+          setLocation(_locationdict);
         })();
       }, []); 
 
