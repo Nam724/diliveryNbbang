@@ -15,6 +15,22 @@ const colorPack = {
 
 
 export const styles = StyleSheet.create({
+// TEXT STYLES
+    titleText:{
+        // fontFamily:'Arial',
+        fontSize:width*0.04, // 40
+        color: colorPack.text_title,
+    },
+    normalText:{
+        // fontFamily:'Arial',
+        fontSize:width*0.03, // 30
+        color: colorPack.text,
+    },
+    highlightText:{
+        // fontFamily:'Arial',
+        fontSize:width*0.04, // 40
+        color: colorPack.text_light,
+    },
     container:{
         width: width,
         height: height,
@@ -26,27 +42,24 @@ export const styles = StyleSheet.create({
         height: 0.04 * height,
         width: width,
         textAlign: 'center',
-        alignContent: 'center',
+        justifyContent: 'center',
         alignItems: 'center',
     },
-    titleText:{
-        // fontFamily:'Arial',
-        fontSize:width*0.04, // 30
-        color: colorPack.text_title,
-    },
-    normalText:{
-        // fontFamily:'Arial',
-        fontSize:width*0.03, // 20
-        color: colorPack.text,
-    },
-    highlightText:{
-        // fontFamily:'Arial',
-        fontSize:width*0.04, // 20
-        color: colorPack.text_light,
-    },
+
+// CONTAINER STYLES
     map:{
         height: height * 0.505,
         width: width,
     },
-
+    restaurantList: {
+        height: height * 810/2000,
+    },
+    locationInfoContainer:{
+        height: height * 106/2000,
+        paddingLeft: width * 30/1000,
+        paddingRight: width * 70/1000,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',    
+    },
   });
