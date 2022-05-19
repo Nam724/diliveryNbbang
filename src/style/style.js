@@ -19,10 +19,15 @@ export const styles = StyleSheet.create({
         width: width,
         height: height,
         backgroundColor:colorPack.representative,
+        flexDirection: 'column',
+        paddingVertical: height * 0.05,
     },
     header:{
-        height: height * 0.4,
+        height: 0.04 * height,
         width: width,
+        textAlign: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
     },
     titleText:{
         // fontFamily:'Arial',
@@ -43,4 +48,5 @@ export const styles = StyleSheet.create({
         height: height * 0.505,
         width: width,
     },
+
   });

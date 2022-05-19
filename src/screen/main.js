@@ -1,54 +1,96 @@
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
-
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
+import uuid from 'react-native-uuid'
+import Dialog from 'react-native-dialog';
+import DialogInput from 'react-native-dialog-input';
 
 
 export default function Main() {
-    // get location
-    const [location, setLocation] = useState(
-      {latitude: 37.4219525, longitude: -122.0837251, latitudeDelta: 0.0922, longitudeDelta: 0.0421}
-    ); // {latitude: 37.4219525, longitude: -122.0837251}
-    const [errorMsg, setErrorMsg] = useState(null);
+  // get location
+  const [location, setLocation] = useState(
+    {latitude: 37.4219525, longitude: -122.0837251, latitudeDelta: 0.0922, longitudeDelta: 0.0421}
+  ); // {latitude: 37.4219525, longitude: -122.0837251}
 
-    useEffect(() => {
-        (async () => {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
-            setErrorMsg('Permission to access location was denied');
-            return;
-          }
-    
-          let location = await Location.getCurrentPositionAsync({});
-          let _locationdict = {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }
-          setLocation(_locationdict);
-        })();
-      }, []); 
+  const [errorMsg, setErrorMsg] = useState(null);
 
-      let text = 'Waiting..';
-      if (errorMsg) {
-        text = errorMsg;
-      } else if (location) {
-        text = JSON.stringify(location);
-      }
+  useEffect(() => {
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+  
+        let location = await Location.getCurrentPositionAsync({});
+        let _locationdict = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }
+        setLocation(_locationdict);
+      })();
+  }, []); 
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } 
+  else if (location) {
+    text = JSON.stringify(location);
+  }
   console.log(location)
 
-  // move maps
+// get log pressed location and add marker
+  const [markers, setMarkers] = useState([]);
+  const [newmarkerCoordinate, setNewmarkerCoordinate] = useState(null);
+  const makeNewMarker = (coordinate, title) => {
+    setDialogVisible(true)
+    return (
+      <Marker
+        coordinate={coordinate}
+        title={title}
+        description={"want some food in here?"}
+        key={'markers%' + uuid.v4()}
+      />
+    );
+  }
 
+ // get marker name dialog
+  const [dialogVisible, setDialogVisible] = useState(false); 
+
+ // return 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
           <Text style={styles.titleText}>MY APPLICATION</Text>
       </View>
+      <DialogInput
+        isDialogVisible={dialogVisible}
+        title={"Enter a title for this place"}
+        dialogStyle={{backgroundColor: 'white', borderRadius: 20}}
+        textInputProps={{
+          autoCorrect: false,
+            autoCapitalize: false,
+            maxLength: 10,
+        }}
+        hintInput={'name of place'}
+        initValueTextInput={""}
+        submitText={'submit'}
+        cancelText={'cancel'}
+        submitInput={(title) => {
+          setMarkers([...markers, makeNewMarker(newmarkerCoordinate, title)]);
+          setDialogVisible(false);
+        }}
+        closeDialog={() => {
+          setDialogVisible(false);
+        }}
+      />
 
-      <View>
+      <View style={styles.map} >
         {location && (
           <MapView
           provider='google'
@@ -59,10 +101,13 @@ export default function Main() {
           loadingEnabled={true}
           zoomEnabled={true}
           rotateEnabled={true}
+
+          onLongPress={(e) => {
+            setNewmarkerCoordinate(e.nativeEvent.coordinate);
+            setDialogVisible(true);
+          }}
           >
-            <Marker
-            coordinate={location}
-            />
+          {markers}
           </MapView>
         )}
       </View>
