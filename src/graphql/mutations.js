@@ -1,43 +1,45 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
-
-export const createTweet = /* GraphQL */ `
-  mutation CreateTweet(
-    $input: CreateTweetInput!
-    $condition: ModelTweetConditionInput
+export const createPlace = /* GraphQL */ `
+  mutation CreatePlace(
+    $input: CreatePlaceInput!
+    $condition: ModelPlaceConditionInput
   ) {
-    createTweet(input: $input, condition: $condition) {
+    createPlace(input: $input, condition: $condition) {
       id
-      text
-      author
+      latitude
+      longitude
+      name
       createdAt
       updatedAt
     }
   }
 `;
-export const updateTweet = /* GraphQL */ `
-  mutation UpdateTweet(
-    $input: UpdateTweetInput!
-    $condition: ModelTweetConditionInput
+export const updatePlace = /* GraphQL */ `
+  mutation UpdatePlace(
+    $input: UpdatePlaceInput!
+    $condition: ModelPlaceConditionInput
   ) {
-    updateTweet(input: $input, condition: $condition) {
+    updatePlace(input: $input, condition: $condition) {
       id
-      text
-      author
+      latitude
+      longitude
+      name
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteTweet = /* GraphQL */ `
-  mutation DeleteTweet(
-    $input: DeleteTweetInput!
-    $condition: ModelTweetConditionInput
+export const deletePlace = /* GraphQL */ `
+  mutation DeletePlace(
+    $input: DeletePlaceInput!
+    $condition: ModelPlaceConditionInput
   ) {
-    deleteTweet(input: $input, condition: $condition) {
+    deletePlace(input: $input, condition: $condition) {
       id
-      text
-      author
+      latitude
+      longitude
+      name
       createdAt
       updatedAt
     }

@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import uuid from 'react-native-uuid';
 import DialogInput from 'react-native-dialog-input';
+import Main_restaurantlist from './main_restaurantlist';
 
 
 export default function Main() {
@@ -88,7 +89,11 @@ export default function Main() {
   const [dialogVisible_marker, setDialogVisible_marker] = useState(false); 
 
 // RESTAURANT LIST
-const [restaurantList, setRestaurantList] = useState([]);
+const [restaurantList, setRestaurantList] = useState([
+  Main_restaurantlist('1231', 'restaurant1', '10', '10'),
+  Main_restaurantlist('2423', 'restaurant2', '20', '20'),
+  Main_restaurantlist('53534', 'restaurant3', '30', '30'),
+]);
 
 // get restaurant list
 const [dialogVisible_restaurant, setDialogVisible_restaurant] = useState(false);

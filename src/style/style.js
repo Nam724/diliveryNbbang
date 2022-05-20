@@ -76,7 +76,15 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: width * 30/1000,
     },
+    restaurantName:{
+    
+    },
+    restaurantFee:{
 
+    },
+    restaurantMembers:{
+
+    },
 
 
 // modal
@@ -126,4 +134,4 @@ export const styles = StyleSheet.create({
         color: colorPack.text,
         textAlign:'center',
     },
-  });
+});

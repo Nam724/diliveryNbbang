@@ -1,34 +1,36 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
-
-export const onCreateTweet = /* GraphQL */ `
-  subscription OnCreateTweet {
-    onCreateTweet {
+export const onCreatePlace = /* GraphQL */ `
+  subscription OnCreatePlace {
+    onCreatePlace {
       id
-      text
-      author
+      latitude
+      longitude
+      name
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateTweet = /* GraphQL */ `
-  subscription OnUpdateTweet {
-    onUpdateTweet {
+export const onUpdatePlace = /* GraphQL */ `
+  subscription OnUpdatePlace {
+    onUpdatePlace {
       id
-      text
-      author
+      latitude
+      longitude
+      name
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteTweet = /* GraphQL */ `
-  subscription OnDeleteTweet {
-    onDeleteTweet {
+export const onDeletePlace = /* GraphQL */ `
+  subscription OnDeletePlace {
+    onDeletePlace {
       id
-      text
-      author
+      latitude
+      longitude
+      name
       createdAt
       updatedAt
     }
