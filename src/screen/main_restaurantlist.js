@@ -1,10 +1,10 @@
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
 import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
-import uuid from 'react-native-uuid';
 
 
-export default function Main_restaurantlist(id,name, fee, members) {
+
+export default function Main_restaurantlist(id, name, fee, url) {
 
  // return 
   return (
@@ -14,7 +14,7 @@ export default function Main_restaurantlist(id,name, fee, members) {
 
       <Text style={[styles.normalText, styles.restaurantFee]}>{`fee: ${fee}won each`}</Text>
 
-      <Text style={[styles.normalText, styles.restaurantMembers]}>{`members: ${members}`}</Text>
+      <Text style={[styles.normalText, styles.restaurantMembers]}>{`members: `}</Text>
       
     </View>
   );  // return

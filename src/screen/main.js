@@ -8,9 +8,6 @@ import DialogInput from 'react-native-dialog-input';
 import Main_restaurantlist from './main_restaurantlist';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
-import { createPlace } from '../graphql/mutations';
-import { API } from 'aws-amplify';
-import { graphqlOperation } from 'aws-amplify';
 
 export default function Main() {
 
@@ -51,7 +48,7 @@ export default function Main() {
   // console.log(location)
 
   const returnMarker = (data) => {// data should contain id, name, latitude, longitude
-    console.log('makeMarker')
+    // console.log('makeMarker')
     let coordinate = {longitude: data.longitude, latitude: data.latitude};
     let title = data.name;
     let key = data.id;
@@ -71,6 +68,7 @@ export default function Main() {
               key: key,
             }
           );
+          loadRestaurant(key);
         }}
       />
     );
@@ -85,7 +83,7 @@ export default function Main() {
     let _markerlist = []
     models.forEach(model => {_markerlist.push(returnMarker(model))});
     setMarkers(_markerlist);
-    console.log(_markerlist);
+    // console.log(_markerlist);
   }
 
   // get log pressed location and add marker
@@ -110,7 +108,7 @@ export default function Main() {
       "Restaurants_in_a_place": []
       })
     );
-    console.log('saved');
+    // console.log('saved');
   }
 
 // selected marker info
@@ -144,12 +142,7 @@ const [newRestaurant_url, setNewRestaurant_url] = useState(null);
 // make new restaurant
 async function saveNewRestaurant(name, fee, url, placeID){
     
-  console.log({
-    "name": name,
-    "fee": fee,
-    "url": url,
-    "placeID": placeID,
-  })
+  // console.log({"name": name,"fee": fee,"url": url,"placeID": placeID,})
   // amplify
   await DataStore.save(
     new Restaurant({
@@ -158,6 +151,28 @@ async function saveNewRestaurant(name, fee, url, placeID){
 		"url": url,
 		"placeID": placeID,
 	}));
+}
+
+// load restaurant
+async function loadRestaurant(placeID){
+  // console.log(placeID)
+
+  const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
+  // console.log(models);
+  let _restaurantlist = []
+
+  models.forEach(model => {
+    _restaurantlist.push(
+      Main_restaurantlist(
+        model.id,
+        model.name,
+        model.fee,
+        model.url,
+      )
+    )
+  });
+  
+  setRestaurantList(_restaurantlist);
 }
 
 
