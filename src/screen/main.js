@@ -92,8 +92,7 @@ export default function Main() {
   const [newmarkerCoordinate, setNewmarkerCoordinate] = useState(null);
 
   // make new marker
-  const makeNewMarker = (coordinate, title) => {
-    setDialogVisible_marker(true)
+  async function makeNewMarker(coordinate, title){
     const key = 'markers%' + uuid.v4()
     setSelectedMarker(
       {
@@ -102,55 +101,16 @@ export default function Main() {
         key: key,
       }
     );
-
-    // //graphql save marker
-    // (async () => {
-    //   await DataStore.save(
-    //     new Place({
-    //     "latitude": coordinate.latitude,
-    //     "longitude": coordinate.longitude,
-    //     "name": title,
-    //     "Restaurants_in_a_place": []
-    //     })
-    //   );
-    // });
-    // console.log('saved');
-
-
-      // (async () => {
-      //   await API.graphql(graphqlOperation(createPlace, {
-      //     input: {
-      //       "latitude": coordinate.latitude,
-      //       "longitude": coordinate.longitude,
-      //       "name": title,
-      //       "Restaurants_in_a_place": []
-      //       }
-      //   }));
-      //   setMarkers([...markers, {
-      //     "latitude": coordinate.latitude,
-      //     "longitude": coordinate.longitude,
-      //     "name": title,
-      //     "Restaurants_in_a_place": []
-      //     }]);
-      // });
-
-    return (
-      <Marker
-        coordinate={coordinate}
-        title={title}
-        description={"want some food in here?"}
-        key={key}
-        onPress={() => {
-          setSelectedMarker(
-            {
-              coordinate: coordinate,
-              title: title,
-              key: key,
-            }
-          );
-        }}
-      />
+    setMarkers([...markers, returnMarker({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "name": title, "id": key, "createdAt": new Date() })]);
+    await DataStore.save(
+      new Place({
+      "latitude": coordinate.latitude,
+      "longitude": coordinate.longitude,
+      "name": title,
+      "Restaurants_in_a_place": []
+      })
     );
+    console.log('saved');
   }
 
 // selected marker info
@@ -200,7 +160,7 @@ const [newRestaurant_url, setNewRestaurant_url] = useState(null);
         submitText={'submit'}
         cancelText={'cancel'}
         submitInput={(title) => {
-          setMarkers([...markers, makeNewMarker(newmarkerCoordinate, title)]);
+          makeNewMarker(newmarkerCoordinate, title);
           setDialogVisible_marker(false);
         }}
         closeDialog={() => {
