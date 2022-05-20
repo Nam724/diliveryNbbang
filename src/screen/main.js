@@ -136,10 +136,29 @@ const [restaurantList, setRestaurantList] = useState([
 // get restaurant list
 const [dialogVisible_restaurant, setDialogVisible_restaurant] = useState(false);
 
-const [newRestaurant, setNewRestaurant] = useState({});
+// const [newRestaurant, setNewRestaurant] = useState({});
 const [newRestaurant_name, setNewRestaurant_name] = useState(null);
 const [newRestaurant_fee, setNewRestaurant_fee] = useState(null);
 const [newRestaurant_url, setNewRestaurant_url] = useState(null);
+
+// make new restaurant
+async function saveNewRestaurant(name, fee, url, placeID){
+    
+  console.log({
+    "name": name,
+    "fee": fee,
+    "url": url,
+    "placeID": placeID,
+  })
+  // amplify
+  await DataStore.save(
+    new Restaurant({
+		"name": name,
+		"fee": fee,
+		"url": url,
+		"placeID": placeID,
+	}));
+}
 
 
  // return 
@@ -209,7 +228,7 @@ const [newRestaurant_url, setNewRestaurant_url] = useState(null);
           </View>
 
           <View style={styles.getRestaurantInfoModal}>
-            <Text style={[styles.normalText,{textAlign:'center'}]}>{'url'}</Text>
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{'배달의 민족 url'}</Text>
             <TextInput style={styles.inputText}
             onChangeText={(text) => setNewRestaurant_url(text)}
             />
@@ -230,18 +249,15 @@ const [newRestaurant_url, setNewRestaurant_url] = useState(null);
             <TouchableOpacity
               style={styles.modalButton}
               onPress={() => 
-                {
+                { let name = newRestaurant_name;
+                  let fee = parseInt(newRestaurant_fee);
+                  let url = newRestaurant_url;
+                  let placeID = selectedMarker.key;
                   setDialogVisible_restaurant(false);
-                  let _newRestaurant = {
-                    name: newRestaurant_name,
-                    fee: newRestaurant_fee,
-                    url: newRestaurant_url,
-                  }
-                  setNewRestaurant_fee(null);
                   setNewRestaurant_name(null);
+                  setNewRestaurant_fee(null);
                   setNewRestaurant_url(null);
-                  setNewRestaurant(_newRestaurant);
-                  // console.log(_newRestaurant)
+                  saveNewRestaurant(name, fee, url, placeID);
                 }}>
               <Text style={styles.highlightText}>{'Submit'}</Text>
             </TouchableOpacity>
@@ -301,7 +317,7 @@ const [newRestaurant_url, setNewRestaurant_url] = useState(null);
                 }}
               >
                 <Text style={styles.normalText}>
-                {selectedMarker.key=='markers%'?'select pin':'add foods here'}
+                {selectedMarker.key=='markers%'?'select pin':'add restaurants here'}
                 </Text>
               </TouchableOpacity>
           </View>
