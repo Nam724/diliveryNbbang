@@ -1,0 +1,16 @@
+{
+  "resourceName": "s3btsstorage9a68b86a",
+  "bucketName": "bts-storage-9a68b86a",
+  "policyUUID": "d080d6a5",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

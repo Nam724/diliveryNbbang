@@ -10,6 +10,11 @@
       "StackName": "amplify-bts-dev-201022",
       "StackId": "arn:aws:cloudformation:ap-northeast-2:986984005361:stack/amplify-bts-dev-201022/cb588160-cb9a-11ec-a5e0-02bde2032c1a",
       "AmplifyAppId": "d2wiijgf3xic82"
+    },
+    "categories": {
+      "auth": {
+        "bts": {}
+      }
     }
   }
 }

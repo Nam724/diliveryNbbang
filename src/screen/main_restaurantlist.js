@@ -8,7 +8,7 @@ export default function Main_restaurantlist(id,name, fee, members) {
 
  // return 
   return (
-    <View style={styles.restaurantList} id={id}>
+    <View style={styles.restaurantList} key={id}>
 
       <Text style={[styles.highlightText, styles.restaurantName]}>{name}</Text>
 

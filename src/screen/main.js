@@ -6,7 +6,11 @@ import MapView, { Marker } from 'react-native-maps';
 import uuid from 'react-native-uuid';
 import DialogInput from 'react-native-dialog-input';
 import Main_restaurantlist from './main_restaurantlist';
-
+import  {DataStore} from '@aws-amplify/datastore';
+import {Restaurant, Place} from '../models';
+import { createPlace } from '../graphql/mutations';
+import { API } from 'aws-amplify';
+import { graphqlOperation } from 'aws-amplify';
 
 export default function Main() {
 
@@ -14,7 +18,7 @@ export default function Main() {
 // get location
   const [location, setLocation] = useState(
     {latitude: 35.572676, longitude: 129.188191, latitudeDelta: 0.003, longitudeDelta: 0.003}
-  ); // {latitude: 37.4219525, longitude: -122.0837251}
+  ); // coordinate = {latitude: 37.4219525, longitude: -122.0837251}
 
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -33,6 +37,7 @@ export default function Main() {
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         });
+        getMarkers();
       })();
   }, []); 
 
@@ -45,10 +50,48 @@ export default function Main() {
   }
   // console.log(location)
 
+  const returnMarker = (data) => {// data should contain id, name, latitude, longitude
+    console.log('makeMarker')
+    let coordinate = {longitude: data.longitude, latitude: data.latitude};
+    let title = data.name;
+    let key = data.id;
+    let createdAt = data.createdAt;
+    
+    return (
+      <Marker
+        coordinate={coordinate}
+        title={title}
+        description={`created at ${createdAt}`}
+        key={key}
+        onPress={() => {
+          setSelectedMarker(
+            {
+              coordinate: coordinate,
+              title: title,
+              key: key,
+            }
+          );
+        }}
+      />
+    );
+  }
+
 //MARKER
+  // current markers
+  const [markers, setMarkers] = useState([]); // use makeMarker(data)
+
+  async function getMarkers() {
+    const models = await DataStore.query(Place);
+    let _markerlist = []
+    models.forEach(model => {_markerlist.push(returnMarker(model))});
+    setMarkers(_markerlist);
+    console.log(_markerlist);
+  }
+
   // get log pressed location and add marker
-  const [markers, setMarkers] = useState([]);
   const [newmarkerCoordinate, setNewmarkerCoordinate] = useState(null);
+
+  // make new marker
   const makeNewMarker = (coordinate, title) => {
     setDialogVisible_marker(true)
     const key = 'markers%' + uuid.v4()
@@ -59,6 +102,38 @@ export default function Main() {
         key: key,
       }
     );
+
+    // //graphql save marker
+    // (async () => {
+    //   await DataStore.save(
+    //     new Place({
+    //     "latitude": coordinate.latitude,
+    //     "longitude": coordinate.longitude,
+    //     "name": title,
+    //     "Restaurants_in_a_place": []
+    //     })
+    //   );
+    // });
+    // console.log('saved');
+
+
+      // (async () => {
+      //   await API.graphql(graphqlOperation(createPlace, {
+      //     input: {
+      //       "latitude": coordinate.latitude,
+      //       "longitude": coordinate.longitude,
+      //       "name": title,
+      //       "Restaurants_in_a_place": []
+      //       }
+      //   }));
+      //   setMarkers([...markers, {
+      //     "latitude": coordinate.latitude,
+      //     "longitude": coordinate.longitude,
+      //     "name": title,
+      //     "Restaurants_in_a_place": []
+      //     }]);
+      // });
+
     return (
       <Marker
         coordinate={coordinate}
@@ -80,13 +155,16 @@ export default function Main() {
 
 // selected marker info
   const [selectedMarker, setSelectedMarker] = useState({
-    coordinate: '',
+    coordinate: {}, // {logitude: 0, latitude: 0}
     title: 'restaurant',
     key: 'markers%',
   });
 
  // get marker name dialog
   const [dialogVisible_marker, setDialogVisible_marker] = useState(false); 
+
+
+
 
 // RESTAURANT LIST
 const [restaurantList, setRestaurantList] = useState([
