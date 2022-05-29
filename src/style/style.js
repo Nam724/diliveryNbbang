@@ -3,7 +3,7 @@ import { Dimensions } from 'react-native';
 
 const height = Dimensions.get('screen').height; // 2000
 export const width = Dimensions.get('screen').width; // 1000
-const colorPack = {
+export const colorPack = {
     representative: '#AF0000',
     highlight_light: '#AF5800',
     highlight_dark: '#8f4800',

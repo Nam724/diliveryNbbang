@@ -151,6 +151,7 @@ async function saveNewRestaurant(name, fee, url, placeID){
 		"url": url,
 		"placeID": placeID,
 	}));
+  loadRestaurant(placeID);
 }
 
 // load restaurant
@@ -161,17 +162,17 @@ async function loadRestaurant(placeID){
   // console.log(models);
   let _restaurantlist = []
 
-  models.forEach(model => {
+  models.forEach((model, index) => {
     _restaurantlist.push(
       Main_restaurantlist(
         model.id,
         model.name,
         model.fee,
         model.url,
+        index
       )
     )
   });
-  
   setRestaurantList(_restaurantlist);
 }
 
