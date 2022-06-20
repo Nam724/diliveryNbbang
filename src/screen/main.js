@@ -5,38 +5,45 @@ import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import uuid from 'react-native-uuid';
 import DialogInput from 'react-native-dialog-input';
-import Main_restaurantlist from './main_restaurantlist';
+import {Main_restaurantlist, Main_restaurantlist_sample} from './main_restaurantlist';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
+
 
 export default function Main() {
 
 // MAP
+  // check is loading finished?
+const [isLoading, setIsLoading] = useState(true);
+
 // get location
   const [location, setLocation] = useState(
     {latitude: 35.572676, longitude: 129.188191, latitudeDelta: 0.003, longitudeDelta: 0.003}
   ); // coordinate = {latitude: 37.4219525, longitude: -122.0837251}
 
   const [errorMsg, setErrorMsg] = useState(null);
+  // const mapRef = createRef();
 
-  useEffect(() => {
-      (async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
-          return;
-        }
-  
+  useEffect(async () => {
+        setIsLoading(true);
+        
+        let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
+        console.log(status_location_permission);
+        // 나중에 풀어야 함!
+        //if (status_location_permission !== 'granted') {
+        //   setErrorMsg('Permission to access location was denied');
+        //   // return; 
+        // }
+
         let location = await Location.getCurrentPositionAsync({});
         setLocation({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: 0.003, longitudeDelta: 0.003
         });
-        getMarkers();
-      })();
-  }, []); 
+        await getMarkers();
+        setIsLoading(false);
+    }, []); 
 
   let text = 'Waiting..';
   if (errorMsg) {
@@ -92,14 +99,14 @@ export default function Main() {
 
   // make new marker
   async function makeNewMarker(coordinate, title){
-    const key = 'markers%' + uuid.v4()
-    setSelectedMarker(
-      {
-        coordinate: coordinate,
-        title: title,
-        key: key,
-      }
-    );
+    // const key = 'markers%' + uuid.v4()
+    // setSelectedMarker(
+    //   {
+    //     coordinate: coordinate,
+    //     title: title,
+    //     key: key,
+    //   }
+    // );
     // setMarkers([...markers, returnMarker({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "name": title, "id": key, "createdAt": new Date() })]);
     await DataStore.save(
       new Place({
@@ -128,9 +135,8 @@ export default function Main() {
 
 // RESTAURANT LIST
 const [restaurantList, setRestaurantList] = useState([
-  Main_restaurantlist('1231', 'restaurant1', '10', '10'),
-  Main_restaurantlist('2423', 'restaurant2', '20', '20'),
-  Main_restaurantlist('53534', 'restaurant3', '30', '30'),
+  Main_restaurantlist_sample('placeholder1','장소 추가하는 법', '지도 길게 누르기', '0'),
+  Main_restaurantlist_sample('placeholder2','장소 선택하는 법', '지도에 표시된 핀 누르기', '1'),
 ]);
 
 // get restaurant list
@@ -181,6 +187,12 @@ async function loadRestaurant(placeID){
 
  // return 
   return (
+    isLoading?(
+      <View>
+        <Text>
+        loading...
+        </Text>
+      </View>):(
     <View style={styles.container}>
 
       <DialogInput
@@ -348,6 +360,6 @@ async function loadRestaurant(placeID){
 
       </View>
     </View>
-  );  // return
-}
+  )
+)}// return}
 

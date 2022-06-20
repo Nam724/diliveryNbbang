@@ -28,7 +28,8 @@
     "react-native-maps": "0.29.4",
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.1",
-    "react-native-webview": "^11.18.2"
+    "react-native-webview": "^11.18.2",
+    "react-ref": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
