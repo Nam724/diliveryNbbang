@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} f
 import { colorPack, styles, width } from '../style/style';
 
 
-function Main_restaurantlist(id, name, fee, url, num) {
+function Main_restaurantlist(id, name, fee, url, num, navigation, place, setRestaurantList, restaurantList) {
   const backgroundColor_odd = colorPack.highlight_dark
   const backgroundColor_even = colorPack.highlight_light
   var myBackgroundColor
@@ -12,12 +12,15 @@ function Main_restaurantlist(id, name, fee, url, num) {
   else{
     myBackgroundColor = backgroundColor_odd
   }
+
+  // console.log(restaurantList)
+
  // return 
   return (
     <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={id}
     onPressOut=  {() => {  
-      // navigation.navigate('Restaurant', {id: id, name: name, fee: fee, url: url})
-      console.log('pressed')
+      navigation.navigate('Restaurant', {id: id, name: name, fee: fee, url: url, place: place, setRestaurantList:setRestaurantList, restaurantList:restaurantList})
+      // console.log('pressed')
     }}
     >
 
@@ -46,7 +49,7 @@ function Main_restaurantlist_sample(id, name, fee, num) {
     <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={id}
     onPressOut=  {() => {  
       // navigation.navigate('Restaurant', {id: id, name: name, fee: fee, url: url})
-      console.log('pressed')
+      // console.log('pressed')
     }}
     >
 

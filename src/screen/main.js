@@ -9,7 +9,7 @@ import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
 import Loading_page from './loading_page';
 
-export default function Main() {
+export default function Main_page({navigation}){
 
 // MAP
   // check is loading finished?
@@ -27,7 +27,7 @@ const [isLoading, setIsLoading] = useState(true);
         setIsLoading(true);
         
         let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
-        console.log(status_location_permission);
+        // console.log(status_location_permission);
         // 나중에 풀어야 함!
         //if (status_location_permission !== 'granted') {
         //   setErrorMsg('Permission to access location was denied');
@@ -67,7 +67,7 @@ const [isLoading, setIsLoading] = useState(true);
         description={`created at ${createdAt}`}
         key={key}
         onPress={() => {
-          console.log(key)
+          // console.log(key)
           setSelectedMarker(
             {
               coordinate: coordinate,
@@ -75,7 +75,7 @@ const [isLoading, setIsLoading] = useState(true);
               key: key,
             }
           );
-          loadRestaurant(`${key}`);
+          loadRestaurant(key, title, coordinate);
         }}
       />
     );
@@ -158,29 +158,41 @@ async function saveNewRestaurant(name, fee, url, placeID){
 		"url": url,
 		"placeID": placeID,
 	}));
-  loadRestaurant(placeID);
+  loadRestaurant(placeID, name);
 }
 
 // load restaurant
-async function loadRestaurant(placeID){
+async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0, latitude: 0}){
   // console.log(placeID)
 
   const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
   // console.log(models);
-  let _restaurantlist = []
+  let _restaurantList = []
 
   models.forEach((model, index) => {
-    _restaurantlist.push(
+    _restaurantList.push(
       Main_restaurantlist(
         model.id,
         model.name,
         model.fee,
         model.url,
-        index
+        index,
+        navigation,
+        {
+          placeID: placeID,
+          placeName: placeName,
+          placeCoordinate: placeCoordinate,
+        },
+        setRestaurantList,
+        _restaurantList        
       )
     )
   });
-  setRestaurantList(_restaurantlist);
+  // console.log(
+  //   placeID,
+  //   placeName,
+  //   placeCoordinate,)
+  setRestaurantList(_restaurantList);
 }
 
 

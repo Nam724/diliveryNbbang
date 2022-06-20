@@ -134,4 +134,16 @@ export const styles = StyleSheet.create({
         color: colorPack.text,
         textAlign:'center',
     },
+
+    // restaurantPage
+
+    restaurantButtonContainer:{
+        flexDirection:'row',
+    },
+    restaurantButton:{
+        height: height * 211/2000,
+        width: width * 0.25,
+        alignItems:'center',
+        justifyContent:'center',
+    }
 });
