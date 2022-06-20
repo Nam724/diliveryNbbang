@@ -61,6 +61,7 @@ export default function Main() {
         description={`created at ${createdAt}`}
         key={key}
         onPress={() => {
+          console.log(key)
           setSelectedMarker(
             {
               coordinate: coordinate,
@@ -68,7 +69,7 @@ export default function Main() {
               key: key,
             }
           );
-          loadRestaurant(key);
+          loadRestaurant(`${key}`);
         }}
       />
     );
@@ -99,7 +100,7 @@ export default function Main() {
         key: key,
       }
     );
-    setMarkers([...markers, returnMarker({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "name": title, "id": key, "createdAt": new Date() })]);
+    // setMarkers([...markers, returnMarker({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "name": title, "id": key, "createdAt": new Date() })]);
     await DataStore.save(
       new Place({
       "latitude": coordinate.latitude,
@@ -108,6 +109,7 @@ export default function Main() {
       "Restaurants_in_a_place": []
       })
     );
+    await getMarkers();
     // console.log('saved');
   }
 

@@ -16,7 +16,12 @@ export default function Main_restaurantlist(id, name, fee, url, num) {
   }
  // return 
   return (
-    <View style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={id}>
+    <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={id}
+    onPressOut=  {() => {  
+      // navigation.navigate('Restaurant', {id: id, name: name, fee: fee, url: url})
+      console.log('pressed')
+    }}
+    >
 
       <Text style={[styles.highlightText, styles.restaurantName]}>{name}</Text>
 
@@ -24,7 +29,7 @@ export default function Main_restaurantlist(id, name, fee, url, num) {
 
       <Text style={[styles.normalText, styles.restaurantMembers]}>{`members: `}</Text>
       
-    </View>
+    </TouchableOpacity>
   );  // return
 }
 
