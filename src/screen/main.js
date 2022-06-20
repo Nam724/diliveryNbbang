@@ -3,12 +3,11 @@ import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
-import uuid from 'react-native-uuid';
 import DialogInput from 'react-native-dialog-input';
 import {Main_restaurantlist, Main_restaurantlist_sample} from './main_restaurantlist';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
-
+import Loading_page from './loading_page';
 
 export default function Main() {
 
@@ -188,11 +187,7 @@ async function loadRestaurant(placeID){
  // return 
   return (
     isLoading?(
-      <View>
-        <Text>
-        loading...
-        </Text>
-      </View>):(
+      <Loading_page></Loading_page>):(
     <View style={styles.container}>
 
       <DialogInput

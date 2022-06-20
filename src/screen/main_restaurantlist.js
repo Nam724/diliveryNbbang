@@ -1,5 +1,4 @@
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
-import {useState, useEffect} from 'react';
 import { colorPack, styles, width } from '../style/style';
 
 
