@@ -4,7 +4,8 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Signup_page from './src/screen/signup';
+import SignUp_page from './src/screen/signup';
+import SignIn_page from './src/screen/signin';
 
 
 
@@ -37,7 +38,7 @@ const Stack = createStackNavigator();
 
 export default function App(){
   return (
-    <Signup_page>
-    </Signup_page>      
+    <SignUp_page>
+    </SignUp_page>   
   );
 }

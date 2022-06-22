@@ -1,17 +1,78 @@
-import { withAuthenticator, Button, Heading } from '@aws-amplify/ui-react';
-import '@aws-amplify/ui-react/styles.css';
+import { Auth } from 'aws-amplify';
+import { useState } from 'react';
+import { TextInput, TouchableOpacity, View, Text } from 'react-native';
+import { styles } from '../style/style';
 
-/* src/App.js */
-function App({ signOut, user }) {
-  // Todo logic here
 
-  return (
-    <View>
-      {/* Add Todo JSX here  */}
-      <Heading level={1}>Hello {user.username}</Heading>
-      <Button onClick={signOut}>Sign out</Button>
-    </View>
-  );
+async function signIn(email, password) {
+    try {
+        const user = await Auth.signIn(email, password);
+    } catch (error) {
+        console.log('error signing in', error);
+    }
 }
 
-export default withAuthenticator(App);
+function emailTest(email){
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(email) === true){
+        return(true)
+    }
+    else{
+        return(false)
+    }
+}
+
+export default function SignIn_page(){
+    const [email, setEmail] = useState('');
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [password, setPassword] = useState('');
+    return(
+        <View style={[styles.container,{
+            paddingTop:100,
+        }]}>
+            <View style={styles.header}>
+            <View>
+                <Text style={styles.titleText}>
+                Email
+                </Text>
+                <TextInput 
+                    autoComplete='email'
+                    keyboardType='email-address'
+                    style={{
+                        borderColor:'red',
+                        borderWidth:isEmailValid?0:1,
+                        height:40,
+                    }}
+                    onChangeText={(email) => {
+                        setEmail(email);
+                        setIsEmailValid(emailTest(email))
+                    }}
+                />
+            </View>
+            <View>
+               <Text style={styles.titleText}>
+                Password
+                </Text>
+                <TextInput 
+                    autoComplete='password'
+                    keyboardType='default'
+                    style={{
+                        borderColor:'red',
+                        borderWidth: 1,
+                        height:40,
+                    }}
+                    onChangeText={(password) => setPassword(password)}
+                />
+            </View>
+                
+            <TouchableOpacity
+                onPressOut={() => signIn(email, password)}
+            >
+                <Text style={styles.titleText}>
+                Sign In
+                </Text>
+            </TouchableOpacity>
+            </View>
+        </View>
+    )
+}
