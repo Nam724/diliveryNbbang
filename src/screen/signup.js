@@ -32,16 +32,17 @@ function emailTest(email){
     }
 }
 
-async function confirmSignUp(username, code) {
+async function confirmSignUp(username, code, navigation) {
     try {
       await Auth.confirmSignUp(username, code);
+      navigation.navigate('SignIn');
       return(true);
     } catch (error) {
         console.log('error confirming sign up', error);
     }
 }
 
-export default function SignUp_page(){
+export default function SignUp_page(navigation){
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');
@@ -116,7 +117,7 @@ export default function SignUp_page(){
             </View>
                 
             <TouchableOpacity
-                onPressOut={() => confirmSignUp(email, verification_code)
+                onPressOut={() => confirmSignUp(email, verification_code, navigation)
                 }
                 disabled={!verification_code}
             >

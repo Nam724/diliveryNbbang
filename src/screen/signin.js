@@ -4,9 +4,11 @@ import { TextInput, TouchableOpacity, View, Text } from 'react-native';
 import { styles } from '../style/style';
 
 
-async function signIn(email, password) {
+async function signIn(email, password, navigation) {
     try {
         const user = await Auth.signIn(email, password);
+        console.log('user', user);
+        navigation.navigate('Main');
     } catch (error) {
         console.log('error signing in', error);
     }
@@ -22,7 +24,7 @@ function emailTest(email){
     }
 }
 
-export default function SignIn_page(){
+export default function SignIn_page(navigation){
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');
@@ -66,10 +68,17 @@ export default function SignIn_page(){
             </View>
                 
             <TouchableOpacity
-                onPressOut={() => signIn(email, password)}
+                onPressOut={() => signIn(email, password, navigation)}
             >
                 <Text style={styles.titleText}>
                 Sign In
+                </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPressOut={() => {console.log(navigation)}}
+            >
+                <Text style={styles.titleText}>
+                Sign Up
                 </Text>
             </TouchableOpacity>
             </View>
