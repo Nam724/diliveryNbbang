@@ -42,7 +42,7 @@ async function confirmSignUp(username, code, navigation) {
     }
 }
 
-export default function SignUp_page(navigation){
+export default function SignUp_page({navigation}){
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');

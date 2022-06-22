@@ -24,7 +24,7 @@ function emailTest(email){
     }
 }
 
-export default function SignIn_page(navigation){
+export default function SignIn_page({navigation}){
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');
