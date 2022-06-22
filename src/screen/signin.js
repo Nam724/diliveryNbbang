@@ -75,7 +75,7 @@ export default function SignIn_page({navigation}){
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                onPressOut={() => {console.log(navigation)}}
+                onPressOut={() => navigation.navigate('SignUp')}
             >
                 <Text style={styles.titleText}>
                 Sign Up
