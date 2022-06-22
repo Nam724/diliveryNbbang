@@ -1,6 +1,6 @@
 import { styles, width } from '../style/style';
 import {View, Text} from 'react-native';
-import { render } from 'react-dom';
+
 
 
 export default function Loading_page(){
