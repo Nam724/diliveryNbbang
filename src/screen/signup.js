@@ -1,9 +1,9 @@
 import { Auth } from 'aws-amplify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextInput, TouchableOpacity, View, Text } from 'react-native';
-import { styles } from '../style/style';
+import { styles, height, width, colorPack } from '../style/style';
 
-async function signUp(email, password, setVerification_code_sended) {
+async function sendVerificationCode(email, password, setVerification_code_sended) {
     
     try {
         const { user } = await Auth.signUp({
@@ -19,12 +19,25 @@ async function signUp(email, password, setVerification_code_sended) {
         setVerification_code_sended(true);
     } catch (error) {
         console.log('error signing up:', error);
+        if(error.code === 'UsernameExistsException'){
+            alert('User already exists');
+            return(false);
+        }
+        else if(error.code === 'InvalidParameterException'){
+            alert('Invalid parameter');
+            return(false);
+        }
+        else if (error.code === 'NetworkError'){
+            alert('Network error');
+            return(false);
+        }
     }
 }
 
-function emailTest(email){
+function emailTest(setEmail, email){
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(email) === true){
+        setEmail(email);
         return(true)
     }
     else{
@@ -35,10 +48,19 @@ function emailTest(email){
 async function confirmSignUp(username, code, navigation) {
     try {
       await Auth.confirmSignUp(username, code);
+      alert('회원가입이 완료되었습니다.');
       navigation.navigate('SignIn');
       return(true);
     } catch (error) {
         console.log('error confirming sign up', error);
+        if (error === 'NetworkError'){
+            alert('Network error');
+            return(false);
+        }
+        else if (error === 'CodeMismatchException'){
+            alert('잘못된 코드입니다.');
+            return(false);
+        }
     }
 }
 
@@ -49,68 +71,69 @@ export default function SignUp_page({navigation}){
     const [verification_code, setVerification_code] = useState('');
     const [verification_code_sended, setVerification_code_sended] = useState(false);
 
+    const [sendVerificationCodeBtn, setSendVerificationCodeBtn] = useState(false);
+
+    useEffect(() => {
+        console.log('email', email);
+        console.log('password', password);
+        console.log('verification_code_sended', verification_code_sended);
+        if(!verification_code_sended && (password && email)){
+            console.log('버튼을 누를 수 있습니다.');
+            setSendVerificationCodeBtn(true);
+        }
+        else{
+            setSendVerificationCodeBtn(false);
+        }
+    },[verification_code_sended, password, email]);
     return(
-        <View style={[styles.container,{
-            paddingTop:200,
-        }]}>
+        <View style={styles.container}>
             <View style={styles.header}>
-            <View>
+                <Text style={styles.highlightText}>
+                    {'My Application 회원가입'}
+                </Text>            
+            </View>
+            <View style={{marginTop:height*249/2000, height:height*179/2000}}>
                 <Text style={styles.highlightText}>
                 Email
                 </Text>
                 <TextInput 
-                    autoComplete='email'
                     keyboardType='email-address'
-                    style={{
-                        borderColor:'red',
-                        borderWidth:isEmailValid?0:1,
-                        height:40,
-                    }}
+                    style={[styles.textInputBox, styles.normalText]}
                     onChangeText={(email) => {
-                        setEmail(email);
-                        setIsEmailValid(emailTest(email))
+                        setIsEmailValid(emailTest(setEmail, email))
                     }}
                 />
             </View>
-            <View>
-               <Text style={styles.highlightText}>
+            <View style={{marginTop: height*100/2000,height:height*179/2000}}>
+                <Text style={styles.highlightText}>
                 Password
                 </Text>
                 <TextInput 
-                    autoComplete='password'
+                    secureTextEntry={true}
                     keyboardType='default'
-                    style={{
-                        borderColor:'red',
-                        borderWidth: 1,
-                        height:40,
-                    }}
+                    style={[styles.textInputBox, styles.normalText]}
                     maxLength={20}
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
+                
             <View>
                
                 <TouchableOpacity
-                onPressOut={() => signUp(email, password, setVerification_code_sended)}
-                disabled={!email}
+                onPressOut={() => sendVerificationCode(email, password, setVerification_code_sended)}
+                disabled={!sendVerificationCodeBtn}
+                style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
                 >
-                <Text style={styles.highlightText}>
-                {'send verification code(email)'}
+                <Text style={sendVerificationCodeBtn?styles.highlightText:styles.deactivatedText}>
+                {!verification_code_sended?'인증코드 보내기(이메일)':'인증코드를 입력하세요'}
                 </Text>
-            </TouchableOpacity>
+                </TouchableOpacity>
             </View>
-            <View style>
-               <Text style={styles.highlightText}>
-                {!verification_code_sended?'send verification code first':'verification code'}
-                </Text>
+            <View>
                 <TextInput 
                     autoComplete='password'
-                    keyboardType='default'
-                    style={{
-                        borderColor:'red',
-                        borderWidth: 1,
-                        height:40,
-                    }}
+                    keyboardType='number-pad'
+                    style={[styles.textInputBox, styles.normalText]}
                     maxLength={6}
                     onChangeText={(verification_code) => setVerification_code(verification_code)}
                 />
@@ -120,12 +143,12 @@ export default function SignUp_page({navigation}){
                 onPressOut={() => confirmSignUp(email, verification_code, navigation)
                 }
                 disabled={!verification_code}
+                style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
             >
                 <Text style={styles.highlightText}>
-                Sign Up
+                {'회원가입'}
                 </Text>
             </TouchableOpacity>
-            </View>
         </View>
     )
 }

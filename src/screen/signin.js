@@ -19,20 +19,24 @@ async function signIn(_setEmail, _setIsLogin, email, password, navigation) {
             alert('User not confirmed');
             return(false);
         }
-        else if(error === 'UserNotFoundException'){
-            alert('User not found');
+        else if(error == 'UserNotFoundException: User does not exist.'){
+            alert('해당 이메일의 사용자를 찾을 수 없습니다.');
             return(false);
         }
-        else if(error === 'NotAuthorizedException'){
-            alert('Wrong password');
+        else if(error == 'NotAuthorizedException: Incorrect username or password.'){
+            alert('잘못된 비밀번호입니다.');
             return(false);
         }
-        else if (error === 'NetworkError'){
+        else if (error == 'NetworkError'){
             alert('Network error');
             return(false);
         }
-        else if (error === 'InvalidParameterException'){
+        else if (error == 'InvalidParameterException: Custom auth lambda trigger is not configured for the user pool.'){
             alert('Invalid parameter');
+            return(false);
+        }
+        else{
+            alert('알수 없는 에러, 다시 시도하세요.');
             return(false);
         }
     }
@@ -49,7 +53,11 @@ function emailTest(email){
 }
 
 async function saveLoginInfo(email='', password=''){
-    await AsyncStorage.setItem('@loginInfoToken', JSON.stringify({email: email, password: password}));
+    const loginInfo = {
+        email: email,
+        password: password
+    }
+    await AsyncStorage.setItem('@loginInfoToken', JSON.stringify(loginInfo));
 }
 
 

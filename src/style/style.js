@@ -27,6 +27,12 @@ export const styles = StyleSheet.create({
         color: colorPack.text_dark,
         textAlign:'center',
     },
+    deactivatedText:{
+        // fontFamily:'Arial',
+        fontSize:width*0.04, // 30
+        color: colorPack.deactivated,
+        textAlign:'center',
+    },
 // CONTAINER STYLES
     container:{
         width: width,
@@ -49,7 +55,7 @@ export const styles = StyleSheet.create({
     restaurantContainer: {
         height: height * 710/2000,
         width:width,
-        backgroundColor: colorPack.highlight_dark,
+        backgroundColor:colorPack.highlight_light,
     },
     locationInfoContainer:{
         height: height * 106/2000,
@@ -57,7 +63,10 @@ export const styles = StyleSheet.create({
         paddingRight: width * 70/1000,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',    
+        justifyContent: 'space-between', 
+        borderColor: colorPack.highlight_light,
+        borderBottomWidth: width * 5/1000, 
+        backgroundColor: colorPack.representative,
     },
     restaurantListContainer:{
         height: height * 604/2000,
@@ -68,12 +77,16 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: width * 30/1000,
+        borderColor: colorPack.highlight_light,
+        borderBottomWidth: width * 5/1000, 
     },
     restaurantName:{
-    
+        width: width * 450/1000,
+        textAlign: 'left',
     },
     restaurantFee:{
-
+        width: width * 300/1000,
+        textAlign: 'left',
     },
     restaurantMembers:{
 
@@ -89,7 +102,7 @@ export const styles = StyleSheet.create({
         marginTop: height * 180/2000,
         height: height * 1000/2000,
         width:width,
-        backgroundColor: colorPack.deactivated,
+        backgroundColor: colorPack.representative,
         alignItems:'center',
         flexDirection:'column',
         justifyContent:'space-between',
