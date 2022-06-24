@@ -12,6 +12,7 @@ export default function Restaurant_page({route, navigation}){
     // console.log(restaurant)
     const [place, setPlace] = useState(restaurant.place);
     const setRestaurantList = route.params.setRestaurantList;
+    const refreshRestaurantList = route.params.refreshRestaurantList;
     var restaurantList = route.params.restaurantList;
     console.log('restaurantlist',restaurantList)
 
@@ -60,7 +61,7 @@ export default function Restaurant_page({route, navigation}){
 
 
                 <TouchableOpacity style={styles.restaurantButton_2}
-                onPressOut={() => deleteRestaurant(restaurant.id, navigation, restaurantList, setRestaurantList)}
+                onPressOut={() => deleteRestaurant(restaurant.id, navigation, restaurantList, refreshRestaurantList)}
                 >
                     <Text style={styles.highlightText}>
                         {'모집\n삭제'}
@@ -97,11 +98,11 @@ export default function Restaurant_page({route, navigation}){
     );
 }
 
-async function deleteRestaurant(key, navigation, restaurantList, setRestaurantList){
+async function deleteRestaurant(key, navigation, restaurantList, refreshRestaurantList){
     const modelToDelete = await DataStore.query(Restaurant, key);
     DataStore.delete(modelToDelete);
     navigation.navigate('Main');
     restaurantList = restaurantList.filter(restaurant => restaurant.key !== key);
     console.log(restaurantList)
-    setRestaurantList(restaurantList);
+    refreshRestaurantList()
 }

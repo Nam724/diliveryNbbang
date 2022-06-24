@@ -52,11 +52,10 @@ const [isLoading, setIsLoading] = useState(true);
     }, []); 
 
     // refresh
-    const refresh = async () => {
-      useEffect(() => {
-        getMarkers();
-        
-      }, [location]);
+    const refreshRestaurantList = async () => {
+      console.log('refreshRestaurantList');
+      await getMarkers()
+      await loadRestaurant(selectedMarker.key, selectedMarker.title, selectedMarker.coordinate);
     }
 
   let text = 'Waiting..';
@@ -130,7 +129,8 @@ const [isLoading, setIsLoading] = useState(true);
       "Restaurants_in_a_place": []
       })
     );
-    await getMarkers();
+    
+    refreshRestaurantList();
     // console.log('saved');
   }
 
@@ -173,7 +173,9 @@ async function saveNewRestaurant(name, fee, url, placeID){
 		"url": url,
 		"placeID": placeID,
 	}));
-  loadRestaurant(placeID, name);
+  await getMarkers();
+  console.log('markers', markers)
+  refreshRestaurantList();
 }
 
 // load restaurant
@@ -199,7 +201,8 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
           placeCoordinate: placeCoordinate,
         },
         setRestaurantList,
-        _restaurantList        
+        _restaurantList,
+        refreshRestaurantList        
       )
     )
   });
