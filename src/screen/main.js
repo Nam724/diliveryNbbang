@@ -61,6 +61,7 @@ export default function Main_page({route, navigation}){
     }
 
     // refresh
+<<<<<<< HEAD
     const refreshRestaurantList = async (id='refresh') => {
       console.log('refreshRestaurantList',id==='refresh');
       await getMarkers()
@@ -72,6 +73,12 @@ export default function Main_page({route, navigation}){
         console.log('refreshRestaurantList_with id');
         await loadRestaurant(id);
       }
+=======
+    const refreshRestaurantList = async () => {
+      console.log('refreshRestaurantList');
+      await getMarkers()
+      await loadRestaurant(selectedMarker.key, selectedMarker.title, selectedMarker.coordinate);
+>>>>>>> 음식점 추가하고 삭제할때마다 새로고침됨
     }
 
   let text = 'Waiting..';
@@ -212,6 +219,7 @@ export default function Main_page({route, navigation}){
     const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
     // console.log(models);
     
+<<<<<<< HEAD
 
     let _restaurantList = []
 
@@ -228,6 +236,47 @@ export default function Main_page({route, navigation}){
           _restaurantList,
           refreshRestaurantList        
         )
+=======
+  // console.log({"name": name,"fee": fee,"url": url,"placeID": placeID,})
+  // amplify
+  await DataStore.save(
+    new Restaurant({
+		"name": name,
+		"fee": fee,
+		"url": url,
+		"placeID": placeID,
+	}));
+  await getMarkers();
+  console.log('markers', markers)
+  refreshRestaurantList();
+}
+
+// load restaurant
+async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0, latitude: 0}){
+  // console.log(placeID)
+
+  const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
+  // console.log(models);
+  let _restaurantList = []
+
+  models.forEach((model, index) => {
+    _restaurantList.push(
+      Main_restaurantlist(
+        model.id,
+        model.name,
+        model.fee,
+        model.url,
+        index,
+        navigation,
+        {
+          placeID: placeID,
+          placeName: placeName,
+          placeCoordinate: placeCoordinate,
+        },
+        setRestaurantList,
+        _restaurantList,
+        refreshRestaurantList        
+>>>>>>> 음식점 추가하고 삭제할때마다 새로고침됨
       )
     });
 
