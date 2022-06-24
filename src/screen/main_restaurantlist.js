@@ -24,12 +24,13 @@ function Main_restaurantlist(id, name, fee, url, num, navigation, place, setRest
     }}
     >
 
-      <Text style={[styles.highlightText, styles.restaurantName]}>{name}</Text>
+      <Text style={[styles.highlightText, styles.restaurantName]} numberOfLines={1} ellipsizeMode='tail' 
+      >{name}</Text>
 
-      <Text style={[styles.normalText, styles.restaurantFee]}>{`fee: ${fee}won each`}</Text>
+      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{`배달료: 각${fee}원`}</Text>
 
-      <Text style={[styles.normalText, styles.restaurantMembers]}>{`members: `}</Text>
-      
+      <Text style={[styles.normalText, styles.restaurantMembers]} ellipsizeMode='tail' numberOfLines={1}>{`00명`}</Text>
+
     </TouchableOpacity>
   );  // return
 }
