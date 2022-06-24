@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage} from 'react-native';
 import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
 import * as Location from 'expo-location';
@@ -9,7 +9,14 @@ import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
 import Loading_page from './loading_page';
 
-export default function Main_page({navigation}){
+export default function Main_page({route, navigation}){
+
+// const _dummy = JSON.parse(AsyncStorage.getItem('@loginInfoToken'));
+// console.log('_dummy', _dummy);
+//  const user={
+//       username:route.params.Username,
+//       email:route.params.Email
+//  } 
 
 // MAP
   // check is loading finished?
@@ -43,6 +50,14 @@ const [isLoading, setIsLoading] = useState(true);
         await getMarkers();
         setIsLoading(false);
     }, []); 
+
+    // refresh
+    const refresh = async () => {
+      useEffect(() => {
+        getMarkers();
+        
+      }, [location]);
+    }
 
   let text = 'Waiting..';
   if (errorMsg) {
@@ -354,7 +369,7 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
                 }}
               >
                 <Text style={styles.normalText}>
-                {selectedMarker.key=='markers%'?'select pin':'add restaurants here'}
+                {selectedMarker.key=='markers%'?'장소를 먼저 선택하세요':'이곳으로 배달할 음식점 추가하기'}
                 </Text>
               </TouchableOpacity>
           </View>
