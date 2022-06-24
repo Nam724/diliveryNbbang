@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 import { useState } from 'react';
 import { TextInput, TouchableOpacity, View, Text } from 'react-native';
-import { styles } from '../style/style';
+import { styles, width, height } from '../style/style';
 
 
 async function signIn(email, password, navigation) {
@@ -29,46 +29,41 @@ export default function SignIn_page({navigation}){
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');
     return(
-        <View style={[styles.container,{
-            paddingTop:100,
-        }]}>
+        <View style={styles.container}>
             <View style={styles.header}>
-            <View>
+                <Text style={styles.titleText}>
+                    {'My Application Login'}
+                </Text>            
+            </View>
+            <View style={{marginTop:height*249/2000, height:height*179/2000}}>
                 <Text style={styles.titleText}>
                 Email
                 </Text>
                 <TextInput 
                     autoComplete='email'
                     keyboardType='email-address'
-                    style={{
-                        borderColor:'red',
-                        borderWidth:isEmailValid?0:1,
-                        height:40,
-                    }}
+                    style={[styles.textInputBox, styles.normalText]}
                     onChangeText={(email) => {
                         setEmail(email);
                         setIsEmailValid(emailTest(email))
                     }}
                 />
             </View>
-            <View>
-               <Text style={styles.titleText}>
+            <View style={{marginTop: height*100/2000,height:height*179/2000}}>
+                <Text style={styles.titleText}>
                 Password
                 </Text>
                 <TextInput 
                     autoComplete='password'
                     keyboardType='default'
-                    style={{
-                        borderColor:'red',
-                        borderWidth: 1,
-                        height:40,
-                    }}
+                    style={[styles.textInputBox, styles.normalText]}
                     onChangeText={(password) => setPassword(password)}
                 />
             </View>
                 
             <TouchableOpacity
                 onPressOut={() => signIn(email, password, navigation)}
+                style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
             >
                 <Text style={styles.titleText}>
                 Sign In
@@ -76,12 +71,12 @@ export default function SignIn_page({navigation}){
             </TouchableOpacity>
             <TouchableOpacity
                 onPressOut={() => navigation.navigate('SignUp')}
+                style={[styles.goToSignUpInButton,{marginTop:height*231/2000}]}
             >
                 <Text style={styles.titleText}>
                 Sign Up
                 </Text>
             </TouchableOpacity>
-            </View>
         </View>
     )
 }

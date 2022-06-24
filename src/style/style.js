@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Dimensions } from 'react-native';
 
-const height = Dimensions.get('screen').height; // 2000
+export const height = Dimensions.get('screen').height; // 2000
 export const width = Dimensions.get('screen').width; // 1000
 export const colorPack = {
     representative: '#AF0000',
@@ -140,10 +140,42 @@ export const styles = StyleSheet.create({
     restaurantButtonContainer:{
         flexDirection:'row',
     },
-    restaurantButton:{
+    restaurantButton_1:{
         height: height * 211/2000,
         width: width * 0.25,
         alignItems:'center',
         justifyContent:'center',
-    }
+        backgroundColor: colorPack.highlight_dark,
+
+    },
+    restaurantButton_2:{
+        height: height * 211/2000,
+        width: width * 0.25,
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor: colorPack.highlight_light,
+
+    },
+
+    // sign in page
+    goToSignUpInButton:{
+        width: width * 700/1000,
+        height: height * 100/2000,
+        backgroundColor: colorPack.highlight_light,
+        borderRadius: height * 50/2000,
+        justifyContent:'center',
+        marginHorizontal: width * 150/1000,
+    },
+    textInputBox:{
+        width: width * 700/1000,
+        height: height * 100/2000,
+        borderRadius: height * 30/2000,
+        borderColor: colorPack.highlight_light,
+        borderWidth: width* 10/2000,
+        marginTop: height * 35/2000,
+        marginBottom: height * 100/2000,
+        marginHorizontal: width * 150/1000,
+    },
+
 });
+

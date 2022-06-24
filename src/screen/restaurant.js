@@ -32,7 +32,7 @@ export default function Restaurant_page({route, navigation}){
 
 
             <View style={styles.restaurantButtonContainer}>
-                <TouchableOpacity style={[styles.restaurantButton,{backgroundColor:colorPack.highlight_dark}]}
+                <TouchableOpacity style={styles.restaurantButton_1}
 
                 >
                     <Text style={styles.highlightText}>
@@ -41,7 +41,7 @@ export default function Restaurant_page({route, navigation}){
                 </TouchableOpacity>
 
 
-                <TouchableOpacity style={[styles.restaurantButton,{backgroundColor:colorPack.highlight_light}]}
+                <TouchableOpacity style={styles.restaurantButton_2}
 
                 >
                     <Text style={styles.highlightText}>
@@ -50,7 +50,7 @@ export default function Restaurant_page({route, navigation}){
                 </TouchableOpacity>
 
                 
-                <TouchableOpacity style={[styles.restaurantButton,{backgroundColor:colorPack.highlight_dark}]}
+                <TouchableOpacity style={styles.restaurantButton_1}
 
                 >
                     <Text style={styles.highlightText}>
@@ -59,7 +59,7 @@ export default function Restaurant_page({route, navigation}){
                 </TouchableOpacity>
 
 
-                <TouchableOpacity style={[styles.restaurantButton,{backgroundColor:colorPack.highlight_light}]}
+                <TouchableOpacity style={styles.restaurantButton_2}
                 onPressOut={() => deleteRestaurant(restaurant.id, navigation, restaurantList, setRestaurantList)}
                 >
                     <Text style={styles.highlightText}>
