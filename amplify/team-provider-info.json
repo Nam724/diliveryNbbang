@@ -15,6 +15,13 @@
       "auth": {
         "bts": {},
         "true": {}
+      },
+      "notifications": {
+        "Pinpoint": {
+          "Name": "btsPe3O8-dev",
+          "Id": "804a9c1dd42c4de3b781664b962de97e",
+          "Region": "ap-northeast-2"
+        }
       }
     }
   }
