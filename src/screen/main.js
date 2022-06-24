@@ -244,7 +244,7 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
 
         <View style={styles.restaurantInfoContainerModal}>
 
-          <Text style={[styles.titleText,{marginTop:20}]}>{`Make new restaurant in ${selectedMarker.title}!`}</Text>
+          <Text style={[styles.highlightText,{marginTop:20}]}>{`Make new restaurant in ${selectedMarker.title}!`}</Text>
 
           
           <View style={styles.getRestaurantInfoModal}>
@@ -308,7 +308,7 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
 
 
       <View style={styles.header}>
-          <Text style={styles.titleText}>MY APPLICATION</Text>
+          <Text style={styles.highlightText}>MY APPLICATION</Text>
       </View>
 
       

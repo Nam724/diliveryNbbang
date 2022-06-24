@@ -4,34 +4,27 @@ import { Dimensions } from 'react-native';
 export const height = Dimensions.get('screen').height; // 2000
 export const width = Dimensions.get('screen').width; // 1000
 export const colorPack = {
-    representative: '#AF0000',
-    highlight_light: '#AF5800',
-    highlight_dark: '#8f4800',
-    text: '#efebdf',
-    text_title: '#00e496',
-    text_light: '#dcfc95',
+    representative: '#ECE6CC',
+    highlight_light: '#BAB5A0',
+    highlight_dark: '#A3965A',
+    text_dark: '#1E1F57',
+    text_light: '#53616E',
     deactivated: '#707070',
 }
 
 
 export const styles = StyleSheet.create({
 // TEXT STYLES
-    titleText:{
-        // fontFamily:'Arial',
-        fontSize:width*0.05, // 40
-        color: colorPack.text_title,
-        textAlign:'center',
-    },
     normalText:{
         // fontFamily:'Arial',
         fontSize:width*0.04, // 30
-        color: colorPack.text,
+        color: colorPack.text_light,
         textAlign:'center',
     },
     highlightText:{
         // fontFamily:'Arial',
         fontSize:width*0.05, // 40
-        color: colorPack.text_light,
+        color: colorPack.text_dark,
         textAlign:'center',
     },
 // CONTAINER STYLES

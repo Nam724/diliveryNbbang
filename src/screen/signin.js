@@ -31,12 +31,12 @@ export default function SignIn_page({navigation}){
     return(
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                     {'My Application Login'}
                 </Text>            
             </View>
             <View style={{marginTop:height*249/2000, height:height*179/2000}}>
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                 Email
                 </Text>
                 <TextInput 
@@ -50,7 +50,7 @@ export default function SignIn_page({navigation}){
                 />
             </View>
             <View style={{marginTop: height*100/2000,height:height*179/2000}}>
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                 Password
                 </Text>
                 <TextInput 
@@ -65,7 +65,7 @@ export default function SignIn_page({navigation}){
                 onPressOut={() => signIn(email, password, navigation)}
                 style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
             >
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                 Sign In
                 </Text>
             </TouchableOpacity>
@@ -73,7 +73,7 @@ export default function SignIn_page({navigation}){
                 onPressOut={() => navigation.navigate('SignUp')}
                 style={[styles.goToSignUpInButton,{marginTop:height*231/2000}]}
             >
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                 Sign Up
                 </Text>
             </TouchableOpacity>

@@ -55,7 +55,7 @@ export default function SignUp_page({navigation}){
         }]}>
             <View style={styles.header}>
             <View>
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                 Email
                 </Text>
                 <TextInput 
@@ -73,7 +73,7 @@ export default function SignUp_page({navigation}){
                 />
             </View>
             <View>
-               <Text style={styles.titleText}>
+               <Text style={styles.highlightText}>
                 Password
                 </Text>
                 <TextInput 
@@ -94,13 +94,13 @@ export default function SignUp_page({navigation}){
                 onPressOut={() => signUp(email, password, setVerification_code_sended)}
                 disabled={!email}
                 >
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                 {'send verification code(email)'}
                 </Text>
             </TouchableOpacity>
             </View>
             <View style>
-               <Text style={styles.titleText}>
+               <Text style={styles.highlightText}>
                 {!verification_code_sended?'send verification code first':'verification code'}
                 </Text>
                 <TextInput 
@@ -121,7 +121,7 @@ export default function SignUp_page({navigation}){
                 }
                 disabled={!verification_code}
             >
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                 Sign Up
                 </Text>
             </TouchableOpacity>

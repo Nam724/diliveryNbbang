@@ -18,14 +18,14 @@ export default function Restaurant_page({route, navigation}){
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                     {restaurant.name}
                 </Text>
             </View>
 
 
             <View style={styles.header}>
-                <Text style={styles.titleText}>
+                <Text style={styles.highlightText}>
                     {`배달료: ${restaurant.fee}원 / ${restaurant.members}명 = ${restaurant.fee/restaurant.members}원`}
                 </Text>
             </View>
