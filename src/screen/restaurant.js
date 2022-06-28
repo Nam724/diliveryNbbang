@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Linking} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
@@ -34,7 +34,9 @@ export default function Restaurant_page({route, navigation}){
 
             <View style={styles.restaurantButtonContainer}>
                 <TouchableOpacity style={styles.restaurantButton_1}
-
+                onPress={() => {
+                    Linking.openURL(restaurant.url);
+                }}
                 >
                     <Text style={styles.highlightText}>
                         {'배민\n바로가기'}

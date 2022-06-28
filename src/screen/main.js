@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage} from 'react-native';
 import * as Clipboard from 'expo-clipboard'
 import {useState, useEffect} from 'react';
-import { styles, width } from '../style/style';
+import { colorPack, styles, width } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import DialogInput from 'react-native-dialog-input';
@@ -48,13 +48,13 @@ const [isLoading, setIsLoading] = useState(true);
           longitude: location.coords.longitude,
           latitudeDelta: 0.003, longitudeDelta: 0.003
         });
-        await getMarkers();
+        let _response = await getMarkers();
         setIsLoading(false);
     }, []); 
 
     // refresh
     const refreshRestaurantList = async () => {
-      // console.log('refreshRestaurantList');
+      console.log('refreshRestaurantList');
       await getMarkers()
       await loadRestaurant(selectedMarker.key, selectedMarker.title, selectedMarker.coordinate);
     }
@@ -267,11 +267,13 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
 
           <View style={styles.getRestaurantInfoModal}>
             <Text style={[styles.normalText,{textAlign:'center'}]}>{'배달의 민족'}</Text>
-            <TouchableOpacity style={styles.goToSignUpInButton}
-            onPress={()=>{
-              readClipboard(setNewRestaurant_name, setNewRestaurant_url)
-            }}
-            ></TouchableOpacity>
+            <TextInput
+            style={styles.textInputBox}
+            placeholder={'배달의 민족 url을 복사 후 여기에 붙여 넣어주세요.'}
+            placeholderTextColor={colorPack.deactivated}
+            onChangeText={(text) => readClipboard(setNewRestaurant_name, setNewRestaurant_url, text)}
+            >            
+            </TextInput>
           </View>
 
           <View style={styles.getRestaurantInfoModal}>
@@ -393,32 +395,33 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
   )
 )}// return}
 
-const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url) => {
-  const clipboardText = await Clipboard.getStringAsync('plainText');
+const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerText='') => {
+  // const clipboardText = await Clipboard.getStringAsync('plainText');
   //클립보드의 내용을 가져온다 
+  const clipboardText = innerText
   console.log(clipboardText);
 
 
-  // const UrlFormat = /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){2,20}$/g
+  const UrlFormat = /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){2,20}$/g
 
-  // const restaurantTitleFormat = /^'(.*)'$/g
-  // const restaurantUrlFormat = /^https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){2,20}$/g
+  const restaurantTitleFormat = /\'.*\'/g
+  const restaurantUrlFormat = /https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){1,}/g
 
-  // const restaurantTitle = clipboardText.match(restaurantTitleFormat);
-  // const restaurantUrl = clipboardText.match(restaurantUrlFormat);
+  const restaurantTitle = clipboardText.match(restaurantTitleFormat);
+  const restaurantUrl = clipboardText.match(restaurantUrlFormat);
 
-  // console.log(clipboardText, restaurantTitle, restaurantUrl);
-  // if(UrlFormat.test(clipboardText)){ 
-  // //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
-  //   setNewRestaurant_url(clipboardText);
-  //   setNewRestaurant_name(restaurantTitle[0]);
-  // }
-  // else{
-  //     if(clipboardText){
-  //         alert(`현재 복사된 링크는 배달의민족 주소가 아닙니다.!`)
-  //     }
-  //     else{
-  //         alert('배달의민족 주소를 먼저 붙여넣어 주세요.')
-  //     }
-  // }
+  console.log(clipboardText, restaurantTitle, restaurantUrl);
+  if(UrlFormat.test(clipboardText)){ 
+  //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
+    setNewRestaurant_url(restaurantUrl);
+    setNewRestaurant_name(restaurantTitle[0]);
+  }
+  else{
+      if(clipboardText){
+          alert(`현재 복사된 링크는 배달의민족 주소가 아닙니다.!`)
+      }
+      else{
+          alert('배달의민족 주소를 먼저 붙여넣어 주세요.')
+      }
+  }
 };

@@ -181,6 +181,8 @@ export const styles = StyleSheet.create({
         marginTop: height * 35/2000,
         marginBottom: height * 100/2000,
         marginHorizontal: width * 150/1000,
+        textAlign:'center',
+        textAlignVertical:'center',
     },
 
 });
