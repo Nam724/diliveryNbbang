@@ -1,4 +1,5 @@
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage} from 'react-native';
+import * as Clipboard from 'expo-clipboard'
 import {useState, useEffect} from 'react';
 import { styles, width } from '../style/style';
 import * as Location from 'expo-location';
@@ -53,7 +54,7 @@ const [isLoading, setIsLoading] = useState(true);
 
     // refresh
     const refreshRestaurantList = async () => {
-      console.log('refreshRestaurantList');
+      // console.log('refreshRestaurantList');
       await getMarkers()
       await loadRestaurant(selectedMarker.key, selectedMarker.title, selectedMarker.coordinate);
     }
@@ -174,7 +175,7 @@ async function saveNewRestaurant(name, fee, url, placeID){
 		"placeID": placeID,
 	}));
   await getMarkers();
-  console.log('markers', markers)
+  // console.log('markers', markers)
   refreshRestaurantList();
 }
 
@@ -222,12 +223,12 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
 
       <DialogInput
         isDialogVisible={dialogVisible_marker}
-        title={"Enter a title for this place"}
+        title={"이 장소의 이름을 입력하세요"}
         dialogStyle={{backgroundColor: 'white', borderRadius: 20}}
         textInputProps={{
           autoCorrect: false,
-            autoCapitalize: false,
-            maxLength: 30,
+          autoCapitalize: false,
+          maxLength: 30,
         }}
         hintInput={'name of place'}
         initValueTextInput={""}
@@ -262,12 +263,21 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
 
         <View style={styles.restaurantInfoContainerModal}>
 
-          <Text style={[styles.highlightText,{marginTop:20}]}>{`Make new restaurant in ${selectedMarker.title}!`}</Text>
+          <Text style={[styles.highlightText,{marginTop:20}]}>{`음식점을 \"${selectedMarker.title}\"에 추가합니다.`}</Text>
 
-          
           <View style={styles.getRestaurantInfoModal}>
-            <Text style={[styles.normalText,{textAlign:'center'}]}>{'restaurant name'}</Text>
-            <TextInput style={styles.inputText}
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{'배달의 민족'}</Text>
+            <TouchableOpacity style={styles.goToSignUpInButton}
+            onPress={()=>{
+              readClipboard(setNewRestaurant_name, setNewRestaurant_url)
+            }}
+            ></TouchableOpacity>
+          </View>
+
+          <View style={styles.getRestaurantInfoModal}>
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{'음식점 이름'}</Text>
+            <TextInput style={styles.textInputBox}
+            value={newRestaurant_name}
             onChangeText={(text) =>
               setNewRestaurant_name(text)
             }
@@ -275,19 +285,14 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
           </View>
 
           <View style={styles.getRestaurantInfoModal}>
-            <Text style={[styles.normalText,{textAlign:'center'}]}>{'delivery Fee(won)'}</Text>
-            <TextInput style={styles.inputText}
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{'배달료(원)'}</Text>
+            <TextInput style={styles.textInputBox}
             onChangeText={(text) => setNewRestaurant_fee(text)}
             keyboardType='numeric'
             />
           </View>
 
-          <View style={styles.getRestaurantInfoModal}>
-            <Text style={[styles.normalText,{textAlign:'center'}]}>{'배달의 민족 url'}</Text>
-            <TextInput style={styles.inputText}
-            onChangeText={(text) => setNewRestaurant_url(text)}
-            />
-          </View>
+          
 
           <View style={styles.buttonContainerModal}>
             <TouchableOpacity
@@ -388,3 +393,32 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
   )
 )}// return}
 
+const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url) => {
+  const clipboardText = await Clipboard.getStringAsync('plainText');
+  //클립보드의 내용을 가져온다 
+  console.log(clipboardText);
+
+
+  // const UrlFormat = /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){2,20}$/g
+
+  // const restaurantTitleFormat = /^'(.*)'$/g
+  // const restaurantUrlFormat = /^https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){2,20}$/g
+
+  // const restaurantTitle = clipboardText.match(restaurantTitleFormat);
+  // const restaurantUrl = clipboardText.match(restaurantUrlFormat);
+
+  // console.log(clipboardText, restaurantTitle, restaurantUrl);
+  // if(UrlFormat.test(clipboardText)){ 
+  // //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
+  //   setNewRestaurant_url(clipboardText);
+  //   setNewRestaurant_name(restaurantTitle[0]);
+  // }
+  // else{
+  //     if(clipboardText){
+  //         alert(`현재 복사된 링크는 배달의민족 주소가 아닙니다.!`)
+  //     }
+  //     else{
+  //         alert('배달의민족 주소를 먼저 붙여넣어 주세요.')
+  //     }
+  // }
+};
