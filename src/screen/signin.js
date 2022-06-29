@@ -5,14 +5,14 @@ import { styles, width, height } from '../style/style';
 
 
 
-async function signIn(_setEmail, _setIsLogin, email, password, navigation) {
+async function signIn(_setEmail,_setUsername, _setIsLogin, email, password, navigation) {
     try {
         const user = await Auth.signIn(email, password);
         console.log('user', user);
         _setEmail(email);
+        _setUsername(user.username);
         _setIsLogin(true);
         saveLoginInfo(email, password);
-        navigation.navigate('Main');
     } catch (error) {
         console.log('error signing in', error);
         if(error === 'UserNotConfirmedException'){
@@ -33,6 +33,11 @@ async function signIn(_setEmail, _setIsLogin, email, password, navigation) {
         }
         else if (error == 'InvalidParameterException: Custom auth lambda trigger is not configured for the user pool.'){
             alert('Invalid parameter');
+            return(false);
+        }
+        else if (error == 'signing in Error: Pending sign-in attempt already in progress'
+        ){
+            alert('이미 로그인이 진행중입니다.');
             return(false);
         }
         else{
@@ -75,27 +80,41 @@ async function getStoredUserInfo(){
 
 
 export default function SignIn_page({route, navigation}){
-    // console.log('route', route);
+    console.log('route', route);
     const _setEmail = route.params.setEmail;
+    const _setUsername = route.params.setUsername;
     const _setIsLogin = route.params.setIsLogin;
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');
-    // loginFirst(_setEmail, _setIsLogin, navigation);
 
     useEffect(() => {
-        const value = getStoredUserInfo();
-        if(value.email && value.password){
-            console.log('value값이 있어서 바로 로그인합니다.', value);
-            setEmail(value.email);
-            setPassword(value.password);
-            signIn(_setEmail, _setIsLogin, email, password, navigation)
-        }
-        else{
-            console.log('value값이 없어서 로그인을 진행합니다.');
-        }
+
+        loginFirst()
+
     }, []);
 
+    const loginFirst = async () => {
+        await AsyncStorage.getItem('@loginInfoToken').then(_value => {
+            const value = JSON.parse(_value);
+            console.log(value);
+            if(value.email && value.password){
+                console.log('value값이 있어서 바로 로그인합니다.', value);
+                setEmail(value.email);
+                setPassword(value.password);
+                signIn(_setEmail, _setUsername,_setIsLogin, value.email, value.password, navigation)
+            }
+            else{
+                console.log('value값이 없어서 로그인을 진행합니다.');
+            }
+        }
+        ).catch(err => {
+            console.log(err);
+            const value = null
+            console.log('value값이 없어서 로그인을 진행합니다.');
+        });
+
+    }
 
     return(
         <View style={styles.container}>
@@ -133,7 +152,7 @@ export default function SignIn_page({route, navigation}){
             </View>
                 
             <TouchableOpacity
-                onPressOut={() => signIn(_setEmail, _setIsLogin, email, password, navigation)}
+                onPressOut={() => signIn(_setEmail, _setUsername,_setIsLogin, email, password, navigation)}
                 style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
                 disabled={!isEmailValid&&password.length<=0}
             >

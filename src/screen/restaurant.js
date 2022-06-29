@@ -1,10 +1,10 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Linking} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
 import { styles, colorPack } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
-
+import * as Linking from 'expo-linking';
 
 export default function Restaurant_page({route, navigation}){
     

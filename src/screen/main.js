@@ -9,11 +9,15 @@ import {Main_restaurantlist, Main_restaurantlist_sample} from './main_restaurant
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place} from '../models';
 import Loading_page from './loading_page';
+import * as Linking from 'expo-linking';
 
 export default function Main_page({route, navigation}){
 
 // const _dummy = JSON.parse(AsyncStorage.getItem('@loginInfoToken'));
 // console.log('_dummy', _dummy);
+
+console.log('route_params', route.params);
+
 //  const user={
 //       username:route.params.Username,
 //       email:route.params.Email
@@ -271,11 +275,20 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
           <Text style={[styles.highlightText,{marginTop:20}]}>{`음식점을 \"${selectedMarker.title}\"에 추가합니다.`}</Text>
 
           <View style={styles.getRestaurantInfoModal}>
-            <Text style={[styles.normalText,{textAlign:'center'}]}>{'배달의 민족'}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              Linking.openURL('');
+          }}
+            disabled={newRestaurant_url != null}
+          >
+          <Text style={[styles.normalText,{textAlign:'center'}]}>{newRestaurant_url?'이제 링크를 붙여넣어 주세요':'배달의 민족으로 이동하기'}</Text>
+          </TouchableOpacity>
+            
             <TextInput
             style={styles.textInputBox}
-            placeholder={'배달의 민족 url을 복사 후 여기에 붙여 넣어주세요.'}
+            placeholder={'배달의 민족 URL을 복사 후 여기에 붙여 넣어주세요'}
             placeholderTextColor={colorPack.deactivated}
+            value={newRestaurant_url}
             onChangeText={(text) => readClipboard(setNewRestaurant_name, setNewRestaurant_url, text)}
             >            
             </TextInput>
@@ -418,15 +431,18 @@ const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerT
   console.log(clipboardText, restaurantTitle, restaurantUrl);
   if(UrlFormat.test(clipboardText)){ 
   //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
-    setNewRestaurant_url(restaurantUrl);
-    setNewRestaurant_name(restaurantTitle[0]);
+    setNewRestaurant_url(restaurantUrl[0]);
+    setNewRestaurant_name(restaurantTitle[0].substring(1, restaurantTitle[0].length-1));
   }
   else{
+      setNewRestaurant_url('');
+      setNewRestaurant_name('');
       if(clipboardText){
           alert(`현재 복사된 링크는 배달의민족 주소가 아닙니다.!`)
       }
       else{
           alert('배달의민족 주소를 먼저 붙여넣어 주세요.')
       }
+
   }
 };

@@ -19,9 +19,9 @@ const Stack = createStackNavigator();
 
 export default function App(){ 
   const [Email, setEmail] = useState('');
-  const [Username, setUsername] = useState('');
+  const [Username, setUsername] = useState('username');
   const [IsLogin, setIsLogin] = useState(false);
-  console.log('Email:', Email);
+  console.log('Email:', Email, 'Username:', Username, 'IsLogin:', IsLogin);
   return (
     IsLogin?
     <NavigationContainer>
@@ -30,7 +30,7 @@ export default function App(){
         options={{
           headerShown: false,
         }}
-        initialParams={{Email:Email, Username:Username, setIsLogin:setIsLogin}}
+        initialParams={{Email:Email, Username:Username}}
         />
         <Stack.Screen name="Restaurant" component={Restaurant_page} 
         options={{
