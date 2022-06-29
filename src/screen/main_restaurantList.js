@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} f
 import { colorPack, styles, width } from '../style/style';
 
 
-function Main_restaurantlist(id, name, fee, url, num, navigation, place, setRestaurantList, restaurantList, refreshRestaurantList) {
+function Main_restaurantList(id, name, fee, url, num, navigation, place, setRestaurantList, restaurantList, refreshRestaurantList) {
   const backgroundColor_odd = colorPack.highlight_dark
   const backgroundColor_even = colorPack.highlight_light
   var myBackgroundColor
@@ -17,8 +17,10 @@ function Main_restaurantlist(id, name, fee, url, num, navigation, place, setRest
 
  // return 
   return (
-    <View style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} >
-    <TouchableOpacity key={id}
+    <View style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} 
+    key={id}   
+    >
+    <TouchableOpacity
     onPress=  {() => {  
       navigation.navigate('Restaurant', {id: id, name: name, fee: fee, url: url, place: place, setRestaurantList:setRestaurantList, restaurantList:restaurantList, refreshRestaurantList:refreshRestaurantList})
       // console.log('pressed')
@@ -37,7 +39,7 @@ function Main_restaurantlist(id, name, fee, url, num, navigation, place, setRest
   );  // return
 }
 
-function Main_restaurantlist_sample(id, name, fee, num) {
+function Main_restaurantList_sample(id, name, fee, num) {
   const backgroundColor_odd = colorPack.highlight_dark
   const backgroundColor_even = colorPack.highlight_light
   var myBackgroundColor
@@ -63,4 +65,4 @@ function Main_restaurantlist_sample(id, name, fee, num) {
   );  // return
 }
 
-export {Main_restaurantlist, Main_restaurantlist_sample}
+export {Main_restaurantList, Main_restaurantList_sample}

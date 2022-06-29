@@ -5,9 +5,9 @@ import { colorPack, styles, width } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import DialogInput from 'react-native-dialog-input';
-import {Main_restaurantlist, Main_restaurantlist_sample} from './main_restaurantlist';
+import {Main_restaurantList, Main_restaurantList_sample} from './main_restaurantList';
 import  {DataStore} from '@aws-amplify/datastore';
-import {Restaurant, Place} from '../models';
+import {Restaurant, Place, Member} from '../models';
 import Loading_page from './loading_page';
 import * as Linking from 'expo-linking';
 
@@ -16,7 +16,7 @@ export default function Main_page({route, navigation}){
 // const _dummy = JSON.parse(AsyncStorage.getItem('@loginInfoToken'));
 // console.log('_dummy', _dummy);
 
-console.log('route_params', route.params);
+// console.log('route_params', route.params);
 
  const user={
       username:route.params.Username,
@@ -160,8 +160,8 @@ const [isLoading, setIsLoading] = useState(true);
 
 // RESTAURANT LIST
 const [restaurantList, setRestaurantList] = useState([
-  Main_restaurantlist_sample('placeholder1','장소 추가하는 법', '지도 길게 누르기', '0'),
-  Main_restaurantlist_sample('placeholder2','장소 선택하는 법', '지도에 표시된 핀 누르기', '1'),
+  Main_restaurantList_sample('placeholder1','장소 추가하는 법', '지도 길게 누르기', '0'),
+  Main_restaurantList_sample('placeholder2','장소 선택하는 법', '지도에 표시된 핀 누르기', '1'),
 ]);
 
 // get restaurant list
@@ -196,11 +196,19 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
 
   const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
   // console.log(models);
+  
+
   let _restaurantList = []
 
-  models.forEach((model, index) => {
+  models.forEach( async(model, index) => {
+
+    // const members = await DataStore.query(Member, (member) => {
+    //   member.restaurantID('eq',model.id)
+    // });
+    // console.log(members)
+
     _restaurantList.push(
-      Main_restaurantlist(
+      Main_restaurantList(
         model.id,
         model.name,
         model.fee,
@@ -218,10 +226,7 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
       )
     )
   });
-  // console.log(
-  //   placeID,
-  //   placeName,
-  //   placeCoordinate,)
+
   setRestaurantList(_restaurantList);
 }
 
