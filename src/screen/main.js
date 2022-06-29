@@ -31,10 +31,15 @@ const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
   // const mapRef = createRef();
 
-  useEffect(async () => {
-        setIsLoading(true);
+  useEffect( () => {
+        // setIsLoading(true); // 주석 풀면 로딩창 뜸
         
-        let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
+        mountFunction();      
+
+    }, []); 
+
+    const mountFunction = async () => { // 시작할 때 실행되는 함수
+      let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
         // console.log(status_location_permission);
         // 나중에 풀어야 함!
         //if (status_location_permission !== 'granted') {
@@ -48,9 +53,9 @@ const [isLoading, setIsLoading] = useState(true);
           longitude: location.coords.longitude,
           latitudeDelta: 0.003, longitudeDelta: 0.003
         });
-        let _response = await getMarkers();
+        getMarkers();
         setIsLoading(false);
-    }, []); 
+    }
 
     // refresh
     const refreshRestaurantList = async () => {
