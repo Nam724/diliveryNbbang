@@ -135,7 +135,12 @@ export default function SignUp_page({navigation}){
                     keyboardType='number-pad'
                     style={[styles.textInputBox, styles.normalText]}
                     maxLength={6}
-                    onChangeText={(verification_code) => setVerification_code(verification_code)}
+                    onChangeText={(verification_code) => {setVerification_code(verification_code)
+                    if (verification_code.length === 6){
+                        confirmSignUp(email, verification_code, navigation);
+                        }
+                    }
+                }   
                 />
             </View>
                 
