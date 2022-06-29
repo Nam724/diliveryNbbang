@@ -3,12 +3,11 @@
   "serviceConfiguration": {
     "apiName": "bts",
     "serviceName": "AppSync",
-    "gqlSchemaPath": "/home/namlinux/bts/amplify/backend/api/bts/schema.graphql",
+    "gqlSchemaPath": "/tmp/amplify-1fa9dfa6-45aa-4965-8024-1377e7dbae5d/amplify/backend/api/bts/schema.graphql",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "expirationTime": 365,
-      "apiKeyExpirationDate": "2023-05-20T05:46:15.734Z",
-      "keyDescription": "ceschhrqfvffpf74okioif3eau"
+      "keyDescription": "api key description",
+      "expirationTime": 30
     },
     "conflictResolution": {
       "defaultResolutionStrategy": {

@@ -18,10 +18,10 @@ export default function Main_page({route, navigation}){
 
 console.log('route_params', route.params);
 
-//  const user={
-//       username:route.params.Username,
-//       email:route.params.Email
-//  } 
+ const user={
+      username:route.params.Username,
+      email:route.params.Email
+ } 
 
 // MAP
   // check is loading finished?
@@ -136,7 +136,8 @@ const [isLoading, setIsLoading] = useState(true);
       "latitude": coordinate.latitude,
       "longitude": coordinate.longitude,
       "name": title,
-      "Restaurants_in_a_place": []
+      "Restaurants_in_a_place": [],
+      "makerID": user.username
       })
     );
     
@@ -182,6 +183,7 @@ async function saveNewRestaurant(name, fee, url, placeID){
 		"fee": fee,
 		"url": url,
 		"placeID": placeID,
+    "makerID": user.username
 	}));
   await getMarkers();
   // console.log('markers', markers)
@@ -277,7 +279,7 @@ async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0,
           <View style={styles.getRestaurantInfoModal}>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL('');
+              Linking.openURL('https://www.baemin.com/shopDetail?shopDetail_shopNo=13364428&bm_rfr=SHARE&shopDetail_campaignId=-1&shopDetail_categoryTypeCode=1');
           }}
             disabled={newRestaurant_url != null}
           >
@@ -420,10 +422,10 @@ const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerT
   console.log(clipboardText);
 
 
-  const UrlFormat = /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){2,20}$/g
+  const UrlFormat = /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/(.*){1,}$/g
 
   const restaurantTitleFormat = /\'.*\'/g
-  const restaurantUrlFormat = /https:\/\/baemin.me\/([a-z]|[0-9]|-|[A-Z]){1,}/g
+  const restaurantUrlFormat = /https:\/\/baemin.me\/(.*){1,}/g
 
   const restaurantTitle = clipboardText.match(restaurantTitleFormat);
   const restaurantUrl = clipboardText.match(restaurantUrlFormat);
@@ -438,7 +440,7 @@ const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerT
       setNewRestaurant_url('');
       setNewRestaurant_name('');
       if(clipboardText){
-          alert(`현재 복사된 링크는 배달의민족 주소가 아닙니다.!`)
+          alert(`현재 복사된 링크는 배달의민족 주소가 아닙니다!`)
       }
       else{
           alert('배달의민족 주소를 먼저 붙여넣어 주세요.')

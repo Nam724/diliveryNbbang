@@ -4,6 +4,7 @@ type Restaurant @model @auth(rules: [{allow: public}]) {
   fee: Int
   url: String
   placeID: ID! @index(name: "byPlace")
+  makerID: String!
 }
 
 type Place @model @auth(rules: [{allow: public}]) {
@@ -12,5 +13,6 @@ type Place @model @auth(rules: [{allow: public}]) {
   longitude: Float!
   name: String!
   Restaurants_in_a_place: [Restaurant] @hasMany(indexName: "byPlace", fields: ["id"])
+  makerID: String!
 }
  

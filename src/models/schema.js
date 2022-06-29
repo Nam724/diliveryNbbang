@@ -38,6 +38,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "makerID": {
+                    "name": "makerID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -134,6 +141,13 @@ export const schema = {
                         "associatedWith": "placeID"
                     }
                 },
+                "makerID": {
+                    "name": "makerID",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -179,5 +193,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "aaa9df670c1ce4cdec7cc6e420ece5a6"
+    "version": "b12247789d03b296fc5e0d423429a194"
 };

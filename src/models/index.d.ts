@@ -18,6 +18,7 @@ export declare class Restaurant {
   readonly fee?: number | null;
   readonly url?: string | null;
   readonly placeID: string;
+  readonly makerID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Restaurant, RestaurantMetaData>);
@@ -30,6 +31,7 @@ export declare class Place {
   readonly longitude: number;
   readonly name: string;
   readonly Restaurants_in_a_place?: (Restaurant | null)[] | null;
+  readonly makerID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Place, PlaceMetaData>);
