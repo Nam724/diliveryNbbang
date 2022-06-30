@@ -14,7 +14,8 @@ export default function Restaurant_page({route, navigation}){
     const setRestaurantList = route.params.setRestaurantList;
     const refreshRestaurantList = route.params.refreshRestaurantList;
     var restaurantList = route.params.restaurantList;
-    console.log('restaurantlist',restaurantList)
+    console.log('place', place)
+    console.log('restaurant', restaurant)
 
     return (
         <View style={styles.container}>
@@ -27,7 +28,7 @@ export default function Restaurant_page({route, navigation}){
 
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {`배달료: ${restaurant.fee}원 / ${restaurant.members}명 = ${restaurant.fee/restaurant.members}원`}
+                    {`배달료: ${restaurant.fee}원 / ${place.num_members}명 = ${restaurant.fee/place.num_members}원`}
                 </Text>
             </View>
 
@@ -63,7 +64,7 @@ export default function Restaurant_page({route, navigation}){
 
 
                 <TouchableOpacity style={styles.restaurantButton_2}
-                onPressOut={() => deleteRestaurant(restaurant.id, navigation, restaurantList, refreshRestaurantList)}
+                onPressOut={() => deleteRestaurant(place, restaurant.id, navigation, restaurantList, refreshRestaurantList)}
                 >
                     <Text style={styles.highlightText}>
                         {'모집\n삭제'}
@@ -74,11 +75,10 @@ export default function Restaurant_page({route, navigation}){
 
 
             <View style={styles.map} >
-            {place.placeCoordinate && (
               <MapView
               provider='google'
               style={styles.map}
-              initialRegion={{longitude: place.placeCoordinate.longitude, latitude: place.placeCoordinate.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}
+              initialRegion={{longitude: place.longitude, latitude: place.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}
               showsMyLocationButton={false}
               showsUserLocation={true}
               loadingEnabled={true}
@@ -86,13 +86,13 @@ export default function Restaurant_page({route, navigation}){
               rotateEnabled={true}
               >
                 <Marker
-                    coordinate={place.placeCoordinate}
-                    title={place.placeName}
-                    description={`${place.placeName}`}
-                    key={place.placeID}
+                    coordinate={{longitude: place.longitude, latitude: place.latitude}}
+                    title={place.name}
+                    description={`${place.num_restaurants}개의 레스토랑`}
+                    key={place.id}
                 />
               </MapView>
-            )}
+            
           </View>
     
         </View>
@@ -100,11 +100,17 @@ export default function Restaurant_page({route, navigation}){
     );
 }
 
-async function deleteRestaurant(key, navigation, restaurantList, refreshRestaurantList){
-    const modelToDelete = await DataStore.query(Restaurant, key);
+async function deleteRestaurant(place, restaurantID, navigation, restaurantList, refreshRestaurantList){
+    const modelToDelete = await DataStore.query(Restaurant, restaurantID);
     DataStore.delete(modelToDelete);
+
+    const CURRENT_ITEM = place;
+    await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
+      // Update the values on {item} variable to update DataStore entry
+      updated.num_restaurants = updated.num_restaurants -1;
+    }));
     navigation.navigate('Main');
-    restaurantList = restaurantList.filter(restaurant => restaurant.key !== key);
+    restaurantList = restaurantList.filter(restaurant => restaurant.key !== restaurantID);
     console.log(restaurantList)
     refreshRestaurantList()
 }

@@ -65,7 +65,7 @@ export default function Main_page({route, navigation}){
     const refreshRestaurantList = async () => {
       console.log('refreshRestaurantList');
       await getMarkers()
-      await loadRestaurant(selectedMarker.key, selectedMarker.title, selectedMarker.coordinate);
+      await loadRestaurant(selectedMarker.key);
     }
 
   let text = 'Waiting..';
@@ -83,12 +83,14 @@ export default function Main_page({route, navigation}){
     let title = data.name;
     let key = data.id;
     let createdAt = data.createdAt;
+    let makerID = data.makerID
+    let num_restaurants = data.num_restaurants;
     
     return (
       <Marker
         coordinate={coordinate}
         title={title}
-        description={`created at ${createdAt}`}
+        description={`${num_restaurants}개의 음식점`}
         key={key}
         onPress={() => {
           // console.log(key)
@@ -99,7 +101,7 @@ export default function Main_page({route, navigation}){
               key: key,
             }
           );
-          loadRestaurant(key, title, coordinate);
+          loadRestaurant(key);
         }}
       />
     );
@@ -122,22 +124,15 @@ export default function Main_page({route, navigation}){
 
   // make new marker
   async function makeNewMarker(coordinate, title){
-    // const key = 'markers%' + uuid.v4()
-    // setSelectedMarker(
-    //   {
-    //     coordinate: coordinate,
-    //     title: title,
-    //     key: key,
-    //   }
-    // );
-    // setMarkers([...markers, returnMarker({ "latitude": coordinate.latitude, "longitude": coordinate.longitude, "name": title, "id": key, "createdAt": new Date() })]);
+
     await DataStore.save(
       new Place({
       "latitude": coordinate.latitude,
       "longitude": coordinate.longitude,
       "name": title,
       "Restaurants_in_a_place": [],
-      "makerID": user.username
+      "makerID": user.username,
+      "num_restaurants":0
       })
     );
     
@@ -173,9 +168,9 @@ export default function Main_page({route, navigation}){
   const [newRestaurant_url, setNewRestaurant_url] = useState(null);
 
   // make new restaurant
-  async function saveNewRestaurant(name, fee, url, placeID){
+  async function saveNewRestaurant(name, fee=0, url, placeID){
       
-    // console.log({"name": name,"fee": fee,"url": url,"placeID": placeID,})
+    console.log({"name": name,"fee": fee,"url": url,"placeID": placeID,})
     // amplify
     await DataStore.save(
       new Restaurant({
@@ -184,7 +179,14 @@ export default function Main_page({route, navigation}){
       "url": url,
       "placeID": placeID,
       "makerID": user.username,
-      "num_Members":0,
+      "num_members":0,
+    }));
+    /* Models in DataStore are immutable. To update a record you must use the copyOf function
+    to apply updates to the item’s fields rather than mutating the instance directly */
+    const CURRENT_ITEM = await DataStore.query(Place, placeID);
+    await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
+      // Update the values on {item} variable to update DataStore entry
+      updated.num_restaurants = updated.num_restaurants + 1;
     }));
     await getMarkers();
     // console.log('markers', markers)
@@ -192,8 +194,9 @@ export default function Main_page({route, navigation}){
   }
 
   // load restaurant
-  async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0, latitude: 0}){
+  async function loadRestaurant(placeID){
     // console.log(placeID)
+    const place = await DataStore.query(Place, placeID);
 
     const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
     // console.log(models);
@@ -203,24 +206,17 @@ export default function Main_page({route, navigation}){
 
     models.forEach( async(model, index) => {
 
-      // const members = await DataStore.query(Member, (member) => {
-      //   member.restaurantID('eq',model.id)
-      // });
-      // console.log(members)
-
       _restaurantList.push(
         Main_restaurantList(
-          model.id,
-          model.name,
-          model.fee,
-          model.url,
+          {id:model.id,
+          name:model.name,
+          fee:model.fee,
+          url:model.url,
+          makerID:model.makerID,
+          num_members:model.num_members},
           index,
           navigation,
-          {
-            placeID: placeID,
-            placeName: placeName,
-            placeCoordinate: placeCoordinate,
-          },
+          place,
           setRestaurantList,
           _restaurantList,
           refreshRestaurantList        
@@ -317,7 +313,7 @@ export default function Main_page({route, navigation}){
             <TextInput style={styles.textInputBox}
             onChangeText={(text) => setNewRestaurant_fee(text)}
             keyboardType='numeric'
-            />
+            placeholder='0'            />
           </View>
 
           

@@ -9,22 +9,22 @@
 					"label": "음식점 리스트 새로고침"
 				},
 				{
-					"line": 112,
+					"line": 114,
 					"column": 4,
 					"label": "장소(마커) 가져오기"
 				},
 				{
-					"line": 123,
+					"line": 125,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 175,
+					"line": 170,
 					"column": 11,
 					"label": "음식점 저장"
 				},
 				{
-					"line": 194,
+					"line": 196,
 					"column": 28,
 					"label": "음식점 불러오기"
 				}
@@ -47,6 +47,16 @@
 					"line": 82,
 					"column": 4,
 					"label": "자동 로그인"
+				}
+			]
+		},
+		{
+			"path": "src/screen/restaurant.js",
+			"bookmarks": [
+				{
+					"line": 102,
+					"column": 0,
+					"label": "음식점 삭제하기"
 				}
 			]
 		}

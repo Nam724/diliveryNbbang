@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} f
 import { colorPack, styles, width } from '../style/style';
 
 
-function Main_restaurantList(id, name, fee, url, num, navigation, place, setRestaurantList, restaurantList, refreshRestaurantList) {
+function Main_restaurantList(restaurant, num, navigation, place, setRestaurantList, restaurantList, refreshRestaurantList) {
   const backgroundColor_odd = colorPack.highlight_dark
   const backgroundColor_even = colorPack.highlight_light
   var myBackgroundColor
@@ -12,6 +12,13 @@ function Main_restaurantList(id, name, fee, url, num, navigation, place, setRest
   else{
     myBackgroundColor = backgroundColor_odd
   }
+
+  const id = restaurant.id
+  const name = restaurant.name
+  const fee = restaurant.fee
+  const num_members = restaurant.num_members
+  const makerID = restaurant.makerID
+  const url = restaurant.url
 
   // console.log(restaurantList)
 
