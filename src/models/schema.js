@@ -149,6 +149,13 @@ export const schema = {
                         "associatedWith": "restaurantID"
                     }
                 },
+                "num_members": {
+                    "name": "num_members",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -252,6 +259,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "num_restaurants": {
+                    "name": "num_restaurants",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -297,5 +311,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "bc26d9df7e41fe4dbf5dc497bdbe7f69"
+    "version": "54a58b0c039bf75d2ce2fd9f82ef7f54"
 };

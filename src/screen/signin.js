@@ -67,18 +67,6 @@ async function saveLoginInfo(email='', password=''){
 
 
 
-async function getStoredUserInfo(){
-    await AsyncStorage.getItem('@loginInfoToken').then(_value => {
-        const value = JSON.parse(_value);
-        return value ? value : null;
-    }
-    ).catch(err => {
-        console.log(err);
-        return null
-    });
-}
-
-
 export default function SignIn_page({route, navigation}){
     console.log('route', route);
     const _setEmail = route.params.setEmail;
@@ -89,9 +77,7 @@ export default function SignIn_page({route, navigation}){
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-
         loginFirst()
-
     }, []);
 
     const loginFirst = async () => {

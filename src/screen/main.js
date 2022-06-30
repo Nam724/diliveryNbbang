@@ -18,14 +18,14 @@ export default function Main_page({route, navigation}){
 
 // console.log('route_params', route.params);
 
- const user={
-      username:route.params.Username,
-      email:route.params.Email
- } 
+  const user={
+        username:route.params.Username,
+        email:route.params.Email
+  } 
 
 // MAP
   // check is loading finished?
-const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
 // get location
   const [location, setLocation] = useState(
@@ -159,76 +159,77 @@ const [isLoading, setIsLoading] = useState(true);
 
 
 // RESTAURANT LIST
-const [restaurantList, setRestaurantList] = useState([
-  Main_restaurantList_sample('placeholder1','장소 추가하는 법', '지도 길게 누르기', '0'),
-  Main_restaurantList_sample('placeholder2','장소 선택하는 법', '지도에 표시된 핀 누르기', '1'),
-]);
+  const [restaurantList, setRestaurantList] = useState([
+    Main_restaurantList_sample('placeholder1','장소 추가하는 법', '지도 길게 누르기', '0'),
+    Main_restaurantList_sample('placeholder2','장소 선택하는 법', '지도에 표시된 핀 누르기', '1'),
+  ]);
 
-// get restaurant list
-const [dialogVisible_restaurant, setDialogVisible_restaurant] = useState(false);
+  // get restaurant list
+  const [dialogVisible_restaurant, setDialogVisible_restaurant] = useState(false);
 
-// const [newRestaurant, setNewRestaurant] = useState({});
-const [newRestaurant_name, setNewRestaurant_name] = useState(null);
-const [newRestaurant_fee, setNewRestaurant_fee] = useState(null);
-const [newRestaurant_url, setNewRestaurant_url] = useState(null);
+  // const [newRestaurant, setNewRestaurant] = useState({});
+  const [newRestaurant_name, setNewRestaurant_name] = useState(null);
+  const [newRestaurant_fee, setNewRestaurant_fee] = useState(null);
+  const [newRestaurant_url, setNewRestaurant_url] = useState(null);
 
-// make new restaurant
-async function saveNewRestaurant(name, fee, url, placeID){
+  // make new restaurant
+  async function saveNewRestaurant(name, fee, url, placeID){
+      
+    // console.log({"name": name,"fee": fee,"url": url,"placeID": placeID,})
+    // amplify
+    await DataStore.save(
+      new Restaurant({
+      "name": name,
+      "fee": fee,
+      "url": url,
+      "placeID": placeID,
+      "makerID": user.username,
+      "num_Members":0,
+    }));
+    await getMarkers();
+    // console.log('markers', markers)
+    refreshRestaurantList();
+  }
+
+  // load restaurant
+  async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0, latitude: 0}){
+    // console.log(placeID)
+
+    const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
+    // console.log(models);
     
-  // console.log({"name": name,"fee": fee,"url": url,"placeID": placeID,})
-  // amplify
-  await DataStore.save(
-    new Restaurant({
-		"name": name,
-		"fee": fee,
-		"url": url,
-		"placeID": placeID,
-    "makerID": user.username
-	}));
-  await getMarkers();
-  // console.log('markers', markers)
-  refreshRestaurantList();
-}
 
-// load restaurant
-async function loadRestaurant(placeID, placeName, placeCoordinate={longitude: 0, latitude: 0}){
-  // console.log(placeID)
+    let _restaurantList = []
 
-  const models = await DataStore.query(Restaurant, (q) => q.placeID('eq',placeID));
-  // console.log(models);
-  
+    models.forEach( async(model, index) => {
 
-  let _restaurantList = []
+      // const members = await DataStore.query(Member, (member) => {
+      //   member.restaurantID('eq',model.id)
+      // });
+      // console.log(members)
 
-  models.forEach( async(model, index) => {
-
-    // const members = await DataStore.query(Member, (member) => {
-    //   member.restaurantID('eq',model.id)
-    // });
-    // console.log(members)
-
-    _restaurantList.push(
-      Main_restaurantList(
-        model.id,
-        model.name,
-        model.fee,
-        model.url,
-        index,
-        navigation,
-        {
-          placeID: placeID,
-          placeName: placeName,
-          placeCoordinate: placeCoordinate,
-        },
-        setRestaurantList,
-        _restaurantList,
-        refreshRestaurantList        
+      _restaurantList.push(
+        Main_restaurantList(
+          model.id,
+          model.name,
+          model.fee,
+          model.url,
+          index,
+          navigation,
+          {
+            placeID: placeID,
+            placeName: placeName,
+            placeCoordinate: placeCoordinate,
+          },
+          setRestaurantList,
+          _restaurantList,
+          refreshRestaurantList        
+        )
       )
-    )
-  });
+    });
 
-  setRestaurantList(_restaurantList);
-}
+    setRestaurantList(_restaurantList);
+  }
 
 
  // return 
