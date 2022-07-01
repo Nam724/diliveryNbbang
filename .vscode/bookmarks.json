@@ -19,12 +19,12 @@
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 170,
+					"line": 171,
 					"column": 11,
 					"label": "음식점 저장"
 				},
 				{
-					"line": 196,
+					"line": 201,
 					"column": 28,
 					"label": "음식점 불러오기"
 				}
@@ -54,7 +54,7 @@
 			"path": "src/screen/restaurant.js",
 			"bookmarks": [
 				{
-					"line": 102,
+					"line": 109,
 					"column": 0,
 					"label": "음식점 삭제하기"
 				}

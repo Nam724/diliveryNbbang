@@ -164,23 +164,28 @@ export default function Main_page({route, navigation}){
 
   // const [newRestaurant, setNewRestaurant] = useState({});
   const [newRestaurant_name, setNewRestaurant_name] = useState(null);
-  const [newRestaurant_fee, setNewRestaurant_fee] = useState(null);
+  const [newRestaurant_fee, setNewRestaurant_fee] = useState(0);
   const [newRestaurant_url, setNewRestaurant_url] = useState(null);
+  const [newRestaurant_account, setNewRestaurant_account] = useState(null);
 
   // make new restaurant
-  async function saveNewRestaurant(name, fee=0, url, placeID){
+  async function saveNewRestaurant(placeID){
       
-    console.log({"name": name,"fee": fee,"url": url,"placeID": placeID,})
+    console.log({"name": newRestaurant_name,"fee": newRestaurant_fee,"url": newRestaurant_url,"placeID": placeID,})
     // amplify
     await DataStore.save(
       new Restaurant({
-      "name": name,
-      "fee": fee,
-      "url": url,
+      "name": newRestaurant_name,
+      "fee": (newRestaurant_fee==null)?0:parseInt(newRestaurant_fee),
+      "url": newRestaurant_url,
       "placeID": placeID,
       "makerID": user.username,
       "num_members":0,
+      "account": newRestaurant_account
     }));
+    setNewRestaurant_name(null);
+    setNewRestaurant_fee(null);
+    setNewRestaurant_url(null);
     /* Models in DataStore are immutable. To update a record you must use the copyOf function
     to apply updates to the item’s fields rather than mutating the instance directly */
     const CURRENT_ITEM = await DataStore.query(Place, placeID);
@@ -208,12 +213,7 @@ export default function Main_page({route, navigation}){
 
       _restaurantList.push(
         Main_restaurantList(
-          {id:model.id,
-          name:model.name,
-          fee:model.fee,
-          url:model.url,
-          makerID:model.makerID,
-          num_members:model.num_members},
+          model,
           index,
           navigation,
           place,
@@ -265,13 +265,21 @@ export default function Main_page({route, navigation}){
       visible={dialogVisible_restaurant}
       onRequestClose={() => {
         setDialogVisible_restaurant(false);
+        setNewRestaurant_fee(null);
+        setNewRestaurant_name(null);
+        setNewRestaurant_url(null);
       }}
       >
       <Pressable style={{
         flex:1,
         backgroundColor:'transparent',
       }}
-      onPress={()=>setDialogVisible_restaurant(false)}
+      onPress={()=>
+      {setDialogVisible_restaurant(false);
+        setNewRestaurant_fee(null);
+        setNewRestaurant_name(null);
+        setNewRestaurant_url(null);}
+      }
       />
 
         <View style={styles.restaurantInfoContainerModal}>
@@ -305,6 +313,10 @@ export default function Main_page({route, navigation}){
             onChangeText={(text) =>
               setNewRestaurant_name(text)
             }
+            placeholder='URL을 붙여넣으면 자동으로 입력됩니다.'
+            placeholderTextColor={colorPack.deactivated}
+            showSoftInputOnFocus={false}
+            editable={false}
             />
           </View>
 
@@ -313,8 +325,39 @@ export default function Main_page({route, navigation}){
             <TextInput style={styles.textInputBox}
             onChangeText={(text) => setNewRestaurant_fee(text)}
             keyboardType='numeric'
-            placeholder='0'            />
+            placeholder='0'
+            placeholderTextColor={colorPack.deactivated}            
+            />
           </View>
+          
+
+          <View style={styles.getRestaurantInfoModal}>
+            <TouchableOpacity
+            onPress={() => {
+              alert('카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요.');
+           }}
+            disabled={newRestaurant_account != null}>
+
+            <Text style={[styles.normalText,{textAlign:'center'}]}>{newRestaurant_account?'입금받을 본인 계좌':' 카카오페이 송금주소를 복사하는 방법 보기.'}</Text>
+            </TouchableOpacity>
+            <TextInput style={styles.textInputBox}
+            onChangeText={(text) => setNewRestaurant_account(text)}
+            placeholder='카카오페이 송금주소 링크.'
+            placeholderTextColor={colorPack.deactivated}       
+            onKeyPress={(e) => {
+              if (e.nativeEvent.key === 'return') {
+                let name = newRestaurant_name;
+                let fee = parseInt(newRestaurant_fee);
+                let url = newRestaurant_url;
+                let placeID = selectedMarker.key;
+                setDialogVisible_restaurant(false);
+                saveNewRestaurant(placeID);
+              }
+            }}
+            />
+
+          </View>
+
 
           
 
@@ -333,15 +376,10 @@ export default function Main_page({route, navigation}){
             <TouchableOpacity
               style={styles.modalButton}
               onPress={() => 
-                { let name = newRestaurant_name;
-                  let fee = parseInt(newRestaurant_fee);
-                  let url = newRestaurant_url;
+                { 
                   let placeID = selectedMarker.key;
                   setDialogVisible_restaurant(false);
-                  setNewRestaurant_name(null);
-                  setNewRestaurant_fee(null);
-                  setNewRestaurant_url(null);
-                  saveNewRestaurant(name, fee, url, placeID);
+                  saveNewRestaurant(placeID);
                 }}>
               <Text style={styles.highlightText}>{'Submit'}</Text>
             </TouchableOpacity>

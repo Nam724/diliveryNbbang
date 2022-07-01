@@ -99,8 +99,8 @@ export const styles = StyleSheet.create({
     },
     restaurantInfoContainerModal:{
         position:'absolute',
-        marginTop: height * 180/2000,
-        height: height * 1000/2000,
+        marginTop: height * 80/2000,
+        height: height * 1100/2000,
         width:width,
         backgroundColor: colorPack.representative,
         alignItems:'center',

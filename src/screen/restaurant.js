@@ -5,17 +5,24 @@ import {Restaurant, Place} from '../models';
 import { styles, colorPack } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
+import * as Clipboard from 'expo-clipboard'
 
 export default function Restaurant_page({route, navigation}){
     
-    const [restaurant, setRestaurant] = useState(route.params);
+    const [restaurant, setRestaurant] = useState(route.params.restaurant);
     // console.log(restaurant)
-    const [place, setPlace] = useState(restaurant.place);
+    const [place, setPlace] = useState(route.params.place);
     const setRestaurantList = route.params.setRestaurantList;
     const refreshRestaurantList = route.params.refreshRestaurantList;
     var restaurantList = route.params.restaurantList;
     console.log('place', place)
     console.log('restaurant', restaurant)
+
+    const quitRecruiting = async () => {
+        Clipboard.setString(restaurant.account);
+        alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
+        Linking.openURL(restaurant.account)
+    }
 
     return (
         <View style={styles.container}>
@@ -46,7 +53,7 @@ export default function Restaurant_page({route, navigation}){
 
 
                 <TouchableOpacity style={styles.restaurantButton_2}
-
+                onPress={()=>quitRecruiting()}
                 >
                     <Text style={styles.highlightText}>
                         {'모집 종료 후\송금 받기'}

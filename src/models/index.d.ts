@@ -37,6 +37,7 @@ export declare class Restaurant {
   readonly placeID: string;
   readonly Members_in_restaurant?: (Member | null)[] | null;
   readonly num_members?: number | null;
+  readonly account?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Restaurant, RestaurantMetaData>);

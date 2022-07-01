@@ -15,6 +15,7 @@ type Restaurant @model @auth(rules: [{allow: public}]) {
   placeID: ID! @index(name: "byPlace")
   Members_in_restaurant: [Member] @hasMany(indexName: "byRestaurant", fields: ["id"])
   num_members: Int
+  account: String
 }
 
 type Place @model @auth(rules: [{allow: public}]) {
@@ -25,4 +26,5 @@ type Place @model @auth(rules: [{allow: public}]) {
   Restaurants_in_a_place: [Restaurant] @hasMany(indexName: "byPlace", fields: ["id"])
   makerID: ID
   num_restaurants: Int
-} 
+}
+ 

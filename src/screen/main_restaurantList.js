@@ -13,34 +13,28 @@ function Main_restaurantList(restaurant, num, navigation, place, setRestaurantLi
     myBackgroundColor = backgroundColor_odd
   }
 
-  const id = restaurant.id
-  const name = restaurant.name
-  const fee = restaurant.fee
-  const num_members = restaurant.num_members
-  const makerID = restaurant.makerID
-  const url = restaurant.url
 
   // console.log(restaurantList)
 
  // return 
   return (
     <View style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} 
-    key={id}   
+    key={restaurant.id}   
     >
     <TouchableOpacity
     onPress=  {() => {  
-      navigation.navigate('Restaurant', {id: id, name: name, fee: fee, url: url, place: place, setRestaurantList:setRestaurantList, restaurantList:restaurantList, refreshRestaurantList:refreshRestaurantList})
+      navigation.navigate('Restaurant', {restaurant:restaurant, place:place,setRestaurantList:setRestaurantList, restaurantList:restaurantList, refreshRestaurantList:refreshRestaurantList})
       // console.log('pressed')
     }}
     >
 
       <Text style={[styles.highlightText, styles.restaurantName]} numberOfLines={1} ellipsizeMode='tail' 
-      >{name}</Text>
+      >{restaurant.name}</Text>
 
       </TouchableOpacity>
-      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{`배달료: 각${fee}원`}</Text>
+      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{`배달료: 각${restaurant.fee}원`}</Text>
 
-      <Text style={[styles.normalText, styles.restaurantMembers]} ellipsizeMode='tail' numberOfLines={1}>{`00명`}</Text>
+      <Text style={[styles.normalText, styles.restaurantMembers]} ellipsizeMode='tail' numberOfLines={1}>{`${restaurant.num_members}명`}</Text>
 
     </View>
   );  // return
