@@ -2,7 +2,7 @@ import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} f
 import { colorPack, styles, width } from '../style/style';
 
 
-function Main_restaurantList(restaurant, num, navigation, place, setRestaurantList, restaurantList, refreshRestaurantList) {
+function Main_restaurantList(user, restaurant, num, navigation, place, setRestaurantList, restaurantList, refreshRestaurantList) {
   const backgroundColor_odd = colorPack.highlight_dark
   const backgroundColor_even = colorPack.highlight_light
   var myBackgroundColor
@@ -23,7 +23,7 @@ function Main_restaurantList(restaurant, num, navigation, place, setRestaurantLi
     >
     <TouchableOpacity
     onPress=  {() => {  
-      navigation.navigate('Restaurant', {restaurant:restaurant, place:place,setRestaurantList:setRestaurantList, restaurantList:restaurantList, refreshRestaurantList:refreshRestaurantList})
+      navigation.navigate('Restaurant', {user:user, restaurant:restaurant, place:place,setRestaurantList:setRestaurantList, restaurantList:restaurantList, refreshRestaurantList:refreshRestaurantList})
       // console.log('pressed')
     }}
     >

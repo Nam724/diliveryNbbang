@@ -213,6 +213,7 @@ export default function Main_page({route, navigation}){
 
       _restaurantList.push(
         Main_restaurantList(
+          user,
           model,
           index,
           navigation,

@@ -77,7 +77,9 @@ export default function SignIn_page({route, navigation}){
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        loginFirst()
+        //이거 주석 달면 자동로그인 안됨
+        // console.log('자동로그인 실행')
+        // loginFirst()
     }, []);
 
     const loginFirst = async () => {

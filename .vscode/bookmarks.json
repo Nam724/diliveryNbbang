@@ -44,14 +44,14 @@
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
 				},
 				{
-					"line": 82,
+					"line": 84,
 					"column": 4,
 					"label": "자동 로그인"
 				}
 			]
 		},
 		{
-			"path": "src/screen/restaurant.js",
+			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
 					"line": 109,
