@@ -62,10 +62,17 @@ export default function Main_page({route, navigation}){
     }
 
     // refresh
-    const refreshRestaurantList = async () => {
-      console.log('refreshRestaurantList');
+    const refreshRestaurantList = async (id='refresh') => {
+      console.log('refreshRestaurantList',id==='refresh');
       await getMarkers()
-      await loadRestaurant(selectedMarker.key);
+      if(id==='refresh'){
+        console.log('refreshRestaurantList_refresh');
+        await loadRestaurant(selectedMarker.key);
+      }
+      else{
+        console.log('refreshRestaurantList_with id');
+        await loadRestaurant(id);
+      }
     }
 
   let text = 'Waiting..';

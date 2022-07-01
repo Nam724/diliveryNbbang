@@ -1,7 +1,7 @@
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
-import {Restaurant, Place} from '../models';
+import {Restaurant, Place, Member,} from '../models';
 import { styles, colorPack } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
@@ -9,8 +9,8 @@ import * as Clipboard from 'expo-clipboard'
 
 export default function Restaurant_page_guest({route, navigation}){
     
+    const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
-    // console.log(restaurant)
     const [place, setPlace] = useState(route.params.place);
     const setRestaurantList = route.params.setRestaurantList;
     const refreshRestaurantList = route.params.refreshRestaurantList;
@@ -18,10 +18,65 @@ export default function Restaurant_page_guest({route, navigation}){
     console.log('place', place)
     console.log('restaurant', restaurant)
 
-    const quitRecruiting = async () => {
+    const sendMoney = async () => {
         Clipboard.setString(restaurant.account);
         alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
         Linking.openURL(restaurant.account)
+    }
+
+    const makeNewMember = async () => {
+        const isRegistered = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id))
+        console.log(isRegistered)
+        if(isRegistered.length == []){
+            await DataStore.save(
+                new Member({
+                    "username": user.username,
+                    "email": user.email,
+                    "menu_fee_array": [],
+                    "restaurantID": restaurant.id,
+                })
+            );
+
+            const CURRENT_ITEM = restaurant;
+            await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
+            // Update the values on {item} variable to update DataStore entry
+            updated.num_members = updated.num_members +1;
+            }));
+            setRestaurant({...restaurant, num_members: restaurant.num_members + 1})
+        }
+        else{
+            alert('이미 가입하셨습니다.')
+        }
+        
+    }
+
+    const deleteMember = async () => {
+        if(user.id !== restaurant.makerID){
+        // 소유자이면 자기를 멤버에서 빼는 것 불가
+            try {
+                await DataStore.delete(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id));
+
+                const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
+                await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
+                // Update the values on {item} variable to update DataStore entry
+                updated.num_members = updated.num_members -1;
+                }));
+                navigation.navigate('Main');
+                setRestaurant({...restaurant, num_members: restaurant.num_members - 1})
+                refreshRestaurantList(id=restaurant.placeID);
+            } catch (error) {
+                console.log(error)
+                if(error.code === 'ConcurrentModificationException'){
+                    alert('자신이 속한 가게가 아닙니다.')
+                }
+                else if(error.code === 'NotFoundException'){
+                    alert('자신이 속한 가게가 아닙니다.')
+                }
+                else{
+                    console.log('에러가 뭔지 모르겠어요')
+                }
+            }
+        }
     }
 
     return (
@@ -35,7 +90,7 @@ export default function Restaurant_page_guest({route, navigation}){
 
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {`배달료: ${restaurant.fee}원 / ${place.num_members}명 = ${restaurant.fee/place.num_members}원`}
+                    {restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: ${restaurant.fee}원 / ${restaurant.num_members}명 = ${restaurant.fee/restaurant.num_members}원`}
                 </Text>
             </View>
 
@@ -53,7 +108,7 @@ export default function Restaurant_page_guest({route, navigation}){
 
 
                 <TouchableOpacity style={styles.restaurantButton_2}
-                onPress={()=>quitRecruiting()}
+                onPress={()=>sendMoney()}
                 >
                     <Text style={styles.highlightText}>
                         {'송금하러\n가기'}
@@ -62,19 +117,19 @@ export default function Restaurant_page_guest({route, navigation}){
 
                 
                 <TouchableOpacity style={styles.restaurantButton_1}
-
+                    onPress={() => makeNewMember()}
                 >
                     <Text style={styles.highlightText}>
-                        {'정보수정'}
+                        {'주문하기'}
                     </Text>
                 </TouchableOpacity>
 
 
                 <TouchableOpacity style={styles.restaurantButton_2}
-                onPressOut={() => deleteRestaurant(place, restaurant.id, navigation, restaurantList, refreshRestaurantList)}
+                onPressOut={() => deleteMember()}
                 >
                     <Text style={styles.highlightText}>
-                        {'모집\n삭제'}
+                        {'주문취소'}
                     </Text>
                 </TouchableOpacity>
 
@@ -105,19 +160,4 @@ export default function Restaurant_page_guest({route, navigation}){
         </View>
 
     );
-}
-
-async function deleteRestaurant(place, restaurantID, navigation, restaurantList, refreshRestaurantList){
-    const modelToDelete = await DataStore.query(Restaurant, restaurantID);
-    DataStore.delete(modelToDelete);
-
-    const CURRENT_ITEM = place;
-    await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
-      // Update the values on {item} variable to update DataStore entry
-      updated.num_restaurants = updated.num_restaurants -1;
-    }));
-    navigation.navigate('Main');
-    restaurantList = restaurantList.filter(restaurant => restaurant.key !== restaurantID);
-    console.log(restaurantList)
-    refreshRestaurantList()
 }

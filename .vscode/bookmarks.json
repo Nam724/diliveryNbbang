@@ -9,22 +9,22 @@
 					"label": "음식점 리스트 새로고침"
 				},
 				{
-					"line": 114,
+					"line": 121,
 					"column": 4,
 					"label": "장소(마커) 가져오기"
 				},
 				{
-					"line": 125,
+					"line": 132,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 171,
+					"line": 178,
 					"column": 11,
 					"label": "음식점 저장"
 				},
 				{
-					"line": 201,
+					"line": 208,
 					"column": 28,
 					"label": "음식점 불러오기"
 				}
@@ -54,9 +54,29 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 109,
-					"column": 0,
-					"label": "음식점 삭제하기"
+					"line": 21,
+					"column": 4,
+					"label": "모집종료"
+				},
+				{
+					"line": 28,
+					"column": 4,
+					"label": "음식점 삭제"
+				}
+			]
+		},
+		{
+			"path": "src/screen/restaurant_guest.js",
+			"bookmarks": [
+				{
+					"line": 20,
+					"column": 4,
+					"label": "송금하러 가기"
+				},
+				{
+					"line": 26,
+					"column": 4,
+					"label": "새로운 멤버로 등록하기"
 				}
 			]
 		}

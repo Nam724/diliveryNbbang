@@ -9,6 +9,7 @@ import * as Clipboard from 'expo-clipboard'
 
 export default function Restaurant_page_auth({route, navigation}){
     
+    const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
     // console.log(restaurant)
     const [place, setPlace] = useState(route.params.place);
@@ -22,6 +23,22 @@ export default function Restaurant_page_auth({route, navigation}){
         Clipboard.setString(restaurant.account);
         alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
         Linking.openURL(restaurant.account)
+    }
+
+
+    const deleteRestaurant = async () => {
+        const modelToDelete = await DataStore.query(Restaurant, restaurant.id);
+        DataStore.delete(modelToDelete);
+
+        const CURRENT_ITEM = place;
+        await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
+        // Update the values on {item} variable to update DataStore entry
+        updated.num_restaurants = updated.num_restaurants -1;
+        }));
+        navigation.navigate('Main');
+        restaurantList = restaurantList.filter(restaurant => restaurant.key !== restaurant.id);
+        console.log(restaurantList)
+        refreshRestaurantList()
     }
 
     return (
@@ -71,7 +88,7 @@ export default function Restaurant_page_auth({route, navigation}){
 
 
                 <TouchableOpacity style={styles.restaurantButton_2}
-                onPressOut={() => deleteRestaurant(place, restaurant.id, navigation, restaurantList, refreshRestaurantList)}
+                onPressOut={() => deleteRestaurant()}
                 >
                     <Text style={styles.highlightText}>
                         {'모집\n삭제'}
@@ -107,17 +124,3 @@ export default function Restaurant_page_auth({route, navigation}){
     );
 }
 
-async function deleteRestaurant(place, restaurantID, navigation, restaurantList, refreshRestaurantList){
-    const modelToDelete = await DataStore.query(Restaurant, restaurantID);
-    DataStore.delete(modelToDelete);
-
-    const CURRENT_ITEM = place;
-    await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
-      // Update the values on {item} variable to update DataStore entry
-      updated.num_restaurants = updated.num_restaurants -1;
-    }));
-    navigation.navigate('Main');
-    restaurantList = restaurantList.filter(restaurant => restaurant.key !== restaurantID);
-    console.log(restaurantList)
-    refreshRestaurantList()
-}

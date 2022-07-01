@@ -7,7 +7,7 @@ import awsconfig from './src/aws-exports';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
-
+import 'react-native-gesture-handler';
 
 
 
