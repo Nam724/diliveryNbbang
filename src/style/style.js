@@ -108,6 +108,19 @@ export const styles = StyleSheet.create({
         justifyContent:'space-between',
         paddingBottom: height * 100/2000,
     },
+
+    restaurantPageModal:{
+        position:'absolute',
+        marginTop: height * 260/2000,
+        height: height * 1210/2000,
+        width:width,
+        backgroundColor: colorPack.representative,
+        alignItems:'center',
+        flexDirection:'column',
+        paddingBottom: height * 100/2000,
+    },
+
+
     buttonContainerModal:{
         height: height * 60/2000,
         flexDirection:'row',
@@ -115,30 +128,19 @@ export const styles = StyleSheet.create({
         alignItems:'stretch',
     },
     modalButton:{
-        height: height * 60/2000,
-        width: width * 360/1000,
-        marginHorizontal: width * 30/1000,
-        // backgroundColor: colorPack.highlight_light,
-        alignItems:'center',
+        width: width * 400/1000,
+        height: height * 100/2000,
+        backgroundColor: colorPack.highlight_light,
+        borderRadius: height * 50/2000,
         justifyContent:'center',
+        marginHorizontal:width*20/1000,
+        alignItems:'center',
     },
     getRestaurantInfoModal:{
         height: height * 100/2000,
         width:width,
         // backgroundColor: colorPack.highlight_dark,
         alignItems:'center',
-    },
-    inputText:{
-        height: height * 60/2000,
-        width: width * 560/1000,
-        marginVertical: height * 20/2000,
-        alignItems:'center',
-        justifyContent:'center',
-        borderColor: colorPack.highlight_dark,
-        borderWidth: height* 5/2000,
-        paddingHorizontal: width * 30/1000,
-        color: colorPack.text,
-        textAlign:'center',
     },
 
     // restaurantPage
@@ -178,12 +180,37 @@ export const styles = StyleSheet.create({
         borderRadius: height * 30/2000,
         borderColor: colorPack.highlight_light,
         borderWidth: width* 10/2000,
-        marginTop: height * 35/2000,
-        marginBottom: height * 100/2000,
+        marginVertical: height * 35/2000,
         marginHorizontal: width * 150/1000,
         textAlign:'center',
         textAlignVertical:'center',
     },
+    textInputBox_restaurant_menu:{
+        width: width * 600/1000,
+        
+        borderRadius: height * 30/2000,
+        borderColor: colorPack.highlight_light,
+        borderWidth: width* 10/2000,
+        marginVertical: height * 35/2000,
+        marginHorizontal: width * 50/1000,
+        textAlign:'center',
+        textAlignVertical:'center',
+        lineHeight: height * 50/2000,
+        padding:width*20/1000
+    },
+    textInputBox_restaurant_price:{
+        width: width * 250/1000,
+        height: height * 100/2000,
+        borderRadius: height * 30/2000,
+        borderColor: colorPack.highlight_light,
+        borderWidth: width* 10/2000,
+        marginVertical: height * 35/2000,
+        marginHorizontal: width * 50/1000,
+        textAlign:'center',
+        textAlignVertical:'center',
+        padding:width*20/1000
+    },
+
 
 });
 

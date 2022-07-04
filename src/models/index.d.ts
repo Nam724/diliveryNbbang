@@ -20,7 +20,8 @@ export declare class Member {
   readonly id: string;
   readonly username?: string | null;
   readonly email?: string | null;
-  readonly menu_fee_array?: (string | null)[] | null;
+  readonly menu?: (string | null)[] | null;
+  readonly price?: number | null;
   readonly restaurantID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

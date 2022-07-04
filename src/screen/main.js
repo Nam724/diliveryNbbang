@@ -13,8 +13,7 @@ import * as Linking from 'expo-linking';
 
 export default function Main_page({route, navigation}){
 
-// const _dummy = JSON.parse(AsyncStorage.getItem('@loginInfoToken'));
-// console.log('_dummy', _dummy);
+  
 
 // console.log('route_params', route.params);
 
@@ -57,7 +56,7 @@ export default function Main_page({route, navigation}){
           longitude: location.coords.longitude,
           latitudeDelta: 0.003, longitudeDelta: 0.003
         });
-        getMarkers();
+        await getMarkers();
         setIsLoading(false);
     }
 
@@ -300,6 +299,7 @@ export default function Main_page({route, navigation}){
               Linking.openURL('https://www.baemin.com/shopDetail?shopDetail_shopNo=13364428&bm_rfr=SHARE&shopDetail_campaignId=-1&shopDetail_categoryTypeCode=1');
           }}
             disabled={newRestaurant_url != null}
+            
           >
           <Text style={[styles.normalText,{textAlign:'center'}]}>{newRestaurant_url?'이제 링크를 붙여넣어 주세요':'배달의 민족으로 이동하기'}</Text>
           </TouchableOpacity>
@@ -378,7 +378,7 @@ export default function Main_page({route, navigation}){
                   setNewRestaurant_name(null);
                   setNewRestaurant_url(null);
                 }}>
-              <Text style={styles.highlightText}>{'Close'}</Text>
+              <Text style={styles.highlightText}>{'닫기'}</Text>
             </TouchableOpacity>
             
             <TouchableOpacity
@@ -389,7 +389,7 @@ export default function Main_page({route, navigation}){
                   setDialogVisible_restaurant(false);
                   saveNewRestaurant(placeID);
                 }}>
-              <Text style={styles.highlightText}>{'Submit'}</Text>
+              <Text style={styles.highlightText}>{'추가하기'}</Text>
             </TouchableOpacity>
           </View>
           

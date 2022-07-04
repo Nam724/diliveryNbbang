@@ -24,13 +24,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "menu_fee_array": {
-                    "name": "menu_fee_array",
+                "menu": {
+                    "name": "menu",
                     "isArray": true,
                     "type": "String",
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
+                },
+                "price": {
+                    "name": "price",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "restaurantID": {
                     "name": "restaurantID",
@@ -318,5 +325,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "a7ca97389d48e0bc18153428a1f51af5"
+    "version": "4764e11400e4ba1a8d8959c649553cf9"
 };

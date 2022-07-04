@@ -68,7 +68,11 @@ async function saveLoginInfo(email='', password=''){
 
 
 export default function SignIn_page({route, navigation}){
-    // console.log('route', route);g
+    
+    // 자동로그인 토글
+    const [autoLogin, setAutoLogin] = useState(true);
+    
+    // console.log('route', route);
     const _setEmail = route.params.setEmail;
     const _setUsername = route.params.setUsername;
     const _setIsLogin = route.params.setIsLogin;
@@ -78,8 +82,13 @@ export default function SignIn_page({route, navigation}){
 
     useEffect(() => {
         //이거 주석 달면 자동로그인 안됨
-        console.log('자동로그인 실행')
-        // loginFirst()
+        if(autoLogin){
+            console.log('자동로그인 실행')
+            loginFirst()
+        }
+        else{
+            console.log('자동로그인 안실행')
+        }
     }, []);
 
     const loginFirst = async () => {

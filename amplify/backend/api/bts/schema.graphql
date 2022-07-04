@@ -2,7 +2,8 @@ type Member @model @auth(rules: [{allow: public}]) {
   id: ID!
   username: ID
   email: String
-  menu_fee_array: [String]
+  menu: [String]
+  price: Int
   restaurantID: ID! @index(name: "byRestaurant")
 }
 
