@@ -59,12 +59,17 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 21,
+					"line": 82,
+					"column": 4,
+					"label": "모집취소"
+				},
+				{
+					"line": 262,
 					"column": 4,
 					"label": "모집종료"
 				},
 				{
-					"line": 28,
+					"line": 269,
 					"column": 4,
 					"label": "음식점 삭제"
 				}

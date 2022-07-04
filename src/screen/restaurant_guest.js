@@ -81,18 +81,18 @@ export default function Restaurant_page_guest({route, navigation}){
     }
 
     const deleteMember = async () => {
-        if(user.id !== restaurant.makerID){
+        if(user.username !== restaurant.makerID){
         // 소유자이면 자기를 멤버에서 빼는 것 불가
             try {
                 const _member = await DataStore.delete(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id));
                 
-                console.log('member', _member)
-                if(_member!==null){
+                console.log('memberLength', _member.length)
+                if(_member.length>0){
 
                     const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
                     await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
                     // Update the values on {item} variable to update DataStore entry
-                    updated.num_members = updated.num_members -1;
+                    updated.num_members = _member.length -1;
                     }));
                     navigation.navigate('Main');
                     setRestaurant({...restaurant, num_members: restaurant.num_members - 1})
