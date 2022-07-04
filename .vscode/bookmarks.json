@@ -59,19 +59,19 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 82,
+					"line": 89,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 262,
+					"line": 113,
 					"column": 4,
-					"label": "모집종료"
+					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 269,
+					"line": 336,
 					"column": 4,
-					"label": "음식점 삭제"
+					"label": "모집종료"
 				}
 			]
 		},
@@ -89,22 +89,22 @@
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 82,
+					"line": 83,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 122,
+					"line": 123,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 152,
+					"line": 153,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 338,
+					"line": 333,
 					"column": 12,
 					"label": "이 음식점에 등록한 사람들 리스트"
 				}

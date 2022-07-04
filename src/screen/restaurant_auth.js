@@ -24,6 +24,9 @@ export default function Restaurant_page_auth({route, navigation}){
     const [menuPrice, setMenuPrice] = useState(null);
     const [isRegistered, setIsRegistered] = useState(false);
 
+    const[account, setAccount] = useState(restaurant.account);
+    const[fee, setFee] = useState(restaurant.fee);
+
     useEffect(() => {
         setMember(getMembers()); // get member from database
         // console.log('user', user)
@@ -33,7 +36,7 @@ export default function Restaurant_page_auth({route, navigation}){
     }, [isRegistered, modalVisible]);
     
     const getMembers = async () => {
-        const members = await DataStore.query(Member, member=>member.restaurantID === restaurant.id);
+        const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
         console.log('members', members)
         const _membersList = []
         members.forEach(async (member, index) => {
@@ -53,7 +56,7 @@ export default function Restaurant_page_auth({route, navigation}){
 
     const makeNewMember = async () => {
         const _isRegistered = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id))
-        console.log(_isRegistered)
+        // console.log(_isRegistered)
         if(_isRegistered.length == []){
             await DataStore.save(
                 new Member({
@@ -65,17 +68,21 @@ export default function Restaurant_page_auth({route, navigation}){
                 })
             );
 
-            const CURRENT_ITEM = restaurant;
+            const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
             await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
             // Update the values on {item} variable to update DataStore entry
             updated.num_members = updated.num_members +1;
+            setRestaurant({...restaurant, num_members: updated.num_members});
             }));
-            setRestaurant({...restaurant, num_members: restaurant.num_members + 1})
+            console.log('새로운 멤버가 추가되었습니다.', restaurant)
+            
             alert('추가되었습니다.\n이제 메뉴를 추가해주세요')
             setModalVisible(true);
+            refreshRestaurantList(id=place.id);
         }
         else{
             alert('이미 추가되었으므로\n메뉴 추가 페이지로 넘어갑니다.')
+            console.log(restaurant)
             setModalVisible(true);
         }
     }
@@ -84,7 +91,8 @@ export default function Restaurant_page_auth({route, navigation}){
         if(user.username === restaurant.makerID){
         // 소유자일때 가능
             try {
-                DataStore.delete(restaurant);
+                const modelToDelete = await DataStore.query(Restaurant, restaurant.id);
+                DataStore.delete(modelToDelete);
 
                 const CURRENT_ITEM = await DataStore.query(Place, place.id);
                 await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
@@ -118,6 +126,15 @@ export default function Restaurant_page_auth({route, navigation}){
             updated.price = menuPrice;
         }));
 
+        if(restaurant.account === account||restaurant.fee === fee){
+            const CURRENT_RESTAURANT = await DataStore.query(Restaurant, restaurant.id);
+            await DataStore.save(Restaurant.copyOf(CURRENT_RESTAURANT, updated => {
+                // Update the values on {item} variable to update DataStore entry
+                updated.account = account;
+                updated.fee = fee;
+            }));
+        }
+
         setModalVisible(false)}
         catch (error) {
             console.log(error)
@@ -145,10 +162,7 @@ export default function Restaurant_page_auth({route, navigation}){
             backgroundColor:'transparent',
             }}
             onPress={()=>
-            {setDialogVisible_restaurant(false);
-            setNewRestaurant_fee(null);
-            setNewRestaurant_name(null);
-            setNewRestaurant_url(null);}
+            {setModalVisible(false);}
             }
             />
   
@@ -160,16 +174,76 @@ export default function Restaurant_page_auth({route, navigation}){
           }}>
 
             <TextInput 
-            style={[styles.textInputBox_restaurant_menu, styles.highlightText,{borderWidth:0}]}
+            style={[styles.textInputBox_restaurant_menu, styles.highlightText,{borderWidth:0, marginBottom:0}]}
             editable={false}
-            placeholder={'주문할 전체 메뉴.'}
+            placeholder={'송금 코드'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 
             <TextInput 
-            style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0}]}
+            style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0, marginBottom:0}]}
             editable={false}
-            placeholder={'전체 가격(원)'}
+            placeholder={'배달료'}
+            placeholderTextColor={colorPack.text_dark}
+            ></TextInput>
+
+          </View>
+
+
+          <View style={{
+            flexDirection:'row',
+            alignItems:'center',
+          }}>
+
+            <TextInput 
+            style={[styles.textInputBox_restaurant_menu, styles.normalText, {textAlign:'left'}]}
+            placeholder={restaurant.account}
+            placeholderTextColor={colorPack.deactivated}
+            onChangeText={(text) => {
+                if(text){
+                    setAccount(text)
+                }
+                else{
+                    setAccount(restaurant.account)
+                }
+            }}
+            ></TextInput>
+
+            <TextInput 
+            style={[styles.textInputBox_restaurant_price, styles.normalText,]}
+            placeholder={String(restaurant.fee)}
+            placeholderTextColor={colorPack.deactivated}
+            keyboardType='numeric'
+            onChangeText={(text)=>{
+                if(text){
+                    setFee(parseInt(text))
+                }
+                else{
+                    setFee(restaurant.fee)
+                }            
+            }}
+
+            ></TextInput>
+
+            </View>
+
+
+
+          <View style={{
+            flexDirection:'row',
+          }}>
+
+            <TextInput 
+            style={[styles.textInputBox_restaurant_menu, styles.highlightText,{borderWidth:0, marginBottom:0}]}
+            editable={false}
+            placeholder={'주문할 전체 메뉴'}
+            placeholderTextColor={colorPack.text_dark}
+            ></TextInput>
+
+            <TextInput 
+            style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0, marginBottom:0}]}
+            editable={false}
+            placeholder={'메뉴 가격(원)'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 
@@ -268,21 +342,20 @@ export default function Restaurant_page_auth({route, navigation}){
                     </Text>
                 </TouchableOpacity>
 
-
-                <TouchableOpacity style={styles.restaurantButton_2}
-                onPress={()=>sendMoney()}
-                >
-                    <Text style={styles.highlightText}>
-                        {'송금요청'}
-                    </Text>
-                </TouchableOpacity>
-
                 
-                <TouchableOpacity style={styles.restaurantButton_1}
+                <TouchableOpacity style={styles.restaurantButton_2}
                     onPress={() => makeNewMember()}
                 >
                     <Text style={styles.highlightText}>
-                        {'정보수정'}
+                        {'주문또는\n정보수정'}
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.restaurantButton_1}
+                onPress={()=>sendMoney()}
+                >
+                    <Text style={styles.highlightText}>
+                        {'모집종료\n송금요청'}
                     </Text>
                 </TouchableOpacity>
 
@@ -329,9 +402,6 @@ export default function Restaurant_page_auth({route, navigation}){
 
 function Members(member, restaurant, index){
 
-    console.log(member)
-    console.log(restaurant)
-    
 
     const backgroundColor_odd = colorPack.highlight_dark
     const backgroundColor_even = colorPack.highlight_light
@@ -355,7 +425,7 @@ function Members(member, restaurant, index){
                 alert(`${member.menu}`)
             }}
             >
-            <Text style={[styles.highlightText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
+            <Text style={[styles.highlightText,styles.restaurantName]}>{`${member.menu[0]}\n등 ${member.menu.length}개`}</Text>
             </TouchableOpacity>
 
 

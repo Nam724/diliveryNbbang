@@ -33,7 +33,7 @@ export default function Restaurant_page_guest({route, navigation}){
     }, [isRegistered, modalVisible]);
     
     const getMembers = async () => {
-        const members = await DataStore.query(Member, member=>member.restaurantID === restaurant.id);
+        const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
         console.log('members', members)
         const _membersList = []
         members.forEach(async (member, index) => {
@@ -71,6 +71,7 @@ export default function Restaurant_page_guest({route, navigation}){
             updated.num_members = updated.num_members +1;
             }));
             setRestaurant({...restaurant, num_members: restaurant.num_members + 1})
+            refreshRestaurantList(id=place.id);
             alert('추가되었습니다.\n이제 메뉴를 추가해주세요')
             setModalVisible(true);
         }
@@ -94,7 +95,7 @@ export default function Restaurant_page_guest({route, navigation}){
                     // Update the values on {item} variable to update DataStore entry
                     updated.num_members = _member.length -1;
                     }));
-                    navigation.navigate('Main');
+                    navigation.goBack();
                     setRestaurant({...restaurant, num_members: restaurant.num_members - 1})
                     refreshRestaurantList(id=restaurant.placeID);
                     setIsRegistered(false);
@@ -162,10 +163,7 @@ export default function Restaurant_page_guest({route, navigation}){
             backgroundColor:'transparent',
             }}
             onPress={()=>
-            {setDialogVisible_restaurant(false);
-            setNewRestaurant_fee(null);
-            setNewRestaurant_name(null);
-            setNewRestaurant_url(null);}
+                {setModalVisible(false);}
             }
             />
   
@@ -186,7 +184,7 @@ export default function Restaurant_page_guest({route, navigation}){
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0}]}
             editable={false}
-            placeholder={'전체 가격(원)'}
+            placeholder={'메뉴 가격(원)'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 
@@ -285,24 +283,21 @@ export default function Restaurant_page_guest({route, navigation}){
                     </Text>
                 </TouchableOpacity>
 
-
                 <TouchableOpacity style={styles.restaurantButton_2}
+                    onPress={() => makeNewMember()}
+                >
+                    <Text style={styles.highlightText}>
+                        {'주문하기'}
+                    </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.restaurantButton_1}
                 onPress={()=>sendMoney()}
                 >
                     <Text style={styles.highlightText}>
                         {'송금하러\n가기'}
                     </Text>
                 </TouchableOpacity>
-
-                
-                <TouchableOpacity style={styles.restaurantButton_1}
-                    onPress={() => makeNewMember()}
-                >
-                    <Text style={styles.highlightText}>
-                        { '주문하기'}
-                    </Text>
-                </TouchableOpacity>
-
 
                 <TouchableOpacity style={styles.restaurantButton_2}
                 onPressOut={() => deleteMember()}
@@ -372,7 +367,7 @@ function Members(member, restaurant, index){
                 alert(`${member.menu}`)
             }}
             >
-            <Text style={[styles.highlightText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
+            <Text style={[styles.highlightText,styles.restaurantName]}>{`${member.menu[0]}\n등 ${member.menu.length}개`}</Text>
             </TouchableOpacity>
 
 

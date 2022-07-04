@@ -70,7 +70,7 @@ async function saveLoginInfo(email='', password=''){
 export default function SignIn_page({route, navigation}){
     
     // 자동로그인 토글
-    const [autoLogin, setAutoLogin] = useState(true);
+    const [autoLogin, setAutoLogin] = useState(false);
     
     // console.log('route', route);
     const _setEmail = route.params.setEmail;
