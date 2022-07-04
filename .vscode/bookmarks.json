@@ -74,34 +74,34 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 34,
-					"column": 4,
-					"label": "이 음식점에 등록된 모든 명단 가져오고 members state에 저장"
-				},
-				{
-					"line": 40,
+					"line": 47,
 					"column": 4,
 					"label": "송금하러 가기"
 				},
 				{
-					"line": 46,
+					"line": 53,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 75,
+					"line": 82,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 115,
+					"line": 122,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 139,
+					"line": 152,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
+				},
+				{
+					"line": 338,
+					"column": 12,
+					"label": "이 음식점에 등록한 사람들 리스트"
 				}
 			]
 		}

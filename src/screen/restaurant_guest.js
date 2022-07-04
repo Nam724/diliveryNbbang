@@ -26,15 +26,22 @@ export default function Restaurant_page_guest({route, navigation}){
 
     useEffect(() => {
         setMember(getMembers()); // get member from database
-        console.log('user', user)
-        console.log('member', member)
-        console.log('restaurant', restaurant)
-        console.log('place', place)
-    }, [isRegistered]);
+        // console.log('user', user)
+        // console.log('member', member)
+        // console.log('restaurant', restaurant)
+        // console.log('place', place)
+    }, [isRegistered, modalVisible]);
     
     const getMembers = async () => {
         const members = await DataStore.query(Member, member=>member.restaurantID === restaurant.id);
         console.log('members', members)
+        const _membersList = []
+        members.forEach(async (member, index) => {
+            const _m = Members(member, restaurant, index)
+            _membersList.push(_m)            
+        })
+        setMembersList(_membersList)
+
         return members;
     }
 
@@ -80,7 +87,7 @@ export default function Restaurant_page_guest({route, navigation}){
                 const _member = await DataStore.delete(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id));
                 
                 console.log('member', _member)
-                if(!_member){
+                if(_member!==null){
 
                     const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
                     await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
@@ -133,6 +140,12 @@ export default function Restaurant_page_guest({route, navigation}){
             console.log(error)
         }
     }
+
+    const [membersList, setMembersList] = useState(
+        [
+            
+        ]
+    );
 
     return (
         <View style={styles.container}>
@@ -256,7 +269,7 @@ export default function Restaurant_page_guest({route, navigation}){
 
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: ${restaurant.fee}원 / ${restaurant.num_members}명 = ${restaurant.fee/restaurant.num_members}원`}
+                    {restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: ${restaurant.fee}원 / ${restaurant.num_members}명 = ${Math.ceil(restaurant.fee/restaurant.num_members)}원`}
                 </Text>
             </View>
 
@@ -321,27 +334,51 @@ export default function Restaurant_page_guest({route, navigation}){
                 />
               </MapView>
             
-          </View>
-    
+            </View>
+            
+            <ScrollView style={styles.restaurantListContainer}>
+            {membersList}
+            </ScrollView>
         </View>
 
     );
 }
 
-function Menu_price(){
+function Members(member, restaurant, index){
 
+    console.log(member)
+    console.log(restaurant)
+    
+
+    const backgroundColor_odd = colorPack.highlight_dark
+    const backgroundColor_even = colorPack.highlight_light
+    var myBackgroundColor
+    if(Number(index) %2 == 0){
+        myBackgroundColor = backgroundColor_even
+    }
+    else{
+        myBackgroundColor = backgroundColor_odd
+    }
     return(
-        <View style={{
-            flexDirection:'row',
-          }}>
+        
+        <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={member.id}
+        disabled={true}
+        >
 
-            <TextInput 
-            style={[styles.textInputBox_restaurant_1, styles.normalText]}></TextInput>
+            <Text style={[styles.normalText, styles.restaurantFee]}>{member.email.split('@')[0]}</Text>
 
-            <TextInput 
-            style={[styles.textInputBox_restaurant_2, styles.normalText]}></TextInput>
+            <TouchableOpacity 
+            onPress={()=>{
+                alert(`${member.menu}`)
+            }}
+            >
+            <Text style={[styles.highlightText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
+            </TouchableOpacity>
 
-        </View>
+
+            <Text style={[styles.normalText, styles.restaurantMembers]}>{Math.ceil(member.price + (restaurant.fee/restaurant.num_members))+'원'}</Text>
+      
+        </TouchableOpacity>
     )
 
 }
