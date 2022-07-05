@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "bts": {}
+        "bts": {},
+        "true": {}
       }
     }
   }

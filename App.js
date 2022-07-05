@@ -12,7 +12,6 @@ import 'react-native-gesture-handler';
 
 
 
-
 Amplify.configure(awsconfig);
 
 const Stack = createStackNavigator();
