@@ -17,10 +17,9 @@ Amplify.configure(awsconfig);
 const Stack = createStackNavigator();
 
 export default function App(){ 
-  const [Email, setEmail] = useState('');
-  const [Username, setUsername] = useState('username');
   const [IsLogin, setIsLogin] = useState(false);
-  console.log('Email:', Email, 'Username:', Username, 'IsLogin:', IsLogin);
+  const [user, setUser] = useState(null);
+  console.log('App.js user', user);
   return (
     IsLogin?
     <NavigationContainer>
@@ -29,7 +28,7 @@ export default function App(){
         options={{
           headerShown: false,
         }}
-        initialParams={{Email:Email, Username:Username}}
+        initialParams={{user:user}}
         />
         <Stack.Screen name="Restaurant" component={Restaurant_page} 
         options={{
@@ -37,13 +36,15 @@ export default function App(){
         }}
         />
       </Stack.Navigator>
-    </NavigationContainer>:<NavigationContainer>
+    </NavigationContainer>
+    :
+    <NavigationContainer>
     <Stack.Navigator initialRouteName={"SignIn"}>
       <Stack.Screen name="SignIn" component={SignIn_page} 
       options={{
         headerShown: false,
       }}
-      initialParams={{Email: Email, setEmail: setEmail, setUsername: setUsername, setIsLogin: setIsLogin}}
+      initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin}}
       />
       <Stack.Screen name="SignUp" component={SignUp_page}
       options={{

@@ -5,48 +5,6 @@ import { styles, width, height } from '../style/style';
 
 
 
-async function signIn(_setEmail,_setUsername, _setIsLogin, email, password, navigation) {
-    try {
-        const user = await Auth.signIn(email, password);
-        console.log('user', user);
-        _setEmail(email);
-        _setUsername(user.username);
-        _setIsLogin(true);
-        saveLoginInfo(email, password);
-    } catch (error) {
-        console.log('error signing in', error);
-        if(error === 'UserNotConfirmedException'){
-            alert('User not confirmed');
-            return(false);
-        }
-        else if(error == 'UserNotFoundException: User does not exist.'){
-            alert('해당 이메일의 사용자를 찾을 수 없습니다.');
-            return(false);
-        }
-        else if(error == 'NotAuthorizedException: Incorrect username or password.'){
-            alert('잘못된 비밀번호입니다.');
-            return(false);
-        }
-        else if (error == 'NetworkError'){
-            alert('Network error');
-            return(false);
-        }
-        else if (error == 'InvalidParameterException: Custom auth lambda trigger is not configured for the user pool.'){
-            alert('Invalid parameter');
-            return(false);
-        }
-        else if (error == 'signing in Error: Pending sign-in attempt already in progress'
-        ){
-            alert('이미 로그인이 진행중입니다.');
-            return(false);
-        }
-        else{
-            alert('알수 없는 에러, 다시 시도하세요.');
-            return(false);
-        }
-    }
-}
-
 function emailTest(email){
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (reg.test(email) === true){
@@ -73,9 +31,9 @@ export default function SignIn_page({route, navigation}){
     const [autoLogin, setAutoLogin] = useState(false);
     
     // console.log('route', route);
-    const _setEmail = route.params.setEmail;
-    const _setUsername = route.params.setUsername;
-    const _setIsLogin = route.params.setIsLogin;
+    const user = route.params.user;
+    const setUser = route.params.setUser;
+    const setIsLogin = route.params.setIsLogin;
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');
@@ -99,7 +57,7 @@ export default function SignIn_page({route, navigation}){
                 console.log('value값이 있어서 바로 로그인합니다.', value);
                 setEmail(value.email);
                 setPassword(value.password);
-                signIn(_setEmail, _setUsername,_setIsLogin, value.email, value.password, navigation)
+                signIn()
             }
             else{
                 console.log('value값이 없어서 로그인을 진행합니다.');
@@ -112,6 +70,50 @@ export default function SignIn_page({route, navigation}){
         });
 
     }
+
+
+    const signIn = async() => {
+        try {
+            const user = await Auth.signIn(email, password);
+            console.log('user', user);
+            setUser(user);
+            setIsLogin(true);
+            saveLoginInfo(email, password);
+        } catch (error) {
+            console.log('error signing in', error);
+            if(error === 'UserNotConfirmedException'){
+                alert('User not confirmed');
+                return(false);
+            }
+            else if(error == 'UserNotFoundException: User does not exist.'){
+                alert('해당 이메일의 사용자를 찾을 수 없습니다.');
+                return(false);
+            }
+            else if(error == 'NotAuthorizedException: Incorrect username or password.'){
+                alert('잘못된 비밀번호입니다.');
+                return(false);
+            }
+            else if (error == 'NetworkError'){
+                alert('Network error');
+                return(false);
+            }
+            else if (error == 'InvalidParameterException: Custom auth lambda trigger is not configured for the user pool.'){
+                alert('Invalid parameter');
+                return(false);
+            }
+            else if (error == 'signing in Error: Pending sign-in attempt already in progress'
+            ){
+                alert('이미 로그인이 진행중입니다.');
+                return(false);
+            }
+            else{
+                alert('알수 없는 에러, 다시 시도하세요.');
+                return(false);
+            }
+        }
+    }
+    
+    
 
     return(
         <View style={styles.container}>
@@ -149,7 +151,7 @@ export default function SignIn_page({route, navigation}){
             </View>
                 
             <TouchableOpacity
-                onPressOut={() => signIn(_setEmail, _setUsername,_setIsLogin, email, password, navigation)}
+                onPressOut={() => signIn()}
                 style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
                 disabled={!isEmailValid&&password.length<=0}
             >

@@ -9,6 +9,8 @@ import * as Clipboard from 'expo-clipboard'
 
 export default function Restaurant_page_guest({route, navigation}){
     
+    console.log('Restaurant_page_guest', route);
+
     const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
     const [place, setPlace] = useState(route.params.place);
@@ -37,7 +39,7 @@ export default function Restaurant_page_guest({route, navigation}){
         console.log('members', members)
         const _membersList = []
         members.forEach(async (member, index) => {
-            const _m = Members(member, restaurant, index)
+            const _m = Members(user, member, restaurant, index)
             _membersList.push(_m)            
         })
         setMembersList(_membersList)
@@ -53,7 +55,7 @@ export default function Restaurant_page_guest({route, navigation}){
 
     const makeNewMember = async () => {
         const _isRegistered = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id))
-        console.log(_isRegistered)
+        // console.log(_isRegistered)
         if(_isRegistered.length == []){
             await DataStore.save(
                 new Member({
@@ -339,11 +341,9 @@ export default function Restaurant_page_guest({route, navigation}){
     );
 }
 
-function Members(member, restaurant, index){
+function Members(user, member, restaurant, index){
 
-    console.log(member)
-    console.log(restaurant)
-    
+   console.log('Members', user, member, restaurant, index)
 
     const backgroundColor_odd = colorPack.highlight_dark
     const backgroundColor_even = colorPack.highlight_light
@@ -360,14 +360,18 @@ function Members(member, restaurant, index){
         disabled={true}
         >
 
-            <Text style={[styles.normalText, styles.restaurantFee]}>{member.email.split('@')[0]}</Text>
+            <Text style={[styles.highlightText, styles.restaurantFee]}
+            ellipsizeMode='tail'
+            numberOfLines={1}
+            >{member.username===user.username?'나의 주문':member.email.split('@')[0]}
+            </Text>
 
             <TouchableOpacity 
             onPress={()=>{
                 alert(`${member.menu}`)
             }}
             >
-            <Text style={[styles.highlightText,styles.restaurantName]}>{`${member.menu[0]}\n등 ${member.menu.length}개`}</Text>
+            <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
             </TouchableOpacity>
 
 

@@ -4,17 +4,17 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 126,
+					"line": 123,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 172,
+					"line": 169,
 					"column": 11,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 202,
+					"line": 199,
 					"column": 28,
 					"label": "음식점 불러오기"
 				}
@@ -24,24 +24,24 @@
 			"path": "src/screen/signin.js",
 			"bookmarks": [
 				{
-					"line": 7,
-					"column": 18,
-					"label": "로그인 함수"
-				},
-				{
-					"line": 62,
+					"line": 20,
 					"column": 23,
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
 				},
 				{
-					"line": 74,
+					"line": 32,
 					"column": 4,
 					"label": "자동로그인 결정"
 				},
 				{
-					"line": 96,
+					"line": 54,
 					"column": 4,
 					"label": "자동 로그인"
+				},
+				{
+					"line": 74,
+					"column": 4,
+					"label": "로그인"
 				}
 			]
 		},
@@ -69,37 +69,37 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 46,
+					"line": 48,
 					"column": 4,
 					"label": "송금하러 가기"
 				},
 				{
-					"line": 52,
+					"line": 54,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 82,
+					"line": 84,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 122,
+					"line": 124,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 152,
+					"line": 154,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 332,
+					"line": 334,
 					"column": 12,
 					"label": "이 음식점에 등록한 사람들 리스트"
 				},
 				{
-					"line": 340,
+					"line": 342,
 					"column": 0,
 					"label": "음식점 게스트 화면의 사람들 리스트"
 				}

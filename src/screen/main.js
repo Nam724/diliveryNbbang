@@ -17,11 +17,10 @@ export default function Main_page({route, navigation}){
 
 // console.log('route_params', route.params);
 
-  const user={
-        username:route.params.Username,
-        email:route.params.Email
-  } 
+  const user = route.params.user.attributes;
+  user.username = user.sub
 
+  console.log('Main_page user', user);
 // MAP
   // check is loading finished?
   const [isLoading, setIsLoading] = useState(true);
@@ -36,9 +35,7 @@ export default function Main_page({route, navigation}){
 
   useEffect( () => {
         // setIsLoading(true); // 주석 풀면 로딩창 뜸
-        
         mountFunction();      
-
     }, []); 
 
     const mountFunction = async () => { // 시작할 때 실행되는 함수

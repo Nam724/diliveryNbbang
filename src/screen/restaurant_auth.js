@@ -40,7 +40,7 @@ export default function Restaurant_page_auth({route, navigation}){
         console.log('members', members)
         const _membersList = []
         members.forEach(async (member, index) => {
-            const _m = Members(member, restaurant, index)
+            const _m = Members(user, member, restaurant, index)
             _membersList.push(_m)            
         })
         setMembersList(_membersList)
@@ -400,38 +400,45 @@ export default function Restaurant_page_auth({route, navigation}){
     );
 }
 
-function Members(member, restaurant, index){
 
 
-    const backgroundColor_odd = colorPack.highlight_dark
-    const backgroundColor_even = colorPack.highlight_light
-    var myBackgroundColor
-    if(Number(index) %2 == 0){
-        myBackgroundColor = backgroundColor_even
-    }
-    else{
-        myBackgroundColor = backgroundColor_odd
-    }
-    return(
-        
-        <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={member.id}
-        disabled={true}
-        >
+function Members(user, member, restaurant, index){
 
-            <Text style={[styles.normalText, styles.restaurantFee]}>{member.email.split('@')[0]}</Text>
-
-            <TouchableOpacity 
-            onPress={()=>{
-                alert(`${member.menu}`)
-            }}
-            >
-            <Text style={[styles.highlightText,styles.restaurantName]}>{`${member.menu[0]}\n등 ${member.menu.length}개`}</Text>
-            </TouchableOpacity>
-
-
-            <Text style={[styles.normalText, styles.restaurantMembers]}>{Math.ceil(member.price + (restaurant.fee/restaurant.num_members))+'원'}</Text>
-      
-        </TouchableOpacity>
-    )
-
-}
+    console.log('Members', user, member, restaurant, index)
+ 
+     const backgroundColor_odd = colorPack.highlight_dark
+     const backgroundColor_even = colorPack.highlight_light
+     var myBackgroundColor
+     if(Number(index) %2 == 0){
+         myBackgroundColor = backgroundColor_even
+     }
+     else{
+         myBackgroundColor = backgroundColor_odd
+     }
+     return(
+         
+         <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={member.id}
+         disabled={true}
+         >
+ 
+             <Text style={[styles.highlightText, styles.restaurantFee]}
+             ellipsizeMode='tail'
+             numberOfLines={1}
+             >{member.username===user.username?'나의 주문':member.email.split('@')[0]}
+             </Text>
+ 
+             <TouchableOpacity 
+             onPress={()=>{
+                 alert(`${member.menu}`)
+             }}
+             >
+             <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
+             </TouchableOpacity>
+ 
+ 
+             <Text style={[styles.normalText, styles.restaurantMembers]}>{Math.ceil(member.price + (restaurant.fee/restaurant.num_members))+'원'}</Text>
+       
+         </TouchableOpacity>
+     )
+ 
+ }
