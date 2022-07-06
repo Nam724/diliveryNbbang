@@ -6,7 +6,7 @@
     "resourceNameTruncated": "bts11dd8ab3",
     "userPoolName": "bts",
     "autoVerifiedAttributes": [
-      "email"
+      "phone_number"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
