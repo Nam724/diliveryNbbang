@@ -28,7 +28,7 @@ async function saveLoginInfo(email='', password=''){
 export default function SignIn_page({route, navigation}){
     
     // 자동로그인 토글
-    const [autoLogin, setAutoLogin] = useState(false);
+    const [autoLogin, setAutoLogin] = useState(true);
     
     // console.log('route', route);
     const user = route.params.user;
@@ -57,7 +57,7 @@ export default function SignIn_page({route, navigation}){
                 console.log('value값이 있어서 바로 로그인합니다.', value);
                 setEmail(value.email);
                 setPassword(value.password);
-                signIn()
+                signIn(value.email, value.password);
             }
             else{
                 console.log('value값이 없어서 로그인을 진행합니다.');
@@ -72,7 +72,7 @@ export default function SignIn_page({route, navigation}){
     }
 
 
-    const signIn = async() => {
+    const signIn = async(email = email, password = password) => {
         try {
             const user = await Auth.signIn(email, password);
             console.log('user', user);

@@ -6,6 +6,8 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
   const backgroundColor_odd = colorPack.highlight_dark
   const backgroundColor_even = colorPack.highlight_light
   var myBackgroundColor
+
+  console.log('Main_restaurantList', user, restaurant)
   if(Number(num) %2 == 0){
     myBackgroundColor = backgroundColor_even
   }
@@ -29,7 +31,7 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
     >
 
       <Text style={[styles.highlightText, styles.restaurantName]} numberOfLines={1} ellipsizeMode='tail' 
-      >{restaurant.name}</Text>
+      >{user.username == restaurant.makerID?`"${restaurant.name}"`:restaurant.name}</Text>
 
       </TouchableOpacity>
       <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{restaurant.num_members==0?`배달료 총${restaurant.fee}원`:`배달료: 각${restaurant.fee/restaurant.num_members}원`}</Text>

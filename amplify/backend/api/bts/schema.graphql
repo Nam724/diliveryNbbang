@@ -5,6 +5,7 @@ type Member @model @auth(rules: [{allow: public}]) {
   menu: [String]
   price: Int
   restaurantID: ID! @index(name: "byRestaurant")
+  phone_number: String
 }
 
 type Restaurant @model @auth(rules: [{allow: public}]) {

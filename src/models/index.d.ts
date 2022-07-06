@@ -23,6 +23,7 @@ export declare class Member {
   readonly menu?: (string | null)[] | null;
   readonly price?: number | null;
   readonly restaurantID: string;
+  readonly phone_number?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Member, MemberMetaData>);

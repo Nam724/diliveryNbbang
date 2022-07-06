@@ -28,7 +28,7 @@ export default function Restaurant_page_auth({route, navigation}){
     const[fee, setFee] = useState(restaurant.fee);
 
     useEffect(() => {
-        setMember(getMembers()); // get member from database
+        getMembers(); // get member from database
         // console.log('user', user)
         // console.log('member', member)
         // console.log('restaurant', restaurant)
@@ -41,17 +41,25 @@ export default function Restaurant_page_auth({route, navigation}){
         const _membersList = []
         members.forEach(async (member, index) => {
             const _m = Members(user, member, restaurant, index)
+            
             _membersList.push(_m)            
         })
         setMembersList(_membersList)
 
-        return members;
+        setMember(members)
     }
 
     const sendMoney = async () => {
-        Clipboard.setString(restaurant.account);
-        alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
-        Linking.openURL(restaurant.account)
+        // Clipboard.setString(restaurant.account);
+        // alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
+        // Linking.openURL(restaurant.account)
+        
+        const menu = member[0].menu.toString();
+        // const menuList = menu.join(',')
+        console.log(`${member.price + (restaurant.fee/restaurant.num_members)}`)
+
+        console.log('돈 보내야 하는 사람들', member)
+        Linking.openURL(`sms:${member[0].phone_number}&body=Pseudo Tesla 배달앱에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member[0].menu.toString()})를 주문하기 위해 아래 링크로 ${member[0].price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n${restaurant.account}`)
     }
 
     const makeNewMember = async () => {
@@ -62,6 +70,7 @@ export default function Restaurant_page_auth({route, navigation}){
                 new Member({
                     "username": user.username,
                     "email": user.email,
+                    "phone_number": user.phone_number,
                     "menu": ['메뉴 없음'], 
                     "fee":0,
                     "restaurantID": restaurant.id,
@@ -404,41 +413,53 @@ export default function Restaurant_page_auth({route, navigation}){
 
 function Members(user, member, restaurant, index){
 
-    console.log('Members', user, member, restaurant, index)
- 
-     const backgroundColor_odd = colorPack.highlight_dark
-     const backgroundColor_even = colorPack.highlight_light
-     var myBackgroundColor
-     if(Number(index) %2 == 0){
-         myBackgroundColor = backgroundColor_even
-     }
-     else{
-         myBackgroundColor = backgroundColor_odd
-     }
-     return(
-         
-         <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={member.id}
-         disabled={true}
-         >
- 
-             <Text style={[styles.highlightText, styles.restaurantFee]}
-             ellipsizeMode='tail'
-             numberOfLines={1}
-             >{member.username===user.username?'나의 주문':member.email.split('@')[0]}
-             </Text>
- 
-             <TouchableOpacity 
-             onPress={()=>{
-                 alert(`${member.menu}`)
-             }}
-             >
-             <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
-             </TouchableOpacity>
- 
- 
-             <Text style={[styles.normalText, styles.restaurantMembers]}>{Math.ceil(member.price + (restaurant.fee/restaurant.num_members))+'원'}</Text>
-       
-         </TouchableOpacity>
-     )
- 
- }
+    //    console.log('Members', user, member, restaurant, index)
+    
+        const backgroundColor_odd = colorPack.highlight_dark
+        const backgroundColor_even = colorPack.highlight_light
+        var myBackgroundColor
+        if(Number(index) %2 == 0){
+            myBackgroundColor = backgroundColor_even
+        }
+        else{
+            myBackgroundColor = backgroundColor_odd
+        }
+        return(
+            
+            <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={member.id}
+            disabled={true}
+            >
+                <TouchableOpacity
+                onPress={
+                    ()=>{
+                        Linking.openURL(`sms:${member.phone_number}&body=Pseudo Tesla 배달앱에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member.menu.toString()})를 주문하기 위해 아래 링크로 ${member.price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n${restaurant.account}`)                  
+                    }
+                }
+                
+                >              
+                <Text style={[styles.highlightText, styles.restaurantFee]}
+                ellipsizeMode='tail'
+                numberOfLines={1}
+                >{member.username===user.username?'나의 주문':member.email.split('@')[0]}
+                </Text>
+                <Text style={[styles.normalText, styles.restaurantFee]}
+                ellipsizeMode='tail'
+                numberOfLines={1}
+                >{'클릭해서 문자전송'}
+                </Text>
+                </TouchableOpacity>
+    
+                <TouchableOpacity 
+                onPress={()=>{
+                    alert(`${member.menu}`)
+                }}
+                >
+                <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
+                </TouchableOpacity>
+        
+                <Text style={[styles.normalText, styles.restaurantMembers]}>{Math.ceil(member.price + (restaurant.fee/restaurant.num_members))+'원'}</Text>
+    
+            </TouchableOpacity>
+
+        )
+    }

@@ -184,7 +184,8 @@ export default function Main_page({route, navigation}){
       "placeID": placeID,
       "makerID": user.username,
       "num_members":0,
-      "account": newRestaurant_account
+      "account": newRestaurant_account,
+      "isFinishedRecruiting": false,
     }));
     setNewRestaurant_name(null);
     setNewRestaurant_fee(null);

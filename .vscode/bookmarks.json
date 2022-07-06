@@ -14,7 +14,7 @@
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 199,
+					"line": 200,
 					"column": 28,
 					"label": "음식점 불러오기"
 				}
@@ -49,17 +49,17 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 89,
+					"line": 98,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 113,
+					"line": 122,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 336,
+					"line": 345,
 					"column": 4,
 					"label": "모집종료"
 				}
@@ -69,39 +69,34 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 48,
+					"line": 49,
 					"column": 4,
 					"label": "송금하러 가기"
 				},
 				{
-					"line": 54,
+					"line": 55,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 84,
+					"line": 86,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 124,
+					"line": 126,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 154,
+					"line": 156,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 334,
+					"line": 336,
 					"column": 12,
 					"label": "이 음식점에 등록한 사람들 리스트"
-				},
-				{
-					"line": 342,
-					"column": 0,
-					"label": "음식점 게스트 화면의 사람들 리스트"
 				}
 			]
 		},

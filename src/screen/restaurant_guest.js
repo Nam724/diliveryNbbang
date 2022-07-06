@@ -7,6 +7,7 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
 
+
 export default function Restaurant_page_guest({route, navigation}){
     
     console.log('Restaurant_page_guest', route);
@@ -61,6 +62,7 @@ export default function Restaurant_page_guest({route, navigation}){
                 new Member({
                     "username": user.username,
                     "email": user.email,
+                    "phone_number": user.phone_number,
                     "menu": ['메뉴 없음'], 
                     "fee":0,
                     "restaurantID": restaurant.id,
@@ -341,9 +343,10 @@ export default function Restaurant_page_guest({route, navigation}){
     );
 }
 
+
 function Members(user, member, restaurant, index){
 
-   console.log('Members', user, member, restaurant, index)
+//    console.log('Members', user, member, restaurant, index)
 
     const backgroundColor_odd = colorPack.highlight_dark
     const backgroundColor_even = colorPack.highlight_light
@@ -376,8 +379,7 @@ function Members(user, member, restaurant, index){
 
 
             <Text style={[styles.normalText, styles.restaurantMembers]}>{Math.ceil(member.price + (restaurant.fee/restaurant.num_members))+'원'}</Text>
-      
+
         </TouchableOpacity>
     )
-
 }
