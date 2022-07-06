@@ -395,10 +395,14 @@ export default function Main_page({route, navigation}){
 
 
 
-
-
-      <View style={styles.header}>
-          <Text style={styles.highlightText}>MY APPLICATION</Text>
+      <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between', paddingHorizontal:width*25/1000}]}>
+          <TouchableOpacity>
+          <Text style={styles.normalText}>로그아웃</Text>
+          </TouchableOpacity>    
+          <Text style={styles.highlightText}>Pseudo Tesla</Text>
+          <TouchableOpacity>
+          <Text style={styles.normalText}>나의주문</Text>
+          </TouchableOpacity>    
       </View>
 
       
