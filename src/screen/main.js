@@ -1,5 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage, RefreshControl, SafeAreaView} from 'react-native';
-import * as Clipboard from 'expo-clipboard'
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator} from 'react-native';
 import {useState, useEffect} from 'react';
 import { colorPack, styles, width } from '../style/style';
 import * as Location from 'expo-location';
@@ -15,7 +14,7 @@ export default function Main_page({route, navigation}){
 
   
 
-// console.log('route_params', route.params);
+console.log('route_params', route.params);
 
   const user = route.params.user.attributes;
   user.username = user.sub
@@ -38,41 +37,41 @@ export default function Main_page({route, navigation}){
         mountFunction();      
     }, []); 
 
-    const mountFunction = async () => { // 시작할 때 실행되는 함수
-      let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
-        // console.log(status_location_permission);
-        // 나중에 풀어야 함!
-        //if (status_location_permission !== 'granted') {
-        //   setErrorMsg('Permission to access location was denied');
-        //   // return; 
-        // }
+  const mountFunction = async () => { // 시작할 때 실행되는 함수
+    let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
+      // console.log(status_location_permission);
+      // 나중에 풀어야 함!
+      //if (status_location_permission !== 'granted') {
+      //   setErrorMsg('Permission to access location was denied');
+      //   // return; 
+      // }
 
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation({
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          latitudeDelta: 0.003, longitudeDelta: 0.003
-        });
-        await getMarkers();
-        setIsLoading(false);
-    }
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      latitudeDelta: 0.003, longitudeDelta: 0.003
+    });
+    await getMarkers();
+    setIsLoading(false);
+  }
 
     // refresh
-    const [refreshing, setRefreshing] = useState(false);
-    const refreshRestaurantList = async (id='refresh') => {
-      setRefreshing(true);
-      // console.log('refreshRestaurantList',id==='refresh');
-      await getMarkers()
-      if(id==='refresh'){
-        // console.log('refreshRestaurantList_refresh');
-        await loadRestaurant(selectedMarker.key);
-      }
-      else{
-        // console.log('refreshRestaurantList_with id');
-        await loadRestaurant(id);
-      }
-      setRefreshing(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const refreshRestaurantList = async (id='refresh') => {
+    setRefreshing(true);
+    // console.log('refreshRestaurantList',id==='refresh');
+    await getMarkers()
+    if(id=='refresh'){
+      // console.log('refreshRestaurantList_refresh');
+      await loadRestaurant(selectedMarker.key);
     }
+    else{
+      // console.log('refreshRestaurantList_with id');
+      await loadRestaurant(id);
+    }
+    setRefreshing(false);
+  }
 
   let text = 'Waiting..';
   if (errorMsg) {
@@ -493,8 +492,9 @@ export default function Main_page({route, navigation}){
 
       </View>
     </View>
-  )
-)}// return}
+  ))
+
+  }// return}
 
 const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerText='') => {
   // const clipboardText = await Clipboard.getStringAsync('plainText');

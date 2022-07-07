@@ -21,7 +21,7 @@ export default function App(){
   const [user, setUser] = useState(null);
   console.log('App.js user', user);
   return (
-    IsLogin?
+    (IsLogin)?
     <NavigationContainer>
       <Stack.Navigator initialRouteName={"Main"}>
         <Stack.Screen name="Main" component={Main_page} 

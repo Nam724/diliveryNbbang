@@ -10,7 +10,7 @@ export default function Loading_page(){
       <Text style={styles.highlightText}>
         {'정보를 업데이트 하는 중이예요.'}
       </Text>
-        <ActivityIndicator size="large" animating='true' color={colorPack.highlight_dark} />
+        <ActivityIndicator size="large" animating={true} color={colorPack.highlight_dark} />
       </View>
   );
 }
