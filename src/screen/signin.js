@@ -34,6 +34,7 @@ export default function SignIn_page({route, navigation}){
     const user = route.params.user;
     const setUser = route.params.setUser;
     const setIsLogin = route.params.setIsLogin;
+    
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [password, setPassword] = useState('');
@@ -151,7 +152,7 @@ export default function SignIn_page({route, navigation}){
             </View>
                 
             <TouchableOpacity
-                onPressOut={() => signIn()}
+                onPressOut={() => signIn(email, password)}
                 style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
                 disabled={!isEmailValid&&password.length<=0}
             >

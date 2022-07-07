@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage, RefreshControl, SafeAreaView} from 'react-native';
 import * as Clipboard from 'expo-clipboard'
 import {useState, useEffect} from 'react';
 import { colorPack, styles, width } from '../style/style';
@@ -20,7 +20,7 @@ export default function Main_page({route, navigation}){
   const user = route.params.user.attributes;
   user.username = user.sub
 
-  console.log('Main_page user', user);
+  // console.log('Main_page user', user);
 // MAP
   // check is loading finished?
   const [isLoading, setIsLoading] = useState(true);
@@ -58,17 +58,20 @@ export default function Main_page({route, navigation}){
     }
 
     // refresh
+    const [refreshing, setRefreshing] = useState(false);
     const refreshRestaurantList = async (id='refresh') => {
-      console.log('refreshRestaurantList',id==='refresh');
+      setRefreshing(true);
+      // console.log('refreshRestaurantList',id==='refresh');
       await getMarkers()
       if(id==='refresh'){
-        console.log('refreshRestaurantList_refresh');
+        // console.log('refreshRestaurantList_refresh');
         await loadRestaurant(selectedMarker.key);
       }
       else{
-        console.log('refreshRestaurantList_with id');
+        // console.log('refreshRestaurantList_with id');
         await loadRestaurant(id);
       }
+      setRefreshing(false);
     }
 
   let text = 'Waiting..';
@@ -176,16 +179,16 @@ export default function Main_page({route, navigation}){
       
     console.log({"name": newRestaurant_name,"fee": newRestaurant_fee,"url": newRestaurant_url,"placeID": placeID,})
     // amplify
-    await DataStore.save(
+    const restaurant = await DataStore.save(
       new Restaurant({
       "name": newRestaurant_name,
       "fee": (newRestaurant_fee==null)?0:parseInt(newRestaurant_fee),
       "url": newRestaurant_url,
       "placeID": placeID,
       "makerID": user.username,
-      "num_members":0,
+      "num_members":1,
       "account": newRestaurant_account,
-      "isFinishedRecruiting": false,
+      "isFinishRecruiting": false,
     }));
     setNewRestaurant_name(null);
     setNewRestaurant_fee(null);
@@ -197,6 +200,19 @@ export default function Main_page({route, navigation}){
       // Update the values on {item} variable to update DataStore entry
       updated.num_restaurants = updated.num_restaurants + 1;
     }));
+
+    // 자기 자신을 음식점에 추가
+    await DataStore.save(
+      new Member({
+          "username": user.username,
+          "email": user.email,
+          "phone_number": user.phone_number,
+          "menu": ['메뉴 없음'], 
+          "fee":0,
+          "restaurantID": restaurant.id,
+      })
+    );
+
     await getMarkers();
     // console.log('markers', markers)
     refreshRestaurantList();
@@ -453,10 +469,25 @@ export default function Main_page({route, navigation}){
                 </Text>
               </TouchableOpacity>
           </View>
-            
-          <ScrollView style={styles.restaurantListContainer}>
+
+
+          <SafeAreaView>
+          <ScrollView style={styles.restaurantListContainer}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={()=>{
+                refreshRestaurantList('refresh');
+                // console.log('refresh')
+              }
+              }
+            />
+            }
+          >
             {restaurantList}
-          </ScrollView>
+          </ScrollView>          
+          </SafeAreaView>
+
 
 
 

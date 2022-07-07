@@ -46,7 +46,7 @@
                     "SMS"
                 ],
                 "verificationMechanisms": [
-                    "PHONE_NUMBER"
+                    "EMAIL"
                 ]
             }
         }

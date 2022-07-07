@@ -6,7 +6,7 @@
     "resourceNameTruncated": "bts11dd8ab3",
     "userPoolName": "bts",
     "autoVerifiedAttributes": [
-      "phone_number"
+      "email"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
@@ -14,7 +14,7 @@
     ],
     "smsAuthenticationMessage": "Your code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Verification code: {####}",
+    "emailVerificationSubject": "UNIST Pseudo Tesla",
     "emailVerificationMessage": "Verification code: {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 6,

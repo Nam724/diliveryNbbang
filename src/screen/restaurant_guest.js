@@ -26,9 +26,9 @@ export default function Restaurant_page_guest({route, navigation}){
     const [menuList, setMenuList] = useState(null);
     const [menuPrice, setMenuPrice] = useState(null);
     const [isRegistered, setIsRegistered] = useState(false);
-
+    
     useEffect(() => {
-        setMember(getMembers()); // get member from database
+        getMembers(); // get member from database
         // console.log('user', user)
         // console.log('member', member)
         // console.log('restaurant', restaurant)
@@ -45,7 +45,9 @@ export default function Restaurant_page_guest({route, navigation}){
         })
         setMembersList(_membersList)
 
-        return members;
+        if(member.filter(member=>member.username===user.username).length>0){
+            setIsRegistered(true)
+        }
     }
 
     const sendMoney = async () => {

@@ -6,6 +6,8 @@ import { styles, colorPack, height } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
+import * as SMS from 'expo-sms';
+
 
 export default function Restaurant_page_auth({route, navigation}){
     
@@ -15,26 +17,27 @@ export default function Restaurant_page_auth({route, navigation}){
     const setRestaurantList = route.params.setRestaurantList;
     const refreshRestaurantList = route.params.refreshRestaurantList;
     var restaurantList = route.params.restaurantList;
-    
+    const [isFinishRecruiting, setIsFinishRecruiting] = useState(restaurant.isFinishRecruiting);
 
     const [member, setMember] = useState(null);
 
     const [modalVisible, setModalVisible] = useState(false);
     const [menuList, setMenuList] = useState(null);
     const [menuPrice, setMenuPrice] = useState(null);
-    const [isRegistered, setIsRegistered] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(true);
 
     const[account, setAccount] = useState(restaurant.account);
     const[fee, setFee] = useState(restaurant.fee);
 
     useEffect(() => {
         getMembers(); // get member from database
-        // console.log('user', user)
-        // console.log('member', member)
-        // console.log('restaurant', restaurant)
-        // console.log('place', place)
+        console.log('user', user)
+        console.log('member', member)
+        console.log('restaurant', restaurant)
+        console.log('place', place)
     }, [isRegistered, modalVisible]);
     
+
     const getMembers = async () => {
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
         console.log('members', members)
@@ -54,13 +57,66 @@ export default function Restaurant_page_auth({route, navigation}){
         // alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
         // Linking.openURL(restaurant.account)
         
-        const menu = member[0].menu.toString();
-        // const menuList = menu.join(',')
         console.log(`${member.price + (restaurant.fee/restaurant.num_members)}`)
 
-        console.log('돈 보내야 하는 사람들', member)
-        Linking.openURL(`sms:${member[0].phone_number}&body=Pseudo Tesla 배달앱에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member[0].menu.toString()})를 주문하기 위해 아래 링크로 ${member[0].price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n${restaurant.account}`)
+        var numberSMS = [] // ['+821012345678', '+821012345678']
+
+        var menuSMS = [] // ['{username:이메일앞부분, menu:'식사1, 식사2', price: ${member.price + (restaurant.fee/restaurant.num_members)}}', '식사2']
+
+        var stringSMS = ''
+        member.forEach(member => {
+            numberSMS.push(member.phone_number)
+            
+            menuSMS.push(
+                `{username:${member.email.split('@')[0]}, menu:${member.menu}, price: ${member.price + (restaurant.fee/restaurant.num_members)}}`
+            )
+            stringSMS += `{${member.email.split('@')[0]}님이 주문하신 메뉴:${member.menu}, 입금하실 금액: ${member.price + (restaurant.fee/restaurant.num_members)}}`
+        })
+
+        menuSMS.forEach(menu => {
+            console.log(menu)
+            stringSMS += `${menu.username}님이 주문하신 메뉴: ${menu.menu} 총 금액: ${menu.price}원\n`
+        })
+        console.log('numberSMS',numberSMS)
+        console.log('menuSMS',menuSMS)
+
+
+        // SMS 발송 가능한 지 여부
+        const isAvailable = await SMS.isAvailableAsync();
+        if (isAvailable) {
+        // do your SMS stuff here
+            const { result } = await SMS.sendSMSAsync(
+            numberSMS,
+            `Pseudo Tesla 배달앱에서 알려드립니다.\n${place.name}에 배달 될 음식점 "${restaurant.name}"\n${stringSMS}\n${restaurant.account}`);
+            if(result == 'sent'){
+                alert('메세지 전송이 완료되었습니다.')
+            }
+            else{
+                alert('메세지 전송이 실패하였습니다.')
+            }
+
+        } else {
+        // misfortune... there's no SMS available on this device
+        }
+        
+
+
+        const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
+        try{
+            await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
+             updated.isFinishRecruiting = true;   
+            }));
+            setIsFinishRecruiting(true);
+            // alert('모집 종료 했습니다.\n이제 멤버들이 주문할 수 있도록 문자를 전송해주세요.')
+
+        }
+        catch(e){
+            console.log(e)
+        }
+
     }
+
+    
 
     const makeNewMember = async () => {
         const _isRegistered = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id))
@@ -83,14 +139,14 @@ export default function Restaurant_page_auth({route, navigation}){
             updated.num_members = updated.num_members +1;
             setRestaurant({...restaurant, num_members: updated.num_members});
             }));
-            console.log('새로운 멤버가 추가되었습니다.', restaurant)
+            // console.log('새로운 멤버가 추가되었습니다.', restaurant)
             
-            alert('추가되었습니다.\n이제 메뉴를 추가해주세요')
+            alert('이제 메뉴를 추가해주세요')
             setModalVisible(true);
             refreshRestaurantList(id=place.id);
         }
         else{
-            alert('이미 추가되었으므로\n메뉴 추가 페이지로 넘어갑니다.')
+            // alert('이미 추가되었으므로\n메뉴 추가 페이지로 넘어갑니다.')
             console.log(restaurant)
             setModalVisible(true);
         }
@@ -150,11 +206,35 @@ export default function Restaurant_page_auth({route, navigation}){
         }
     }
 
-    const [membersList, setMembersList] = useState(
-        [
-            
-        ]
-    );
+    const [membersList, setMembersList] = useState([]);
+
+    const showAllMenu = () => {
+        console.log(member)
+        const _allMenuList = []
+        member.forEach(member => {
+            member.menu.forEach(menu => {
+                _allMenuList.push(menu)
+            })
+        })
+        console.log(_allMenuList)
+        Clipboard.setString(_allMenuList.join('\n'))
+        alert(`전체 메뉴가 복사되었습니다.\n${_allMenuList.join('\n')}`)
+    }
+
+    const restartRecruiting = async () =>{
+        const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
+        try{
+            await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
+             updated.isFinishRecruiting = false;   
+            }));
+            setIsFinishRecruiting(false);
+            alert('모집 시작 했습니다.')
+
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -328,7 +408,7 @@ export default function Restaurant_page_auth({route, navigation}){
 
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {restaurant.name}
+                    {isFinishRecruiting? `배달 모집 완료! ${restaurant.name}`:restaurant.name}
                 </Text>
             </View>
 
@@ -353,27 +433,47 @@ export default function Restaurant_page_auth({route, navigation}){
 
                 
                 <TouchableOpacity style={styles.restaurantButton_2}
-                    onPress={() => makeNewMember()}
+                    onPress={() => {
+                        if(!isFinishRecruiting){
+                            makeNewMember()
+                        }
+                        else{
+                            showAllMenu();
+                        }
+                    }
+                    }
                 >
                     <Text style={styles.highlightText}>
-                        {'주문또는\n정보수정'}
+                        {!isFinishRecruiting?'주문또는\n정보수정':'전체주문\n확인'}
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.restaurantButton_1}
-                onPress={()=>sendMoney()}
+                onPress={()=>{
+                    sendMoney();
+                    
+                }}
                 >
                     <Text style={styles.highlightText}>
-                        {'모집종료\n송금요청'}
+                        {!isFinishRecruiting?'모집종료\n송금요청':'전체문자\n보내기'}
                     </Text>
                 </TouchableOpacity>
 
 
                 <TouchableOpacity style={styles.restaurantButton_2}
-                onPressOut={() => deleteRestaurant()}
+                onPressOut={() => {
+                    if(isFinishRecruiting){
+                        restartRecruiting()
+                    }    
+                    else{
+                        deleteRestaurant()                        
+                    }
+                }
+                }
+                
                 >
                     <Text style={styles.highlightText}>
-                        {'모집취소'}
+                        {!isFinishRecruiting?'모집취소':'다시\n모집하기'}
                     </Text>
                 </TouchableOpacity>
 
@@ -414,7 +514,9 @@ export default function Restaurant_page_auth({route, navigation}){
 function Members(user, member, restaurant, index){
 
     //    console.log('Members', user, member, restaurant, index)
-    
+
+
+
         const backgroundColor_odd = colorPack.highlight_dark
         const backgroundColor_even = colorPack.highlight_light
         var myBackgroundColor
@@ -424,6 +526,24 @@ function Members(user, member, restaurant, index){
         else{
             myBackgroundColor = backgroundColor_odd
         }
+
+        const sendSMS = async() => {
+            const isAvailable = await SMS.isAvailableAsync();
+        if (isAvailable) {
+        // do your SMS stuff here
+            const { result } = await SMS.sendSMSAsync(
+            member.phone_number,
+            `Pseudo Tesla 배달앱에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member.menu.toString()})를 주문하기 위해 아래 링크로 ${member.price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n${restaurant.account}`);
+            if(result == 'sent'){
+                alert('메세지 전송이 완료되었습니다.')
+            }
+            else{
+                alert('메세지 전송이 실패하였습니다.')
+            }
+
+        } else {
+        // misfortune... there's no SMS available on this device
+        }}
         return(
             
             <TouchableOpacity style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} key={member.id}
@@ -432,10 +552,9 @@ function Members(user, member, restaurant, index){
                 <TouchableOpacity
                 onPress={
                     ()=>{
-                        Linking.openURL(`sms:${member.phone_number}&body=Pseudo Tesla 배달앱에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member.menu.toString()})를 주문하기 위해 아래 링크로 ${member.price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n${restaurant.account}`)                  
+                        sendSMS();                 
                     }
                 }
-                
                 >              
                 <Text style={[styles.highlightText, styles.restaurantFee]}
                 ellipsizeMode='tail'
@@ -445,7 +564,7 @@ function Members(user, member, restaurant, index){
                 <Text style={[styles.normalText, styles.restaurantFee]}
                 ellipsizeMode='tail'
                 numberOfLines={1}
-                >{'클릭해서 문자전송'}
+                >{'개별 문자전송'}
                 </Text>
                 </TouchableOpacity>
     

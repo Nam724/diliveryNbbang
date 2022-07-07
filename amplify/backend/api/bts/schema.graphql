@@ -18,6 +18,7 @@ type Restaurant @model @auth(rules: [{allow: public}]) {
   Members_in_restaurant: [Member] @hasMany(indexName: "byRestaurant", fields: ["id"])
   num_members: Int
   account: String
+  isFinishRecruiting: Boolean
 }
 
 type Place @model @auth(rules: [{allow: public}]) {

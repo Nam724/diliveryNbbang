@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Dimensions } from 'react-native';
-
+import Constants from 'expo-constants';
 export const height = Dimensions.get('screen').height; // 2000
 export const width = Dimensions.get('screen').width; // 1000
 export const colorPack = {
@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
         height: height,
         backgroundColor:colorPack.representative,
         flexDirection: 'column',
-        paddingVertical: height * 100/2000,
+        paddingTop: Constants.statusBarHeight,
     },
     header:{
         height: height * 80/2000,
