@@ -56,29 +56,19 @@ export default function Restaurant_page_auth({route, navigation}){
         // Clipboard.setString(restaurant.account);
         // alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
         // Linking.openURL(restaurant.account)
-        
+        console.log('sendMoney')
         console.log(`${member.price + (restaurant.fee/restaurant.num_members)}`)
 
         var numberSMS = [] // ['+821012345678', '+821012345678']
 
-        var menuSMS = [] // ['{username:이메일앞부분, menu:'식사1, 식사2', price: ${member.price + (restaurant.fee/restaurant.num_members)}}', '식사2']
 
         var stringSMS = ''
-        member.forEach(member => {
-            numberSMS.push(member.phone_number)
-            
-            menuSMS.push(
-                `{username:${member.email.split('@')[0]}, menu:${member.menu}, price: ${member.price + (restaurant.fee/restaurant.num_members)}}`
-            )
-            stringSMS += `{${member.email.split('@')[0]}님이 주문하신 메뉴:${member.menu}, 입금하실 금액: ${member.price + (restaurant.fee/restaurant.num_members)}}`
-        })
+        member.forEach(m => {
+            numberSMS.push(m.phone_number)
 
-        menuSMS.forEach(menu => {
-            console.log(menu)
-            stringSMS += `${menu.username}님이 주문하신 메뉴: ${menu.menu} 총 금액: ${menu.price}원\n`
+            stringSMS += `${m.email.split('@')[0]}님이 주문하신 메뉴:${m.menu}, 입금하실 금액: ${m.price + (restaurant.fee/restaurant.num_members)}원\n`
         })
         console.log('numberSMS',numberSMS)
-        console.log('menuSMS',menuSMS)
 
 
         // SMS 발송 가능한 지 여부
@@ -87,7 +77,7 @@ export default function Restaurant_page_auth({route, navigation}){
         // do your SMS stuff here
             const { result } = await SMS.sendSMSAsync(
             numberSMS,
-            `Pseudo Tesla 배달앱에서 알려드립니다.\n${place.name}에 배달 될 음식점 "${restaurant.name}"\n${stringSMS}\n${restaurant.account}`);
+            `Pseudo Tesla 배달앱에서 알려드립니다.(이 메세지는 방장이 보낸 메세지입니다.)\n${place.name}에 배달 될 음식점 "${restaurant.name}" 주문 정산 내용입니다.\n\n${stringSMS}\n${restaurant.account}`);
             if(result == 'sent'){
                 alert('메세지 전송이 완료되었습니다.')
             }
@@ -325,14 +315,14 @@ export default function Restaurant_page_auth({route, navigation}){
             <TextInput 
             style={[styles.textInputBox_restaurant_menu, styles.highlightText,{borderWidth:0, marginBottom:0}]}
             editable={false}
-            placeholder={'주문할 전체 메뉴'}
+            placeholder={'주문 메뉴'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0, marginBottom:0}]}
             editable={false}
-            placeholder={'메뉴 가격(원)'}
+            placeholder={'가격(원)'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 

@@ -1,3 +1,4 @@
+import { Auth } from 'aws-amplify';
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator} from 'react-native';
 import {useState, useEffect} from 'react';
 import { colorPack, styles, width } from '../style/style';
@@ -14,11 +15,13 @@ export default function Main_page({route, navigation}){
 
   
 
-console.log('route_params', route.params);
+  console.log('route_params', route.params);
 
   const user = route.params.user.attributes;
   user.username = user.sub
-
+  const setIsLogin = route.params.setIsLogin;
+  const setUser = route.params.setUser;
+  const setAutoLogin = route.params.setAutoLogin;
   // console.log('Main_page user', user);
 // MAP
   // check is loading finished?
@@ -71,6 +74,14 @@ console.log('route_params', route.params);
       await loadRestaurant(id);
     }
     setRefreshing(false);
+  }
+
+  const logOut = async () => {
+    alert('로그아웃 되었습니다.');
+    await Auth.signOut();
+    setAutoLogin(false)
+    setIsLogin(false);
+    setUser(null);
   }
 
   let text = 'Waiting..';
@@ -412,12 +423,16 @@ console.log('route_params', route.params);
 
 
       <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between', paddingHorizontal:width*25/1000}]}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              logOut()
+            }}
+          >
           <Text style={styles.normalText}>로그아웃</Text>
           </TouchableOpacity>    
           <Text style={styles.highlightText}>Pseudo Tesla</Text>
           <TouchableOpacity>
-          <Text style={styles.normalText}>나의주문</Text>
+          <Text style={styles.normalText}>{user.email.split('@')[0]}</Text>
           </TouchableOpacity>    
       </View>
 

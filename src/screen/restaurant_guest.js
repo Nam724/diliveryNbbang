@@ -37,7 +37,7 @@ export default function Restaurant_page_guest({route, navigation}){
     
     const getMembers = async () => {
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
-        console.log('members', members)
+        // console.log('members', members)
         const _membersList = []
         members.forEach(async (member, index) => {
             const _m = Members(user, member, restaurant, index)
@@ -45,7 +45,7 @@ export default function Restaurant_page_guest({route, navigation}){
         })
         setMembersList(_membersList)
 
-        if(member.filter(member=>member.username===user.username).length>0){
+        if(members.filter(member=>member.username===user.username).length>0){
             setIsRegistered(true)
         }
     }
@@ -183,14 +183,14 @@ export default function Restaurant_page_guest({route, navigation}){
             <TextInput 
             style={[styles.textInputBox_restaurant_menu, styles.highlightText,{borderWidth:0}]}
             editable={false}
-            placeholder={'주문할 전체 메뉴.'}
+            placeholder={'주문 메뉴'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0}]}
             editable={false}
-            placeholder={'메뉴 가격(원)'}
+            placeholder={'가격(원)'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 

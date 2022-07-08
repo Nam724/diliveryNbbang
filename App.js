@@ -19,6 +19,9 @@ const Stack = createStackNavigator();
 export default function App(){ 
   const [IsLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
+  const [autoLogin, setAutoLogin] = useState(true);
+
+
   console.log('App.js user', user);
   return (
     (IsLogin)?
@@ -28,7 +31,7 @@ export default function App(){
         options={{
           headerShown: false,
         }}
-        initialParams={{user:user}}
+        initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin, autoLogin:autoLogin, setAutoLogin:setAutoLogin}}
         />
         <Stack.Screen name="Restaurant" component={Restaurant_page} 
         options={{
@@ -44,7 +47,7 @@ export default function App(){
       options={{
         headerShown: false,
       }}
-      initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin}}
+      initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin, autoLogin:autoLogin, setAutoLogin:setAutoLogin}}
       />
       <Stack.Screen name="SignUp" component={SignUp_page}
       options={{
