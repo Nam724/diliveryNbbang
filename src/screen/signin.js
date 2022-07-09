@@ -128,7 +128,8 @@ export default function SignIn_page({route, navigation}){
                 </Text>
             </View>
 
-            <KeyboardAvoidingView>
+            <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
+            style={{flex:1}}>
             <ScrollView>
                 <View>
                     <View style={{marginTop:height*100/2000, height:height*179/2000}}>

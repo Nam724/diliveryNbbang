@@ -77,7 +77,7 @@ export default function Restaurant_page_auth({route, navigation}){
         // do your SMS stuff here
             const { result } = await SMS.sendSMSAsync(
             numberSMS,
-            `Pseudo Tesla 배달앱에서 알려드립니다.(이 메세지는 방장이 보낸 메세지입니다.)\n${place.name}에 배달 될 음식점 "${restaurant.name}" 주문 정산 내용입니다.\n\n${stringSMS}\n${restaurant.account}`);
+            `배달앤빵에서 알려드립니다.(이 메세지는 방장이 보낸 메세지입니다.)\n${place.name}에 배달 될 음식점 "${restaurant.name}" 주문 정산 내용입니다.\n\n${stringSMS}\n입금하실 곳: ${restaurant.account}`);
             if(result == 'sent'){
                 Alert.alert('배달앤빵', '메세지 전송이 완료되었습니다.', [{text: '확인'}])
             }
@@ -520,7 +520,7 @@ function Members(user, member, restaurant, index){
         // do your SMS stuff here
             const { result } = await SMS.sendSMSAsync(
             member.phone_number,
-            `Pseudo Tesla 배달앱에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member.menu.toString()})를 주문하기 위해 아래 링크로 ${member.price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n${restaurant.account}`);
+            `배달앤빵에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member.menu.toString()})를 주문하기 위해 아래 링크로 ${member.price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n입금하실 곳: ${restaurant.account}`);
             if(result == 'sent'){
                 Alert.alert('배달앤빵','메세지 전송이 완료되었습니다.',[{text:'확인'}])
             }

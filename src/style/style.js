@@ -100,31 +100,17 @@ export const styles = StyleSheet.create({
 
 // modal
     restaurantInfoModal:{
-        
+      flex:1,
+      position: 'absolute',
+      marginTop: height * 150/2000,
     },
     restaurantInfoContainerModal:{
-        position:'absolute',
-        marginTop: height * 80/2000,
-        height: height * 1100/2000,
-        width:width,
         backgroundColor: colorPack.representative,
         alignItems:'center',
         flexDirection:'column',
         justifyContent:'space-between',
         paddingBottom: height * 100/2000,
     },
-
-    restaurantPageModal:{
-        position:'absolute',
-        marginTop: height * 260/2000,
-        height: height * 1210/2000,
-        width:width,
-        backgroundColor: colorPack.representative,
-        alignItems:'center',
-        flexDirection:'column',
-        paddingBottom: height * 100/2000,
-    },
-
 
     buttonContainerModal:{
         height: height * 60/2000,
@@ -132,6 +118,7 @@ export const styles = StyleSheet.create({
         justifyContent:'space-between',
         alignItems:'stretch',
     },
+
     modalButton:{
         width: width * 400/1000,
         height: height * 100/2000,
@@ -141,10 +128,10 @@ export const styles = StyleSheet.create({
         marginHorizontal:width*20/1000,
         alignItems:'center',
     },
+
     getRestaurantInfoModal:{
-        height: height * 100/2000,
+        height: height * 250/2000,
         width:width,
-        // backgroundColor: colorPack.highlight_dark,
         alignItems:'center',
     },
 
@@ -189,6 +176,8 @@ export const styles = StyleSheet.create({
         marginHorizontal: width * 150/1000,
         textAlign:'center',
         textAlignVertical:'center',
+        color: colorPack.text_light,
+        paddingHorizontal: width * 20/1000,
     },
     textInputBox_restaurant_menu:{
         width: width * 600/1000,

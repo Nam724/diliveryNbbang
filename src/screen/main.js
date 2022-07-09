@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator, Alert, KeyboardAvoidingView} from 'react-native';
 import {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import * as Location from 'expo-location';
@@ -173,10 +173,13 @@ export default function Main_page({route, navigation}){
 
 
 // RESTAURANT LIST
-  const [restaurantList, setRestaurantList] = useState([
-    Main_restaurantList_sample('placeholder1','장소 추가', '지도 길게 누르기', '0'),
-    Main_restaurantList_sample('placeholder2','장소 선택', '핀 누르기', '1'),
-  ]);
+const restaurantList_sample = [
+  Main_restaurantList_sample('placeholder1','장소 추가', '지도 길게 누르기', '0'),
+  Main_restaurantList_sample('placeholder2','장소 선택', '핀 누르기', '1'),
+]
+
+  const [restaurantList, setRestaurantList] = useState(restaurantList_sample);
+
 
   // get restaurant list
   const [dialogVisible_restaurant, setDialogVisible_restaurant] = useState(false);
@@ -185,7 +188,7 @@ export default function Main_page({route, navigation}){
   const [newRestaurant_name, setNewRestaurant_name] = useState(null);
   const [newRestaurant_fee, setNewRestaurant_fee] = useState(0);
   const [newRestaurant_url, setNewRestaurant_url] = useState(null);
-  const [newRestaurant_account, setNewRestaurant_account] = useState(null);
+  const [newRestaurant_account, setNewRestaurant_account] = useState(user.address);
 
   // make new restaurant
   async function saveNewRestaurant(placeID){
@@ -242,7 +245,11 @@ export default function Main_page({route, navigation}){
 
     let _restaurantList = []
 
-    models.forEach( async(model, index) => {
+    models.sort((a,b) => {
+      const price1 = a.fee/a.num_members;
+      const price2 = b.fee/b.num_members;
+      return price1 - price2;
+    }).forEach( async(model, index) => {
 
       _restaurantList.push(
         Main_restaurantList(
@@ -309,6 +316,7 @@ export default function Main_page({route, navigation}){
         setNewRestaurant_name(null);
         setNewRestaurant_url(null);
       }}
+
       >
       <Pressable style={{
         flex:1,
@@ -321,10 +329,15 @@ export default function Main_page({route, navigation}){
         setNewRestaurant_url(null);}
       }
       />
-
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
+      style={styles.restaurantInfoModal}>
+      <ScrollView>
+        
         <View style={styles.restaurantInfoContainerModal}>
-
-          <Text style={[styles.highlightText,{marginTop:20}]}>{`음식점을 \"${selectedMarker.title}\"에 추가합니다.`}</Text>
+          <View style={styles.header}>
+          <Text style={[styles.highlightText]}>{`음식점을 \"${selectedMarker.title}\"에 추가합니다.`}</Text>
+          </View>
+          
 
           <View style={styles.getRestaurantInfoModal}>
           <TouchableOpacity
@@ -334,12 +347,12 @@ export default function Main_page({route, navigation}){
             disabled={newRestaurant_url != null}
             
           >
-          <Text style={[styles.normalText,{textAlign:'center'}]}>{newRestaurant_url?'이제 링크를 붙여넣어 주세요':'배달의 민족으로 이동하기'}</Text>
+          <Text style={[styles.normalText]}>{newRestaurant_url?'배달의 민족 링크':'배달의 민족으로 이동하기'}</Text>
           </TouchableOpacity>
             
             <TextInput
             style={styles.textInputBox}
-            placeholder={'배달의 민족 URL을 복사 후 여기에 붙여 넣어주세요'}
+            placeholder={'배달의 민족 URL 붙여넣기'}
             placeholderTextColor={colorPack.deactivated}
             value={newRestaurant_url}
             onChangeText={(text) => readClipboard(setNewRestaurant_name, setNewRestaurant_url, text)}
@@ -348,7 +361,7 @@ export default function Main_page({route, navigation}){
           </View>
 
           <View style={styles.getRestaurantInfoModal}>
-            <Text style={[styles.normalText,{textAlign:'center'}]}>{'음식점 이름'}</Text>
+            <Text style={[styles.normalText]}>{'음식점 이름'}</Text>
             <TextInput style={styles.textInputBox}
             value={newRestaurant_name}
             onChangeText={(text) =>
@@ -362,7 +375,7 @@ export default function Main_page({route, navigation}){
           </View>
 
           <View style={styles.getRestaurantInfoModal}>
-            <Text style={[styles.normalText,{textAlign:'center'}]}>{'배달료(원)'}</Text>
+            <Text style={[styles.normalText]}>{'배달료(원)'}</Text>
             <TextInput style={styles.textInputBox}
             onChangeText={(text) => setNewRestaurant_fee(text)}
             keyboardType='numeric'
@@ -383,13 +396,11 @@ export default function Main_page({route, navigation}){
             </TouchableOpacity>
             <TextInput style={styles.textInputBox}
             onChangeText={(text) => setNewRestaurant_account(text)}
-            placeholder='카카오페이 송금주소 링크.'
-            placeholderTextColor={colorPack.deactivated}       
+            placeholder= {user.address}
+            placeholderTextColor={colorPack.text_light}
+            editable={newRestaurant_account == null}  
             onKeyPress={(e) => {
               if (e.nativeEvent.key === 'return') {
-                let name = newRestaurant_name;
-                let fee = parseInt(newRestaurant_fee);
-                let url = newRestaurant_url;
                 let placeID = selectedMarker.key;
                 setDialogVisible_restaurant(false);
                 saveNewRestaurant(placeID);
@@ -398,9 +409,6 @@ export default function Main_page({route, navigation}){
             />
 
           </View>
-
-
-          
 
           <View style={styles.buttonContainerModal}>
             <TouchableOpacity
@@ -411,7 +419,7 @@ export default function Main_page({route, navigation}){
                   setNewRestaurant_name(null);
                   setNewRestaurant_url(null);
                 }}>
-              <Text style={styles.highlightText}>{'닫기'}</Text>
+              <Text style={styles.highlightText}>{'취소'}</Text>
             </TouchableOpacity>
             
             <TouchableOpacity
@@ -427,11 +435,16 @@ export default function Main_page({route, navigation}){
           </View>
           
         </View>
+        </ScrollView>
+        </KeyboardAvoidingView>
+        
+
       </Modal>
 
 
 
-      <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between', paddingHorizontal:width*25/1000}]}>
+      <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between'}]}>
+
         <View style={{width:width*0.25}}>
           <TouchableOpacity
             onPress={() => {
@@ -441,14 +454,17 @@ export default function Main_page({route, navigation}){
           <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{'로그아웃'}</Text>
           </TouchableOpacity>    
         </View>
+
         <View style={{width:width*0.25}}>
           <Text style={styles.highlightText} lineBreakMode='tail' numberOfLines={1}>{'배달앤빵'}</Text>
         </View>
+
         <View style={{width:width*0.25}}>
           <TouchableOpacity>
           <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{user.email.split('@')[0]}</Text>
           </TouchableOpacity>    
         </View>
+
       </View>
 
       
@@ -494,7 +510,7 @@ export default function Main_page({route, navigation}){
                 }}
               >
                 <Text style={styles.normalText}>
-                {selectedMarker.key=='markers%'?'장소를 먼저 선택하세요':'이곳으로 배달할 음식점 추가하기'}
+                {selectedMarker.key==='markers%'?'장소를 먼저 선택하세요':'이곳으로 배달할 음식점 추가하기'}
                 </Text>
               </TouchableOpacity>
           </View>
@@ -513,7 +529,7 @@ export default function Main_page({route, navigation}){
             />
             }
           >
-            {restaurantList}
+            {selectedMarker.key === 'markers%'?restaurantList_sample:restaurantList}
           </ScrollView>          
           </SafeAreaView>
 
@@ -542,7 +558,7 @@ const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerT
   const restaurantUrl = clipboardText.match(restaurantUrlFormat);
 
   console.log(clipboardText, restaurantTitle, restaurantUrl);
-  if(UrlFormat.test(clipboardText)){ 
+  if(restaurantTitle&&restaurantUrl){ 
   //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
     setNewRestaurant_url(restaurantUrl[0]);
     setNewRestaurant_name(restaurantTitle[0].substring(1, restaurantTitle[0].length-1));
