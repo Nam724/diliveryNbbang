@@ -54,27 +54,27 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 54,
+					"line": 60,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 144,
+					"line": 150,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 168,
+					"line": 174,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 200,
+					"line": 206,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 415,
+					"line": 421,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -84,27 +84,27 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 51,
+					"line": 55,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 81,
+					"line": 85,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 120,
+					"line": 124,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 150,
+					"line": 154,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 331,
+					"line": 336,
 					"column": 12,
 					"label": "이 음식점에 등록한 사람들 리스트"
 				}

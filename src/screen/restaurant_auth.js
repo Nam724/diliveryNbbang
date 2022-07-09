@@ -42,10 +42,16 @@ export default function Restaurant_page_auth({route, navigation}){
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
         console.log('members', members)
         const _membersList = []
-        members.forEach(async (member, index) => {
-            const _m = Members(user, member, restaurant, index)
+        members.forEach(async (m, index) => {
+            const _m = Members(user, m, restaurant, index)
             
-            _membersList.push(_m)            
+            _membersList.push(_m)
+            if(m.username==user.username){
+                setIsRegistered(true)
+                console.log('등록됨!')
+                setMenuList(m.menu.join(', '))
+                setMenuPrice(m.price)
+            }
         })
         setMembersList(_membersList)
 
@@ -278,8 +284,7 @@ export default function Restaurant_page_auth({route, navigation}){
 
             <TextInput 
             style={[styles.textInputBox_restaurant_menu, styles.normalText, {textAlign:'left'}]}
-            placeholder={restaurant.account}
-            placeholderTextColor={colorPack.deactivated}
+            defaultValue={account}
             onChangeText={(text) => {
                 if(text){
                     setAccount(text)
@@ -292,7 +297,7 @@ export default function Restaurant_page_auth({route, navigation}){
 
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,]}
-            placeholder={String(restaurant.fee)}
+            defaultValue={String(fee)}
             placeholderTextColor={colorPack.deactivated}
             keyboardType='numeric'
             onChangeText={(text)=>{
@@ -338,10 +343,10 @@ export default function Restaurant_page_auth({route, navigation}){
             <TextInput 
             style={[styles.textInputBox_restaurant_menu, styles.normalText, {textAlign:'left'}]}
             multiline={true}
-
             placeholder={'주문할 메뉴를 입력해주세요.\n이때 한 줄에 \n하나의 메뉴를 입력해 주세요.\n해당 내용을 통해 방장이\n자동으로 주문할 수 있습니다.'}
             placeholderTextColor={colorPack.deactivated}
             onChangeText={(text) => {setMenuList(text)}}
+            defaultValue={menuList}
             ></TextInput>
 
             <TextInput 
@@ -350,6 +355,7 @@ export default function Restaurant_page_auth({route, navigation}){
             placeholderTextColor={colorPack.deactivated}
             keyboardType='numeric'
             onChangeText={(text)=>{setMenuPrice(parseInt(text))}}
+            defaultValue={String(menuPrice)}
 
             ></TextInput>
 

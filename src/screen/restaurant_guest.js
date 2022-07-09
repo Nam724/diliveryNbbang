@@ -39,15 +39,19 @@ export default function Restaurant_page_guest({route, navigation}){
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
         // console.log('members', members)
         const _membersList = []
-        members.forEach(async (member, index) => {
-            const _m = Members(user, member, restaurant, index)
-            _membersList.push(_m)            
+        members.forEach(async (m, index) => {
+            const _m = Members(user, m, restaurant, index)
+            
+            _membersList.push(_m)
+            if(m.username==user.username){
+                setIsRegistered(true)
+                console.log('등록됨!')
+                setMenuList(m.menu.join(', '))
+                setMenuPrice(m.price)
+            }
         })
         setMembersList(_membersList)
-
-        if(members.filter(member=>member.username===user.username).length>0){
-            setIsRegistered(true)
-        }
+        setMember(members)
     }
 
     const makeNewMember = async () => {
@@ -201,6 +205,7 @@ export default function Restaurant_page_guest({route, navigation}){
 
             placeholder={'주문할 메뉴를 입력해주세요.\n이때 한 줄에 \n하나의 메뉴를 입력해 주세요.\n해당 내용을 통해 방장이\n자동으로 주문할 수 있습니다.'}
             placeholderTextColor={colorPack.deactivated}
+            defaultValue={menuList}
             onChangeText={(text) => {setMenuList(text)}}
             ></TextInput>
 
@@ -210,7 +215,7 @@ export default function Restaurant_page_guest({route, navigation}){
             placeholderTextColor={colorPack.deactivated}
             keyboardType='numeric'
             onChangeText={(text)=>{setMenuPrice(parseInt(text))}}
-
+            defaultValue={String(menuPrice)}
             ></TextInput>
 
         </View>

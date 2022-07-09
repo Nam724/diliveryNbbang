@@ -52,13 +52,13 @@ export default function Restaurant_page_finished({route, navigation}){
         console.log('isRegistered', isRegistered);
     }
     const sendMoney = async() => {
-        Clipboard.setString(restaurant.account);
+        Clipboard.setString(`${estaurant.account}`);
 
         const reg = /^(https:\/\/qr.kakaopay.com\/)(.*)+$/;
         
         if (reg.test(restaurant.account)===true){
             Alert.alert('배달앤빵','보내실 주소가 복사되었습니다.', [{text: '카카오페이로 이동', onPress: () => {
-                Linking.openURL(restaurant.account);
+                Linking.openURL(`${restaurant.account}`);
             }}, {text: '닫기'}]);
         }
         else{
