@@ -105,7 +105,7 @@ export default function Restaurant_page_finished({route, navigation}){
                 }}
                 disabled={!isRegistered}
                 >
-                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
+                    <Text style={(isRegistered)?styles.normalText:styles.deactivated}>
                         {'배민\n바로가기'}
                     </Text>
                 </TouchableOpacity>
@@ -114,9 +114,8 @@ export default function Restaurant_page_finished({route, navigation}){
                     onPress={() => {
                         Alert.alert('배달앤빵','준비중입니다.', [{text: '닫기'}]);
                     }}
-                    disabled={!isRegistered}
                 >
-                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
+                    <Text style={(isRegistered)?styles.normalText:styles.deactivated}>
                         {'나의주문\n메뉴보기'}
                     </Text>
                 </TouchableOpacity>
@@ -125,7 +124,7 @@ export default function Restaurant_page_finished({route, navigation}){
                 onPress={()=>sendMoney()}
                 disabled={!isRegistered}
                 >
-                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
+                    <Text style={(isRegistered)?styles.normalText:styles.deactivated}>
                         {'송금하러\n가기'}
                     </Text>
                 </TouchableOpacity>
@@ -135,7 +134,7 @@ export default function Restaurant_page_finished({route, navigation}){
                         sendSMStoAuthor()}}
                         disabled={!isRegistered}
                 >
-                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
+                    <Text style={(isRegistered)?styles.normalText:styles.deactivated}>
                         {'주문자에게\n문자보내기'}
                     </Text>
                 </TouchableOpacity>
