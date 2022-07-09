@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert, KeyboardAvoidingView} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member} from '../models';
@@ -245,8 +245,10 @@ export default function Restaurant_page_auth({route, navigation}){
             }
             />
   
-          <View style={styles.restaurantPageModal}>
-          
+            <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
+            style={styles.restaurantInfoModal}>
+            <ScrollView>
+            <View style={styles.restaurantPageContainerModal}>          
 
           <View style={{
             flexDirection:'row',
@@ -390,6 +392,8 @@ export default function Restaurant_page_auth({route, navigation}){
           
           </View>
 
+          </ScrollView>
+          </KeyboardAvoidingView>
             
         </Modal>
 
