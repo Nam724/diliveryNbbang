@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text, Alert } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, Alert, ScrollView, Keyboard, Linking, KeyboardAvoidingView } from 'react-native';
 import { styles, height, width, colorPack } from '../style/style';
 
 // async function sendVerificationCode(email, password, setVerification_code_sended) {
@@ -50,7 +50,9 @@ export default function SignUp_page({navigation}){
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
     const [phoneNumber , setPhoneNumber] = useState('');
+    const [password1, setPassword1] = useState('');
     const [password, setPassword] = useState('');
+    const [account, setAccount] = useState('');
     const [verification_code, setVerification_code] = useState('');
     const [verification_code_sended, setVerification_code_sended] = useState(false);
 
@@ -80,6 +82,7 @@ export default function SignUp_page({navigation}){
                     email:email,          // optional
                     phone_number:'+82'+phoneNumber.substring(1),   // optional - E.164 number convention
                     // other custom attributes 
+                    address:account,
                 }
             });
             console.log(user);
@@ -130,7 +133,15 @@ export default function SignUp_page({navigation}){
                     {'배달앤빵 회원가입'}
                 </Text>            
             </View>
-            <View style={{marginTop:height*50/2000, height:height*179/2000}}>
+
+            <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
+            style={{flex:1}}
+            >
+            <ScrollView>
+            <View>
+
+            
+            <View style={{marginTop:height*50/2000, height:height*180/2000}}>
                 <Text style={styles.highlightText}>
                 {'아이디(이메일)'}
                 </Text>
@@ -142,12 +153,12 @@ export default function SignUp_page({navigation}){
                     }}
                 />
             </View>
-            <View style={{marginTop:height*50/2000, height:height*179/2000}}>
+            <View style={{marginTop:height*50/2000, height:height*180/2000}}>
                 <Text style={styles.highlightText}>
-                전화번호
+                {'전화번호'}
                 </Text>
                 <TextInput 
-                    keyboardType='numeric'
+                    keyboardType='phone-pad'
                     style={[styles.textInputBox, styles.normalText]}
                     onChangeText={(num) => {
                         setPhoneNumber(num)
@@ -156,7 +167,8 @@ export default function SignUp_page({navigation}){
                     placeholder={'01012345678'}
                 />
             </View>
-            <View style={{marginTop: height*50/2000,height:height*179/2000}}>
+
+            <View style={{marginTop: height*50/2000,height:height*180/2000}}>
                 <Text style={styles.highlightText}>
                 비밀번호
                 </Text>
@@ -165,9 +177,65 @@ export default function SignUp_page({navigation}){
                     keyboardType='default'
                     style={[styles.textInputBox, styles.normalText]}
                     maxLength={20}
-                    onChangeText={(password) => setPassword(password)}
+                    onChangeText={(pw) => {
+                            const reg = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
+                            if(reg.test(pw)){
+                                setPassword1(pw)
+                            }
+                            else{
+                                setPassword1('')
+                            }
+                        }
+                    }
                 />
             </View>
+
+            <View style={{marginTop: height*50/2000,height:(password1)?height*180/2000:0}}>
+                <Text style={(password===password1)?styles.highlightText:styles.deactivatedText}>
+                {(password===password1)?'비밀번호 일치':'비밀번호 불일치'}
+                </Text>
+                <TextInput 
+                    secureTextEntry={true}
+                    keyboardType='default'
+                    style={(password1)?[styles.textInputBox, styles.normalText]:{height:0}}
+                    maxLength={20}
+                    onChangeText={(pw) => {
+                        if(pw === password1){
+                            setPassword(pw)
+                        }
+                        else{
+                            setPassword('')
+                        }
+                    }}
+                    editable={(password1)?true:false}
+                />
+            </View>
+
+            <View style={{marginTop:height*50/2000, height:height*260/2000}}>
+            <TouchableOpacity
+                    onPress={()=>{
+                        Alert.alert('배달앤빵','카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요.');
+                    }}
+            >
+                <Text style={styles.highlightText}>
+                {!account?'계좌번호 또는 카카오페이 송금코드\n클릭해서 카카오페이 송금코드 확인':'계좌번호'}
+                </Text>           
+            </TouchableOpacity>
+
+            <TextInput
+                keyboardType='default'
+                style={[styles.textInputBox, styles.normalText]}
+                onChangeText={(account) => {
+                    setAccount(account)
+                }}
+                numberOfLines={(account)?1:2}
+                editable={true}
+                placeholderTextColor={colorPack.deactivated}
+                placeholder={'카카오뱅크 3333047718018\n또는 카카오페이 송금코드'}
+            />
+            </View>
+
+            
                 
             <View>
                
@@ -177,35 +245,37 @@ export default function SignUp_page({navigation}){
                 style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
                 >
                 <Text style={sendVerificationCodeBtn?styles.highlightText:styles.deactivatedText}>
-                {!verification_code_sended?'인증코드 보내기(문자)':'인증코드를 입력하세요'}
+                {!verification_code_sended?'인증코드 보내기(이메일)':'인증코드를 입력하세요'}
                 </Text>
                 </TouchableOpacity>
-            </View>
-            <View>
-                <TextInput 
-                    autoComplete='password'
+                <TextInput
+                    autoComplete='off'
                     keyboardType='number-pad'
                     style={[styles.textInputBox, styles.normalText]}
                     maxLength={6}
                     onChangeText={(verification_code) => {setVerification_code(verification_code)
-                    if (verification_code.length === 6){
-                        confirmSignUp();
+                            if (verification_code.length === 6){
+                                Keyboard.dismiss();
+                            }
                         }
                     }
-                }   
+                    editable={verification_code_sended}
                 />
             </View>
-                
             <TouchableOpacity
-                onPressOut={() => confirmSignUp()
-                }
-                disabled={!verification_code}
-                style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
+            onPressOut={() => confirmSignUp()
+            }
+            disabled={!verification_code}
+            style={[styles.goToSignUpInButton]}
             >
-                <Text style={styles.highlightText}>
-                {'회원가입'}
-                </Text>
+            <Text style={styles.highlightText}>
+            {'회원가입'}
+            </Text>
             </TouchableOpacity>
+            </View>
+            </ScrollView>
+            </KeyboardAvoidingView>
+
         </View>
     )
 }

@@ -14,8 +14,8 @@
     ],
     "smsAuthenticationMessage": "Your code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "UNIST Pseudo Tesla",
-    "emailVerificationMessage": "Verification code: {####}",
+    "emailVerificationSubject": "Delivery N bbang",
+    "emailVerificationMessage": "Verification code: {####}\n\nfrom developer. ",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 6,
     "passwordPolicyCharacters": [
