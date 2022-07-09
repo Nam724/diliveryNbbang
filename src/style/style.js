@@ -112,6 +112,16 @@ export const styles = StyleSheet.create({
         paddingBottom: height * 100/2000,
     },
 
+    restaurantPageContainerModal:{
+      backgroundColor: colorPack.representative,
+      height: height * (150+990)/2000,
+      alignItems:'center',
+      flexDirection:'column',
+      justifyContent:'space-between',
+      paddingBottom: 0,
+      marginTop: height * 45/2000,
+    },
+
     buttonContainerModal:{
         height: height * 60/2000,
         flexDirection:'row',

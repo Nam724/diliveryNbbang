@@ -201,7 +201,7 @@ function Members(user, member, restaurant, index){
 
             <TouchableOpacity 
             onPress={()=>{
-                Alert.alert(`${member.email.split('@')[0]}님이 주문하신 메뉴`,`${member.menu}`, [{text:'닫기'}])
+                Alert.alert(`${member.email.split('@')[0]}님이 주문하신 메뉴`,`${member.menu}\n음식값: ${member.price}원, 배달료: ${restaurant.fee/restaurant.num_members}원`, [{text:'닫기'}])
             }}
             >
             <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>

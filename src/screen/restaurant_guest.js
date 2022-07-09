@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert, KeyboardAvoidingView} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member,} from '../models';
@@ -165,8 +165,10 @@ export default function Restaurant_page_guest({route, navigation}){
                 {setModalVisible(false);}
             }
             />
-  
-          <View style={styles.restaurantPageModal}>
+            <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
+            style={styles.restaurantInfoModal}>
+            <ScrollView>
+            <View style={styles.restaurantPageContainerModal}>
           
 
           <View style={{
@@ -251,7 +253,8 @@ export default function Restaurant_page_guest({route, navigation}){
           
           </View>
 
-            
+          </ScrollView>
+          </KeyboardAvoidingView>
         </Modal>
 
 
@@ -364,7 +367,7 @@ function Members(user, member, restaurant, index){
 
             <TouchableOpacity 
             onPress={()=>{
-                Alert.alert(`${member.email.split('@')[0]}님이 주문하신 메뉴`,`${member.menu}`, [{text:'닫기'}])
+                Alert.alert(`${member.email.split('@')[0]}님이 주문하신 메뉴`,`${member.menu}\n음식값: ${member.price}원, 배달료: ${restaurant.fee/restaurant.num_members}원`, [{text:'닫기'}])
             }}
             >
             <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>

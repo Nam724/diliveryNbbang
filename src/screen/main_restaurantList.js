@@ -34,7 +34,7 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
       >{user.username == restaurant.makerID?`"${restaurant.name}"`:restaurant.name}</Text>
 
       </TouchableOpacity>
-      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{restaurant.num_members==1?`총 ${restaurant.fee}원`:`각 ${restaurant.fee/restaurant.num_members}원`}</Text>
+      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{restaurant.num_members==0?`총 ${restaurant.fee}원`:`각 ${restaurant.fee/restaurant.num_members}원`}</Text>
 
       <Text style={[styles.normalText, styles.restaurantMembers]} ellipsizeMode='tail' numberOfLines={1}>{`${restaurant.num_members}명`}</Text>
 
