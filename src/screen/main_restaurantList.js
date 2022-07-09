@@ -19,7 +19,27 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
   // console.log(restaurantList)
 
  // return 
-  return (
+  return (restaurant.isFinishRecruiting?
+    <View style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} 
+    key={restaurant.id}   
+    >
+    <TouchableOpacity
+    onPress=  {() => {  
+      navigation.navigate('Restaurant', {user:user, restaurant:restaurant, place:place,setRestaurantList:setRestaurantList, restaurantList:restaurantList, refreshRestaurantList:refreshRestaurantList})
+      // console.log('pressed')
+    }}
+    >
+
+      <Text style={[styles.deactivatedText, styles.restaurantName]} numberOfLines={1} ellipsizeMode='tail' 
+      >{user.username == restaurant.makerID?`"${restaurant.name}"`:restaurant.name}</Text>
+
+      </TouchableOpacity>
+      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{''}</Text>
+
+      <Text style={[styles.normalText, styles.restaurantMembers]} ellipsizeMode='tail' numberOfLines={1}>{`모집종료`}</Text>
+
+    </View>
+    :
     <View style={[styles.restaurantList,{backgroundColor:myBackgroundColor}]} 
     key={restaurant.id}   
     >
