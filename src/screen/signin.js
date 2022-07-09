@@ -1,8 +1,9 @@
 import { Auth } from 'aws-amplify';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text, AsyncStorage, Alert } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, AsyncStorage, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
+import Svg from 'react-native-svg';
 import { styles, width, height } from '../style/style';
-
+import Logo from '../../assets/Logo.svg';
 
 
 function emailTest(email){
@@ -118,56 +119,72 @@ export default function SignIn_page({route, navigation}){
 
     return(
         <View style={styles.container}>
+            <View style={{alignContent:'center'}}>
+            <Image source={require('../../assets/icon.png')} style={{width:width*0.3, height:width*0.3, marginLeft:width*0.35}} />
+            </View>
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
                     {'배달앤빵 로그인'}
-                </Text>            
+                </Text>
             </View>
-            <TouchableOpacity
-                onPressOut={() => navigation.navigate('SignUp')}
-                style={[styles.goToSignUpInButton,{marginTop:height*231/2000}]}
-            >
-                <Text style={styles.highlightText}>
-                {'회원가입'}
-                </Text>
-            </TouchableOpacity>
-            <View style={{marginTop:height*249/2000, height:height*179/2000}}>
-                <Text style={styles.highlightText}>
-                {'이메일'}
-                </Text>
-                <TextInput 
-                    autoComplete='email'
-                    keyboardType='email-address'
-                    style={[styles.textInputBox, styles.normalText]}
-                    onChangeText={(email) => {
-                        setEmail(email);
-                        setIsEmailValid(emailTest(email))
-                    }}
-                />
+
+            <KeyboardAvoidingView>
+            <ScrollView>
+                <View>
+                    <View style={{marginTop:height*100/2000, height:height*179/2000}}>
+                        <Text style={styles.highlightText}>
+                            {'이메일'}
+                        </Text>
+                        <TextInput 
+                            autoComplete='email'
+                            keyboardType='email-address'
+                            style={[styles.textInputBox, styles.normalText]}
+                            onChangeText={(email) => {
+                                setEmail(email);
+                                setIsEmailValid(emailTest(email))
+                            }}
+                        />
+                    </View>
+                    <View style={{marginTop: height*100/2000,height:height*179/2000}}>
+                        <Text style={styles.highlightText}>
+                        {'비밀번호'}
+                        </Text>
+                        <TextInput 
+                            secureTextEntry={true}
+                            autoComplete='password'
+                            keyboardType='default'
+                            style={[styles.textInputBox, styles.normalText]}
+                            maxLength={20}
+                            onChangeText={(password) => setPassword(password)}
+                        />
+                    </View>
+                    
+                    <TouchableOpacity
+                        onPressOut={() => signIn(email, password)}
+                        style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
+                        disabled={!isEmailValid&&password.length<=0}
+                    >
+                        <Text style={styles.highlightText}>
+                        {'로그인'}
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                    onPressOut={() => navigation.navigate('SignUp')}
+                    style={[styles.goToSignUpInButton,{marginTop:height*200/2000}]}
+                >
+                        <Text style={styles.highlightText}>
+                        {'회원가입'}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+            </KeyboardAvoidingView>
+
+            <View style={{top:height*350/2000}}>
+                <Text style={styles.deactivatedText}>
+                    {'presented by UNIST BTS Pseudo Tesla Team'}
+                </Text>       
             </View>
-            <View style={{marginTop: height*100/2000,height:height*179/2000}}>
-                <Text style={styles.highlightText}>
-                {'비밀번호'}
-                </Text>
-                <TextInput 
-                    secureTextEntry={true}
-                    autoComplete='password'
-                    keyboardType='default'
-                    style={[styles.textInputBox, styles.normalText]}
-                    maxLength={20}
-                    onChangeText={(password) => setPassword(password)}
-                />
-            </View>
-                
-            <TouchableOpacity
-                onPressOut={() => signIn(email, password)}
-                style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
-                disabled={!isEmailValid&&password.length<=0}
-            >
-                <Text style={styles.highlightText}>
-                {'로그인'}
-                </Text>
-            </TouchableOpacity>
             
         </View>
     )

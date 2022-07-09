@@ -76,12 +76,15 @@ export default function Main_page({route, navigation}){
     setRefreshing(false);
   }
 
-  const logOut = async () => {
-    Alert.alert('배달앤빵','로그아웃 되었습니다.',[{text: '로그인 화면으로 돌아가기'}]);
-    await Auth.signOut();
-    setAutoLogin(false)
-    setIsLogin(false);
-    setUser(null);
+  const logOut = () => {
+    Alert.alert('배달앤빵','로그아웃을 할까요?',[{text: '로그아웃', onPress: async () => {
+      await Auth.signOut();
+      setAutoLogin(false)
+      setIsLogin(false);
+      setUser(null);
+    }},{text: '취소', onPress: () => {
+    console.log('Cancel Pressed');
+  }}]);
   }
 
   let text = 'Waiting..';

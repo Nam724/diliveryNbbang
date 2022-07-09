@@ -14,17 +14,17 @@
 					"label": "로그 아웃"
 				},
 				{
-					"line": 136,
+					"line": 139,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 186,
+					"line": 189,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 225,
+					"line": 228,
 					"column": 28,
 					"label": "음식점 불러오기"
 				}
@@ -34,17 +34,17 @@
 			"path": "src/screen/signin.js",
 			"bookmarks": [
 				{
-					"line": 20,
+					"line": 21,
 					"column": 23,
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
 				},
 				{
-					"line": 55,
+					"line": 56,
 					"column": 4,
 					"label": "자동 로그인"
 				},
 				{
-					"line": 75,
+					"line": 76,
 					"column": 4,
 					"label": "로그인"
 				}
@@ -132,6 +132,16 @@
 					"line": 106,
 					"column": 4,
 					"label": "인증코드 확인(회원가입 완료)"
+				}
+			]
+		},
+		{
+			"path": "App.js",
+			"bookmarks": [
+				{
+					"line": 23,
+					"column": 49,
+					"label": "자동로그인 결정"
 				}
 			]
 		}

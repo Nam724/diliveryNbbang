@@ -21,7 +21,7 @@ const Stack = createStackNavigator();
 export default function App(){ 
   const [IsLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
-  const [autoLogin, setAutoLogin] = useState(true);
+  const [autoLogin, setAutoLogin] = useState(false);
   const [loaded] = useFonts({
     happy_sans_bold: require('./assets/font/Happiness-Sans-Bold.ttf'),
     happy_sans_regular: require('./assets/font/Happiness-Sans-Regular.ttf'),
