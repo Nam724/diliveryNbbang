@@ -11,22 +11,18 @@ import { sendSMSAsync } from 'expo-sms';
 
 export default function Restaurant_page_finished({route, navigation}){
     
-    console.log('Restaurant_page_guest', route);
+
 
     const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
     const [place, setPlace] = useState(route.params.place);
+    const [member, setMember] = useState(null);
+    const [isRegistered, setIsRegistered] = useState(false);
     const setRestaurantList = route.params.setRestaurantList;
     const refreshRestaurantList = route.params.refreshRestaurantList;
     var restaurantList = route.params.restaurantList;
     
 
-    const [member, setMember] = useState(null);
-
-    const [modalVisible, setModalVisible] = useState(false);
-    const [menuList, setMenuList] = useState(null);
-    const [menuPrice, setMenuPrice] = useState(null);
-    const [isRegistered, setIsRegistered] = useState(false);
 
     useEffect(() => {
         getMembers(); // get member from database
@@ -34,24 +30,26 @@ export default function Restaurant_page_finished({route, navigation}){
         // console.log('member', member)
         // console.log('restaurant', restaurant)
         // console.log('place', place)
-    }, [isRegistered, modalVisible]);
+    }, []);
     
     const getMembers = async () => {
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
-        console.log('members', members)
+
         const _membersList = []
-        members.forEach(async (member, index) => {
-            const _m = Members(user, member, restaurant, index)
-            
-            _membersList.push(_m)            
+        members.forEach(async (m, index) => {
+            const _m = Members(user, m, restaurant, index)
+
+            _membersList.push(_m)
+            if(m.username==user.username){
+                setIsRegistered(true)
+                console.log('등록됨!')
+            }
+            // console.log(m)
         })
         setMembersList(_membersList)
 
         setMember(members)
-
-        if(member.filter(member=>member.username===user.username).length>0){
-            setIsRegistered(true)
-        }
+        console.log('isRegistered', isRegistered);
     }
     const sendMoney = async() => {
         Clipboard.setString(restaurant.account);
