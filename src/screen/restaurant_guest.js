@@ -50,13 +50,6 @@ export default function Restaurant_page_guest({route, navigation}){
         }
     }
 
-    const sendMoney = async () => {
-        Clipboard.setString(restaurant.account);
-        Alert.alert('배달앤빵','보내실 주소가 복사되었습니다.', [{text: '카카오페이로 이동', onPress: () => {
-            Linking.openURL(restaurant.account);
-        }}, {text: '닫기'}]);
-    }
-
     const makeNewMember = async () => {
         const _isRegistered = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id))
         // console.log(_isRegistered)
@@ -294,10 +287,11 @@ export default function Restaurant_page_guest({route, navigation}){
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.restaurantButton_1}
-                onPress={()=>sendMoney()}
+                
+                disabled={true}
                 >
                     <Text style={styles.normalText}>
-                        {'송금하러\n가기'}
+                        {'모집종료 후\n입금가능'}
                     </Text>
                 </TouchableOpacity>
 

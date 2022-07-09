@@ -141,20 +141,28 @@ export const styles = StyleSheet.create({
         flexDirection:'row',
     },
     restaurantButton_1:{
-        height: height * 200/2000,
         width: width * 0.25,
         alignItems:'center',
         justifyContent:'center',
         backgroundColor: colorPack.highlight_dark,
-
+        
+        height: height * 150/2000,
+        borderRadius: height * 50/2000,
+        borderColor: colorPack.representative,
+        borderWidth: 3,
+        marginBottom: height * 20/2000,
     },
     restaurantButton_2:{
-        height: height * 200/2000,
         width: width * 0.25,
         alignItems:'center',
         justifyContent:'center',
         backgroundColor: colorPack.highlight_light,
 
+        height: height * 150/2000,
+        borderRadius: height * 50/2000,
+        borderColor: colorPack.representative,
+        borderWidth: 3,
+        marginBottom: height * 20/2000,
     },
 
     // sign in page
