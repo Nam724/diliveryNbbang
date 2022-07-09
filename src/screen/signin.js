@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text, AsyncStorage } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, AsyncStorage, Alert } from 'react-native';
 import { styles, width, height } from '../style/style';
 
 
@@ -83,32 +83,32 @@ export default function SignIn_page({route, navigation}){
         } catch (error) {
             console.log('error signing in', error);
             if(error === 'UserNotConfirmedException'){
-                alert('User not confirmed');
+                Alert.alert('배달앤빵','허가되지 않은 사용자입니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);
             }
             else if(error == 'UserNotFoundException: User does not exist.'){
-                alert('해당 이메일의 사용자를 찾을 수 없습니다.');
+                Alert.alert('배달앤빵','등록되지 않은 이메일입니다.', [{text: '확인', onPress: () => {}}]);                
                 return(false);
             }
             else if(error == 'NotAuthorizedException: Incorrect username or password.'){
-                alert('잘못된 비밀번호입니다.');
+                Alert.alert('배달앤빵','비밀번호가 일치하지 않습니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);
             }
             else if (error == 'NetworkError'){
-                alert('Network error');
+                Alert.alert('배달앤빵','네트워크 오류입니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);
             }
             else if (error == 'InvalidParameterException: Custom auth lambda trigger is not configured for the user pool.'){
-                alert('Invalid parameter');
+                Alert.alert('배달앤빵','로그인 오류입니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);
             }
             else if (error == 'signing in Error: Pending sign-in attempt already in progress'
             ){
-                alert('이미 로그인이 진행중입니다.');
+                Alert.alert('배달앤빵','이미 로그인중입니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);
             }
             else{
-                alert('알수 없는 에러, 다시 시도하세요.');
+                Alert.alert('배달앤빵','다시 시도해주세요.', [{text: '확인', onPress: () => {}}]);
                 return(false);
             }
         }
@@ -120,12 +120,20 @@ export default function SignIn_page({route, navigation}){
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {'My Application Login'}
+                    {'배달앤빵 로그인'}
                 </Text>            
             </View>
+            <TouchableOpacity
+                onPressOut={() => navigation.navigate('SignUp')}
+                style={[styles.goToSignUpInButton,{marginTop:height*231/2000}]}
+            >
+                <Text style={styles.highlightText}>
+                {'회원가입'}
+                </Text>
+            </TouchableOpacity>
             <View style={{marginTop:height*249/2000, height:height*179/2000}}>
                 <Text style={styles.highlightText}>
-                Email
+                {'이메일'}
                 </Text>
                 <TextInput 
                     autoComplete='email'
@@ -139,7 +147,7 @@ export default function SignIn_page({route, navigation}){
             </View>
             <View style={{marginTop: height*100/2000,height:height*179/2000}}>
                 <Text style={styles.highlightText}>
-                Password
+                {'비밀번호'}
                 </Text>
                 <TextInput 
                     secureTextEntry={true}
@@ -160,14 +168,7 @@ export default function SignIn_page({route, navigation}){
                 {'로그인'}
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-                onPressOut={() => navigation.navigate('SignUp')}
-                style={[styles.goToSignUpInButton,{marginTop:height*231/2000}]}
-            >
-                <Text style={styles.highlightText}>
-                {'회원가입'}
-                </Text>
-            </TouchableOpacity>
+            
         </View>
     )
 }

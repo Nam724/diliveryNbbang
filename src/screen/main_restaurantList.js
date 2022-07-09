@@ -34,7 +34,7 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
       >{user.username == restaurant.makerID?`"${restaurant.name}"`:restaurant.name}</Text>
 
       </TouchableOpacity>
-      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{restaurant.num_members==0?`배달료 총${restaurant.fee}원`:`배달료: 각${restaurant.fee/restaurant.num_members}원`}</Text>
+      <Text style={[styles.normalText, styles.restaurantFee,]} ellipsizeMode='tail' numberOfLines={1}>{restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: 각 ${restaurant.fee/restaurant.num_members}원`}</Text>
 
       <Text style={[styles.normalText, styles.restaurantMembers]} ellipsizeMode='tail' numberOfLines={1}>{`${restaurant.num_members}명`}</Text>
 
@@ -58,11 +58,9 @@ function Main_restaurantList_sample(id, name, fee, num) {
     disabled={true}
     >
 
-      <Text style={[styles.highlightText, styles.restaurantName]}>{name}</Text>
+      <Text style={[styles.normalText, styles.restaurantName]}>{name}</Text>
 
-      <Text style={[styles.normalText, styles.restaurantFee]}>{`${fee}`}</Text>
-
-      <Text style={[styles.normalText, styles.restaurantMembers]}>{``}</Text>
+      <Text style={[styles.deactivatedText, styles.restaurantFee]}>{`${fee}`}</Text>
       
     </TouchableOpacity>
   );  // return

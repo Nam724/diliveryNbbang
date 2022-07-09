@@ -1,34 +1,35 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Dimensions } from 'react-native';
 import Constants from 'expo-constants';
-export const height = Dimensions.get('screen').height; // 2000
+export const height = Dimensions.get('screen').height-Constants.statusBarHeight; // 2000
 export const width = Dimensions.get('screen').width; // 1000
 export const colorPack = {
-    representative: '#ECE6CC',
-    highlight_light: '#BAB5A0',
-    highlight_dark: '#A3965A',
-    text_dark: '#1E1F57',
-    text_light: '#53616E',
-    deactivated: '#707070',
+    representative: '#17263C',
+    highlight_light: '#38414E',
+    highlight_dark: '#242F3E',
+    text_dark: '#D99066',
+    text_light: '#E4EAF2',
+    deactivated: '#8B9198',
 }
 
 
 export const styles = StyleSheet.create({
 // TEXT STYLES
     normalText:{
-        // fontFamily:'Arial',
+        fontFamily:'happy_sans_bold',
         fontSize:width*0.04, // 30
         color: colorPack.text_light,
         textAlign:'center',
     },
     highlightText:{
-        // fontFamily:'Arial',
+        fontFamily:'happy_sans_title',
         fontSize:width*0.05, // 40
         color: colorPack.text_dark,
         textAlign:'center',
+        fontWeight:'bold',
     },
     deactivatedText:{
-        // fontFamily:'Arial',
+        fontFamily:'happy_sans_regular',
         fontSize:width*0.04, // 30
         color: colorPack.deactivated,
         textAlign:'center',
@@ -36,37 +37,39 @@ export const styles = StyleSheet.create({
 // CONTAINER STYLES
     container:{
         width: width,
-        height: height,
+        height: Dimensions.get('screen').height,
         backgroundColor:colorPack.representative,
         flexDirection: 'column',
-        paddingTop: Constants.statusBarHeight,
+        paddingTop: height * 100/2000,
     },
     header:{
-        height: height * 80/2000,
+        height: height * 150/2000,
         width: width,
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
     },
+    mapContainer:{
+        height: height * 990/2000,
+        width: width,
+        marginBottom: height * 10/2000,
+    },
     map:{
-        height: height * 1000/2000,
+        height: height * 990/2000,
         width: width,
     },
     restaurantContainer: {
         height: height * 710/2000,
         width:width,
-        backgroundColor:colorPack.highlight_light,
+
     },
     locationInfoContainer:{
         height: height * 106/2000,
         paddingLeft: width * 30/1000,
-        paddingRight: width * 70/1000,
+        paddingRight: width * 30/1000,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between', 
-        borderColor: colorPack.highlight_light,
-        borderBottomWidth: width * 5/1000, 
-        backgroundColor: colorPack.representative,
     },
     restaurantListContainer:{
         height: height * 604/2000,
@@ -76,9 +79,11 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingHorizontal: width * 30/1000,
-        borderColor: colorPack.highlight_light,
-        borderBottomWidth: width * 5/1000, 
+        marginHorizontal: width*15/1000,
+        paddingHorizontal: width*30/1000,
+        borderColor: colorPack.representative,
+        borderWidth: 3, 
+        borderRadius: width*50/1000,
     },
     restaurantName:{
         width: width * 450/1000,
@@ -149,7 +154,7 @@ export const styles = StyleSheet.create({
         flexDirection:'row',
     },
     restaurantButton_1:{
-        height: height * 211/2000,
+        height: height * 200/2000,
         width: width * 0.25,
         alignItems:'center',
         justifyContent:'center',
@@ -157,7 +162,7 @@ export const styles = StyleSheet.create({
 
     },
     restaurantButton_2:{
-        height: height * 211/2000,
+        height: height * 200/2000,
         width: width * 0.25,
         alignItems:'center',
         justifyContent:'center',
@@ -214,3 +219,164 @@ export const styles = StyleSheet.create({
 
 });
 
+export const map_darkStyle =[
+        {
+          "elementType": "geometry",
+          "stylers": [
+            {
+              "color": "#242f3e"
+            }
+          ]
+        },
+        {
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#746855"
+            }
+          ]
+        },
+        {
+          "elementType": "labels.text.stroke",
+          "stylers": [
+            {
+              "color": "#242f3e"
+            }
+          ]
+        },
+        {
+          "featureType": "administrative.locality",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#d59563"
+            }
+          ]
+        },
+        {
+          "featureType": "poi",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#d59563"
+            }
+          ]
+        },
+        {
+          "featureType": "poi.park",
+          "elementType": "geometry",
+          "stylers": [
+            {
+              "color": "#263c3f"
+            }
+          ]
+        },
+        {
+          "featureType": "poi.park",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#6b9a76"
+            }
+          ]
+        },
+        {
+          "featureType": "road",
+          "elementType": "geometry",
+          "stylers": [
+            {
+              "color": "#38414e"
+            }
+          ]
+        },
+        {
+          "featureType": "road",
+          "elementType": "geometry.stroke",
+          "stylers": [
+            {
+              "color": "#212a37"
+            }
+          ]
+        },
+        {
+          "featureType": "road",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#9ca5b3"
+            }
+          ]
+        },
+        {
+          "featureType": "road.highway",
+          "elementType": "geometry",
+          "stylers": [
+            {
+              "color": "#746855"
+            }
+          ]
+        },
+        {
+          "featureType": "road.highway",
+          "elementType": "geometry.stroke",
+          "stylers": [
+            {
+              "color": "#1f2835"
+            }
+          ]
+        },
+        {
+          "featureType": "road.highway",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#f3d19c"
+            }
+          ]
+        },
+        {
+          "featureType": "transit",
+          "elementType": "geometry",
+          "stylers": [
+            {
+              "color": "#2f3948"
+            }
+          ]
+        },
+        {
+          "featureType": "transit.station",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#d59563"
+            }
+          ]
+        },
+        {
+          "featureType": "water",
+          "elementType": "geometry",
+          "stylers": [
+            {
+              "color": "#17263c"
+            }
+          ]
+        },
+        {
+          "featureType": "water",
+          "elementType": "labels.text.fill",
+          "stylers": [
+            {
+              "color": "#515c6d"
+            }
+          ]
+        },
+        {
+          "featureType": "water",
+          "elementType": "labels.text.stroke",
+          "stylers": [
+            {
+              "color": "#17263c"
+            }
+          ]
+        }
+]

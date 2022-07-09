@@ -1,8 +1,8 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member,} from '../models';
-import { styles, colorPack, width, height } from '../style/style';
+import { styles, colorPack, width, height, map_darkStyle } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
@@ -55,8 +55,10 @@ export default function Restaurant_page_finished({route, navigation}){
     }
     const sendMoney = async () => {
         Clipboard.setString(restaurant.account);
-        alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
-        Linking.openURL(restaurant.account)
+        Alert.alert('배달앤빵','보내실 주소가 복사되었습니다.', [{text: '카카오페이로 이동', onPress: () => {
+            Linking.openURL(restaurant.account);
+        }}, {text: '닫기'}]);
+        
     }
 
     const sendSMStoAuthor = async() => {
@@ -65,7 +67,7 @@ export default function Restaurant_page_finished({route, navigation}){
         const makerPhoneNumber = member.filter(member => member.username == restaurant.makerID)[0].phone_number;
 
         console.log(makerPhoneNumber)
-        Linking.openURL(`sms:${makerPhoneNumber}`)
+        sendSMSAsync(makerPhoneNumber, `배달앤빵 주문자: ${user.email.split('@')[0]} 주문한 음식점: ${restaurant.name}\n`)
         
     }
     const [membersList, setMembersList] = useState(
@@ -82,14 +84,11 @@ export default function Restaurant_page_finished({route, navigation}){
                 <Text style={styles.highlightText}>
                     {`배달 모집 완료! ${restaurant.name}`}
                 </Text>
-            </View>
-
-
-            <View style={styles.header}>
                 <Text style={styles.highlightText}>
                     {restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: ${restaurant.fee}원 / ${restaurant.num_members}명 = ${Math.ceil(restaurant.fee/restaurant.num_members)}원`}
                 </Text>
             </View>
+
 
 
             <View style={styles.restaurantButtonContainer}>
@@ -99,18 +98,18 @@ export default function Restaurant_page_finished({route, navigation}){
                 }}
                 disabled={!isRegistered}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
                         {'배민\n바로가기'}
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.restaurantButton_2}
                     onPress={() => {
-                        alert('준비중입니다.')
+                        Alert.alert('배달앤빵','준비중입니다.', [{text: '닫기'}]);
                     }}
                     disabled={!isRegistered}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
                         {'나의주문\n메뉴보기'}
                     </Text>
                 </TouchableOpacity>
@@ -119,7 +118,7 @@ export default function Restaurant_page_finished({route, navigation}){
                 onPress={()=>sendMoney()}
                 disabled={!isRegistered}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
                         {'송금하러\n가기'}
                     </Text>
                 </TouchableOpacity>
@@ -129,7 +128,7 @@ export default function Restaurant_page_finished({route, navigation}){
                         sendSMStoAuthor()}}
                         disabled={!isRegistered}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={(!isRegistered)?styles.normalText:styles.deactivated}>
                         {'주문자에게\n문자보내기'}
                     </Text>
                 </TouchableOpacity>
@@ -137,9 +136,10 @@ export default function Restaurant_page_finished({route, navigation}){
             </View>
 
 
-            <View style={styles.map} >
+            <View style={styles.mapContainer} >
               <MapView
               provider='google'
+              customMapStyle={map_darkStyle}
               style={styles.map}
               initialRegion={{longitude: place.longitude, latitude: place.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}
               showsMyLocationButton={false}
@@ -194,7 +194,7 @@ function Members(user, member, restaurant, index){
 
             <TouchableOpacity 
             onPress={()=>{
-                alert(`${member.menu}`)
+                Alert.alert(`${member.email.split('@')[0]}님이 주문하신 메뉴`,`${member.menu}`, [{text:'닫기'}])
             }}
             >
             <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>

@@ -1,8 +1,8 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member,} from '../models';
-import { styles, colorPack, width, height } from '../style/style';
+import { styles, colorPack, width, height, map_darkStyle } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
@@ -52,8 +52,9 @@ export default function Restaurant_page_guest({route, navigation}){
 
     const sendMoney = async () => {
         Clipboard.setString(restaurant.account);
-        alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
-        Linking.openURL(restaurant.account)
+        Alert.alert('배달앤빵','보내실 주소가 복사되었습니다.', [{text: '카카오페이로 이동', onPress: () => {
+            Linking.openURL(restaurant.account);
+        }}, {text: '닫기'}]);
     }
 
     const makeNewMember = async () => {
@@ -78,12 +79,11 @@ export default function Restaurant_page_guest({route, navigation}){
             }));
             setRestaurant({...restaurant, num_members: restaurant.num_members + 1})
             refreshRestaurantList(id=place.id);
-            alert('추가되었습니다.\n이제 메뉴를 추가해주세요')
+            // Alert.alert('배달앤빵','메뉴를 추가해주세요.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
             setModalVisible(true);
         }
         else{
-            alert('이미 추가되었으므로\n메뉴 추가 페이지로 넘어갑니다.')
-            setModalVisible(true);
+            Alert.alert('배달앤빵','이미 등록되었습니다.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
         }
     }
 
@@ -107,15 +107,15 @@ export default function Restaurant_page_guest({route, navigation}){
                     setIsRegistered(false);
                 }
                 else{
-                    alert('등록되지 않은 음식점입니다.')
+                    Alert.alert('배달앤빵','등록되지 않은 음식점입니다.',[{text:'닫기'}])
                 }
             } catch (error) {
                 console.log(error)
                 if(error.code === 'ConcurrentModificationException'){
-                    alert('자신이 속한 가게가 아닙니다.')
+                    Alert.alert('배달앤빵','자신이 속한 가게가 아닙니다.',[{text:'닫기'}])
                 }
                 else if(error.code === 'NotFoundException'){
-                    alert('자신이 속한 가게가 아닙니다.')
+                    Alert.alert('배달앤빵','자신이 속한 가게가 아닙니다.',[{text:'닫기'}])
                 }
                 else{
                     console.log('에러가 뭔지 모르겠어요')
@@ -123,7 +123,7 @@ export default function Restaurant_page_guest({route, navigation}){
             }
         }
         else{
-            alert('자신이 만든 모집은 삭제할 수 없습니다.')
+            Alert.alert('배달앤빵','자신이 만든 모집은 삭제할 수 없습니다.',[{text:'확인'}])
         }
     }
 
@@ -244,7 +244,7 @@ export default function Restaurant_page_guest({route, navigation}){
                     addMenu();
                 }
                 else{
-                    alert('메뉴 또는 가격이 입력되지 않았습니다.')
+                    Alert.alert('배달앤빵','메뉴 또는 가격이 입력되지 않았습니다.',[{text: '확인'}])
                 }
             }}
             >
@@ -268,10 +268,6 @@ export default function Restaurant_page_guest({route, navigation}){
                 <Text style={styles.highlightText}>
                     {restaurant.name}
                 </Text>
-            </View>
-
-
-            <View style={styles.header}>
                 <Text style={styles.highlightText}>
                     {restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: ${restaurant.fee}원 / ${restaurant.num_members}명 = ${Math.ceil(restaurant.fee/restaurant.num_members)}원`}
                 </Text>
@@ -284,7 +280,7 @@ export default function Restaurant_page_guest({route, navigation}){
                     Linking.openURL(restaurant.url);
                 }}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {'배민\n바로가기'}
                     </Text>
                 </TouchableOpacity>
@@ -292,7 +288,7 @@ export default function Restaurant_page_guest({route, navigation}){
                 <TouchableOpacity style={styles.restaurantButton_2}
                     onPress={() => makeNewMember()}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {'주문하기'}
                     </Text>
                 </TouchableOpacity>
@@ -300,7 +296,7 @@ export default function Restaurant_page_guest({route, navigation}){
                 <TouchableOpacity style={styles.restaurantButton_1}
                 onPress={()=>sendMoney()}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {'송금하러\n가기'}
                     </Text>
                 </TouchableOpacity>
@@ -308,7 +304,7 @@ export default function Restaurant_page_guest({route, navigation}){
                 <TouchableOpacity style={styles.restaurantButton_2}
                 onPressOut={() => deleteMember()}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {'주문취소'}
                     </Text>
                 </TouchableOpacity>
@@ -316,9 +312,10 @@ export default function Restaurant_page_guest({route, navigation}){
             </View>
 
 
-            <View style={styles.map} >
+            <View style={styles.mapContainer} >
               <MapView
               provider='google'
+              customMapStyle={map_darkStyle}
               style={styles.map}
               initialRegion={{longitude: place.longitude, latitude: place.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}
               showsMyLocationButton={false}
@@ -373,7 +370,7 @@ function Members(user, member, restaurant, index){
 
             <TouchableOpacity 
             onPress={()=>{
-                alert(`${member.menu}`)
+                Alert.alert(`${member.email.split('@')[0]}님이 주문하신 메뉴`,`${member.menu}`, [{text:'닫기'}])
             }}
             >
             <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>

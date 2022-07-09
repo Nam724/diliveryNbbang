@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, Alert } from 'react-native';
 import { styles, height, width, colorPack } from '../style/style';
 
 // async function sendVerificationCode(email, password, setVerification_code_sended) {
@@ -87,15 +87,15 @@ export default function SignUp_page({navigation}){
         } catch (error) {
             console.log('error signing up:', error);
             if(error.code === 'UsernameExistsException'){
-                alert('User already exists');
+                Alert.alert('배달앤빵','이미 존재하는 이메일입니다.',[{text:'확인'}]);
                 return(false);
             }
             else if(error.code === 'InvalidParameterException'){
-                alert('Invalid parameter');
+                Alert.alert('배달앤빵','잘못된 이메일입니다.',[{text:'확인'}]);
                 return(false);
             }
             else if (error.code === 'NetworkError'){
-                alert('Network error');
+                Alert.alert('배달앤빵','네트워크 오류입니다.',[{text:'확인'}]);
                 return(false);
             }
         }
@@ -104,17 +104,17 @@ export default function SignUp_page({navigation}){
     const confirmSignUp = async() => {
         try {
           await Auth.confirmSignUp(email, verification_code);
-          alert('회원가입이 완료되었습니다.');
+          Alert.alert('배달앤빵','회원가입이 완료되었습니다.',[{text:'확인'}]);
           navigation.navigate('SignIn');
           return(true);
         } catch (error) {
             console.log('error confirming sign up', error);
             if (error === 'NetworkError'){
-                alert('Network error');
+                Alert.alert('배달앤빵','네트워크 오류입니다.',[{text:'확인'}]);
                 return(false);
             }
             else if (error === 'CodeMismatchException'){
-                alert('잘못된 코드입니다.');
+                Alert.alert('배달앤빵','코드가 일치하지 않습니다.',[{text:'확인'}]);
                 return(false);
             }
         }
@@ -127,7 +127,7 @@ export default function SignUp_page({navigation}){
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {'My Application 회원가입'}
+                    {'배달앤빵 회원가입'}
                 </Text>            
             </View>
             <View style={{marginTop:height*50/2000, height:height*179/2000}}>

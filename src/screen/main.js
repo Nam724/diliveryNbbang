@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
-import { colorPack, styles, width } from '../style/style';
+import { colorPack, mapStandardStyle, map_darkStyle, styles, width } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import DialogInput from 'react-native-dialog-input';
@@ -77,7 +77,7 @@ export default function Main_page({route, navigation}){
   }
 
   const logOut = async () => {
-    alert('로그아웃 되었습니다.');
+    Alert.alert('배달앤빵','로그아웃 되었습니다.',[{text: '로그인 화면으로 돌아가기'}]);
     await Auth.signOut();
     setAutoLogin(false)
     setIsLogin(false);
@@ -159,7 +159,7 @@ export default function Main_page({route, navigation}){
 // selected marker info
   const [selectedMarker, setSelectedMarker] = useState({
     coordinate: {}, // {logitude: 0, latitude: 0}
-    title: 'restaurant',
+    title: '',
     key: 'markers%',
   });
 
@@ -171,8 +171,8 @@ export default function Main_page({route, navigation}){
 
 // RESTAURANT LIST
   const [restaurantList, setRestaurantList] = useState([
-    Main_restaurantList_sample('placeholder1','장소 추가하는 법', '지도 길게 누르기', '0'),
-    Main_restaurantList_sample('placeholder2','장소 선택하는 법', '지도에 표시된 핀 누르기', '1'),
+    Main_restaurantList_sample('placeholder1','장소 추가', '지도 길게 누르기', '0'),
+    Main_restaurantList_sample('placeholder2','장소 선택', '핀 누르기', '1'),
   ]);
 
   // get restaurant list
@@ -267,28 +267,30 @@ export default function Main_page({route, navigation}){
 
       <DialogInput
         isDialogVisible={dialogVisible_marker}
-        title={"이 장소의 이름을 입력하세요"}
+        title={"장소 추가"}
         dialogStyle={{backgroundColor: 'white', borderRadius: 20}}
         textInputProps={{
           autoCorrect: false,
           autoCapitalize: false,
           maxLength: 30,
         }}
-        hintInput={'name of place'}
+        hintInput={'이 장소의 이름을 입력하세요'}
         initValueTextInput={""}
-        submitText={'submit'}
-        cancelText={'cancel'}
+        submitText={'확인'}
+        cancelText={'닫기'}
         submitInput={(title) => {
+          if(title){
           makeNewMarker(newmarkerCoordinate, title);
           setDialogVisible_marker(false);
+          }
+          else{
+            setDialogVisible_marker(false);
+          }
         }}
         closeDialog={() => {
           setDialogVisible_marker(false);
         }}
       />
-
-
-
 
 
       <Modal animationType='fade'
@@ -366,7 +368,7 @@ export default function Main_page({route, navigation}){
           <View style={styles.getRestaurantInfoModal}>
             <TouchableOpacity
             onPress={() => {
-              alert('카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요.');
+              Alert.alert('배달앤빵','카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요.')
            }}
             disabled={newRestaurant_account != null}>
 
@@ -423,24 +425,31 @@ export default function Main_page({route, navigation}){
 
 
       <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between', paddingHorizontal:width*25/1000}]}>
+        <View style={{width:width*0.25}}>
           <TouchableOpacity
             onPress={() => {
               logOut()
             }}
           >
-          <Text style={styles.normalText}>로그아웃</Text>
+          <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{'로그아웃'}</Text>
           </TouchableOpacity>    
-          <Text style={styles.highlightText}>Pseudo Tesla</Text>
+        </View>
+        <View style={{width:width*0.25}}>
+          <Text style={styles.highlightText} lineBreakMode='tail' numberOfLines={1}>{'배달앤빵'}</Text>
+        </View>
+        <View style={{width:width*0.25}}>
           <TouchableOpacity>
-          <Text style={styles.normalText}>{user.email.split('@')[0]}</Text>
+          <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{user.email.split('@')[0]}</Text>
           </TouchableOpacity>    
+        </View>
       </View>
 
       
-      <View style={styles.map} >
-        {location && (
+      <View style={styles.mapContainer}>
+
           <MapView
           provider='google'
+          customMapStyle={map_darkStyle}
           style={styles.map}
           initialRegion={location}
           showsMyLocationButton={true}
@@ -448,7 +457,6 @@ export default function Main_page({route, navigation}){
           loadingEnabled={true}
           zoomEnabled={true}
           rotateEnabled={true}
-
           onLongPress={(e) => {
             setNewmarkerCoordinate(e.nativeEvent.coordinate);
             setDialogVisible_marker(true);
@@ -456,7 +464,7 @@ export default function Main_page({route, navigation}){
           >
           {markers}
           </MapView>
-        )}
+
       </View>
 
 
@@ -536,11 +544,12 @@ const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerT
       setNewRestaurant_url('');
       setNewRestaurant_name('');
       if(clipboardText){
-          alert(`현재 복사된 링크는 배달의민족 주소가 아닙니다!`)
+          Alert.alert('배달앤빵', `현재 복사된 링크는 배달의민족 주소가 아닙니다!`, [{text: '확인'}]);
       }
       else{
-          alert('배달의민족 주소를 먼저 붙여넣어 주세요.')
+          Alert.alert('배달앤빵','배달의민족 주소를 먼저 붙여넣어 주세요.',[{text: '확인'}])
       }
 
   }
 };
+

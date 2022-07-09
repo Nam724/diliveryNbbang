@@ -1,8 +1,8 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member} from '../models';
-import { styles, colorPack, height } from '../style/style';
+import { styles, colorPack, height, map_darkStyle } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
@@ -79,10 +79,10 @@ export default function Restaurant_page_auth({route, navigation}){
             numberSMS,
             `Pseudo Tesla 배달앱에서 알려드립니다.(이 메세지는 방장이 보낸 메세지입니다.)\n${place.name}에 배달 될 음식점 "${restaurant.name}" 주문 정산 내용입니다.\n\n${stringSMS}\n${restaurant.account}`);
             if(result == 'sent'){
-                alert('메세지 전송이 완료되었습니다.')
+                Alert.alert('배달앤빵', '메세지 전송이 완료되었습니다.', [{text: '확인'}])
             }
             else{
-                alert('메세지 전송이 실패하였습니다.')
+                console.log('메세지 전송 실패')   
             }
 
         } else {
@@ -131,7 +131,7 @@ export default function Restaurant_page_auth({route, navigation}){
             }));
             // console.log('새로운 멤버가 추가되었습니다.', restaurant)
             
-            alert('이제 메뉴를 추가해주세요')
+            Alert.alert('배달앤빵','이제 메뉴를 추가해주세요', [{text: '확인'}])
             setModalVisible(true);
             refreshRestaurantList(id=place.id);
         }
@@ -162,7 +162,7 @@ export default function Restaurant_page_auth({route, navigation}){
             }
         }
         else{
-            alert('자신이 만든 모집이 아니라서 삭제할 수 없습니다.')
+            Alert.alert('배달앤빵','자신이 만든 모집이 아니라서 삭제할 수 없습니다.', [{text: '확인'}])
         }
     }
 
@@ -208,7 +208,7 @@ export default function Restaurant_page_auth({route, navigation}){
         })
         console.log(_allMenuList)
         Clipboard.setString(_allMenuList.join('\n'))
-        alert(`전체 메뉴가 복사되었습니다.\n${_allMenuList.join('\n')}`)
+        Alert.alert('배달앤빵',`전체 메뉴가 복사되었습니다.\n${_allMenuList.join('\n')}`, [{text: '확인'}])
     }
 
     const restartRecruiting = async () =>{
@@ -218,7 +218,7 @@ export default function Restaurant_page_auth({route, navigation}){
              updated.isFinishRecruiting = false;   
             }));
             setIsFinishRecruiting(false);
-            alert('모집 시작 했습니다.')
+            Alert.alert('배달앤빵','모집을 시작합니다.', [{text: '확인'}])
 
         }
         catch(e){
@@ -376,7 +376,7 @@ export default function Restaurant_page_auth({route, navigation}){
                     addMenu();
                 }
                 else{
-                    alert('메뉴 또는 가격이 입력되지 않았습니다.')
+                    Alert.alert('배달앤빵','메뉴 또는 가격이 입력되지 않았습니다.',[{text: '확인'}])
                 }
             }}
             >
@@ -400,10 +400,6 @@ export default function Restaurant_page_auth({route, navigation}){
                 <Text style={styles.highlightText}>
                     {isFinishRecruiting? `배달 모집 완료! ${restaurant.name}`:restaurant.name}
                 </Text>
-            </View>
-
-
-            <View style={styles.header}>
                 <Text style={styles.highlightText}>
                     {restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: ${restaurant.fee}원 / ${restaurant.num_members}명 = ${Math.ceil(restaurant.fee/restaurant.num_members)}원`}
                 </Text>
@@ -416,7 +412,7 @@ export default function Restaurant_page_auth({route, navigation}){
                     Linking.openURL(restaurant.url);
                 }}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {'배민\n바로가기'}
                     </Text>
                 </TouchableOpacity>
@@ -433,7 +429,7 @@ export default function Restaurant_page_auth({route, navigation}){
                     }
                     }
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {!isFinishRecruiting?'주문또는\n정보수정':'전체주문\n확인'}
                     </Text>
                 </TouchableOpacity>
@@ -444,7 +440,7 @@ export default function Restaurant_page_auth({route, navigation}){
                     
                 }}
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {!isFinishRecruiting?'모집종료\n송금요청':'전체문자\n보내기'}
                     </Text>
                 </TouchableOpacity>
@@ -462,7 +458,7 @@ export default function Restaurant_page_auth({route, navigation}){
                 }
                 
                 >
-                    <Text style={styles.highlightText}>
+                    <Text style={styles.normalText}>
                         {!isFinishRecruiting?'모집취소':'다시\n모집하기'}
                     </Text>
                 </TouchableOpacity>
@@ -473,6 +469,7 @@ export default function Restaurant_page_auth({route, navigation}){
             <View style={styles.map} >
               <MapView
               provider='google'
+              customMapStyle={map_darkStyle}
               style={styles.map}
               initialRegion={{longitude: place.longitude, latitude: place.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}
               showsMyLocationButton={false}
@@ -525,10 +522,10 @@ function Members(user, member, restaurant, index){
             member.phone_number,
             `Pseudo Tesla 배달앱에서 알려드립니다.\n${restaurant.name}으로 주문하신 메뉴(${member.menu.toString()})를 주문하기 위해 아래 링크로 ${member.price + (restaurant.fee/restaurant.num_members)} 원을 송금해주세요.\n${restaurant.account}`);
             if(result == 'sent'){
-                alert('메세지 전송이 완료되었습니다.')
+                Alert.alert('배달앤빵','메세지 전송이 완료되었습니다.',[{text:'확인'}])
             }
             else{
-                alert('메세지 전송이 실패하였습니다.')
+                console.log('SMS 전송 실패')
             }
 
         } else {
@@ -560,7 +557,7 @@ function Members(user, member, restaurant, index){
     
                 <TouchableOpacity 
                 onPress={()=>{
-                    alert(`${member.menu}`)
+                    Alert.alert(`${member.email.split('@')[0]}님이 주문하신 메뉴`,`${member.menu}`, [{text:'닫기'}])
                 }}
                 >
                 <Text style={[styles.normalText,styles.restaurantName]}>{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>

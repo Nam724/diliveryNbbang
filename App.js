@@ -8,6 +8,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
+import {useFonts} from 'expo-font'
+import Loading_page from './src/screen/loading_page';
 
 
 
@@ -20,42 +22,54 @@ export default function App(){
   const [IsLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [autoLogin, setAutoLogin] = useState(true);
+  const [loaded] = useFonts({
+    happy_sans_bold: require('./assets/font/Happiness-Sans-Bold.ttf'),
+    happy_sans_regular: require('./assets/font/Happiness-Sans-Regular.ttf'),
+    happy_sans_title: require('./assets/font/Happiness-Sans-Title.ttf'),
+  });
 
 
   console.log('App.js user', user);
-  return (
-    (IsLogin)?
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName={"Main"}>
-        <Stack.Screen name="Main" component={Main_page} 
+  if(!loaded){
+    return(
+      <Loading_page></Loading_page>
+    )
+  }
+  else{
+    return (
+      (IsLogin)?
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName={"Main"}>
+          <Stack.Screen name="Main" component={Main_page} 
+          options={{
+            headerShown: false,
+          }}
+          initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin, autoLogin:autoLogin, setAutoLogin:setAutoLogin}}
+          />
+          <Stack.Screen name="Restaurant" component={Restaurant_page} 
+          options={{
+            headerShown: false,
+          }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      :
+      <NavigationContainer>
+      <Stack.Navigator initialRouteName={"SignIn"}>
+        <Stack.Screen name="SignIn" component={SignIn_page} 
         options={{
           headerShown: false,
         }}
         initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin, autoLogin:autoLogin, setAutoLogin:setAutoLogin}}
         />
-        <Stack.Screen name="Restaurant" component={Restaurant_page} 
+        <Stack.Screen name="SignUp" component={SignUp_page}
         options={{
           headerShown: false,
         }}
         />
       </Stack.Navigator>
     </NavigationContainer>
-    :
-    <NavigationContainer>
-    <Stack.Navigator initialRouteName={"SignIn"}>
-      <Stack.Screen name="SignIn" component={SignIn_page} 
-      options={{
-        headerShown: false,
-      }}
-      initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin, autoLogin:autoLogin, setAutoLogin:setAutoLogin}}
-      />
-      <Stack.Screen name="SignUp" component={SignUp_page}
-      options={{
-        headerShown: false,
-      }}
-      />
-    </Stack.Navigator>
-  </NavigationContainer>
-      
-  );
+        
+    );  
+  }
 }

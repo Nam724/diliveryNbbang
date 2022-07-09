@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, AsyncStorage, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
 import { colorPack, styles, width } from '../style/style';
 
@@ -77,7 +77,7 @@ export default function Order({route, navigation}){
             <View style={styles.getRestaurantInfoModal}>
             <TouchableOpacity
             onPress={() => {
-                alert('카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요.');
+                Alert.alert('배달앤빵','카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요.', [{text: '확인'}]);
             }}
             disabled={newRestaurant_account != null}>
 
