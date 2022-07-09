@@ -1,7 +1,7 @@
 import { Auth } from 'aws-amplify';
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
-import { colorPack, mapStandardStyle, map_darkStyle, styles, width } from '../style/style';
+import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 import DialogInput from 'react-native-dialog-input';
@@ -270,16 +270,20 @@ export default function Main_page({route, navigation}){
 
       <DialogInput
         isDialogVisible={dialogVisible_marker}
-        title={"장소 추가"}
-        dialogStyle={{backgroundColor: 'white', borderRadius: 20}}
+        title={"이곳에 핀 추가하기"}
+        message={'이 장소의 이름을 입력하세요'}
+        dialogStyle={{
+          borderRadius: width*50/1000,
+          backgroundColor: colorPack.text_light,
+          padding: width*20/1000,
+        }}
         textInputProps={{
           autoCorrect: false,
           autoCapitalize: false,
-          maxLength: 30,
+          maxLength: 10,
         }}
-        hintInput={'이 장소의 이름을 입력하세요'}
-        initValueTextInput={""}
-        submitText={'확인'}
+
+        submitText={'저장'}
         cancelText={'닫기'}
         submitInput={(title) => {
           if(title){
