@@ -88,14 +88,13 @@ export default function Restaurant_page_guest({route, navigation}){
                 
                 console.log('memberLength', _member.length)
                 if(_member.length>0){ // 현재 등록이 되어 있는 상태라면
-
                     const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
+                    console.log('CURRENT_ITEM', CURRENT_ITEM)
                     await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
                     // Update the values on {item} variable to update DataStore entry
                     updated.num_members -= 1; ;
                     }));
                     navigation.goBack();
-                    setRestaurant({...restaurant, num_members: restaurant.num_members - 1})
                     refreshRestaurantList(id=restaurant.placeID);
                     setIsRegistered(false);
                 }
@@ -120,7 +119,7 @@ export default function Restaurant_page_guest({route, navigation}){
         }
     }
 
-    const addMenu = async () => {
+    const addMenu = async () => { // 기존에 등록되어 있을 때 메뉴 수정 및 추가
         console.log('addMenu')
 
         const _menuList = menuList.split('\n');
