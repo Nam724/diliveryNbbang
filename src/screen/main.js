@@ -15,7 +15,7 @@ export default function Main_page({route, navigation}){
 
   
 
-  console.log('route_params', route.params);
+  // console.log('route_params', route.params);
 
   const user = route.params.user.attributes;
   user.username = user.sub
@@ -75,6 +75,9 @@ export default function Main_page({route, navigation}){
     }
     setRefreshing(false);
   }
+
+
+
 
   const logOut = () => {
     Alert.alert('배달앤빵','로그아웃을 할까요?',[{text: '로그아웃', onPress: async () => {
@@ -223,8 +226,8 @@ const restaurantList_sample = [
           "username": user.username,
           "email": user.email,
           "phone_number": user.phone_number,
-          "menu": ['메뉴 없음'], 
-          "fee":0,
+          "menu": [''], 
+          "fee":Number(0),
           "restaurantID": restaurant.id,
       })
     );
@@ -259,7 +262,7 @@ const restaurantList_sample = [
           navigation,
           place,
           setRestaurantList,
-          _restaurantList,
+          restaurantList,
           refreshRestaurantList        
         )
       )
@@ -308,7 +311,7 @@ const restaurantList_sample = [
 
 
       <Modal animationType='fade'
-      transparent={true}
+      transparent={false}
       visible={dialogVisible_restaurant}
       onRequestClose={() => {
         setDialogVisible_restaurant(false);
@@ -316,11 +319,10 @@ const restaurantList_sample = [
         setNewRestaurant_name(null);
         setNewRestaurant_url(null);
       }}
-
       >
       <Pressable style={{
         flex:1,
-        backgroundColor:'transparent',
+        backgroundColor: colorPack.representative,
       }}
       onPress={()=>
       {setDialogVisible_restaurant(false);
@@ -342,7 +344,7 @@ const restaurantList_sample = [
           <View style={styles.getRestaurantInfoModal}>
           <TouchableOpacity
             onPress={() => {
-              Linking.openURL('https://www.baemin.com/shopDetail?shopDetail_shopNo=13364428&bm_rfr=SHARE&shopDetail_campaignId=-1&shopDetail_categoryTypeCode=1');
+              Linking.openURL('https://baeminkr.onelink.me/XgL8/baemincom');
           }}
             disabled={newRestaurant_url != null}
             
@@ -451,17 +453,31 @@ const restaurantList_sample = [
               logOut()
             }}
           >
-          <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{'로그아웃'}</Text>
+          <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{user.email.split('@')[0]}</Text>
           </TouchableOpacity>    
         </View>
 
-        <View style={{width:width*0.25}}>
+        <TouchableOpacity style={{width:width*0.25}}
+            onPress={async() => {
+              await getMarkers();
+              setSelectedMarker({
+                coordinate: {}, // {logitude: 0, latitude: 0}
+                title: '',
+                key: 'markers%',
+              });
+              setRestaurantList(restaurantList_sample)
+            }}
+        >
           <Text style={styles.highlightText} lineBreakMode='tail' numberOfLines={1}>{'배달앤빵'}</Text>
-        </View>
+        </TouchableOpacity>
 
         <View style={{width:width*0.25}}>
-          <TouchableOpacity>
-          <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{user.email.split('@')[0]}</Text>
+          <TouchableOpacity
+            onPress={() => {
+              showUserOrderList();
+            }}
+          >
+          <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{`나의 주문`}</Text>
           </TouchableOpacity>    
         </View>
 
@@ -529,7 +545,7 @@ const restaurantList_sample = [
             />
             }
           >
-            {selectedMarker.key === 'markers%'?restaurantList_sample:restaurantList}
+            {restaurantList}
           </ScrollView>          
           </SafeAreaView>
 

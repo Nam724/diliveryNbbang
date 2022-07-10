@@ -7,7 +7,7 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
   const backgroundColor_even = colorPack.highlight_light
   var myBackgroundColor
 
-  // console.log('Main_restaurantList', user, restaurant)
+  console.log('Main_restaurantList', user, restaurant)
   if(Number(num) %2 == 0){
     myBackgroundColor = backgroundColor_even
   }

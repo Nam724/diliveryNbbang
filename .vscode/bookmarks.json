@@ -9,22 +9,22 @@
 					"label": "음식점 리스트 새로고침"
 				},
 				{
-					"line": 78,
+					"line": 81,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 139,
+					"line": 142,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 192,
+					"line": 195,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 231,
+					"line": 234,
 					"column": 28,
 					"label": "음식점 불러오기"
 				}
@@ -59,22 +59,22 @@
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 150,
+					"line": 149,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 174,
+					"line": 173,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 206,
+					"line": 205,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 421,
+					"line": 420,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -89,22 +89,22 @@
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 85,
+					"line": 86,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 124,
+					"line": 125,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 154,
+					"line": 155,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 336,
+					"line": 337,
 					"column": 12,
 					"label": "이 음식점에 등록한 사람들 리스트"
 				}

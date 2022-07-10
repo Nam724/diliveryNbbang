@@ -57,14 +57,15 @@ export default function Restaurant_page_guest({route, navigation}){
     const makeNewMember = async () => {
         const _isRegistered = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id))
         // console.log(_isRegistered)
-        if(_isRegistered.length == []){
+        setIsRegistered(_isRegistered.length>0)
+        if(!isRegistered){
             await DataStore.save(
                 new Member({
                     "username": user.username,
                     "email": user.email,
                     "phone_number": user.phone_number,
-                    "menu": ['메뉴 없음'], 
-                    "fee":0,
+                    "menu": [''], 
+                    "fee":Number(0),
                     "restaurantID": restaurant.id,
                 })
             );
@@ -74,13 +75,13 @@ export default function Restaurant_page_guest({route, navigation}){
             // Update the values on {item} variable to update DataStore entry
             updated.num_members = updated.num_members +1;
             }));
-            setRestaurant({...restaurant, num_members: restaurant.num_members + 1})
             refreshRestaurantList(id=place.id);
             // Alert.alert('배달앤빵','메뉴를 추가해주세요.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
             setModalVisible(true);
         }
         else{
-            Alert.alert('배달앤빵','이미 등록되었습니다.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
+            // Alert.alert('배달앤빵','이미 등록되었습니다.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
+            setModalVisible(true);
         }
     }
 
@@ -154,7 +155,7 @@ export default function Restaurant_page_guest({route, navigation}){
         <View style={styles.container}>
 
         <Modal animationType='fade'
-        transparent={true}
+        transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(false);
@@ -162,7 +163,7 @@ export default function Restaurant_page_guest({route, navigation}){
         >
             <Pressable style={{
             flex:1,
-            backgroundColor:'transparent',
+            backgroundColor:colorPack.representative,
             }}
             onPress={()=>
                 {setModalVisible(false);}
@@ -189,6 +190,7 @@ export default function Restaurant_page_guest({route, navigation}){
             style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0}]}
             editable={false}
             placeholder={'가격(원)'}
+            numberOfLines={2}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 
@@ -211,11 +213,10 @@ export default function Restaurant_page_guest({route, navigation}){
 
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,]}
-            placeholder={'배달비제외'}
             placeholderTextColor={colorPack.deactivated}
             keyboardType='numeric'
             onChangeText={(text)=>{setMenuPrice(parseInt(text))}}
-            defaultValue={String(menuPrice)}
+            placeholder={menuPrice==null||menuPrice==NaN?'배달료 제외':`${menuPrice}`}
             ></TextInput>
 
         </View>
@@ -289,7 +290,7 @@ export default function Restaurant_page_guest({route, navigation}){
                     onPress={() => makeNewMember()}
                 >
                     <Text style={styles.normalText}>
-                        {'주문하기'}
+                        {(isRegistered)?'메뉴 변경':'주문하기'}
                     </Text>
                 </TouchableOpacity>
 

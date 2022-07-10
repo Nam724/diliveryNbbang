@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
     restaurantInfoModal:{
       flex:1,
       position: 'absolute',
-      marginTop: height * 150/2000,
+      paddingTop: height * 150/2000,
     },
     restaurantInfoContainerModal:{
         backgroundColor: colorPack.representative,

@@ -123,8 +123,8 @@ export default function Restaurant_page_auth({route, navigation}){
                     "username": user.username,
                     "email": user.email,
                     "phone_number": user.phone_number,
-                    "menu": ['메뉴 없음'], 
-                    "fee":0,
+                    "menu": [''], 
+                    "fee":Number(0),
                     "restaurantID": restaurant.id,
                 })
             );
@@ -142,8 +142,7 @@ export default function Restaurant_page_auth({route, navigation}){
             refreshRestaurantList(id=place.id);
         }
         else{
-            // alert('이미 추가되었으므로\n메뉴 추가 페이지로 넘어갑니다.')
-            console.log(restaurant)
+            // alert('이미 추가되었으므로\n메뉴 추가 페이지로 넘어갑니다.'
             setModalVisible(true);
         }
     }
@@ -236,7 +235,7 @@ export default function Restaurant_page_auth({route, navigation}){
         <View style={styles.container}>
 
         <Modal animationType='fade'
-        transparent={true}
+        transparent={false}
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(false);
@@ -244,7 +243,7 @@ export default function Restaurant_page_auth({route, navigation}){
         >
             <Pressable style={{
             flex:1,
-            backgroundColor:'transparent',
+            backgroundColor:colorPack.representative,
             }}
             onPress={()=>
             {setModalVisible(false);}
@@ -270,7 +269,7 @@ export default function Restaurant_page_auth({route, navigation}){
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0, marginBottom:0}]}
             editable={false}
-            placeholder={'배달료'}
+            placeholder={'배달료(원)'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
 
@@ -297,7 +296,7 @@ export default function Restaurant_page_auth({route, navigation}){
 
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,]}
-            defaultValue={String(fee)}
+            defaultValue={`${fee}`}
             placeholderTextColor={colorPack.deactivated}
             keyboardType='numeric'
             onChangeText={(text)=>{
@@ -329,6 +328,7 @@ export default function Restaurant_page_auth({route, navigation}){
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,{borderWidth:0, marginBottom:0}]}
             editable={false}
+            numberOfLines={2}
             placeholder={'가격(원)'}
             placeholderTextColor={colorPack.text_dark}
             ></TextInput>
@@ -351,11 +351,10 @@ export default function Restaurant_page_auth({route, navigation}){
 
             <TextInput 
             style={[styles.textInputBox_restaurant_price, styles.normalText,]}
-            placeholder={'배달비제외'}
+            placeholder={menuPrice==null||menuPrice==NaN?'배달료 제외':`${menuPrice}`}
             placeholderTextColor={colorPack.deactivated}
             keyboardType='numeric'
             onChangeText={(text)=>{setMenuPrice(parseInt(text))}}
-            defaultValue={String(menuPrice)}
 
             ></TextInput>
 
@@ -552,16 +551,17 @@ function Members(user, member, restaurant, index){
                         sendSMS();                 
                     }
                 }
+                disabled={member.username === user.username}
                 >              
                 <Text style={[styles.highlightText, styles.restaurantFee]}
                 ellipsizeMode='tail'
                 numberOfLines={1}
-                >{member.username===user.username?'나의 주문':member.email.split('@')[0]}
+                >{member.email.split('@')[0]}
                 </Text>
                 <Text style={[styles.normalText, styles.restaurantFee]}
                 ellipsizeMode='tail'
                 numberOfLines={1}
-                >{'개별 문자전송'}
+                >{(member.username===user.username)?'나의 주문':'개별 문자전송'}
                 </Text>
                 </TouchableOpacity>
     
