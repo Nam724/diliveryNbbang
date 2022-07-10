@@ -5,7 +5,6 @@ import {Restaurant, Place, Member,} from '../models';
 import { styles, colorPack, width, height, map_darkStyle } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
-import * as Clipboard from 'expo-clipboard'
 
 
 export default function Restaurant_page_guest({route, navigation}){

@@ -42,21 +42,26 @@ export default function Main_page({route, navigation}){
 
   const mountFunction = async () => { // 시작할 때 실행되는 함수
     let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
-      console.log(status_location_permission);
+      // console.log(status_location_permission);
       // 나중에 풀어야 함!
       if (status_location_permission !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         // return; 
       }
 
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      latitudeDelta: 0.003, longitudeDelta: 0.003
-    });
-    // alert('getMarkers 이전')
-    await getMarkers();
+      let _location = await Location.getCurrentPositionAsync({});
+      setLocation({
+        latitude: _location.coords.latitude,
+        longitude: _location.coords.longitude,
+        latitudeDelta: 0.0003, longitudeDelta: 0.0003
+      });
+      if(await getMarkers()){
+        console.log('마커를 불러오는데 성공했습니다.')
+      }
+      else{
+        console.log('마커를 불러오는데 실패했습니다.')
+      }
+      setIsLoading(false);
   }
 
     // refresh
@@ -109,8 +114,6 @@ export default function Main_page({route, navigation}){
     let coordinate = {longitude: data.longitude, latitude: data.latitude};
     let title = data.name;
     let key = data.id;
-    let createdAt = data.createdAt;
-    let makerID = data.makerID
     let num_restaurants = data.num_restaurants;
     
     return (
@@ -140,13 +143,28 @@ export default function Main_page({route, navigation}){
 
   async function getMarkers() {
     let _markerList = []
+    console.log('location', location);
+    try {
+      const models = await DataStore.query(Place, place => {
+      });
+      console.log(models)
+      models.forEach((model, index) => {
+  
+        _markerList.push(returnMarker(model))
+  
+        if(index == models.length-1){
+          setMarkers(_markerList);
+        }
+  
+      });
+      return(true);
+    } 
+    
+    catch (error) {
+      return(error)
+    }
+    
 
-    const models = await DataStore.query(Place);
-
-    models.forEach((model) => {_markerList.push(returnMarker(model))});
-    setMarkers(_markerList);
-    // console.log(_markerlist);
-    setIsLoading(false);
   }
 
   // get log pressed location and add marker
@@ -315,8 +333,8 @@ const restaurantList_sample = [
 
  // return 
   return (
-    isLoading?(
-      <Loading_page></Loading_page>):(
+    (isLoading)?
+      <Loading_page></Loading_page>:
     <View style={styles.container}>
 
       <DialogInput
@@ -600,7 +618,7 @@ const restaurantList_sample = [
 
       </View>
     </View>
-  ))
+  )
 
   }// return}
 

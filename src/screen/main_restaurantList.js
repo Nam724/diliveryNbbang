@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import { colorPack, styles, width } from '../style/style';
 
 

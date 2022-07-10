@@ -1,11 +1,3 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable} from 'react-native';
-import {useState, useEffect} from 'react';
-import  {DataStore} from '@aws-amplify/datastore';
-import {Restaurant, Place} from '../models';
-import { styles, colorPack } from '../style/style';
-import MapView, { Marker } from 'react-native-maps';
-import * as Linking from 'expo-linking';
-import * as Clipboard from 'expo-clipboard'
 import Restaurant_page_auth from './restaurant_auth';
 import Restaurant_page_guest from './restaurant_guest';
 import Restaurant_page_finished from './restaurant_finished';

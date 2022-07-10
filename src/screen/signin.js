@@ -1,9 +1,7 @@
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { useEffect, useState } from 'react';
 import { TextInput, TouchableOpacity, View, Text, AsyncStorage, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
-import Svg from 'react-native-svg';
 import { styles, width, height } from '../style/style';
-import Logo from '../../assets/Logo.svg';
 
 
 function emailTest(email){
@@ -59,7 +57,7 @@ export default function SignIn_page({route, navigation}){
                 // console.log('value값이 있어서 바로 로그인합니다.', value);
                 setEmail(value.email);
                 setPassword(value.password);
-                signIn(value.email, value.password);
+                // signIn(value.email, value.password);
             }
             else{
                 // console.log('value값이 없어서 로그인을 진행합니다.');
@@ -144,6 +142,7 @@ export default function SignIn_page({route, navigation}){
                                 setEmail(email);
                                 setIsEmailValid(emailTest(email))
                             }}
+                            defaultValue={email}
                         />
                     </View>
                     <View style={{marginTop: height*100/2000,height:height*179/2000}}>
@@ -157,6 +156,7 @@ export default function SignIn_page({route, navigation}){
                             style={[styles.textInputBox, styles.normalText]}
                             maxLength={20}
                             onChangeText={(password) => setPassword(password)}
+                            defaultValue={password}
                         />
                     </View>
                     
