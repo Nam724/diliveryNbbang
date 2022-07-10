@@ -55,10 +55,8 @@ export default function Main_page({route, navigation}){
       longitude: location.coords.longitude,
       latitudeDelta: 0.003, longitudeDelta: 0.003
     });
-    alert('getMarkers 이전')
+    // alert('getMarkers 이전')
     await getMarkers();
-    
-    setIsLoading(false);
   }
 
     // refresh
@@ -141,11 +139,14 @@ export default function Main_page({route, navigation}){
   const [markers, setMarkers] = useState([]); // use makeMarker(data)
 
   async function getMarkers() {
+    let _markerList = []
+
     const models = await DataStore.query(Place);
-    let _markerlist = []
-    models.forEach((model) => {_markerlist.push(returnMarker(model))});
-    setMarkers(_markerlist);
+
+    models.forEach((model) => {_markerList.push(returnMarker(model))});
+    setMarkers(_markerList);
     // console.log(_markerlist);
+    setIsLoading(false);
   }
 
   // get log pressed location and add marker
