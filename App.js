@@ -22,10 +22,10 @@ export default function App(){
   const [IsLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
   const [autoLogin, setAutoLogin] = useState(true);
-  const [loaded] = useFonts({
-    happy_sans_bold: require('./assets/font/Happiness-Sans-Bold.ttf'),
-    happy_sans_regular: require('./assets/font/Happiness-Sans-Regular.ttf'),
-    happy_sans_title: require('./assets/font/Happiness-Sans-Title.ttf'),
+  let [loaded] = useFonts({
+    'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
+    'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
+    'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),
   });
 
 
