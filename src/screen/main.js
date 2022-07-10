@@ -61,6 +61,8 @@ export default function Main_page({route, navigation}){
 
     // refresh
   const [refreshing, setRefreshing] = useState(false);
+
+
   const refreshRestaurantList = async (id='refresh') => {
     setRefreshing(true);
     // console.log('refreshRestaurantList',id==='refresh');
@@ -68,6 +70,9 @@ export default function Main_page({route, navigation}){
     if(id=='refresh'){
       // console.log('refreshRestaurantList_refresh');
       await loadRestaurant(selectedMarker.key);
+    }
+    else if(id == 'userOrder'){
+      showUserOrderList();
     }
     else{
       // console.log('refreshRestaurantList_with id');
@@ -267,10 +272,43 @@ const restaurantList_sample = [
         )
       )
     });
-
     setRestaurantList(_restaurantList);
   }
 
+  const showUserOrderList = async() => {
+    const members = await DataStore.query(Member, (q) => q.username('eq',user.username));
+    console.log(members);
+    var _orderList = []
+    members.forEach( async(member, index) => {
+
+      let rest = await DataStore.query(Restaurant, member.restaurantID);
+      let place = await DataStore.query(Place, rest.placeID);
+
+      console.log('rest', rest);
+      console.log('place', place);
+
+      _orderList.push(Main_restaurantList(
+        user,
+        rest,
+        index,
+        navigation,
+        place,
+        setRestaurantList,
+        restaurantList,
+        refreshRestaurantList        
+      ))
+
+      if(index == members.length-1){
+        setSelectedMarker({
+          coordinate: {}, // {logitude: 0, latitude: 0}
+          title: '나의 주문',
+          key: 'user_order',
+        })
+        setRestaurantList(_orderList);
+        console.log('orderList', _orderList);
+      }
+    })
+  }
 
  // return 
   return (
@@ -517,16 +555,12 @@ const restaurantList_sample = [
               <TouchableOpacity
                 style={styles.locationInfoButton}
                 onPressOut={() => {
-                  {
-                    if(selectedMarker.key!=='markers%'){
-                      setDialogVisible_restaurant(true);
-                    }
-                  }
-                  // console.log('add foods here!');
+                  {setDialogVisible_restaurant(true);}
                 }}
+                disabled={selectedMarker.key==='markers%'||selectedMarker.key==='user_order'}
               >
                 <Text style={styles.normalText}>
-                {selectedMarker.key==='markers%'?'장소를 먼저 선택하세요':'이곳으로 배달할 음식점 추가하기'}
+                {selectedMarker.key==='markers%'?'장소를 먼저 선택하세요':(selectedMarker.key ==='user_order'?'':'이곳으로 배달할 음식점 추가하기')}
                 </Text>
               </TouchableOpacity>
           </View>
@@ -538,7 +572,16 @@ const restaurantList_sample = [
             <RefreshControl
               refreshing={refreshing}
               onRefresh={()=>{
-                refreshRestaurantList('refresh');
+                if(selectedMarker.key =='user_order'){
+                  refreshRestaurantList('userOrder')
+                }
+                else if(selectedMarker.key =='markers%'){
+                  setRestaurantList(restaurantList_sample)
+                }
+                else{
+                  refreshRestaurantList('refresh');
+                }
+
                 // console.log('refresh')
               }
               }
