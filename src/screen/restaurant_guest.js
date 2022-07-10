@@ -10,7 +10,7 @@ import * as Clipboard from 'expo-clipboard'
 
 export default function Restaurant_page_guest({route, navigation}){
     
-    console.log('Restaurant_page_guest', route);
+    // console.log('Restaurant_page_guest', route);
 
     const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
@@ -45,7 +45,7 @@ export default function Restaurant_page_guest({route, navigation}){
             _membersList.push(_m)
             if(m.username==user.username){
                 setIsRegistered(true)
-                console.log('등록됨!')
+                // console.log('등록됨!')
                 setMenuList(m.menu.join(', '))
                 setMenuPrice(m.price)
             }
@@ -91,10 +91,10 @@ export default function Restaurant_page_guest({route, navigation}){
             try {
                 const _member = await DataStore.delete(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id)); // delete member
                 
-                console.log('memberLength', _member.length)
+                // console.log('memberLength', _member.length)
                 if(_member.length>0){ // 현재 등록이 되어 있는 상태라면
                     const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
-                    console.log('CURRENT_ITEM', CURRENT_ITEM)
+                    // console.log('CURRENT_ITEM', CURRENT_ITEM)
                     await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
                     // Update the values on {item} variable to update DataStore entry
                     updated.num_members -= 1; ;
@@ -107,7 +107,7 @@ export default function Restaurant_page_guest({route, navigation}){
                     Alert.alert('배달앤빵','등록되지 않은 음식점입니다.',[{text:'닫기'}])
                 }
             } catch (error) {
-                console.log(error)
+                // console.log(error)
                 if(error.code === 'ConcurrentModificationException'){
                     Alert.alert('배달앤빵','자신이 속한 가게가 아닙니다.',[{text:'닫기'}])
                 }
@@ -115,7 +115,8 @@ export default function Restaurant_page_guest({route, navigation}){
                     Alert.alert('배달앤빵','자신이 속한 가게가 아닙니다.',[{text:'닫기'}])
                 }
                 else{
-                    console.log('에러가 뭔지 모르겠어요')
+                    // console.log('에러가 뭔지 모르겠어요')
+                    alert('에러가 뭔지 모르겠어요')
                 }
             }
         }
@@ -125,14 +126,14 @@ export default function Restaurant_page_guest({route, navigation}){
     }
 
     const addMenu = async () => { // 기존에 등록되어 있을 때 메뉴 수정 및 추가
-        console.log('addMenu')
+        // console.log('addMenu')
 
         const _menuList = menuList.split('\n');
-        console.log('_menuList', _menuList)
-        console.log('menuPrice', menuPrice)
+        // console.log('_menuList', _menuList)
+        // console.log('menuPrice', menuPrice)
 
         const CURRENT_Member = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id));
-        console.log('current member', CURRENT_Member[0])
+        // console.log('current member', CURRENT_Member[0])
         try {await DataStore.save(Member.copyOf(CURRENT_Member[0], updated => {
             // Update the values on {item} variable to update DataStore entry
             updated.menu = _menuList;
@@ -141,7 +142,7 @@ export default function Restaurant_page_guest({route, navigation}){
 
         setModalVisible(false)}
         catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 

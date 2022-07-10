@@ -59,11 +59,11 @@ export default function SignUp_page({navigation}){
     const [sendVerificationCodeBtn, setSendVerificationCodeBtn] = useState(false);
 
     useEffect(() => {
-        console.log('email', email);
-        console.log('password', password);
-        console.log('verification_code_sended', verification_code_sended);
+        // console.log('email', email);
+        // console.log('password', password);
+        // console.log('verification_code_sended', verification_code_sended);
         if(!verification_code_sended && (password && email)){
-            console.log('버튼을 누를 수 있습니다.');
+            // console.log('버튼을 누를 수 있습니다.');
             setSendVerificationCodeBtn(true);
         }
         else{
@@ -85,10 +85,10 @@ export default function SignUp_page({navigation}){
                     address:account,
                 }
             });
-            console.log(user);
+            // console.log(user);
             setVerification_code_sended(true);
         } catch (error) {
-            console.log('error signing up:', error);
+            // console.log('error signing up:', error);
             if(error.code === 'UsernameExistsException'){
                 Alert.alert('배달앤빵','이미 존재하는 이메일입니다.',[{text:'확인'}]);
                 return(false);
@@ -111,7 +111,7 @@ export default function SignUp_page({navigation}){
           navigation.navigate('SignIn');
           return(true);
         } catch (error) {
-            console.log('error confirming sign up', error);
+            // console.log('error confirming sign up', error);
             if (error === 'NetworkError'){
                 Alert.alert('배달앤빵','네트워크 오류입니다.',[{text:'확인'}]);
                 return(false);

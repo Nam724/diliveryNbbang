@@ -43,32 +43,32 @@ export default function SignIn_page({route, navigation}){
     useEffect(() => {
         //이거 주석 달면 자동로그인 안됨
         if(autoLogin){
-            console.log('자동로그인 실행')
+            // console.log('자동로그인 실행')
             loginFirst()
         }
         else{
-            console.log('자동로그인 안실행')
+            // console.log('자동로그인 안실행')
         }
     }, []);
 
     const loginFirst = async () => {
         await AsyncStorage.getItem('@loginInfoToken').then(_value => {
             const value = JSON.parse(_value);
-            console.log(value);
+            // console.log(value);
             if(value.email && value.password){
-                console.log('value값이 있어서 바로 로그인합니다.', value);
+                // console.log('value값이 있어서 바로 로그인합니다.', value);
                 setEmail(value.email);
                 setPassword(value.password);
                 signIn(value.email, value.password);
             }
             else{
-                console.log('value값이 없어서 로그인을 진행합니다.');
+                // console.log('value값이 없어서 로그인을 진행합니다.');
             }
         }
         ).catch(err => {
-            console.log(err);
+            // console.log(err);
             const value = null
-            console.log('value값이 없어서 로그인을 진행합니다.');
+            // console.log('value값이 없어서 로그인을 진행합니다.');
         });
 
     }
@@ -77,12 +77,12 @@ export default function SignIn_page({route, navigation}){
     const signIn = async(email = email, password = password) => {
         try {
             const user = await Auth.signIn(email, password);
-            console.log('user', user);
+            // console.log('user', user);
             setUser(user);
             setIsLogin(true);
             saveLoginInfo(email, password);
         } catch (error) {
-            console.log('error signing in', error);
+            // console.log('error signing in', error);
             if(error === 'UserNotConfirmedException'){
                 Alert.alert('배달앤빵','허가되지 않은 사용자입니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);

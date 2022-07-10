@@ -16,20 +16,20 @@ export const colorPack = {
 export const styles = StyleSheet.create({
 // TEXT STYLES
     normalText:{
-        fontFamily:'happy_sans_bold',
+        // fontFamily:'happy_sans_bold',
         fontSize:width*0.04, // 30
         color: colorPack.text_light,
         textAlign:'center',
     },
     highlightText:{
-        fontFamily:'happy_sans_title',
+        // fontFamily:'happy_sans_title',
         fontSize:width*0.05, // 40
         color: colorPack.text_dark,
         textAlign:'center',
         fontWeight:'bold',
     },
     deactivatedText:{
-        fontFamily:'happy_sans_regular',
+        // fontFamily:'happy_sans_regular',
         fontSize:width*0.04, // 30
         color: colorPack.deactivated,
         textAlign:'center',

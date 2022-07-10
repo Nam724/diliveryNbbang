@@ -42,12 +42,12 @@ export default function Main_page({route, navigation}){
 
   const mountFunction = async () => { // 시작할 때 실행되는 함수
     let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
-      // console.log(status_location_permission);
+      console.log(status_location_permission);
       // 나중에 풀어야 함!
-      //if (status_location_permission !== 'granted') {
-      //   setErrorMsg('Permission to access location was denied');
-      //   // return; 
-      // }
+      if (status_location_permission !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        // return; 
+      }
 
     let location = await Location.getCurrentPositionAsync({});
     setLocation({
@@ -55,7 +55,9 @@ export default function Main_page({route, navigation}){
       longitude: location.coords.longitude,
       latitudeDelta: 0.003, longitudeDelta: 0.003
     });
+    alert('getMarkers 이전')
     await getMarkers();
+    
     setIsLoading(false);
   }
 
@@ -141,7 +143,7 @@ export default function Main_page({route, navigation}){
   async function getMarkers() {
     const models = await DataStore.query(Place);
     let _markerlist = []
-    models.forEach(model => {_markerlist.push(returnMarker(model))});
+    models.forEach((model) => {_markerlist.push(returnMarker(model))});
     setMarkers(_markerlist);
     // console.log(_markerlist);
   }
@@ -277,15 +279,15 @@ const restaurantList_sample = [
 
   const showUserOrderList = async() => {
     const members = await DataStore.query(Member, (q) => q.username('eq',user.username));
-    console.log(members);
+    //console.log(members);
     var _orderList = []
     members.forEach( async(member, index) => {
 
       let rest = await DataStore.query(Restaurant, member.restaurantID);
       let place = await DataStore.query(Place, rest.placeID);
 
-      console.log('rest', rest);
-      console.log('place', place);
+      //console.log('rest', rest);
+      //console.log('place', place);
 
       _orderList.push(Main_restaurantList(
         user,
@@ -305,7 +307,7 @@ const restaurantList_sample = [
           key: 'user_order',
         })
         setRestaurantList(_orderList);
-        console.log('orderList', _orderList);
+        //console.log('orderList', _orderList);
       }
     })
   }
@@ -605,7 +607,7 @@ const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerT
   // const clipboardText = await Clipboard.getStringAsync('plainText');
   //클립보드의 내용을 가져온다 
   const clipboardText = innerText
-  console.log(clipboardText);
+  //console.log(clipboardText);
 
 
   const UrlFormat = /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/(.*){1,}$/g
@@ -616,7 +618,7 @@ const readClipboard = async (setNewRestaurant_name, setNewRestaurant_url, innerT
   const restaurantTitle = clipboardText.match(restaurantTitleFormat);
   const restaurantUrl = clipboardText.match(restaurantUrlFormat);
 
-  console.log(clipboardText, restaurantTitle, restaurantUrl);
+  //console.log(clipboardText, restaurantTitle, restaurantUrl);
   if(restaurantTitle&&restaurantUrl){ 
   //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
     setNewRestaurant_url(restaurantUrl[0]);

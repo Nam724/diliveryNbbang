@@ -42,14 +42,14 @@ export default function Restaurant_page_finished({route, navigation}){
             _membersList.push(_m)
             if(m.username==user.username){
                 setIsRegistered(true)
-                console.log('등록됨!')
+                // console.log('등록됨!')
             }
             // console.log(m)
         })
         setMembersList(_membersList)
 
         setMember(members)
-        console.log('isRegistered', isRegistered);
+        // console.log('isRegistered', isRegistered);
     }
     const sendMoney = async() => {
         Clipboard.setString(`${estaurant.account}`);
@@ -71,7 +71,7 @@ export default function Restaurant_page_finished({route, navigation}){
         
         const makerPhoneNumber = member.filter(member => member.username == restaurant.makerID)[0].phone_number;
 
-        console.log(makerPhoneNumber)
+        // console.log(makerPhoneNumber)
         sendSMSAsync(makerPhoneNumber, `배달앤빵 주문자: ${user.email.split('@')[0]} 주문한 음식점: ${restaurant.name}\n`)
         
     }

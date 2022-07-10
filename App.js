@@ -21,16 +21,30 @@ const Stack = createStackNavigator();
 export default function App(){ 
   const [IsLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
-  const [autoLogin, setAutoLogin] = useState(true);
-  let [loaded] = useFonts({
-    'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
-    'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
-    'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),
-  });
+  const [autoLogin, setAutoLogin] = useState(false);
+  // let [fontLoaded] = useFonts({
+  //   'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
+  //   'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
+  //   'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),
+  // });
+
+  // const [fontLoaded, setFontLoaded] = useState(false);
+  // async function loadFonts() {
+  //   await Font.loadAsync({
+  //     'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
+  //     'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
+  //     'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),    
+  //   });
+  //   setFontLoaded(true);
+  // }
+  // useEffect(() => {
+  //   loadFonts();
+  // }
+  // , []);
 
 
-  console.log('App.js user', user);
-  if(!loaded){
+  // console.log('App.js user', user);
+  if(false){
     return(
       <Loading_page></Loading_page>
     )

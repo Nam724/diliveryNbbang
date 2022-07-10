@@ -31,16 +31,16 @@ export default function Restaurant_page_auth({route, navigation}){
 
     useEffect(() => {
         getMembers(); // get member from database
-        console.log('user', user)
-        console.log('member', member)
-        console.log('restaurant', restaurant)
-        console.log('place', place)
+        //console.log('user', user)
+        //console.log('member', member)
+        //console.log('restaurant', restaurant)
+        //console.log('place', place)
     }, [isRegistered, modalVisible]);
     
 
     const getMembers = async () => {
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
-        console.log('members', members)
+        //console.log('members', members)
         const _membersList = []
         members.forEach(async (m, index) => {
             const _m = Members(user, m, restaurant, index)
@@ -48,7 +48,7 @@ export default function Restaurant_page_auth({route, navigation}){
             _membersList.push(_m)
             if(m.username==user.username){
                 setIsRegistered(true)
-                console.log('등록됨!')
+                //console.log('등록됨!')
                 setMenuList(m.menu.join(', '))
                 setMenuPrice(m.price)
             }
@@ -62,8 +62,8 @@ export default function Restaurant_page_auth({route, navigation}){
         // Clipboard.setString(restaurant.account);
         // alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
         // Linking.openURL(restaurant.account)
-        console.log('sendMoney')
-        console.log(`${member.price + (restaurant.fee/restaurant.num_members)}`)
+        //console.log('sendMoney')
+        //console.log(`${member.price + (restaurant.fee/restaurant.num_members)}`)
 
         var numberSMS = [] // ['+821012345678', '+821012345678']
 
@@ -74,7 +74,7 @@ export default function Restaurant_page_auth({route, navigation}){
 
             stringSMS += `${m.email.split('@')[0]}님이 주문하신 메뉴:${m.menu}, 입금하실 금액: ${m.price + (restaurant.fee/restaurant.num_members)}원\n`
         })
-        console.log('numberSMS',numberSMS)
+        //console.log('numberSMS',numberSMS)
 
 
         // SMS 발송 가능한 지 여부
@@ -88,7 +88,7 @@ export default function Restaurant_page_auth({route, navigation}){
                 Alert.alert('배달앤빵', '메세지 전송이 완료되었습니다.', [{text: '확인'}])
             }
             else{
-                console.log('메세지 전송 실패')   
+                // console.log('메세지 전송 실패')   
             }
 
         } else {
@@ -107,7 +107,8 @@ export default function Restaurant_page_auth({route, navigation}){
 
         }
         catch(e){
-            console.log(e)
+            // console.log(e)
+            alert(e)
         }
 
     }
@@ -163,7 +164,8 @@ export default function Restaurant_page_auth({route, navigation}){
                 navigation.goBack();
                 refreshRestaurantList(id=place.id);
             } catch (error) {
-                console.log(error)
+                // console.log(error)
+                alert(error)
             }
         }
         else{
@@ -172,14 +174,14 @@ export default function Restaurant_page_auth({route, navigation}){
     }
 
     const addMenu = async () => {
-        console.log('addMenu')
+        // console.log('addMenu')
 
         const _menuList = menuList.split('\n');
-        console.log('_menuList', _menuList)
-        console.log('menuPrice', menuPrice)
+        // console.log('_menuList', _menuList)
+        // console.log('menuPrice', menuPrice)
 
         const CURRENT_Member = await DataStore.query(Member, member => member.username("eq", user.username).restaurantID("eq", restaurant.id));
-        console.log('current member', CURRENT_Member[0])
+        // console.log('current member', CURRENT_Member[0])
         try {await DataStore.save(Member.copyOf(CURRENT_Member[0], updated => {
             // Update the values on {item} variable to update DataStore entry
             updated.menu = _menuList;
@@ -197,21 +199,21 @@ export default function Restaurant_page_auth({route, navigation}){
 
         setModalVisible(false)}
         catch (error) {
-            console.log(error)
+            // console.log(error)
         }
     }
 
     const [membersList, setMembersList] = useState([]);
 
     const showAllMenu = () => {
-        console.log(member)
+        // console.log(member)
         const _allMenuList = []
         member.forEach(member => {
             member.menu.forEach(menu => {
                 _allMenuList.push(menu)
             })
         })
-        console.log(_allMenuList)
+        // console.log(_allMenuList)
         Clipboard.setString(_allMenuList.join('\n'))
         Alert.alert('배달앤빵',`전체 메뉴가 복사되었습니다.\n${_allMenuList.join('\n')}`, [{text: '확인'}])
     }
@@ -227,7 +229,8 @@ export default function Restaurant_page_auth({route, navigation}){
 
         }
         catch(e){
-            console.log(e)
+            // console.log(e)
+            alert(e)
         }
     }
 
@@ -534,7 +537,8 @@ function Members(user, member, restaurant, index){
                 Alert.alert('배달앤빵','메세지 전송이 완료되었습니다.',[{text:'확인'}])
             }
             else{
-                console.log('SMS 전송 실패')
+                // console.log('SMS 전송 실패')
+                alert('메세지 전송에 실패하였습니다.')
             }
 
         } else {
