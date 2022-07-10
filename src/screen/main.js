@@ -25,7 +25,7 @@ export default function Main_page({route, navigation}){
   // console.log('Main_page user', user);
 // MAP
   // check is loading finished?
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
 // get location
   const [location, setLocation] = useState(
@@ -300,35 +300,46 @@ const restaurantList_sample = [
     const members = await DataStore.query(Member, (q) => q.username('eq',user.username));
     //console.log(members);
     var _orderList = []
-    members.forEach( async(member, index) => {
+    if(members){
+      members.forEach( async(member, index) => {
 
-      let rest = await DataStore.query(Restaurant, member.restaurantID);
-      let place = await DataStore.query(Place, rest.placeID);
-
-      //console.log('rest', rest);
-      //console.log('place', place);
-
-      _orderList.push(Main_restaurantList(
-        user,
-        rest,
-        index,
-        navigation,
-        place,
-        setRestaurantList,
-        restaurantList,
-        refreshRestaurantList        
-      ))
-
-      if(index == members.length-1){
-        setSelectedMarker({
-          coordinate: {}, // {logitude: 0, latitude: 0}
-          title: '나의 주문',
-          key: 'user_order',
-        })
-        setRestaurantList(_orderList);
-        //console.log('orderList', _orderList);
-      }
-    })
+        let rest = await DataStore.query(Restaurant, member.restaurantID);
+        let place = await DataStore.query(Place, rest.placeID);
+  
+        //console.log('rest', rest);
+        //console.log('place', place);
+  
+        _orderList.push(Main_restaurantList(
+          user,
+          rest,
+          index,
+          navigation,
+          place,
+          setRestaurantList,
+          restaurantList,
+          refreshRestaurantList        
+        ))
+  
+        if(index == members.length-1){
+          setSelectedMarker({
+            coordinate: {}, // {logitude: 0, latitude: 0}
+            title: '나의 주문',
+            key: 'user_order',
+          })
+          setRestaurantList(_orderList);
+          //console.log('orderList', _orderList);
+        }
+      })
+    }
+    else{
+      setSelectedMarker({
+        coordinate: {}, // {logitude: 0, latitude: 0}
+        title: '나의 주문',
+        key: 'user_order',
+      })
+      setRestaurantList(_orderList);
+    }
+    
   }
 
  // return 
