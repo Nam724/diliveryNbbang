@@ -11,6 +11,7 @@ import * as SMS from 'expo-sms';
 
 export default function Restaurant_page_auth({route, navigation}){
     
+    console.log(route.params.user)
     const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
     const [place, setPlace] = useState(route.params.place);
