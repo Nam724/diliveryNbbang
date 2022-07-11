@@ -4,32 +4,32 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 82,
+					"line": 79,
 					"column": 4,
 					"label": "음식점 리스트 새로고침"
 				},
 				{
-					"line": 115,
+					"line": 113,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 168,
+					"line": 166,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 191,
+					"line": 189,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 244,
+					"line": 242,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 319,
+					"line": 317,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}
@@ -134,7 +134,7 @@
 			"path": "App.js",
 			"bookmarks": [
 				{
-					"line": 22,
+					"line": 20,
 					"column": 49,
 					"label": "자동로그인 결정"
 				}

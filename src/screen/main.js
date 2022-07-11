@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView, Image, ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import * as Location from 'expo-location';
@@ -8,7 +8,6 @@ import DialogInput from 'react-native-dialog-input';
 import {Main_restaurantList, Main_restaurantList_sample} from './main_restaurantList';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member} from '../models';
-import Loading_page from './loading_page';
 import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
@@ -34,17 +33,15 @@ export default function Main_page({route, navigation}){
   // const mapRef = createRef();
 
   useEffect( () => {
-        // setIsLoading(true); // 주석 풀면 로딩창 뜸
-        mountFunction();      
+        mountFunction();
     }, []); 
 
   useFocusEffect(
     React.useCallback(() => {
 
-      setRefreshing(true);
       refreshRestaurantList('userOrder')
-      setRefreshing(false);
-      
+      // setIsLoading(true);
+
     }, [])
   )
 
@@ -66,13 +63,13 @@ export default function Main_page({route, navigation}){
         // return; 
       }
 
-      let _location = await Location.getCurrentPositionAsync({});
+      let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest, maximumAge: 10000});
       setLocation({
         latitude: _location.coords.latitude,
         longitude: _location.coords.longitude,
         latitudeDelta: 0.003, longitudeDelta: 0.003
       });
-
+      setIsLoading(false);
       // await getMarkers()
   }
 
@@ -111,6 +108,7 @@ export default function Main_page({route, navigation}){
       await loadRestaurant(id);
     }
     setRefreshing(false);
+    // setIsLoading(false);
   }
 
   const logOut = () => {
@@ -168,7 +166,7 @@ export default function Main_page({route, navigation}){
 
   async function getMarkers() {
     let _markerList = []
-    console.log('location', location);
+    // console.log('location', location);
     try {
       const models = await DataStore.query(Place, place => {
       });
@@ -365,7 +363,28 @@ const restaurantList_sample = [
  // return 
   return (
     (isLoading)?
-      (<Loading_page></Loading_page>):
+      (
+
+        <View style={[styles.container, {flex:1, justifyContent:'center'}]}>
+
+
+        <View style={{alignContent:'center'}}>
+          <Image source={require('../../assets/icon.png')} style={{width:width*0.3, height:width*0.3, marginLeft:width*0.35}} />
+        </View>
+
+
+        <ActivityIndicator size="large" animating={true} color={colorPack.text_light} />
+
+        <View style={styles.header}>
+          <Text style={styles.highlightText}>
+              {'정보를 불러오는 중이예요'}
+          </Text>
+        </View>
+
+
+        </View>
+
+      ):
     (<View style={styles.container}>
 
       <DialogInput

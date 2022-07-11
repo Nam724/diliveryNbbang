@@ -9,7 +9,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import {useFonts} from 'expo-font'
-import Loading_page from './src/screen/loading_page';
 
 
 
@@ -19,13 +18,12 @@ Amplify.configure(awsconfig);
 const Stack = createStackNavigator();
 
 export default function App(){
-  const [user, setUser] = useState(null);
   
-  // let [fontLoaded] = useFonts({
-  //   'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
-  //   'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
-  //   'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),
-  // });
+  let [fontLoaded] = useFonts({
+    'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
+    'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
+    'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),
+  });
 
   // const [fontLoaded, setFontLoaded] = useState(false);
   // async function loadFonts() {
