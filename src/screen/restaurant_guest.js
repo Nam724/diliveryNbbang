@@ -1,8 +1,8 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert, KeyboardAvoidingView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl,SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
-import {Restaurant, Place, Member,} from '../models';
-import { styles, colorPack, width, height, map_darkStyle } from '../style/style';
+import {Restaurant, Member,} from '../models';
+import { styles, colorPack,  height, map_darkStyle } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 
@@ -12,17 +12,16 @@ export default function Restaurant_page_guest({route, navigation}){
     // console.log('Restaurant_page_guest', route);
 
     const user = route.params.user;//{username: 'test', email: ''}
-    const [restaurant, setRestaurant] = useState(route.params.restaurant);
-    const [place, setPlace] = useState(route.params.place);
-    const refreshRestaurantList = route.params.refreshRestaurantList;
+    const [restaurant, setRestaurant] = useState(route.params.restaurant);//{makerID: 'test', name: '', fee: 0, num_members: 0, menu: [], isFinishRecruiting: false}
+    const place = route.params.place;//{name: '', latitude: 0, longitude: 0}
     
 
-    const [member, setMember] = useState(null);
-
     const [modalVisible, setModalVisible] = useState(false);
-    const [menuList, setMenuList] = useState('');
+    const [menuList, setMenuList] = useState('메뉴를 먼저 추가해주세요');
     const [menuPrice, setMenuPrice] = useState(0);
     const [isRegistered, setIsRegistered] = useState(false);
+
+    const[refreshing, setRefreshing] = useState(false);
     
     useEffect(() => {
         getMembers(); // get member from database
@@ -33,6 +32,8 @@ export default function Restaurant_page_guest({route, navigation}){
     }, [isRegistered, modalVisible]);
     
     const getMembers = async () => {
+        setRefreshing(true);
+
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
         // console.log('members', members)
         const _membersList = []
@@ -47,8 +48,10 @@ export default function Restaurant_page_guest({route, navigation}){
                 setMenuPrice(m.price)
             }
         })
+        setRestaurant({...restaurant, num_members: members.length})
         setMembersList(_membersList)
-        setMember(members)
+        setRefreshing(false)
+
     }
 
     const makeNewMember = async () => {
@@ -61,20 +64,22 @@ export default function Restaurant_page_guest({route, navigation}){
                     "username": user.username,
                     "email": user.email,
                     "phone_number": user.phone_number,
-                    "menu": [''], 
+                    "menu": ['메뉴를 먼저 추가해주세요'], 
                     "fee":Number(0),
                     "restaurantID": restaurant.id,
                 })
             );
 
-            const CURRENT_ITEM = restaurant;
-            await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
-            // Update the values on {item} variable to update DataStore entry
-            updated.num_members = updated.num_members +1;
-            }));
-            refreshRestaurantList(id=place.id);
-            // Alert.alert('배달앤빵','메뉴를 추가해주세요.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
+            const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
+            const updatedItem = await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
+                // Update the values on {item} variable to update DataStore entry
+                updated.num_members = updated.num_members +1;
+                }));
+            console.log('새로운 멤버가 추가되었습니다.', updatedItem)
+            setRestaurant(updatedItem)
+
             setModalVisible(true);
+            // refreshRestaurantList(id=place.id);
         }
         else{
             // Alert.alert('배달앤빵','이미 등록되었습니다.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
@@ -97,7 +102,7 @@ export default function Restaurant_page_guest({route, navigation}){
                     updated.num_members -= 1; ;
                     }));
                     navigation.goBack();
-                    refreshRestaurantList(id=restaurant.placeID);
+                    // refreshRestaurantList(id=restaurant.placeID);
                     setIsRegistered(false);
                 }
                 else{
@@ -303,20 +308,20 @@ export default function Restaurant_page_guest({route, navigation}){
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.restaurantButton_1}
-                
                 disabled={true}
                 >
-                    <Text style={styles.normalText}>
+                    <Text style={(styles.deactivatedText)}>
                         {'모집종료 후\n입금가능'}
                     </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.restaurantButton_2}
                 onPressOut={() => deleteMember()}
+                disabled={!isRegistered}
                 >
-                    <Text style={styles.normalText}>
-                        {'주문취소'}
-                    </Text>
+                <Text style={(!isRegistered)?(styles.deactivatedText):(styles.normalText)}>
+                    {'주문취소'}
+                </Text>
                 </TouchableOpacity>
 
             </View>
@@ -343,10 +348,23 @@ export default function Restaurant_page_guest({route, navigation}){
               </MapView>
             
             </View>
-            
-            <ScrollView style={styles.restaurantListContainer}>
+            <SafeAreaView>
+
+            <ScrollView style={styles.restaurantListContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={()=>{
+                  getMembers();
+                }
+                }
+              />
+              }
+            >
+              
             {membersList}
             </ScrollView>
+            </SafeAreaView>
         </View>
 
     );

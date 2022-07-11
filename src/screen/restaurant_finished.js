@@ -1,8 +1,8 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
-import {Restaurant, Place, Member,} from '../models';
-import { styles, colorPack, width, height, map_darkStyle } from '../style/style';
+import { Member,} from '../models';
+import { styles, colorPack, map_darkStyle } from '../style/style';
 import MapView, { Marker } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
@@ -16,8 +16,8 @@ export default function Restaurant_page_finished({route, navigation}){
     const [isRegistered, setIsRegistered] = useState(false);
 
     const user = route.params.user;//{username: 'test', email: ''}
-    const [restaurant, setRestaurant] = useState(route.params.restaurant);
-    const [place, setPlace] = useState(route.params.place);
+    const restaurant = route.params.restaurant;//{makerID: 'test', name: '', fee: 0, num_members: 0, menu: [], isFinishRecruiting: false}
+    const place = route.params.place;//{name: '', latitude: 0, longitude: 0}
 
 
     useEffect(() => {

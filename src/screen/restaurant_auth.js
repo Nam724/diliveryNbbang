@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, Alert, KeyboardAvoidingView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member} from '../models';
@@ -9,13 +9,15 @@ import * as Clipboard from 'expo-clipboard'
 import * as SMS from 'expo-sms';
 
 
+
 export default function Restaurant_page_auth({route, navigation}){
     
-    console.log(route.params.user)
+    // console.log(route.params.user)
     const user = route.params.user;//{username: 'test', email: ''}
-    const [restaurant, setRestaurant] = useState(route.params.restaurant);
-    const [place, setPlace] = useState(route.params.place);
-    const refreshRestaurantList = route.params.refreshRestaurantList;
+    const [restaurant, setRestaurant] = useState(route.params.restaurant);//{makerID: 'test', name: '', fee: 0, num_members: 0, menu: [], isFinishRecruiting: false}
+    const place = route.params.place;//{name: '', latitude: 0, longitude: 0}
+
+    
     const [isFinishRecruiting, setIsFinishRecruiting] = useState(restaurant.isFinishRecruiting);
 
     const [member, setMember] = useState(null);
@@ -28,6 +30,8 @@ export default function Restaurant_page_auth({route, navigation}){
     const[account, setAccount] = useState(restaurant.account);
     const[fee, setFee] = useState(restaurant.fee);
 
+    const[refreshing, setRefreshing] = useState(false);
+
     useEffect(() => {
         getMembers(); // get member from database
         //console.log('user', user)
@@ -37,7 +41,10 @@ export default function Restaurant_page_auth({route, navigation}){
     }, [isRegistered, modalVisible]);
     
 
+
+
     const getMembers = async () => {
+        setRefreshing(true);
         const members = await DataStore.query(Member, member=>member.restaurantID('eq', restaurant.id));
         //console.log('members', members)
         const _membersList = []
@@ -52,9 +59,11 @@ export default function Restaurant_page_auth({route, navigation}){
                 setMenuPrice(m.price)
             }
         })
+        setRestaurant({...restaurant, num_members: members.length})
         setMembersList(_membersList)
 
         setMember(members)
+        setRefreshing(false)
     }
 
     const sendMoney = async () => {
@@ -130,16 +139,16 @@ export default function Restaurant_page_auth({route, navigation}){
             );
 
             const CURRENT_ITEM = await DataStore.query(Restaurant, restaurant.id);
-            await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
+            const updatedItem = await DataStore.save(Restaurant.copyOf(CURRENT_ITEM, updated => {
             // Update the values on {item} variable to update DataStore entry
             updated.num_members = updated.num_members +1;
-            setRestaurant({...restaurant, num_members: updated.num_members});
             }));
-            // console.log('새로운 멤버가 추가되었습니다.', restaurant)
+            console.log('새로운 멤버가 추가되었습니다.', updatedItem)
+            setRestaurant(updatedItem)
             
-            Alert.alert('배달앤빵','이제 메뉴를 추가해주세요', [{text: '확인'}])
+            // Alert.alert('배달앤빵','이제 메뉴를 추가해주세요', [{text: '확인'}])
             setModalVisible(true);
-            refreshRestaurantList(id=place.id);
+            // refreshRestaurantList(id=place.id);
         }
         else{
             // alert('이미 추가되었으므로\n메뉴 추가 페이지로 넘어갑니다.'
@@ -161,7 +170,7 @@ export default function Restaurant_page_auth({route, navigation}){
                 }));
 
                 navigation.goBack();
-                refreshRestaurantList(id=place.id);
+                // refreshRestaurantList(id=place.id);
             } catch (error) {
                 // console.log(error)
                 alert(error)
@@ -508,7 +517,17 @@ export default function Restaurant_page_auth({route, navigation}){
             
             </View>
             
-            <ScrollView style={styles.restaurantListContainer}>
+            <ScrollView style={styles.restaurantListContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={()=>{
+                  getMembers();
+                }
+                }
+              />
+              }
+            >
             {membersList}
             </ScrollView>
         </View>

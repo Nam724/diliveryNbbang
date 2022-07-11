@@ -26,7 +26,7 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
     <TouchableOpacity
     onPress=  {() => {  
       console.log(JSON.stringify(user))
-      navigation.navigate('Restaurant', {user:user, restaurant:restaurant, place:place, refreshRestaurantList:refreshRestaurantList})
+      navigation.navigate('Restaurant', {user:user, restaurant:restaurant, place:place})
       // console.log('pressed')
     }}
     >
@@ -46,7 +46,7 @@ function Main_restaurantList(user, restaurant, num, navigation, place, setRestau
     >
     <TouchableOpacity
     onPress=  {() => {
-      navigation.navigate('Restaurant', {user:user, restaurant:restaurant, place:place, refreshRestaurantList:refreshRestaurantList})
+      navigation.navigate('Restaurant', {user:user, restaurant:restaurant, place:place})
       // console.log('pressed')
     }}>
 

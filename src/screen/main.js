@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, Pressable, RefreshControl, SafeAreaView, ActivityIndicator, Alert, KeyboardAvoidingView} from 'react-native';
-import {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
@@ -11,16 +11,16 @@ import {Restaurant, Place, Member} from '../models';
 import Loading_page from './loading_page';
 import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Main_page({route, navigation}){
 
-  
 
   
   let user = JSON.parse(route.params.user).attributes;
   user.username = user.sub
 
-  console.log('Main_page user', user);
+  // console.log('Main_page user', user);
 // MAP
   // check is loading finished?
   const [isLoading, setIsLoading] = useState(true);
@@ -37,6 +37,13 @@ export default function Main_page({route, navigation}){
         // setIsLoading(true); // 주석 풀면 로딩창 뜸
         mountFunction();      
     }, []); 
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refreshRestaurantList('userOrder')
+
+    }, [])
+  )
 
   const setUser = (user) =>{
       AsyncStorage.setItem('@user', JSON.stringify(user));
@@ -74,23 +81,35 @@ export default function Main_page({route, navigation}){
   const refreshRestaurantList = async (id='refresh') => {
     setRefreshing(true);
     // console.log('refreshRestaurantList',id==='refresh');
+    console.log(selectedMarker)
     await getMarkers()
-    if(id=='refresh'){
+    if(id==='refresh'){
       // console.log('refreshRestaurantList_refresh');
       await loadRestaurant(selectedMarker.key);
     }
-    else if(id == 'userOrder'){
+    else if(id === 'userOrder'){
       showUserOrderList();
+      setSelectedMarker({
+        coordinate: {}, // {logitude: 0, latitude: 0}
+        title: '나의 주문',
+        key: 'userOrder',
+      })
+    }
+    else if(id === 'default'){
+      setRestaurantList(restaurantList_sample);
+      setSelectedMarker({
+        coordinate: {}, // {logitude: 0, latitude: 0}
+        title: '',
+        key: 'markers%',
+      })
+
     }
     else{
-      // console.log('refreshRestaurantList_with id');
+      console.log('refreshRestaurantList_with id');
       await loadRestaurant(id);
     }
     setRefreshing(false);
   }
-
-
-
 
   const logOut = () => {
     Alert.alert('배달앤빵','로그아웃을 할까요?',[{text: '로그아웃', onPress: async () => {
@@ -127,7 +146,7 @@ export default function Main_page({route, navigation}){
         description={`${num_restaurants}개의 음식점`}
         key={key}
         onPress={() => {
-          // console.log(key)
+          console.log(title)
           setSelectedMarker(
             {
               coordinate: coordinate,
@@ -243,7 +262,7 @@ const restaurantList_sample = [
     /* Models in DataStore are immutable. To update a record you must use the copyOf function
     to apply updates to the item’s fields rather than mutating the instance directly */
     const CURRENT_ITEM = await DataStore.query(Place, placeID);
-    await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
+    const place = await DataStore.save(Place.copyOf(CURRENT_ITEM, updated => {
       // Update the values on {item} variable to update DataStore entry
       updated.num_restaurants = updated.num_restaurants + 1;
     }));
@@ -254,15 +273,14 @@ const restaurantList_sample = [
           "username": user.username,
           "email": user.email,
           "phone_number": user.phone_number,
-          "menu": [''], 
+          "menu": ['메뉴를 추가해주세요'], 
           "fee":Number(0),
           "restaurantID": restaurant.id,
       })
     );
 
-    await getMarkers();
-    // console.log('markers', markers)
-    refreshRestaurantList();
+    navigation.navigate('Restaurant', {user:user, restaurant:restaurant, place:place})
+
   }
 
   // load restaurant
@@ -290,8 +308,7 @@ const restaurantList_sample = [
           navigation,
           place,
           setRestaurantList,
-          restaurantList,
-          refreshRestaurantList        
+          restaurantList,        
         )
       )
     });
@@ -319,14 +336,13 @@ const restaurantList_sample = [
           place,
           setRestaurantList,
           restaurantList,
-          refreshRestaurantList        
         ))
   
         if(index == members.length-1){
           setSelectedMarker({
             coordinate: {}, // {logitude: 0, latitude: 0}
             title: '나의 주문',
-            key: 'user_order',
+            key: 'userOrder',
           })
           setRestaurantList(_orderList);
           //console.log('orderList', _orderList);
@@ -336,10 +352,10 @@ const restaurantList_sample = [
     else{
       setSelectedMarker({
         coordinate: {}, // {logitude: 0, latitude: 0}
-        title: '나의 주문',
-        key: 'user_order',
+        title: '',
+        key: 'markers%',
       })
-      setRestaurantList(_orderList);
+      setRestaurantList(restaurantList_sample);
     }
     
   }
@@ -435,8 +451,13 @@ const restaurantList_sample = [
       </View>
 
     </View>
-    
 
+    <View style={styles.header}>
+    <Text style={[styles.highlightText]}>{`음식점을 \"${selectedMarker.title}\"에 추가합니다.`}</Text>
+    </View>
+
+
+    <ScrollView>
     <View style={[styles.mapContainer,{height:500*height/2000}]}>
 
     <MapView
@@ -459,12 +480,8 @@ const restaurantList_sample = [
 
     </View>
 
-      <ScrollView>
         
         <View style={styles.restaurantInfoContainerModal}>
-          <View style={styles.header}>
-          <Text style={[styles.highlightText]}>{`음식점을 \"${selectedMarker.title}\"에 추가합니다.`}</Text>
-          </View>
           
 
           <View style={styles.getRestaurantInfoModal}>
@@ -645,10 +662,10 @@ const restaurantList_sample = [
                 onPressOut={() => {
                   {setDialogVisible_restaurant(true);}
                 }}
-                disabled={selectedMarker.key==='markers%'||selectedMarker.key==='user_order'}
+                disabled={selectedMarker.key==='markers%'||selectedMarker.key==='userOrder'}
               >
                 <Text style={styles.normalText}>
-                {selectedMarker.key==='markers%'?'장소를 먼저 선택하세요':(selectedMarker.key ==='user_order'?'':'이곳으로 배달할 음식점 추가하기')}
+                {selectedMarker.key==='markers%'?'장소를 먼저 선택하세요':(selectedMarker.key ==='userOrder'?'':'이곳으로 배달할 음식점 추가하기')}
                 </Text>
               </TouchableOpacity>
           </View>
@@ -660,7 +677,7 @@ const restaurantList_sample = [
             <RefreshControl
               refreshing={refreshing}
               onRefresh={()=>{
-                if(selectedMarker.key =='user_order'){
+                if(selectedMarker.key =='userOrder'){
                   refreshRestaurantList('userOrder')
                 }
                 else if(selectedMarker.key =='markers%'){

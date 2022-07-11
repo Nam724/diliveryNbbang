@@ -16,9 +16,11 @@ export default function Restaurant_page({route, navigation}){
                 <Restaurant_page_finished route={route} navigation={navigation}/>
                 );
         }
-        return (
-            <Restaurant_page_guest route={route} navigation={navigation}/>
-            );
+        else{
+            return (
+                <Restaurant_page_guest route={route} navigation={navigation}/>
+                );        
+        }
     }
     
 }
