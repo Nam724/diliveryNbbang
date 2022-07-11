@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
         height: Dimensions.get('screen').height,
         backgroundColor:colorPack.representative,
         flexDirection: 'column',
-        paddingTop: height * 100/2000,
+        paddingTop: Constants.statusBarHeight,
     },
     header:{
         height: height * 150/2000,
@@ -101,8 +101,8 @@ export const styles = StyleSheet.create({
 // modal
     restaurantInfoModal:{
       flex:1,
-      position: 'absolute',
-      paddingTop: height * 150/2000,
+      paddingVertical: Constants.statusBarHeight,
+      backgroundColor: colorPack.representative,
     },
     restaurantInfoContainerModal:{
         backgroundColor: colorPack.representative,
@@ -114,12 +114,10 @@ export const styles = StyleSheet.create({
 
     restaurantPageContainerModal:{
       backgroundColor: colorPack.representative,
-      height: height * (150+990)/2000,
       alignItems:'center',
       flexDirection:'column',
       justifyContent:'space-between',
       paddingBottom: 0,
-      marginTop: height * 45/2000,
     },
 
     buttonContainerModal:{

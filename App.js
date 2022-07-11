@@ -18,10 +18,9 @@ Amplify.configure(awsconfig);
 
 const Stack = createStackNavigator();
 
-export default function App(){ 
-  const [IsLogin, setIsLogin] = useState(false);
+export default function App(){
   const [user, setUser] = useState(null);
-  const [autoLogin, setAutoLogin] = useState(true);
+  
   // let [fontLoaded] = useFonts({
   //   'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
   //   'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
@@ -44,46 +43,33 @@ export default function App(){
 
 
   // console.log('App.js user', user);
-  if(false){
-    return(
-      <Loading_page></Loading_page>
-    )
-  }
-  else{
+
+
     return (
-      (IsLogin)?
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Main"}>
+        <Stack.Navigator initialRouteName={"SignIn"}>
           <Stack.Screen name="Main" component={Main_page} 
           options={{
             headerShown: false,
           }}
-          initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin, autoLogin:autoLogin, setAutoLogin:setAutoLogin}}
           />
           <Stack.Screen name="Restaurant" component={Restaurant_page} 
           options={{
             headerShown: false,
           }}
           />
+          <Stack.Screen name="SignIn" component={SignIn_page} 
+          options={{
+            headerShown: false,
+          }}
+          />
+          <Stack.Screen name="SignUp" component={SignUp_page}
+          options={{
+            headerShown: false,
+          }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-      :
-      <NavigationContainer>
-      <Stack.Navigator initialRouteName={"SignIn"}>
-        <Stack.Screen name="SignIn" component={SignIn_page} 
-        options={{
-          headerShown: false,
-        }}
-        initialParams={{user:user, setUser:setUser, setIsLogin:setIsLogin, autoLogin:autoLogin, setAutoLogin:setAutoLogin}}
-        />
-        <Stack.Screen name="SignUp" component={SignUp_page}
-        options={{
-          headerShown: false,
-        }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-        
+
     );  
-  }
 }

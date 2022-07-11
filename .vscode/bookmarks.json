@@ -4,37 +4,37 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 70,
+					"line": 73,
 					"column": 4,
 					"label": "음식점 리스트 새로고침"
 				},
 				{
-					"line": 91,
+					"line": 94,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 143,
+					"line": 147,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 168,
+					"line": 170,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 221,
+					"line": 223,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 260,
+					"line": 262,
 					"column": 28,
 					"label": "음식점 불러오기"
 				},
 				{
-					"line": 298,
+					"line": 300,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}
@@ -44,17 +44,12 @@
 			"path": "src/screen/signin.js",
 			"bookmarks": [
 				{
-					"line": 19,
+					"line": 20,
 					"column": 23,
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
 				},
 				{
-					"line": 54,
-					"column": 4,
-					"label": "자동 로그인"
-				},
-				{
-					"line": 74,
+					"line": 79,
 					"column": 4,
 					"label": "로그인"
 				}
@@ -64,27 +59,27 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 60,
+					"line": 59,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 150,
+					"line": 149,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 175,
+					"line": 176,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 207,
+					"line": 208,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 423,
+					"line": 431,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -94,27 +89,27 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 54,
+					"line": 52,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 85,
+					"line": 83,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 125,
+					"line": 123,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 155,
+					"line": 153,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 337,
+					"line": 345,
 					"column": 12,
 					"label": "이 음식점에 등록한 사람들 리스트"
 				}
@@ -144,7 +139,7 @@
 			"path": "App.js",
 			"bookmarks": [
 				{
-					"line": 23,
+					"line": 22,
 					"column": 49,
 					"label": "자동로그인 결정"
 				}

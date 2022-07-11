@@ -12,16 +12,12 @@ import { sendSMSAsync } from 'expo-sms';
 export default function Restaurant_page_finished({route, navigation}){
     
 
+    const [member, setMember] = useState(null);
+    const [isRegistered, setIsRegistered] = useState(false);
 
     const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
     const [place, setPlace] = useState(route.params.place);
-    const [member, setMember] = useState(null);
-    const [isRegistered, setIsRegistered] = useState(false);
-    const setRestaurantList = route.params.setRestaurantList;
-    const refreshRestaurantList = route.params.refreshRestaurantList;
-    var restaurantList = route.params.restaurantList;
-    
 
 
     useEffect(() => {

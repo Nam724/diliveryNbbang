@@ -14,16 +14,14 @@ export default function Restaurant_page_guest({route, navigation}){
     const user = route.params.user;//{username: 'test', email: ''}
     const [restaurant, setRestaurant] = useState(route.params.restaurant);
     const [place, setPlace] = useState(route.params.place);
-    const setRestaurantList = route.params.setRestaurantList;
     const refreshRestaurantList = route.params.refreshRestaurantList;
-    var restaurantList = route.params.restaurantList;
     
 
     const [member, setMember] = useState(null);
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [menuList, setMenuList] = useState(null);
-    const [menuPrice, setMenuPrice] = useState(null);
+    const [menuList, setMenuList] = useState('');
+    const [menuPrice, setMenuPrice] = useState(0);
     const [isRegistered, setIsRegistered] = useState(false);
     
     useEffect(() => {
@@ -161,19 +159,28 @@ export default function Restaurant_page_guest({route, navigation}){
           setModalVisible(false);
         }}
         >
-            <Pressable style={{
-            flex:1,
-            backgroundColor:colorPack.representative,
-            }}
-            onPress={()=>
-                {setModalVisible(false);}
-            }
-            />
             <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
             style={styles.restaurantInfoModal}>
+
+            <View style={[styles.header,{opacity:0.5}]}>
+                <Text style={styles.highlightText}>
+                    {restaurant.name}
+                </Text>
+                <Text style={styles.highlightText}>
+                    {restaurant.num_members==0?`배달료 총 ${restaurant.fee}원`:`배달료: ${restaurant.fee}원 / ${restaurant.num_members}명 = ${Math.ceil(restaurant.fee/restaurant.num_members)}원`}
+                </Text>
+            </View>
+            
+            <View style={styles.header}>
+            <Text style={styles.highlightText}>
+                {'새롭게 주문하기'}
+            </Text>
+            </View>
+
+
             <ScrollView>
             <View style={styles.restaurantPageContainerModal}>
-          
+
 
           <View style={{
             flexDirection:'row',
@@ -207,7 +214,6 @@ export default function Restaurant_page_guest({route, navigation}){
 
             placeholder={'주문할 메뉴를 입력해주세요.\n이때 한 줄에 \n하나의 메뉴를 입력해 주세요.\n해당 내용을 통해 방장이\n자동으로 주문할 수 있습니다.'}
             placeholderTextColor={colorPack.deactivated}
-            defaultValue={menuList}
             onChangeText={(text) => {setMenuList(text)}}
             ></TextInput>
 
@@ -215,8 +221,10 @@ export default function Restaurant_page_guest({route, navigation}){
             style={[styles.textInputBox_restaurant_price, styles.normalText,]}
             placeholderTextColor={colorPack.deactivated}
             keyboardType='numeric'
-            onChangeText={(text)=>{setMenuPrice(parseInt(text))}}
-            placeholder={menuPrice==null||menuPrice==NaN?'배달료 제외':`${menuPrice}`}
+            onChangeText={(text)=>{
+                setMenuPrice(parseInt(text))
+            }}
+            placeholder={'배달료 제외'}
             ></TextInput>
 
         </View>

@@ -10,22 +10,20 @@ import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member} from '../models';
 import Loading_page from './loading_page';
 import * as Linking from 'expo-linking';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Main_page({route, navigation}){
 
   
 
-  // console.log('route_params', route.params);
-
-  const user = route.params.user.attributes;
+  
+  let user = JSON.parse(route.params.user).attributes;
   user.username = user.sub
-  const setIsLogin = route.params.setIsLogin;
-  const setUser = route.params.setUser;
-  const setAutoLogin = route.params.setAutoLogin;
-  // console.log('Main_page user', user);
+
+  console.log('Main_page user', user);
 // MAP
   // check is loading finished?
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
 // get location
   const [location, setLocation] = useState(
@@ -40,6 +38,15 @@ export default function Main_page({route, navigation}){
         mountFunction();      
     }, []); 
 
+  const setUser = (user) =>{
+      AsyncStorage.setItem('@user', JSON.stringify(user));
+  }
+  
+  const getUser = async () =>{
+      const user = await AsyncStorage.getItem('@user');
+      return JSON.parse(user);
+  }  
+
   const mountFunction = async () => { // 시작할 때 실행되는 함수
     let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
       // console.log(status_location_permission);
@@ -53,14 +60,10 @@ export default function Main_page({route, navigation}){
       setLocation({
         latitude: _location.coords.latitude,
         longitude: _location.coords.longitude,
-        latitudeDelta: 0.0003, longitudeDelta: 0.0003
+        latitudeDelta: 0.003, longitudeDelta: 0.003
       });
-      if(await getMarkers()){
-        console.log('마커를 불러오는데 성공했습니다.')
-      }
-      else{
-        console.log('마커를 불러오는데 실패했습니다.')
-      }
+
+      await getMarkers()
       setIsLoading(false);
   }
 
@@ -91,10 +94,11 @@ export default function Main_page({route, navigation}){
 
   const logOut = () => {
     Alert.alert('배달앤빵','로그아웃을 할까요?',[{text: '로그아웃', onPress: async () => {
+      
+      setUser({});
       await Auth.signOut();
-      setAutoLogin(false)
-      setIsLogin(false);
-      setUser(null);
+      navigation.replace('SignIn')
+
     }},{text: '취소', onPress: () => {
     console.log('Cancel Pressed');
   }}]);
@@ -155,15 +159,13 @@ export default function Main_page({route, navigation}){
         if(index == models.length-1){
           setMarkers(_markerList);
         }
-  
       });
-      return(true);
     } 
     
     catch (error) {
       return(error)
     }
-    
+
 
   }
 
@@ -345,8 +347,8 @@ const restaurantList_sample = [
  // return 
   return (
     (isLoading)?
-      <Loading_page></Loading_page>:
-    <View style={styles.container}>
+      (<Loading_page></Loading_page>):
+    (<View style={styles.container}>
 
       <DialogInput
         isDialogVisible={dialogVisible_marker}
@@ -390,19 +392,73 @@ const restaurantList_sample = [
         setNewRestaurant_url(null);
       }}
       >
-      <Pressable style={{
-        flex:1,
-        backgroundColor: colorPack.representative,
-      }}
-      onPress={()=>
-      {setDialogVisible_restaurant(false);
-        setNewRestaurant_fee(null);
-        setNewRestaurant_name(null);
-        setNewRestaurant_url(null);}
-      }
-      />
+
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
       style={styles.restaurantInfoModal}>
+      <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between', opacity:0.5}]}>
+
+      <View style={{width:width*0.25}}>
+        <TouchableOpacity
+          onPress={() => {
+            logOut()
+          }}
+          disabled = {true}
+        >
+        <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{user.email.split('@')[0]}</Text>
+        </TouchableOpacity>    
+      </View>
+
+      <TouchableOpacity style={{width:width*0.25}}
+          onPress={async() => {
+            await getMarkers();
+            setSelectedMarker({
+              coordinate: {}, // {logitude: 0, latitude: 0}
+              title: '',
+              key: 'markers%',
+            });
+            setRestaurantList(restaurantList_sample)
+          }}
+          disabled = {true}
+      >
+        <Text style={styles.highlightText} lineBreakMode='tail' numberOfLines={1}>{'배달앤빵'}</Text>
+      </TouchableOpacity>
+
+      <View style={{width:width*0.25}}>
+        <TouchableOpacity
+          onPress={() => {
+            showUserOrderList();
+          }}
+          disabled = {true}
+        >
+        <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{`나의 주문`}</Text>
+        </TouchableOpacity>    
+      </View>
+
+    </View>
+    
+
+    <View style={[styles.mapContainer,{height:500*height/2000}]}>
+
+    <MapView
+    provider='google'
+    customMapStyle={map_darkStyle}
+    style={[styles.map, {height:500*height/2000}]}
+    initialRegion={location}
+    showsMyLocationButton={true}
+    showsUserLocation={true}
+    loadingEnabled={true}
+    zoomEnabled={true}
+    rotateEnabled={true}
+    onLongPress={(e) => {
+      setNewmarkerCoordinate(e.nativeEvent.coordinate);
+      setDialogVisible_marker(true);
+    }}
+    >
+    {markers.filter((marker) => marker.key === selectedMarker.key)}
+    </MapView>
+
+    </View>
+
       <ScrollView>
         
         <View style={styles.restaurantInfoContainerModal}>
@@ -628,7 +684,7 @@ const restaurantList_sample = [
 
 
       </View>
-    </View>
+    </View>)
   )
 
   }// return}

@@ -1,6 +1,7 @@
 import { Auth } from '@aws-amplify/auth';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text, AsyncStorage, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles, width, height } from '../style/style';
 
 
@@ -24,15 +25,10 @@ async function saveLoginInfo(email='', password=''){
 
 
 
-export default function SignIn_page({route, navigation}){
+export default function SignIn_page({navigation}){
     
     // 자동로그인 토글
-    
-    // console.log('route', route);
-    const user = route.params.user;
-    const setUser = route.params.setUser;
-    const setIsLogin = route.params.setIsLogin;
-    const autoLogin = route.params.autoLogin;
+    const [autoLogin, setAutoLogin] = useState(true);
 
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
@@ -49,9 +45,20 @@ export default function SignIn_page({route, navigation}){
         }
     }, []);
 
+    const setUser = (user) =>{
+        AsyncStorage.setItem('@user', JSON.stringify(user));
+    }
+
+    const getUser = async () =>{
+        const user = await AsyncStorage.getItem('@user');
+        return JSON.parse(user);
+    }
+
     const loginFirst = async () => {
+    let value = null
+    try {
         await AsyncStorage.getItem('@loginInfoToken').then(_value => {
-            const value = JSON.parse(_value);
+            value = JSON.parse(_value);
             // console.log(value);
             if(value.email && value.password){
                 // console.log('value값이 있어서 바로 로그인합니다.', value);
@@ -62,25 +69,23 @@ export default function SignIn_page({route, navigation}){
             else{
                 // console.log('value값이 없어서 로그인을 진행합니다.');
             }
-        }
-        ).catch(err => {
+        })
+    } catch (error) {
             // console.log(err);
-            const value = null
+            value = null
             // console.log('value값이 없어서 로그인을 진행합니다.');
-        });
-
-    }
+    }}
 
 
     const signIn = async(email = email, password = password) => {
         try {
-            const user = await Auth.signIn(email, password);
-            // console.log('user', user);
-            setUser(user);
-            setIsLogin(true);
+            const _user = await Auth.signIn(email, password);
+            console.log('user', _user);
+            setUser(_user);
             saveLoginInfo(email, password);
+            navigation.replace('Main', {user: JSON.stringify(_user)});
         } catch (error) {
-            // console.log('error signing in', error);
+            console.log('error signing in', error);
             if(error === 'UserNotConfirmedException'){
                 Alert.alert('배달앤빵','허가되지 않은 사용자입니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);
