@@ -40,8 +40,11 @@ export default function Main_page({route, navigation}){
 
   useFocusEffect(
     React.useCallback(() => {
-      refreshRestaurantList('userOrder')
 
+      setRefreshing(true);
+      refreshRestaurantList('userOrder')
+      setRefreshing(false);
+      
     }, [])
   )
 
@@ -70,8 +73,7 @@ export default function Main_page({route, navigation}){
         latitudeDelta: 0.003, longitudeDelta: 0.003
       });
 
-      await getMarkers()
-      setIsLoading(false);
+      // await getMarkers()
   }
 
     // refresh
