@@ -45,7 +45,7 @@ export default function App(){
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={"SignIn"}>
+        <Stack.Navigator initialRouteName={"Loading"}>
           <Stack.Screen name="Main" component={Main_page} 
           options={{
             headerShown: false,
