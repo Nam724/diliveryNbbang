@@ -2,7 +2,6 @@ import { Auth } from 'aws-amplify';
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView, Image, ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
-import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
 // import DialogInput from 'react-native-dialog-input';
 import {Main_restaurantList, Main_restaurantList_sample} from './main_restaurantList';
@@ -19,23 +18,16 @@ export default function Main_page({route, navigation}){
   
   let user = JSON.parse(route.params.user).attributes;
   user.username = user.sub
+  const location = JSON.parse(route.params.location);
 
   // console.log('Main_page user', user);
 // MAP
   // check is loading finished?
-  const [isLoading, setIsLoading] = useState(true);
 
 // get location
-  const [location, setLocation] = useState(
-    {latitude: 35.572676, longitude: 129.188191, latitudeDelta: 0.003, longitudeDelta: 0.003}
-  ); // coordinate = {latitude: 37.4219525, longitude: -122.0837251}
 
   const [errorMsg, setErrorMsg] = useState(null);
   // const mapRef = createRef();
-
-  useEffect( () => {
-        mountFunction();
-    }, []); 
 
   useFocusEffect(
     React.useCallback(() => {
@@ -54,29 +46,6 @@ export default function Main_page({route, navigation}){
       const user = await AsyncStorage.getItem('@user');
       return JSON.parse(user);
   }  
-
-  const mountFunction = async () => { // 시작할 때 실행되는 함수
-    alert('mountFunction');
-    let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
-      // console.log(status_location_permission);
-      // 나중에 풀어야 함!
-      if (status_location_permission !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        // return; 
-      }
-
-      let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest, maximumAge: 10000});
-      setLocation({
-        latitude: _location.coords.latitude,
-        longitude: _location.coords.longitude,
-        latitudeDelta: 0.003, longitudeDelta: 0.003
-      });
-
-      alert('mountFunction is finished'+_location)
-
-      setIsLoading(false);
-      // await getMarkers()
-  }
 
     // refresh
   const [refreshing, setRefreshing] = useState(false);

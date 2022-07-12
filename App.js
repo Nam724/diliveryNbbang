@@ -6,9 +6,9 @@ import { Amplify } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useEffect, useState } from 'react';
 import 'react-native-gesture-handler';
 import {useFonts} from 'expo-font'
+import Loading_page from './src/screen/loading_page';
 
 
 
@@ -53,7 +53,7 @@ export default function App(){
           />
           <Stack.Screen name="Restaurant" component={Restaurant_page} 
           options={{
-            headerShown: false,
+            headerShown: true,
           }}
           />
           <Stack.Screen name="SignIn" component={SignIn_page} 
@@ -62,6 +62,11 @@ export default function App(){
           }}
           />
           <Stack.Screen name="SignUp" component={SignUp_page}
+          options={{
+            headerShown: false,
+          }}
+          />
+          <Stack.Screen name="Loading" component={Loading_page}
           options={{
             headerShown: false,
           }}
