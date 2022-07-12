@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify';
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView, Image, ActivityIndicator} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 // import DialogInput from 'react-native-dialog-input';
 import {Main_restaurantList, Main_restaurantList_sample} from './main_restaurantList';
 import  {DataStore} from '@aws-amplify/datastore';
@@ -10,6 +10,7 @@ import {Restaurant, Place, Member} from '../models';
 import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import DialogInput from 'react-native-dialog-input';
 
 export default function Main_page({route, navigation}){
 
@@ -91,7 +92,7 @@ export default function Main_page({route, navigation}){
       
       setUser({});
       await Auth.signOut();
-      navigation.replace('Loading');
+      navigation.replace('SignIn')
 
     }},{text: '취소', onPress: () => {
     console.log('Cancel Pressed');
@@ -339,18 +340,37 @@ const restaurantList_sample = [
   return (
     <View style={styles.container}>
 
+      <DialogInput
+        isDialogVisible={dialogVisible_marker}
+        title={"이곳에 핀 추가하기"}
+        message={'이 장소의 이름을 입력하세요'}
+        dialogStyle={{
+          borderRadius: width*50/1000,
+          backgroundColor: colorPack.text_light,
+          padding: width*20/1000,
+        }}
+        textInputProps={{
+          autoCorrect: false,
+          autoCapitalize: false,
+          maxLength: 10,
+        }}
 
-
-      <Modal animationType='fade'
-      transparent={false}
-      visible={dialogVisible_restaurant}
-      onRequestClose={() => {
-        
-      }}
-      >
+        submitText={'저장'}
+        cancelText={'닫기'}
+        submitInput={(title) => {
+          if(title){
+          makeNewMarker(newmarkerCoordinate, title);
+          setDialogVisible_marker(false);
+          }
+          else{
+            setDialogVisible_marker(false);
+          }
+        }}
+        closeDialog={() => {
+          setDialogVisible_marker(false);
+        }}
+      />
       
-      
-      </Modal>
 
 
       <Modal animationType='fade'
@@ -416,7 +436,7 @@ const restaurantList_sample = [
     <View style={[styles.mapContainer,{height:500*height/2000}]}>
 
     <MapView
-    provider='google'
+    provider={PROVIDER_GOOGLE}
     customMapStyle={map_darkStyle}
     style={[styles.map, {height:500*height/2000}]}
     initialRegion={location}
@@ -585,7 +605,7 @@ const restaurantList_sample = [
       <View style={styles.mapContainer}>
 
           <MapView
-          provider='google'
+          provider={PROVIDER_GOOGLE}
           customMapStyle={map_darkStyle}
           style={styles.map}
           initialRegion={location}

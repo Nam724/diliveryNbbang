@@ -26,7 +26,12 @@
         "backgroundColor": "#17263C"
       },
       "package": "expo.eject.BTS_PseudoTesla",
-      "versionCode": 2
+      "versionCode": 2,
+      "config":{
+        "googleMaps":{
+          "apiKey":"AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
