@@ -45,7 +45,7 @@ export default function App(){
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={"Loading"}>
+        <Stack.Navigator initialRouteName={"SignIn"}>
           <Stack.Screen name="Main" component={Main_page} 
           options={{
             headerShown: false,
@@ -53,7 +53,7 @@ export default function App(){
           />
           <Stack.Screen name="Restaurant" component={Restaurant_page} 
           options={{
-            headerShown: true,
+            headerShown: false,
           }}
           />
           <Stack.Screen name="SignIn" component={SignIn_page} 
@@ -62,11 +62,6 @@ export default function App(){
           }}
           />
           <Stack.Screen name="SignUp" component={SignUp_page}
-          options={{
-            headerShown: false,
-          }}
-          />
-          <Stack.Screen name="Loading" component={Loading_page}
           options={{
             headerShown: false,
           }}

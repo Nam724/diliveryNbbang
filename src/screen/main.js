@@ -11,6 +11,8 @@ import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import DialogInput from 'react-native-dialog-input';
+import Loading_page from './loading_page';
+import * as Location from 'expo-location';
 
 const API_KEY = "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE";
 
@@ -20,25 +22,46 @@ export default function Main_page({route, navigation}){
   
   let user = JSON.parse(route.params.user).attributes;
   user.username = user.sub
-  const location = JSON.parse(route.params.location);
+  const [location, setLocation] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // console.log('Main_page user', user);
-// MAP
-  // check is loading finished?
 
-// get location
 
   const [errorMsg, setErrorMsg] = useState(null);
   // const mapRef = createRef();
 
+
+
+  useEffect(() => {
+    getLocation();
+    // console.log('user', user)
+  },[]);
+
   useFocusEffect(
     React.useCallback(() => {
-
       refreshRestaurantList('userOrder')
-      // setIsLoading(true);
-
     }, [])
   )
+
+  // get location
+  const getLocation = async () => {
+    setIsLoading(true);
+    let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
+    // console.log(status_location_permission);
+    //   나중에 풀어야 함!
+      if (status_location_permission !== 'granted') {
+        alert('Permission to access location was denied');
+        // return; 
+      }
+    let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
+    setLocation({
+    latitude: _location.coords.latitude,
+    longitude: _location.coords.longitude,
+    latitudeDelta: 0.003, longitudeDelta: 0.003
+    });
+    setIsLoading(false);
+}
+
 
   const setUser = (user) =>{
       AsyncStorage.setItem('@user', JSON.stringify(user));
@@ -54,7 +77,7 @@ export default function Main_page({route, navigation}){
 
 
   const refreshRestaurantList = async (id='refresh') => {
-    alert('refreshRestaurantList');
+    // alert('refreshRestaurantList');
     setRefreshing(true);
     // console.log('refreshRestaurantList',id==='refresh');
     console.log(selectedMarker)
@@ -84,7 +107,7 @@ export default function Main_page({route, navigation}){
       console.log('refreshRestaurantList_with id');
       await loadRestaurant(id);
     }
-    alert('refreshRestaurantList is finished');
+    // alert('refreshRestaurantList is finished');
     setRefreshing(false);
     // setIsLoading(false);
   }
@@ -340,6 +363,9 @@ const restaurantList_sample = [
 
  // return 
   return (
+    (isLoading)?
+    <Loading_page/>:
+
     <View style={styles.container}>
 
       <DialogInput

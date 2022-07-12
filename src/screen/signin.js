@@ -28,8 +28,6 @@ async function saveLoginInfo(email='', password=''){
 export default function SignIn_page({route, navigation}){
     
     // 자동로그인 토글
-    const location = route.params.location;
-
     const [autoLogin, setAutoLogin] = useState(true);
 
     const [email, setEmail] = useState('');
@@ -85,7 +83,7 @@ export default function SignIn_page({route, navigation}){
             console.log('user', _user);
             setUser(_user);
             saveLoginInfo(email, password);
-            navigation.replace('Main', {user: JSON.stringify(_user), location:location});
+            navigation.replace('Main', {user: JSON.stringify(_user)});
         } catch (error) {
             console.log('error signing in', error);
             if(error === 'UserNotConfirmedException'){
