@@ -6,6 +6,7 @@ import { styles, colorPack,  height, map_darkStyle } from '../style/style';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 
+const API_KEY = "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE";
 
 export default function Restaurant_page_guest({route, navigation}){
     
@@ -330,6 +331,7 @@ export default function Restaurant_page_guest({route, navigation}){
             <View style={styles.mapContainer} >
               <MapView
               provider={PROVIDER_GOOGLE}
+              key={API_KEY}
               customMapStyle={map_darkStyle}
               style={styles.map}
               initialRegion={{longitude: place.longitude, latitude: place.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}

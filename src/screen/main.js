@@ -12,6 +12,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import DialogInput from 'react-native-dialog-input';
 
+const API_KEY = "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE";
+
 export default function Main_page({route, navigation}){
 
 
@@ -437,6 +439,7 @@ const restaurantList_sample = [
 
     <MapView
     provider={PROVIDER_GOOGLE}
+    key={API_KEY}
     customMapStyle={map_darkStyle}
     style={[styles.map, {height:500*height/2000}]}
     initialRegion={location}
@@ -606,6 +609,7 @@ const restaurantList_sample = [
 
           <MapView
           provider={PROVIDER_GOOGLE}
+          key={API_KEY}
           customMapStyle={map_darkStyle}
           style={styles.map}
           initialRegion={location}

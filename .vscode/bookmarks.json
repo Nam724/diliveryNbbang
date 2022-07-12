@@ -4,27 +4,27 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 89,
+					"line": 91,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 142,
+					"line": 144,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 165,
+					"line": 167,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 218,
+					"line": 220,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 293,
+					"line": 295,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}
@@ -79,27 +79,27 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 55,
+					"line": 56,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 88,
+					"line": 89,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 128,
+					"line": 129,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 158,
+					"line": 159,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 350,
+					"line": 352,
 					"column": 12,
 					"label": "이 음식점에 등록한 사람들 리스트"
 				}
