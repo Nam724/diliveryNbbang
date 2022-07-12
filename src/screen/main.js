@@ -4,13 +4,14 @@ import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
-import DialogInput from 'react-native-dialog-input';
+// import DialogInput from 'react-native-dialog-input';
 import {Main_restaurantList, Main_restaurantList_sample} from './main_restaurantList';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member} from '../models';
 import * as Linking from 'expo-linking';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import DialogInput from 'react-native-dialog-input';
 
 export default function Main_page({route, navigation}){
 
@@ -55,6 +56,7 @@ export default function Main_page({route, navigation}){
   }  
 
   const mountFunction = async () => { // 시작할 때 실행되는 함수
+    alert('mountFunction');
     let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
       // console.log(status_location_permission);
       // 나중에 풀어야 함!
@@ -69,6 +71,9 @@ export default function Main_page({route, navigation}){
         longitude: _location.coords.longitude,
         latitudeDelta: 0.003, longitudeDelta: 0.003
       });
+
+      alert('mountFunction is finished'+_location)
+
       setIsLoading(false);
       // await getMarkers()
   }
@@ -78,6 +83,7 @@ export default function Main_page({route, navigation}){
 
 
   const refreshRestaurantList = async (id='refresh') => {
+    alert('refreshRestaurantList');
     setRefreshing(true);
     // console.log('refreshRestaurantList',id==='refresh');
     console.log(selectedMarker)
@@ -107,6 +113,7 @@ export default function Main_page({route, navigation}){
       console.log('refreshRestaurantList_with id');
       await loadRestaurant(id);
     }
+    alert('refreshRestaurantList is finished');
     setRefreshing(false);
     // setIsLoading(false);
   }
