@@ -8,8 +8,7 @@ import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
 import { sendSMSAsync } from 'expo-sms';
 
-const API_KEY = "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE";
-
+const API_KEY = "AIzaSyBbXcijZtoSLZqH_zFGiF8coTSmPJwq4SI";
 export default function Restaurant_page_finished({route, navigation}){
     
 

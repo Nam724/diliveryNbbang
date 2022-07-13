@@ -14,7 +14,7 @@ import DialogInput from 'react-native-dialog-input';
 import Loading_page from './loading_page';
 import * as Location from 'expo-location';
 
-const API_KEY = "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE";
+const API_KEY = "AIzaSyBbXcijZtoSLZqH_zFGiF8coTSmPJwq4SI";
 
 export default function Main_page({route, navigation}){
 

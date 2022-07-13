@@ -6,8 +6,7 @@ import { styles, colorPack,  height, map_darkStyle } from '../style/style';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 
-const API_KEY = "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE";
-
+const API_KEY = "AIzaSyBbXcijZtoSLZqH_zFGiF8coTSmPJwq4SI";
 export default function Restaurant_page_guest({route, navigation}){
     
     // console.log('Restaurant_page_guest', route);
