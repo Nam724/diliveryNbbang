@@ -8,7 +8,8 @@ import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
 import { sendSMSAsync } from 'expo-sms';
 
-const API_KEY = "AIzaSyBbXcijZtoSLZqH_zFGiF8coTSmPJwq4SI";
+const API_KEY_android = Config.google_map_API_KEY_android;
+const API_KEY_ios = Config.google_map_API_KEY_ios;
 export default function Restaurant_page_finished({route, navigation}){
     
 
@@ -139,8 +140,7 @@ export default function Restaurant_page_finished({route, navigation}){
             <View style={styles.mapContainer} >
               <MapView
               provider={PROVIDER_GOOGLE}
-              key={API_KEY}
-              customMapStyle={map_darkStyle}
+              key={Platform.OS === 'android' ? API_KEY_android : API_KEY_ios}              customMapStyle={map_darkStyle}
               style={styles.map}
               initialRegion={{longitude: place.longitude, latitude: place.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}
               showsMyLocationButton={false}

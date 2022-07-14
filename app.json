@@ -2,7 +2,7 @@
   "expo": {
     "name": "배달앤빵",
     "slug": "bts",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -18,7 +18,9 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "PseudoTesla"
+      "bundleIdentifier": "diliveryNbbang",
+      "config": {"googleMapsApiKey": "AIzaSyA0BTNwQXNis2TgpD3zfRHHyU8Ej1tQizc"}
+      
     },
     "android": {
       "adaptiveIcon": {
@@ -26,10 +28,10 @@
         "backgroundColor": "#17263C"
       },
       "package": "expo.eject.BTS_PseudoTesla",
-      "versionCode": 3,
+      "versionCode": 4,
       "config":{
         "googleMaps": {
-          "apiKey": "AIzaSyBbXcijZtoSLZqH_zFGiF8coTSmPJwq4SI"
+          "apiKey": "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE"
         }
       }
     },

@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView, Image, ActivityIndicator} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView, Image, ActivityIndicator, Platform} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
@@ -13,8 +13,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import DialogInput from 'react-native-dialog-input';
 import Loading_page from './loading_page';
 import * as Location from 'expo-location';
+import Config from 'react-native-config';
 
-const API_KEY = "AIzaSyBbXcijZtoSLZqH_zFGiF8coTSmPJwq4SI";
+const API_KEY_android = Config.google_map_API_KEY_android;
+const API_KEY_ios = Config.google_map_API_KEY_ios;
 
 export default function Main_page({route, navigation}){
 
@@ -465,7 +467,7 @@ const restaurantList_sample = [
 
     <MapView
     provider={PROVIDER_GOOGLE}
-    key={API_KEY}
+    key={Platform.OS === 'android' ? API_KEY_android : API_KEY_ios}
     customMapStyle={map_darkStyle}
     style={[styles.map, {height:500*height/2000}]}
     initialRegion={location}
@@ -635,8 +637,7 @@ const restaurantList_sample = [
 
           <MapView
           provider={PROVIDER_GOOGLE}
-          key={API_KEY}
-          customMapStyle={map_darkStyle}
+          key={Platform.OS === 'android' ? API_KEY_android : API_KEY_ios}          customMapStyle={map_darkStyle}
           style={styles.map}
           initialRegion={location}
           showsMyLocationButton={true}

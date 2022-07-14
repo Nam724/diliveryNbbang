@@ -4,27 +4,27 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 114,
+					"line": 116,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 167,
+					"line": 169,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 190,
+					"line": 192,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 243,
+					"line": 245,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 318,
+					"line": 320,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}
@@ -49,27 +49,27 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 68,
+					"line": 69,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 158,
+					"line": 159,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 185,
+					"line": 186,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 217,
+					"line": 218,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 440,
+					"line": 441,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -79,22 +79,22 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 56,
+					"line": 57,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 89,
+					"line": 90,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 129,
+					"line": 130,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 159,
+					"line": 160,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
