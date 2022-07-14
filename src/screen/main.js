@@ -51,10 +51,10 @@ export default function Main_page({route, navigation}){
     let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
     // console.log(status_location_permission);
     //   나중에 풀어야 함!
-      if (status_location_permission !== 'granted') {
-        alert('Permission to access location was denied');
-        // return; 
-      }
+      // if (status_location_permission !== 'granted') {
+      //   alert('Permission to access location was denied');
+      //   // return; 
+      // }
     let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
     setLocation({
     latitude: _location.coords.latitude,
