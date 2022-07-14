@@ -19,7 +19,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "diliveryNbbang",
-      "config": {"googleMapsApiKey": "AIzaSyA0BTNwQXNis2TgpD3zfRHHyU8Ej1tQizc"}
+      "config": {"googleMapsApiKey": 
+      "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I"
+    }
       
     },
     "android": {
@@ -31,7 +33,7 @@
       "versionCode": 4,
       "config":{
         "googleMaps": {
-          "apiKey": "AIzaSyBp8cLDOrXOGsr2vFYxCLrcZNnNL5YNWlE"
+          "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
         }
       }
     },

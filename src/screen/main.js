@@ -13,10 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import DialogInput from 'react-native-dialog-input';
 import Loading_page from './loading_page';
 import * as Location from 'expo-location';
-import Config from 'react-native-config';
 
-const API_KEY_android = Config.google_map_API_KEY_android;
-const API_KEY_ios = Config.google_map_API_KEY_ios;
 
 export default function Main_page({route, navigation}){
 
@@ -467,7 +464,6 @@ const restaurantList_sample = [
 
     <MapView
     provider={PROVIDER_GOOGLE}
-    key={Platform.OS === 'android' ? API_KEY_android : API_KEY_ios}
     customMapStyle={map_darkStyle}
     style={[styles.map, {height:500*height/2000}]}
     initialRegion={location}
@@ -637,7 +633,7 @@ const restaurantList_sample = [
 
           <MapView
           provider={PROVIDER_GOOGLE}
-          key={Platform.OS === 'android' ? API_KEY_android : API_KEY_ios}          customMapStyle={map_darkStyle}
+          customMapStyle={map_darkStyle}
           style={styles.map}
           initialRegion={location}
           showsMyLocationButton={true}
