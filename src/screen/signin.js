@@ -148,6 +148,7 @@ export default function SignIn_page({route, navigation}){
                                 setIsEmailValid(emailTest(email))
                             }}
                             defaultValue={email}
+                            accessibilityLabel = {'email_input'}
                         />
                     </View>
                     <View style={{marginTop: height*100/2000,height:height*179/2000}}>
@@ -162,6 +163,7 @@ export default function SignIn_page({route, navigation}){
                             maxLength={20}
                             onChangeText={(password) => setPassword(password)}
                             defaultValue={password}
+                            accessibilityLabel = {'password_input'}
                         />
                     </View>
                     
