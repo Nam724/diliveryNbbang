@@ -74,7 +74,7 @@ export default function Restaurant_page_guest({route, navigation}){
                 // Update the values on {item} variable to update DataStore entry
                 updated.num_members = updated.num_members +1;
                 }));
-            console.log('새로운 멤버가 추가되었습니다.', updatedItem)
+            // console.log('새로운 멤버가 추가되었습니다.', updatedItem)
             setRestaurant(updatedItem)
 
             setModalVisible(true);

@@ -80,12 +80,12 @@ export default function SignIn_page({route, navigation}){
     const signIn = async(email = email, password = password) => {
         try {
             const _user = await Auth.signIn(email, password);
-            console.log('user', _user);
+            // console.log('user', _user);
             setUser(_user);
             saveLoginInfo(email, password);
             navigation.replace('Main', {user: JSON.stringify(_user)});
         } catch (error) {
-            console.log('error signing in', error);
+            // console.log('error signing in', error);
             if(error === 'UserNotConfirmedException'){
                 Alert.alert('배달앤빵','허가되지 않은 사용자입니다.', [{text: '확인', onPress: () => {}}]);
                 return(false);

@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView, Image, ActivityIndicator, Platform} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
@@ -45,20 +45,29 @@ export default function Main_page({route, navigation}){
   // get location
   const getLocation = async () => {
     setIsLoading(true);
-    let { status_location_permission } = await Location.requestForegroundPermissionsAsync();
-    // console.log(status_location_permission);
-    //   나중에 풀어야 함!
-      // if (status_location_permission !== 'granted') {
-      //   alert('Permission to access location was denied');
-      //   // return; 
-      // }
-    let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
-    setLocation({
-    latitude: _location.coords.latitude,
-    longitude: _location.coords.longitude,
-    latitudeDelta: 0.003, longitudeDelta: 0.003
-    });
-    setIsLoading(false);
+    Alert.alert('배달앤빵', '현재 위치에 따른 배달 정보를 제공하기 위해\n사용자의 위치 정보에 접근하려 합니다.\n동의하시겠습니까?', [
+      {text: '취소', onPress: () => {
+        // console.log('Cancel Pressed')
+        navigation.replace('SignIn');
+      }, style: 'cancel'},
+      {text: '동의', onPress: async() => {
+        let { status_location_permission } = await Location.requestForegroundPermissionsAsync()
+        console.log('위치 정보 access '+status_location_permission);
+        //   나중에 풀어야 함!
+          // if (status_location_permission !== 'granted') {
+          //   alert('Permission to access location was denied');
+          //   // return; 
+          // }
+        let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
+        setLocation({
+        latitude: _location.coords.latitude,
+        longitude: _location.coords.longitude,
+        latitudeDelta: 0.003, longitudeDelta: 0.003
+        });
+        setIsLoading(false);
+      }} 
+    ])
+    
 }
 
 
@@ -79,7 +88,7 @@ export default function Main_page({route, navigation}){
     // alert('refreshRestaurantList');
     setRefreshing(true);
     // console.log('refreshRestaurantList',id==='refresh');
-    console.log(selectedMarker)
+    // console.log(selectedMarker)
     await getMarkers()
     if(id==='refresh'){
       // console.log('refreshRestaurantList_refresh');
@@ -103,7 +112,7 @@ export default function Main_page({route, navigation}){
 
     }
     else{
-      console.log('refreshRestaurantList_with id');
+      // console.log('refreshRestaurantList_with id');
       await loadRestaurant(id);
     }
     // alert('refreshRestaurantList is finished');
@@ -119,7 +128,7 @@ export default function Main_page({route, navigation}){
       navigation.replace('SignIn')
 
     }},{text: '취소', onPress: () => {
-    console.log('Cancel Pressed');
+    // console.log('Cancel Pressed');
   }}]);
   }
 
@@ -146,7 +155,7 @@ export default function Main_page({route, navigation}){
         description={`${num_restaurants}개의 음식점`}
         key={key}
         onPress={() => {
-          console.log(title)
+          // console.log(title)
           setSelectedMarker(
             {
               coordinate: coordinate,
@@ -170,7 +179,7 @@ export default function Main_page({route, navigation}){
     try {
       const models = await DataStore.query(Place, place => {
       });
-      console.log(models)
+      // console.log(models)
       models.forEach((model, index) => {
   
         _markerList.push(returnMarker(model))
@@ -243,7 +252,7 @@ const restaurantList_sample = [
   // make new restaurant
   async function saveNewRestaurant(placeID){
       
-    console.log({"name": newRestaurant_name,"fee": newRestaurant_fee,"url": newRestaurant_url,"placeID": placeID,})
+    ({"name": newRestaurant_name,"fee": newRestaurant_fee,"url": newRestaurant_url,"placeID": placeID,})
     // amplify
     const restaurant = await DataStore.save(
       new Restaurant({
