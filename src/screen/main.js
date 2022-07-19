@@ -15,10 +15,12 @@ import Loading_page from './loading_page';
 import * as Location from 'expo-location';
 
 
+
+
 export default function Main_page({route, navigation}){
 
 
-  
+  const autoLogin = route.params.autoLogin;
   let user = JSON.parse(route.params.user).attributes;
   user.username = user.sub
   const [location, setLocation] = useState(null);
@@ -45,28 +47,47 @@ export default function Main_page({route, navigation}){
   // get location
   const getLocation = async () => {
     setIsLoading(true);
-    Alert.alert('배달앤빵', '현재 위치에 따른 배달 정보를 제공하기 위해\n사용자의 위치 정보에 접근하려 합니다.\n동의하시겠습니까?', [
-      {text: '취소', onPress: () => {
-        // console.log('Cancel Pressed')
-        navigation.replace('SignIn');
-      }, style: 'cancel'},
-      {text: '동의', onPress: async() => {
-        let { status_location_permission } = await Location.requestForegroundPermissionsAsync()
-        console.log('위치 정보 access '+status_location_permission);
-        //   나중에 풀어야 함!
-          // if (status_location_permission !== 'granted') {
-          //   alert('Permission to access location was denied');
-          //   // return; 
-          // }
-        let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
-        setLocation({
-        latitude: _location.coords.latitude,
-        longitude: _location.coords.longitude,
-        latitudeDelta: 0.003, longitudeDelta: 0.003
-        });
-        setIsLoading(false);
-      }} 
-    ])
+    if(autoLogin){
+      Alert.alert('배달앤빵', '현재 위치에 따른 배달 정보를 제공하기 위해\n사용자의 위치 정보에 접근하려 합니다.\n동의하시겠습니까?', [
+        {text: '취소', onPress: () => {
+          // console.log('Cancel Pressed')
+          navigation.replace('SignIn');
+        }, style: 'cancel'},
+        {text: '동의', onPress: async() => {
+          let { status_location_permission } = await Location.requestForegroundPermissionsAsync()
+          console.log('위치 정보 access '+status_location_permission);
+          //   나중에 풀어야 함!
+            // if (status_location_permission !== 'granted') {
+            //   alert('Permission to access location was denied');
+            //   // return; 
+            // }
+          let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
+          setLocation({
+          latitude: _location.coords.latitude,
+          longitude: _location.coords.longitude,
+          latitudeDelta: 0.003, longitudeDelta: 0.003
+          });
+          setIsLoading(false);
+        }} 
+      ])
+    }
+    else{
+      let { status_location_permission } = await Location.requestForegroundPermissionsAsync()
+      console.log('위치 정보 access '+status_location_permission);
+      //   나중에 풀어야 함!
+        // if (status_location_permission !== 'granted') {
+        //   alert('Permission to access location was denied');
+        //   // return; 
+        // }
+      let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
+      setLocation({
+      latitude: _location.coords.latitude,
+      longitude: _location.coords.longitude,
+      latitudeDelta: 0.003, longitudeDelta: 0.003
+      });
+      setIsLoading(false);
+    }
+    
     
 }
 

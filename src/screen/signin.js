@@ -83,7 +83,10 @@ export default function SignIn_page({route, navigation}){
             // console.log('user', _user);
             setUser(_user);
             saveLoginInfo(email, password);
-            navigation.replace('Main', {user: JSON.stringify(_user)});
+            navigation.replace('Main', {
+                user: JSON.stringify(_user),
+                autoLogin: autoLogin
+            });
         } catch (error) {
             // console.log('error signing in', error);
             if(error === 'UserNotConfirmedException'){
