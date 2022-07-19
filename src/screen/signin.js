@@ -64,7 +64,7 @@ export default function SignIn_page({route, navigation}){
                 // console.log('value값이 있어서 바로 로그인합니다.', value);
                 setEmail(value.email);
                 setPassword(value.password);
-                // signIn(value.email, value.password);
+                signIn(value.email, value.password);
             }
             else{
                 // console.log('value값이 없어서 로그인을 진행합니다.');

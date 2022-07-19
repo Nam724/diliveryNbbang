@@ -39,6 +39,11 @@
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
 				},
 				{
+					"line": 56,
+					"column": 4,
+					"label": "자동로그인하기"
+				},
+				{
 					"line": 79,
 					"column": 4,
 					"label": "로그인"
@@ -122,16 +127,6 @@
 					"line": 106,
 					"column": 4,
 					"label": "인증코드 확인(회원가입 완료)"
-				}
-			]
-		},
-		{
-			"path": "App.js",
-			"bookmarks": [
-				{
-					"line": 20,
-					"column": 49,
-					"label": "자동로그인 결정"
 				}
 			]
 		}
