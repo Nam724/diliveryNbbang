@@ -1,9 +1,9 @@
-import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native-web';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import { Member,} from '../models';
 import { styles, colorPack, map_darkStyle } from '../style/style';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-web-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
 import { sendSMSAsync } from 'expo-sms';

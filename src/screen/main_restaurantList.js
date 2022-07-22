@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native-web';
 import { colorPack, styles, width } from '../style/style';
 
 

@@ -1,8 +1,8 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native-web';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-web-maps';
 // import DialogInput from 'react-native-dialog-input';
 import {Main_restaurantList, Main_restaurantList_sample} from './main_restaurantList';
 import  {DataStore} from '@aws-amplify/datastore';

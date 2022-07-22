@@ -1,6 +1,6 @@
 import { Auth } from '@aws-amplify/auth';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
+import { TextInput, TouchableOpacity, View, Text, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native-web';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles, width, height } from '../style/style';
 
@@ -28,7 +28,7 @@ async function saveLoginInfo(email='', password=''){
 export default function SignIn_page({route, navigation}){
     
     // 자동로그인 토글
-    const [autoLogin, setAutoLogin] = useState(true);
+    const [autoLogin, setAutoLogin] = useState(false);
 
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
