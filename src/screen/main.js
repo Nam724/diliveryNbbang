@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify';
 import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
-import { GoogleMap, useJsApiLoader, Marker, LoadScript } from '@react-google-maps/api';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 // import DialogInput from 'react-native-dialog-input';
 import {Main_restaurantList, Main_restaurantList_sample} from './main_restaurantList';
 import  {DataStore} from '@aws-amplify/datastore';
@@ -13,6 +13,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import DialogInput from 'react-native-dialog-input';
 import Loading_page from './loading_page';
 import * as Location from 'expo-location';
+
+
 
 
 export default function Main_page({route, navigation}){
@@ -61,8 +63,9 @@ export default function Main_page({route, navigation}){
             // }
           let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
           setLocation({
-          lat: _location.coords.latitude,
-          lng: _location.coords.longitude,
+          latitude: _location.coords.latitude,
+          longitude: _location.coords.longitude,
+          latitudeDelta: 0.003, longitudeDelta: 0.003
           });
           setIsLoading(false);
         }} 
@@ -78,8 +81,9 @@ export default function Main_page({route, navigation}){
         // }
       let _location = await Location.getCurrentPositionAsync({accuracy: Location.Accuracy.Highest});
       setLocation({
-      lat: _location.coords.latitude,
-      lng: _location.coords.longitude,
+      latitude: _location.coords.latitude,
+      longitude: _location.coords.longitude,
+      latitudeDelta: 0.003, longitudeDelta: 0.003
       });
       setIsLoading(false);
     }
@@ -160,18 +164,18 @@ export default function Main_page({route, navigation}){
 
   const returnMarker = (data) => {// data should contain id, name, latitude, longitude
     // console.log('makeMarker')
-    let coordinate = {lng: data.longitude, lat: data.latitude};
+    let coordinate = {longitude: data.longitude, latitude: data.latitude};
     let title = data.name;
     let key = data.id;
     let num_restaurants = data.num_restaurants;
     
     return (
       <Marker
-        position={coordinate}
+        coordinate={coordinate}
         title={title}
-        label={`${num_restaurants}개의 음식점`}
+        description={`${num_restaurants}개의 음식점`}
         key={key}
-        onClick={() => {
+        onPress={() => {
           // console.log(title)
           setSelectedMarker(
             {
@@ -488,15 +492,24 @@ const restaurantList_sample = [
     <ScrollView>
     <View style={[styles.mapContainer,{height:500*height/2000}]}>
 
-    <LoadScript
-      googleMapsApiKey="AIzaSyC95vjKj1U_vVlPBl2_geUy-Y_UgyzmPUQ">
-      <GoogleMap
-        mapContainerStyle={[styles.map, {height:500*height/2000}]}
-        center={location}
-        zoom={2} >
-        {markers.filter((marker) => marker.key === selectedMarker.key)}
-      </GoogleMap>
-    </LoadScript>
+    <MapView
+    provider={PROVIDER_GOOGLE}
+    customMapStyle={map_darkStyle}
+    style={[styles.map, {height:500*height/2000}]}
+    initialRegion={location}
+    showsMyLocationButton={true}
+    showsUserLocation={true}
+    loadingEnabled={true}
+    zoomEnabled={true}
+    rotateEnabled={true}
+    onLongPress={(e) => {
+      setNewmarkerCoordinate(e.nativeEvent.coordinate);
+      setDialogVisible_marker(true);
+    }}
+    >
+    {markers.filter((marker) => marker.key === selectedMarker.key)}
+    </MapView>
+
     </View>
 
         
@@ -648,15 +661,23 @@ const restaurantList_sample = [
       
       <View style={styles.mapContainer}>
 
-          <LoadScript
-            googleMapsApiKey="AIzaSyC95vjKj1U_vVlPBl2_geUy-Y_UgyzmPUQ">
-            <GoogleMap
-              mapContainerStyle={[styles.map]}
-              center={location}
-              zoom={2} >
-              {markers}
-            </GoogleMap>
-          </LoadScript>
+          <MapView
+          provider={PROVIDER_GOOGLE}
+          customMapStyle={map_darkStyle}
+          style={styles.map}
+          initialRegion={location}
+          showsMyLocationButton={true}
+          showsUserLocation={true}
+          loadingEnabled={true}
+          zoomEnabled={true}
+          rotateEnabled={true}
+          onLongPress={(e) => {
+            setNewmarkerCoordinate(e.nativeEvent.coordinate);
+            setDialogVisible_marker(true);
+          }}
+          >
+          {markers}
+          </MapView>
 
       </View>
 

@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import { Member,} from '../models';
 import { styles, colorPack, map_darkStyle } from '../style/style';
-import { GoogleMap, useJsApiLoader, Marker, LoadScript } from '@react-google-maps/api';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
 import { sendSMSAsync } from 'expo-sms';
@@ -135,22 +135,25 @@ export default function Restaurant_page_finished({route, navigation}){
             </View>
 
 
-            <View style={styles.mapContainer}>
-            
-            <LoadScript
-            googleMapsApiKey="AIzaSyC95vjKj1U_vVlPBl2_geUy-Y_UgyzmPUQ">
-            <GoogleMap
-                mapContainerStyle={[styles.map]}
-                center={{lng: place.longitude, lat: place.latitude}}
-                zoom={2} >
+            <View style={styles.mapContainer} >
+              <MapView
+              provider={PROVIDER_GOOGLE}
+              customMapStyle={map_darkStyle}
+              style={styles.map}
+              initialRegion={{longitude: place.longitude, latitude: place.latitude, latitudeDelta: 0.003, longitudeDelta: 0.003}}
+              showsMyLocationButton={false}
+              showsUserLocation={true}
+              loadingEnabled={true}
+              zoomEnabled={true}
+              rotateEnabled={true}
+              >
                 <Marker
-                    position={{lng: place.longitude, lat: place.latitude}}
+                    coordinate={{longitude: place.longitude, latitude: place.latitude}}
                     title={place.name}
-                    label={`${place.num_restaurants}개의 레스토랑`}
+                    description={`${place.num_restaurants}개의 레스토랑`}
                     key={place.id}
                 />
-            </GoogleMap>
-            </LoadScript>
+              </MapView>
             
             </View>
             
