@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
 import {useFonts} from 'expo-font'
+import { styles } from './src/style/style';
 import Loading_page from './src/screen/loading_page';
 
 
@@ -46,26 +47,32 @@ export default function App(){
     return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName={"SignIn"}>
-          <Stack.Screen name="Main" component={Main_page} 
-          options={{
-            headerShown: false,
-          }}
-          />
-          <Stack.Screen name="Restaurant" component={Restaurant_page} 
-          options={{
-            headerShown: false,
-          }}
-          />
           <Stack.Screen name="SignIn" component={SignIn_page} 
           options={{
-            headerShown: false,
+            headerTransparent: true,
+            headerTitle:'',
+            headerTintColor: '#fff',
           }}
           />
           <Stack.Screen name="SignUp" component={SignUp_page}
           options={{
-            headerShown: false,
+            headerTransparent: true,
+            headerTitle:'',
+            headerTintColor: '#fff',
           }}
           />
+          <Stack.Screen name="Main" component={Main_page} 
+          options={{
+            headerTransparent: true,
+            headerTitleStyle: styles.normalText
+          }}
+          />
+          <Stack.Screen name="Restaurant" component={Restaurant_page} 
+          options={{
+            headerTransparent: true,
+          }}
+          />
+
         </Stack.Navigator>
       </NavigationContainer>
 

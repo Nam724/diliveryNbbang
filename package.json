@@ -1,7 +1,7 @@
 {
   "name": "diliveryNbbang",
   "version": "1.0.5",
-  "homepage": "https://nam724.github.io/homepage/",
+  "homepage": "https://nam724.github.io/homepage/diliveryNbbang/",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android",
