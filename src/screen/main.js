@@ -1,5 +1,5 @@
 import { Auth } from 'aws-amplify';
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native-web';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, KeyboardAvoidingView, Alert} from 'react-native-web';
 import React, {useState, useEffect} from 'react';
 import { colorPack, map_darkStyle, styles, width, height } from '../style/style';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-web-maps';
@@ -13,7 +13,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import DialogInput from 'react-native-dialog-input';
 import Loading_page from './loading_page';
 import * as Location from 'expo-location';
-
 
 
 
@@ -35,19 +34,20 @@ export default function Main_page({route, navigation}){
 
   useEffect(() => {
     getLocation();
+    refreshRestaurantList('refresh')
     // console.log('user', user)
   },[]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      refreshRestaurantList('userOrder')
-    }, [])
-  )
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     refreshRestaurantList('userOrder')
+  //   }, [])
+  // )
 
   // get location
   const getLocation = async () => {
     setIsLoading(true);
-    if(autoLogin){
+    if(!autoLogin){
       Alert.alert('배달앤빵', '현재 위치에 따른 배달 정보를 제공하기 위해\n사용자의 위치 정보에 접근하려 합니다.\n동의하시겠습니까?', [
         {text: '취소', onPress: () => {
           // console.log('Cancel Pressed')
@@ -196,11 +196,11 @@ export default function Main_page({route, navigation}){
 
   async function getMarkers() {
     let _markerList = []
-    // console.log('location', location);
+    console.log('location', location);
     try {
       const models = await DataStore.query(Place, place => {
       });
-      // console.log(models)
+      console.log(models)
       models.forEach((model, index) => {
   
         _markerList.push(returnMarker(model))
