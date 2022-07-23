@@ -64,12 +64,15 @@ export default function App(){
           <Stack.Screen name="Main" component={Main_page} 
           options={{
             headerTransparent: true,
-            headerTitleStyle: styles.normalText
+            headerTitle:'',
+            headerTintColor: '#fff',
           }}
           />
           <Stack.Screen name="Restaurant" component={Restaurant_page} 
           options={{
             headerTransparent: true,
+            headerTitle:'',
+            headerTintColor: '#fff',
           }}
           />
 
