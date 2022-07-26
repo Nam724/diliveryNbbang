@@ -25,49 +25,41 @@ export default function App(){
     'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),
   });
 
-  // const [fontLoaded, setFontLoaded] = useState(false);
-  // async function loadFonts() {
-  //   await Font.loadAsync({
-  //     'happy_sans_bold': require('./assets/font/Happiness-Sans-Bold.ttf'),
-  //     'happy_sans_regular': require('./assets/font/Happiness-Sans-Regular.ttf'),
-  //     'happy_sans_title': require('./assets/font/Happiness-Sans-Title.ttf'),    
-  //   });
-  //   setFontLoaded(true);
-  // }
-  // useEffect(() => {
-  //   loadFonts();
-  // }
-  // , []);
 
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={"SignIn"}>
+        <Stack.Screen name="SignIn" component={SignIn_page} 
+        options={{
+          headerTransparent: true,
+          headerTitle:'',
+          headerTintColor: '#fff',
+        }}
+        />
+        <Stack.Screen name="SignUp" component={SignUp_page}
+        options={{
+          headerTransparent: true,
+          headerTitle:'',
+          headerTintColor: '#fff',
+        }}
+        />
+        <Stack.Screen name="Main" component={Main_page} 
+        options={{
+          headerTransparent: true,
+          headerTitle:'',
+          headerTintColor: '#fff',
+        }}
+        />
+        <Stack.Screen name="Restaurant" component={Restaurant_page} 
+        options={{
+          headerTransparent: true,
+          headerTitle:'',
+          headerTintColor: '#fff',
+        }}
+        />
 
-  // console.log('App.js user', user);
+      </Stack.Navigator>
+    </NavigationContainer>
 
-
-    return (
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName={"SignIn"}>
-          <Stack.Screen name="Main" component={Main_page} 
-          options={{
-            headerShown: false,
-          }}
-          />
-          <Stack.Screen name="Restaurant" component={Restaurant_page} 
-          options={{
-            headerShown: false,
-          }}
-          />
-          <Stack.Screen name="SignIn" component={SignIn_page} 
-          options={{
-            headerShown: false,
-          }}
-          />
-          <Stack.Screen name="SignUp" component={SignUp_page}
-          options={{
-            headerShown: false,
-          }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-
-    );  
+  );  
 }

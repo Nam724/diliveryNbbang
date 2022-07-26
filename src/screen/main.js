@@ -47,7 +47,7 @@ export default function Main_page({route, navigation}){
   // get location
   const getLocation = async () => {
     setIsLoading(true);
-    if(autoLogin){
+    if(false){
       Alert.alert('배달앤빵', '현재 위치에 따른 배달 정보를 제공하기 위해\n사용자의 위치 정보에 접근하려 합니다.\n동의하시겠습니까?', [
         {text: '취소', onPress: () => {
           // console.log('Cancel Pressed')
@@ -96,10 +96,10 @@ export default function Main_page({route, navigation}){
       AsyncStorage.setItem('@user', JSON.stringify(user));
   }
   
-  const getUser = async () =>{
-      const user = await AsyncStorage.getItem('@user');
-      return JSON.parse(user);
-  }  
+  // const getUser = async () =>{
+  //     const user = await AsyncStorage.getItem('@user');
+  //     return JSON.parse(user);
+  // }  
 
     // refresh
   const [refreshing, setRefreshing] = useState(false);
@@ -143,10 +143,10 @@ export default function Main_page({route, navigation}){
 
   const logOut = () => {
     Alert.alert('배달앤빵','로그아웃을 할까요?',[{text: '로그아웃', onPress: async () => {
-      
+      await AsyncStorage.setItem('@autoLogin', 'false');
       setUser({});
       await Auth.signOut();
-      navigation.replace('SignIn')
+      navigation.replace('SignIn', {autoLogin: false});
 
     }},{text: '취소', onPress: () => {
     // console.log('Cancel Pressed');

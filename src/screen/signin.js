@@ -2,7 +2,9 @@ import { Auth } from '@aws-amplify/auth';
 import { useEffect, useState } from 'react';
 import { TextInput, TouchableOpacity, View, Text, Alert, ScrollView, KeyboardAvoidingView, Image } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { styles, width, height } from '../style/style';
+import { styles, width, height, colorPack } from '../style/style';
+import Checkbox from 'expo-checkbox';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 function emailTest(email){
@@ -28,7 +30,7 @@ async function saveLoginInfo(email='', password=''){
 export default function SignIn_page({route, navigation}){
     
     // 자동로그인 토글
-    const [autoLogin, setAutoLogin] = useState(true);
+    const [autoLogin, setAutoLogin] = useState(route.autoLogin === 'true');
 
     const [email, setEmail] = useState('');
     const [isEmailValid, setIsEmailValid] = useState(false);
@@ -64,7 +66,8 @@ export default function SignIn_page({route, navigation}){
                 // console.log('value값이 있어서 바로 로그인합니다.', value);
                 setEmail(value.email);
                 setPassword(value.password);
-                signIn(value.email, value.password);
+                // signIn(value.email, value.password);
+                
             }
             else{
                 // console.log('value값이 없어서 로그인을 진행합니다.');
@@ -82,7 +85,14 @@ export default function SignIn_page({route, navigation}){
             const _user = await Auth.signIn(email, password);
             // console.log('user', _user);
             setUser(_user);
-            saveLoginInfo(email, password);
+            if(autoLogin){
+                saveLoginInfo(email, password);
+            }
+            else{
+                await AsyncStorage.removeItem('@loginInfoToken');
+            }
+            setEmail('');
+            setPassword('');            
             navigation.replace('Main', {
                 user: JSON.stringify(_user),
                 autoLogin: autoLogin
@@ -170,6 +180,19 @@ export default function SignIn_page({route, navigation}){
                         />
                     </View>
                     
+                    <View style={{marginTop: height*100/2000,height:height*50/2000,flexDirection: "row", justifyContent: "center",alignItems: "center"}}>
+                        <Checkbox
+                            style={styles.autoLoginCheckBox}
+                            value={autoLogin}
+                            onValueChange={setAutoLogin}
+                            label='자동 로그인'
+                            color={autoLogin? colorPack.highlight_dark:colorPack.deactivated}                        
+                        ></Checkbox>
+                        <Text style={styles.normalText}>
+                            {'자동 로그인'}
+                        </Text>
+                    </View>
+
                     <TouchableOpacity
                         onPressOut={() => signIn(email, password)}
                         style={[styles.goToSignUpInButton, {marginTop:height*100/2000}]}
@@ -181,7 +204,7 @@ export default function SignIn_page({route, navigation}){
                     </TouchableOpacity>
                     <TouchableOpacity
                     onPressOut={() => navigation.navigate('SignUp')}
-                    style={[styles.goToSignUpInButton,{marginTop:height*200/2000}]}
+                    style={[styles.goToSignUpInButton,{marginTop:height*100/2000}]}
                 >
                         <Text style={styles.highlightText}>
                         {'회원가입'}
