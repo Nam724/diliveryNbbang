@@ -1,9 +1,9 @@
-import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native-web';
+import {View, Text, TouchableOpacity, ScrollView, Modal, TextInput, RefreshControl, SafeAreaView, Alert, KeyboardAvoidingView} from 'react-native';
 import {useState, useEffect} from 'react';
 import  {DataStore} from '@aws-amplify/datastore';
 import {Restaurant, Place, Member} from '../models';
 import { styles, colorPack, height, map_darkStyle } from '../style/style';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-web-maps';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard'
 import * as SMS from 'expo-sms';

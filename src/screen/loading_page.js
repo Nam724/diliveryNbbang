@@ -1,5 +1,5 @@
 import { colorPack, styles, width } from '../style/style';
-import {View, ActivityIndicator, Text, Image} from 'react-native-web';
+import {View, ActivityIndicator, Text, Image} from 'react-native';
 import {useState, useEffect} from 'react';
 import * as Location from 'expo-location';
 

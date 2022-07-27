@@ -1,44 +1,41 @@
 {
-  "expo": {
-    "name": "배달앤빵",
-    "slug": "bts",
-    "version": "1.0.5",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#17263C"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "diliveryNbbang",
-      "config": {"googleMapsApiKey": 
-      "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I"
-    }
-      
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#17263C"
-      },
-      "package": "expo.eject.BTS_PseudoTesla",
-      "versionCode": 5,
-      "config":{
-        "googleMaps": {
-          "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
+    "expo": {
+        "name": "배달앤빵",
+        "slug": "bts",
+        "version": "1.0.7",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#17263C"
+        },
+        "updates": {
+            "fallbackToCacheTimeout": 0
+        },
+        "assetBundlePatterns": ["**/*"],
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "diliveryNbbang",
+            "config": {
+                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I"
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#17263C"
+            },
+            "package": "expo.eject.BTS_PseudoTesla",
+            "versionCode": 8,
+            "config": {
+                "googleMaps": {
+                    "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
+                }
+            }
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
         }
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
-  }
 }

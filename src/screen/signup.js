@@ -1,6 +1,6 @@
 import { Auth } from '@aws-amplify/auth';
 import { useEffect, useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text, Alert, ScrollView, Keyboard, Linking, KeyboardAvoidingView } from 'react-native-web';
+import { TextInput, TouchableOpacity, View, Text, Alert, ScrollView, Keyboard, Linking, KeyboardAvoidingView } from 'react-native';
 import { styles, height, width, colorPack } from '../style/style';
 
 // async function sendVerificationCode(email, password, setVerification_code_sended) {
