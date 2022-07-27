@@ -220,6 +220,9 @@ export const styles = StyleSheet.create({
         textAlignVertical:'center',
         padding:width*20/1000
     },
+    autoLoginCheckBox:{
+      margin:width*50/1000,
+    },
 
 
 });
