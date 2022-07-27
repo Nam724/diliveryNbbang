@@ -116,12 +116,12 @@ export default function Main_page({route, navigation}){
       await loadRestaurant(selectedMarker.key);
     }
     else if(id === 'userOrder'){
-      showUserOrderList();
       setSelectedMarker({
         coordinate: {}, // {logitude: 0, latitude: 0}
         title: '나의 주문',
         key: 'userOrder',
       })
+      showUserOrderList();
     }
     else if(id === 'default'){
       setRestaurantList(restaurantList_sample);
@@ -349,7 +349,8 @@ const restaurantList_sample = [
     const members = await DataStore.query(Member, (q) => q.username('eq',user.username));
     //console.log(members);
     var _orderList = []
-    if(members){
+    if(members===[]){
+      // console.log('members', members)
       members.forEach( async(member, index) => {
 
         let rest = await DataStore.query(Restaurant, member.restaurantID);
@@ -380,6 +381,7 @@ const restaurantList_sample = [
       })
     }
     else{
+      // console.log('no order');
       setSelectedMarker({
         coordinate: {}, // {logitude: 0, latitude: 0}
         title: '',
@@ -443,46 +445,47 @@ const restaurantList_sample = [
 
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={height*50/2000}
       style={styles.restaurantInfoModal}>
-      <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between', opacity:0.5}]}>
+      <View style={[styles.header, {flexDirection:'row', justifyContent:'space-between', opacity:0.5,}]}>
 
-      <View style={{width:width*0.25}}>
-        <TouchableOpacity
-          onPress={() => {
-            logOut()
-          }}
-          disabled = {true}
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              logOut()
+            }}
+            disabled = {true}
+          >
+          <Text style={[styles.normalText,{width:width*0.3}]} lineBreakMode='tail' numberOfLines={1}>{user.email.split('@')[0]}</Text>
+          </TouchableOpacity>    
+        </View>
+
+        <TouchableOpacity style={{width:width*0.4}}
+            onPress={async() => {
+              await getMarkers();
+              setSelectedMarker({
+                coordinate: {}, // {logitude: 0, latitude: 0}
+                title: '',
+                key: 'markers%',
+              });
+              setRestaurantList(restaurantList_sample)
+            }}
+            disabled = {true}
         >
-        <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{user.email.split('@')[0]}</Text>
-        </TouchableOpacity>    
+          <Text style={styles.highlightText} lineBreakMode='tail' numberOfLines={1}>{'배달앤빵'}</Text>
+        </TouchableOpacity>
+
+        <View style={{}}>
+          <TouchableOpacity
+            onPress={() => {
+              showUserOrderList();
+            }}
+            disabled = {true}
+          >
+          <Text style={[styles.normalText,{width:width*0.3}]}
+           lineBreakMode='tail' numberOfLines={1}>{`나의 주문`}</Text>
+          </TouchableOpacity>    
+        </View>
+
       </View>
-
-      <TouchableOpacity style={{width:width*0.25}}
-          onPress={async() => {
-            await getMarkers();
-            setSelectedMarker({
-              coordinate: {}, // {logitude: 0, latitude: 0}
-              title: '',
-              key: 'markers%',
-            });
-            setRestaurantList(restaurantList_sample)
-          }}
-          disabled = {true}
-      >
-        <Text style={styles.highlightText} lineBreakMode='tail' numberOfLines={1}>{'배달앤빵'}</Text>
-      </TouchableOpacity>
-
-      <View style={{width:width*0.25}}>
-        <TouchableOpacity
-          onPress={() => {
-            showUserOrderList();
-          }}
-          disabled = {true}
-        >
-        <Text style={styles.normalText} lineBreakMode='tail' numberOfLines={1}>{`나의 주문`}</Text>
-        </TouchableOpacity>    
-      </View>
-
-    </View>
 
     <View style={styles.header}>
     <Text style={[styles.highlightText]}>{`음식점을 \"${selectedMarker.title}\"에 추가합니다.`}</Text>
