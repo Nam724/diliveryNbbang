@@ -28,7 +28,6 @@
             },
             "package": "expo.eject.BTS_PseudoTesla",
             "versionCode": 8,
-            "versionName": "1.0.7",
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
