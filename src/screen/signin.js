@@ -38,13 +38,7 @@ export default function SignIn_page({route, navigation}){
 
     useEffect(() => {
         //이거 주석 달면 자동로그인 안됨
-        if(autoLogin){
-            // console.log('자동로그인 실행')
-            loginFirst()
-        }
-        else{
-            // console.log('자동로그인 안실행')
-        }
+        loginFirst();
     }, []);
 
     const setUser = (user) =>{
@@ -57,26 +51,31 @@ export default function SignIn_page({route, navigation}){
     }
 
     const loginFirst = async () => {
-    let value = null
-    try {
-        await AsyncStorage.getItem('@loginInfoToken').then(_value => {
-            value = JSON.parse(_value);
-            // console.log(value);
-            if(value.email && value.password){
-                // console.log('value값이 있어서 바로 로그인합니다.', value);
-                setEmail(value.email);
-                setPassword(value.password);
-                // signIn(value.email, value.password);
-                
-            }
-            else{
-                // console.log('value값이 없어서 로그인을 진행합니다.');
-            }
-        })
-    } catch (error) {
-            // console.log(err);
-            value = null
-            // console.log('value값이 없어서 로그인을 진행합니다.');
+        let value = null
+        const _autoLogin = await AsyncStorage.getItem('@autoLogin');
+        if(_autoLogin === 'true'){
+            setAutoLogin(true);
+            try {
+                await AsyncStorage.getItem('@loginInfoToken').then(_value => {
+                    value = JSON.parse(_value);
+                    setAutoLogin(true);
+                    // console.log(value);
+                    if(value.email && value.password){
+                        // console.log('value값이 있어서 바로 로그인합니다.', value);
+                        setEmail(value.email);
+                        setPassword(value.password);
+                        // signIn(value.email, value.password);
+                        
+                    }
+                    else{
+                        // console.log('value값이 없어서 로그인을 진행합니다.');
+                    }
+                })
+            } catch (error) {
+                    // console.log(err);
+                    value = null
+                    // console.log('value값이 없어서 로그인을 진행합니다.');
+        }
     }}
 
 
@@ -184,7 +183,10 @@ export default function SignIn_page({route, navigation}){
                         <Checkbox
                             style={styles.autoLoginCheckBox}
                             value={autoLogin}
-                            onValueChange={setAutoLogin}
+                            onValueChange={async (isChecked)=>{
+                                setAutoLogin(isChecked)
+                                await AsyncStorage.setItem('@autoLogin', JSON.stringify(isChecked));
+                            }}
                             label='자동 로그인'
                             color={autoLogin? colorPack.highlight_dark:colorPack.deactivated}                        
                         ></Checkbox>

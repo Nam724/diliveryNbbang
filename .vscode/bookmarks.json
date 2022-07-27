@@ -4,27 +4,27 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 160,
+					"line": 163,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 213,
+					"line": 216,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 236,
+					"line": 239,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 289,
+					"line": 292,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 365,
+					"line": 367,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}
@@ -34,12 +34,12 @@
 			"path": "src/screen/signin.js",
 			"bookmarks": [
 				{
-					"line": 11,
+					"line": 49,
 					"column": 23,
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
 				},
 				{
-					"line": 46,
+					"line": 88,
 					"column": 4,
 					"label": "자동로그인하기"
 				}
