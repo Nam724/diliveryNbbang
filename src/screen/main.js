@@ -444,9 +444,9 @@ export default function Main_page({ route, navigation }) {
         const members = await DataStore.query(Member, (q) =>
             q.username("eq", user.username)
         );
-        //console.log(members);
+        // console.log(members);
         var _orderList = [];
-        if (members === []) {
+        if (members !== []) {
             // console.log('members', members)
             members.forEach(async (member, index) => {
                 let rest = await DataStore.query(
