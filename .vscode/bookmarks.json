@@ -4,27 +4,27 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 617,
+					"line": 618,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 667,
+					"line": 668,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 690,
+					"line": 691,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 743,
+					"line": 744,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 804,
+					"line": 805,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}

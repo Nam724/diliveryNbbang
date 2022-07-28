@@ -246,7 +246,8 @@ export default function Main_page({ route, navigation }) {
                     });
                     loadRestaurant(key);
                 }}
-            />
+                icon={require("../../assets/marker_icon.png")}
+            ></Marker>
         );
     };
 
