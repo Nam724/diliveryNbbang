@@ -83,7 +83,7 @@ export default function SignIn_page({ route, navigation }) {
                         // console.log('value값이 있어서 바로 로그인합니다.', value);
                         setEmail(value.email);
                         setPassword(value.password);
-                        // signIn(value.email, value.password);
+                        signIn(value.email, value.password);
                     } else {
                         // console.log('value값이 없어서 로그인을 진행합니다.');
                     }
@@ -146,7 +146,14 @@ export default function SignIn_page({ route, navigation }) {
                 Alert.alert(
                     "배달앤빵",
                     "비밀번호가 일치하지 않습니다.",
-                    [{ text: "확인", onPress: () => {} }]
+                    [
+                        {
+                            text: "확인",
+                            onPress: () => {
+                                setPassword("");
+                            },
+                        },
+                    ]
                 );
                 return false;
             } else if (error == "NetworkError") {
