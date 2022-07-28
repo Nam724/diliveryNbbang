@@ -139,7 +139,7 @@ export default function Restaurant_page_finished({
                         style={
                             isRegistered
                                 ? styles.normalText
-                                : styles.deactivated
+                                : styles.deactivatedText
                         }
                     >
                         {"배민\n바로가기"}
@@ -160,7 +160,7 @@ export default function Restaurant_page_finished({
                         style={
                             isRegistered
                                 ? styles.normalText
-                                : styles.deactivated
+                                : styles.deactivatedText
                         }
                     >
                         {"나의주문\n메뉴보기"}
@@ -176,7 +176,7 @@ export default function Restaurant_page_finished({
                         style={
                             isRegistered
                                 ? styles.normalText
-                                : styles.deactivated
+                                : styles.deactivatedText
                         }
                     >
                         {"송금하러\n가기"}
@@ -194,7 +194,7 @@ export default function Restaurant_page_finished({
                         style={
                             isRegistered
                                 ? styles.normalText
-                                : styles.deactivated
+                                : styles.deactivatedText
                         }
                     >
                         {"주문자에게\n문자보내기"}
