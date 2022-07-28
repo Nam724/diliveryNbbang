@@ -1,390 +1,386 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { Dimensions } from 'react-native';
-import Constants from 'expo-constants';
-export const height = Dimensions.get('screen').height-Constants.statusBarHeight; // 2000
-export const width = Dimensions.get('screen').width; // 1000
+import { StyleSheet, Text, View } from "react-native";
+import { Dimensions } from "react-native";
+import Constants from "expo-constants";
+export const height =
+    Dimensions.get("screen").height -
+    Constants.statusBarHeight; // 2000
+export const width = Dimensions.get("screen").width; // 1000
 export const colorPack = {
-    representative: '#17263C',
-    highlight_light: '#38414E',
-    highlight_dark: '#242F3E',
-    text_dark: '#D99066',
-    text_light: '#E4EAF2',
-    deactivated: '#8B9198',
-}
-
+    representative: "#17263C",
+    highlight_light: "#38414E",
+    highlight_dark: "#242F3E",
+    text_dark: "#D99066",
+    text_light: "#E4EAF2",
+    deactivated: "#8B9198",
+};
 
 export const styles = StyleSheet.create({
-// TEXT STYLES
-    normalText:{
+    // TEXT STYLES
+    normalText: {
         // fontFamily:'happy_sans_bold',
-        fontSize:width*0.04, // 30
+        fontSize: width * 0.04, // 30
         color: colorPack.text_light,
-        textAlign:'center',
+        textAlign: "center",
     },
-    highlightText:{
+    highlightText: {
         // fontFamily:'happy_sans_title',
-        fontSize:width*0.05, // 40
+        fontSize: width * 0.05, // 40
         color: colorPack.text_dark,
-        textAlign:'center',
-        fontWeight:'bold',
+        textAlign: "center",
+        fontWeight: "bold",
     },
-    deactivatedText:{
+    deactivatedText: {
         // fontFamily:'happy_sans_regular',
-        fontSize:width*0.04, // 30
+        fontSize: width * 0.04, // 30
         color: colorPack.deactivated,
-        textAlign:'center',
+        textAlign: "center",
     },
-// CONTAINER STYLES
-    container:{
+    // CONTAINER STYLES
+    container: {
         width: width,
-        height: Dimensions.get('screen').height,
-        backgroundColor:colorPack.representative,
-        flexDirection: 'column',
+        height: Dimensions.get("screen").height,
+        backgroundColor: colorPack.representative,
+        flexDirection: "column",
         paddingTop: Constants.statusBarHeight,
     },
-    header:{
-        height: height * 150/2000,
+    header: {
+        height: (height * 150) / 2000,
         width: width,
-        textAlign: 'center',
-        justifyContent: 'center',
-        alignItems: 'center',
+        textAlign: "center",
+        justifyContent: "center",
+        alignItems: "center",
     },
-    mapContainer:{
-        height: height * 990/2000,
+    mapContainer: {
+        height: (height * 990) / 2000,
         width: width,
-        marginBottom: height * 10/2000,
+        marginBottom: (height * 10) / 2000,
     },
-    map:{
-        height: height * 990/2000,
+    map: {
+        height: (height * 990) / 2000,
         width: width,
     },
     restaurantContainer: {
-        height: height * 710/2000,
-        width:width,
-
+        height: (height * 710) / 2000,
+        width: width,
     },
-    locationInfoContainer:{
-        height: height * 106/2000,
-        paddingLeft: width * 30/1000,
-        paddingRight: width * 30/1000,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between', 
+    locationInfoContainer: {
+        height: (height * 106) / 2000,
+        paddingLeft: (width * 30) / 1000,
+        paddingRight: (width * 30) / 1000,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
-    restaurantListContainer:{
-        height: height * 604/2000,
+    restaurantListContainer: {
+        height: (height * 604) / 2000,
     },
-    restaurantList:{
-        height: height * 150/2000,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginHorizontal: width*15/1000,
-        paddingHorizontal: width*30/1000,
+    restaurantList: {
+        height: (height * 150) / 2000,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginHorizontal: (width * 15) / 1000,
+        paddingHorizontal: (width * 30) / 1000,
         borderColor: colorPack.representative,
-        borderWidth: 3, 
-        borderRadius: width*50/1000,
+        borderWidth: 3,
+        borderRadius: (width * 50) / 1000,
     },
-    restaurantName:{
-        width: width * 450/1000,
-        textAlign: 'left',
+    restaurantName: {
+        width: (width * 450) / 1000,
+        textAlign: "left",
     },
-    restaurantFee:{
-        width: width * 300/1000,
-        textAlign: 'left',
+    restaurantFee: {
+        width: (width * 300) / 1000,
+        textAlign: "left",
     },
-    restaurantMembers:{
+    restaurantMembers: {},
 
-    },
-
-
-// modal
-    restaurantInfoModal:{
-      flex:1,
-      paddingVertical: Constants.statusBarHeight,
-      backgroundColor: colorPack.representative,
-    },
-    restaurantInfoContainerModal:{
+    // modal
+    restaurantInfoModal: {
+        flex: 1,
+        paddingVertical: Constants.statusBarHeight,
         backgroundColor: colorPack.representative,
-        alignItems:'center',
-        flexDirection:'column',
-        justifyContent:'space-between',
-        paddingBottom: height * 100/2000,
+    },
+    restaurantInfoContainerModal: {
+        backgroundColor: colorPack.representative,
+        alignItems: "center",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        paddingBottom: (height * 100) / 2000,
     },
 
-    restaurantPageContainerModal:{
-      backgroundColor: colorPack.representative,
-      alignItems:'center',
-      flexDirection:'column',
-      justifyContent:'space-between',
-      paddingBottom: 0,
+    restaurantPageContainerModal: {
+        backgroundColor: colorPack.representative,
+        alignItems: "center",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        paddingBottom: 0,
     },
 
-    buttonContainerModal:{
-        height: height * 60/2000,
-        flexDirection:'row',
-        justifyContent:'space-between',
-        alignItems:'stretch',
+    buttonContainerModal: {
+        height: (height * 60) / 2000,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "stretch",
+        marginVertical: (width * 30) / 1000,
     },
 
-    modalButton:{
-        width: width * 400/1000,
-        height: height * 100/2000,
+    modalButton: {
+        width: (width * 400) / 1000,
+        height: (height * 100) / 2000,
         backgroundColor: colorPack.highlight_light,
-        borderRadius: height * 50/2000,
-        justifyContent:'center',
-        marginHorizontal:width*20/1000,
-        alignItems:'center',
+        borderRadius: (height * 50) / 2000,
+        justifyContent: "center",
+        marginHorizontal: (width * 20) / 1000,
+        alignItems: "center",
     },
 
-    getRestaurantInfoModal:{
-        height: height * 250/2000,
-        width:width,
-        alignItems:'center',
+    getRestaurantInfoModal: {
+        height: (height * 250) / 2000,
+        width: width,
+        alignItems: "center",
     },
 
     // restaurantPage
 
-    restaurantButtonContainer:{
-        flexDirection:'row',
+    restaurantButtonContainer: {
+        flexDirection: "row",
     },
-    restaurantButton_1:{
+    restaurantButton_1: {
         width: width * 0.25,
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: colorPack.highlight_dark,
-        
-        height: height * 150/2000,
-        borderRadius: height * 50/2000,
+
+        height: (height * 150) / 2000,
+        borderRadius: (height * 50) / 2000,
         borderColor: colorPack.representative,
         borderWidth: 3,
-        marginBottom: height * 20/2000,
+        marginBottom: (height * 20) / 2000,
     },
-    restaurantButton_2:{
+    restaurantButton_2: {
         width: width * 0.25,
-        alignItems:'center',
-        justifyContent:'center',
+        alignItems: "center",
+        justifyContent: "center",
         backgroundColor: colorPack.highlight_light,
 
-        height: height * 150/2000,
-        borderRadius: height * 50/2000,
+        height: (height * 150) / 2000,
+        borderRadius: (height * 50) / 2000,
         borderColor: colorPack.representative,
         borderWidth: 3,
-        marginBottom: height * 20/2000,
+        marginBottom: (height * 20) / 2000,
     },
 
     // sign in page
-    goToSignUpInButton:{
-        width: width * 700/1000,
-        height: height * 100/2000,
+    goToSignUpInButton: {
+        width: (width * 700) / 1000,
+        height: (height * 100) / 2000,
         backgroundColor: colorPack.highlight_light,
-        borderRadius: height * 50/2000,
-        justifyContent:'center',
-        marginHorizontal: width * 150/1000,
+        borderRadius: (height * 50) / 2000,
+        justifyContent: "center",
+        marginHorizontal: (width * 150) / 1000,
     },
-    textInputBox:{
-        width: width * 700/1000,
-        height: height * 100/2000,
-        borderRadius: height * 30/2000,
+    textInputBox: {
+        width: (width * 700) / 1000,
+        height: (height * 100) / 2000,
+        borderRadius: (height * 30) / 2000,
         borderColor: colorPack.highlight_light,
-        borderWidth: width* 10/2000,
-        marginVertical: height * 35/2000,
-        marginHorizontal: width * 150/1000,
-        textAlign:'center',
-        textAlignVertical:'center',
+        borderWidth: (width * 10) / 2000,
+        marginVertical: (height * 35) / 2000,
+        marginHorizontal: (width * 150) / 1000,
+        textAlign: "center",
+        textAlignVertical: "center",
         color: colorPack.text_light,
-        paddingHorizontal: width * 20/1000,
+        paddingHorizontal: (width * 20) / 1000,
     },
-    textInputBox_restaurant_menu:{
-        width: width * 600/1000,
-        
-        borderRadius: height * 30/2000,
-        borderColor: colorPack.highlight_light,
-        borderWidth: width* 10/2000,
-        marginVertical: height * 35/2000,
-        marginHorizontal: width * 50/1000,
-        textAlign:'center',
-        textAlignVertical:'center',
-        lineHeight: height * 50/2000,
-        padding:width*20/1000
-    },
-    textInputBox_restaurant_price:{
-        width: width * 250/1000,
-        height: height * 100/2000,
-        borderRadius: height * 30/2000,
-        borderColor: colorPack.highlight_light,
-        borderWidth: width* 10/2000,
-        marginVertical: height * 35/2000,
-        marginHorizontal: width * 50/1000,
-        textAlign:'center',
-        textAlignVertical:'center',
-        padding:width*20/1000
-    },
-    autoLoginCheckBox:{
-      margin:width*50/1000,
-    },
+    textInputBox_restaurant_menu: {
+        width: (width * 600) / 1000,
 
-
+        borderRadius: (height * 30) / 2000,
+        borderColor: colorPack.highlight_light,
+        borderWidth: (width * 10) / 2000,
+        marginVertical: (height * 35) / 2000,
+        marginHorizontal: (width * 50) / 1000,
+        textAlign: "center",
+        textAlignVertical: "center",
+        lineHeight: (height * 50) / 2000,
+        padding: (width * 20) / 1000,
+    },
+    textInputBox_restaurant_price: {
+        width: (width * 250) / 1000,
+        height: (height * 100) / 2000,
+        borderRadius: (height * 30) / 2000,
+        borderColor: colorPack.highlight_light,
+        borderWidth: (width * 10) / 2000,
+        marginVertical: (height * 35) / 2000,
+        marginHorizontal: (width * 50) / 1000,
+        textAlign: "center",
+        textAlignVertical: "center",
+        padding: (width * 20) / 1000,
+    },
+    autoLoginCheckBox: {
+        margin: (width * 50) / 1000,
+    },
 });
 
-export const map_darkStyle =[
-        {
-          "elementType": "geometry",
-          "stylers": [
+export const map_darkStyle = [
+    {
+        elementType: "geometry",
+        stylers: [
             {
-              "color": "#242f3e"
-            }
-          ]
-        },
-        {
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#242f3e",
+            },
+        ],
+    },
+    {
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#746855"
-            }
-          ]
-        },
-        {
-          "elementType": "labels.text.stroke",
-          "stylers": [
+                color: "#746855",
+            },
+        ],
+    },
+    {
+        elementType: "labels.text.stroke",
+        stylers: [
             {
-              "color": "#242f3e"
-            }
-          ]
-        },
-        {
-          "featureType": "administrative.locality",
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#242f3e",
+            },
+        ],
+    },
+    {
+        featureType: "administrative.locality",
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#d59563"
-            }
-          ]
-        },
-        {
-          "featureType": "poi",
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#d59563",
+            },
+        ],
+    },
+    {
+        featureType: "poi",
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#d59563"
-            }
-          ]
-        },
-        {
-          "featureType": "poi.park",
-          "elementType": "geometry",
-          "stylers": [
+                color: "#d59563",
+            },
+        ],
+    },
+    {
+        featureType: "poi.park",
+        elementType: "geometry",
+        stylers: [
             {
-              "color": "#263c3f"
-            }
-          ]
-        },
-        {
-          "featureType": "poi.park",
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#263c3f",
+            },
+        ],
+    },
+    {
+        featureType: "poi.park",
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#6b9a76"
-            }
-          ]
-        },
-        {
-          "featureType": "road",
-          "elementType": "geometry",
-          "stylers": [
+                color: "#6b9a76",
+            },
+        ],
+    },
+    {
+        featureType: "road",
+        elementType: "geometry",
+        stylers: [
             {
-              "color": "#38414e"
-            }
-          ]
-        },
-        {
-          "featureType": "road",
-          "elementType": "geometry.stroke",
-          "stylers": [
+                color: "#38414e",
+            },
+        ],
+    },
+    {
+        featureType: "road",
+        elementType: "geometry.stroke",
+        stylers: [
             {
-              "color": "#212a37"
-            }
-          ]
-        },
-        {
-          "featureType": "road",
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#212a37",
+            },
+        ],
+    },
+    {
+        featureType: "road",
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#9ca5b3"
-            }
-          ]
-        },
-        {
-          "featureType": "road.highway",
-          "elementType": "geometry",
-          "stylers": [
+                color: "#9ca5b3",
+            },
+        ],
+    },
+    {
+        featureType: "road.highway",
+        elementType: "geometry",
+        stylers: [
             {
-              "color": "#746855"
-            }
-          ]
-        },
-        {
-          "featureType": "road.highway",
-          "elementType": "geometry.stroke",
-          "stylers": [
+                color: "#746855",
+            },
+        ],
+    },
+    {
+        featureType: "road.highway",
+        elementType: "geometry.stroke",
+        stylers: [
             {
-              "color": "#1f2835"
-            }
-          ]
-        },
-        {
-          "featureType": "road.highway",
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#1f2835",
+            },
+        ],
+    },
+    {
+        featureType: "road.highway",
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#f3d19c"
-            }
-          ]
-        },
-        {
-          "featureType": "transit",
-          "elementType": "geometry",
-          "stylers": [
+                color: "#f3d19c",
+            },
+        ],
+    },
+    {
+        featureType: "transit",
+        elementType: "geometry",
+        stylers: [
             {
-              "color": "#2f3948"
-            }
-          ]
-        },
-        {
-          "featureType": "transit.station",
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#2f3948",
+            },
+        ],
+    },
+    {
+        featureType: "transit.station",
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#d59563"
-            }
-          ]
-        },
-        {
-          "featureType": "water",
-          "elementType": "geometry",
-          "stylers": [
+                color: "#d59563",
+            },
+        ],
+    },
+    {
+        featureType: "water",
+        elementType: "geometry",
+        stylers: [
             {
-              "color": "#17263c"
-            }
-          ]
-        },
-        {
-          "featureType": "water",
-          "elementType": "labels.text.fill",
-          "stylers": [
+                color: "#17263c",
+            },
+        ],
+    },
+    {
+        featureType: "water",
+        elementType: "labels.text.fill",
+        stylers: [
             {
-              "color": "#515c6d"
-            }
-          ]
-        },
-        {
-          "featureType": "water",
-          "elementType": "labels.text.stroke",
-          "stylers": [
+                color: "#515c6d",
+            },
+        ],
+    },
+    {
+        featureType: "water",
+        elementType: "labels.text.stroke",
+        stylers: [
             {
-              "color": "#17263c"
-            }
-          ]
-        }
-]
+                color: "#17263c",
+            },
+        ],
+    },
+];

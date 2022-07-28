@@ -4,27 +4,27 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 163,
+					"line": 618,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 216,
+					"line": 668,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 239,
+					"line": 691,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 292,
+					"line": 744,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 367,
+					"line": 805,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}
@@ -34,14 +34,9 @@
 			"path": "src/screen/signin.js",
 			"bookmarks": [
 				{
-					"line": 49,
+					"line": 64,
 					"column": 23,
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
-				},
-				{
-					"line": 88,
-					"column": 4,
-					"label": "자동로그인하기"
 				}
 			]
 		},
@@ -49,27 +44,27 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 69,
+					"line": 360,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 159,
+					"line": 450,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 186,
+					"line": 477,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 218,
+					"line": 509,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 441,
+					"line": 732,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -79,29 +74,24 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 59,
+					"line": 94,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 92,
+					"line": 135,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 132,
+					"line": 212,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 162,
+					"line": 250,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
-				},
-				{
-					"line": 350,
-					"column": 12,
-					"label": "이 음식점에 등록한 사람들 리스트"
 				}
 			]
 		},
@@ -109,17 +99,17 @@
 			"path": "src/screen/signup.js",
 			"bookmarks": [
 				{
-					"line": 29,
+					"line": 37,
 					"column": 8,
 					"label": "회원가입"
 				},
 				{
-					"line": 74,
+					"line": 90,
 					"column": 4,
 					"label": "회원가입"
 				},
 				{
-					"line": 106,
+					"line": 134,
 					"column": 4,
 					"label": "인증코드 확인(회원가입 완료)"
 				}

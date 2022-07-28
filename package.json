@@ -11,12 +11,14 @@
   "dependencies": {
     "@picocss/pico": "^1.5.0",
     "@react-native-async-storage/async-storage": "~1.17.3",
+    "@react-native-clipboard/clipboard": "^1.10.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "8.2.0",
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/stack": "^6.2.1",
     "aws-amplify": "^4.3.21",
     "expo": "^45.0.0",
+    "expo-checkbox": "~2.1.0",
     "expo-cli": "^5.4.12",
     "expo-clipboard": "~3.0.1",
     "expo-constants": "~13.1.1",
@@ -49,8 +51,7 @@
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.7",
     "react-native-webview": "11.18.1",
-    "react-ref": "^0.0.1",
-    "expo-checkbox": "~2.1.0"
+    "react-ref": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

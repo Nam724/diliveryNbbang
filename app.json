@@ -2,7 +2,7 @@
     "expo": {
         "name": "배달앤빵",
         "slug": "bts",
-        "version": "1.0.7",
+        "version": "1.0.8",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -27,7 +27,7 @@
                 "backgroundColor": "#17263C"
             },
             "package": "expo.eject.BTS_PseudoTesla",
-            "versionCode": 8,
+            "versionCode": 9,
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
