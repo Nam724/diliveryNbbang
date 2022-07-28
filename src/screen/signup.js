@@ -347,7 +347,7 @@ export default function SignUp_page({ navigation }) {
                                     }
                                 >
                                     {!account
-                                        ? "계좌번호 / 카카오페이 송금코드"
+                                        ? "계좌번호 또는 카카오페이 송금코드"
                                         : "계좌번호"}
                                 </Text>
                             </TouchableOpacity>
@@ -366,8 +366,13 @@ export default function SignUp_page({ navigation }) {
                                         : {},
                                 ]}
                                 onChangeText={(text) => {
-                                    text.replace("-", "");
-                                    setAccount(text);
+                                    const _account =
+                                        text.replaceAll(
+                                            "-",
+                                            ""
+                                        );
+                                    setAccount(_account);
+                                    console.log(_account);
                                 }}
                                 numberOfLines={2}
                                 editable={true}
