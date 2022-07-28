@@ -357,9 +357,18 @@ export default function SignUp_page({ navigation }) {
                                 style={[
                                     styles.textInputBox,
                                     styles.normalText,
-                                    { height: width * 0.1 },
+                                    !account
+                                        ? {
+                                              height:
+                                                  width *
+                                                  0.15,
+                                          }
+                                        : {},
                                 ]}
-                                onChangeText={setAccount}
+                                onChangeText={(text) => {
+                                    text.replace("-", "");
+                                    setAccount(text);
+                                }}
                                 numberOfLines={2}
                                 editable={true}
                                 placeholderTextColor={

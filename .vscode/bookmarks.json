@@ -99,17 +99,17 @@
 			"path": "src/screen/signup.js",
 			"bookmarks": [
 				{
-					"line": 44,
+					"line": 37,
 					"column": 8,
 					"label": "회원가입"
 				},
 				{
-					"line": 97,
+					"line": 90,
 					"column": 4,
 					"label": "회원가입"
 				},
 				{
-					"line": 141,
+					"line": 134,
 					"column": 4,
 					"label": "인증코드 확인(회원가입 완료)"
 				}
