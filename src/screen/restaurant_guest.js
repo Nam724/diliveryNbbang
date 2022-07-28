@@ -253,9 +253,6 @@ export default function Restaurant_page_guest({
             >
                 <KeyboardAvoidingView
                     behavior="padding"
-                    keyboardVerticalOffset={
-                        (height * 50) / 2000
-                    }
                     style={styles.restaurantInfoModal}
                 >
                     <View

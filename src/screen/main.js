@@ -10,6 +10,7 @@ import {
     SafeAreaView,
     Alert,
     KeyboardAvoidingView,
+    Platform,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
@@ -36,6 +37,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import DialogInput from "react-native-dialog-input";
 import Loading_page from "./loading_page";
 import * as Location from "expo-location";
+import * as Clipboard from "expo-clipboard";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -492,6 +494,84 @@ export default function Main_page({ route, navigation }) {
         }
     };
 
+    const readClipboard = async () => {
+        let clipboardText = "";
+        if (Platform.OS === "android") {
+            clipboardText =
+                await Clipboard.getStringAsync();
+        } else if (Platform.OS === "ios") {
+            const _clipboardTextUrl =
+                await Clipboard.getUrlAsync();
+            const _clipboardTextName =
+                await Clipboard.getStringAsync();
+            console.log(
+                "_clipboardTextName",
+                _clipboardTextName
+            );
+            console.log(
+                "_clipboardTextUrl",
+                _clipboardTextUrl
+            );
+            clipboardText =
+                _clipboardTextName + _clipboardTextUrl;
+        } else {
+            clipboardText = "";
+        }
+        console.log("clipboardText", clipboardText);
+
+        const UrlFormat =
+            /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/(.*){1,}$/g;
+
+        const restaurantTitleFormat = /\'.*\'/g;
+        const restaurantUrlFormat =
+            /https:\/\/baemin.me\/(.*){1,}/g;
+
+        const restaurantTitle = clipboardText.match(
+            restaurantTitleFormat
+        );
+        const restaurantUrl = clipboardText.match(
+            restaurantUrlFormat
+        );
+
+        //console.log(clipboardText, restaurantTitle, restaurantUrl);
+        if (restaurantTitle && restaurantUrl) {
+            //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
+            setNewRestaurant_url(restaurantUrl[0]);
+            setNewRestaurant_name(
+                restaurantTitle[0].substring(
+                    1,
+                    restaurantTitle[0].length - 1
+                )
+            );
+        } else {
+            setNewRestaurant_url("");
+            setNewRestaurant_name("");
+            if (clipboardText.match(UrlFormat)) {
+                Alert.alert(
+                    "배달앤빵",
+                    `현재 복사된 링크는 배달의민족 주소가 아닙니다!`,
+                    [{ text: "확인" }]
+                );
+            } else {
+                Alert.alert(
+                    "배달앤빵",
+                    "배달의민족 주소가 아님니다.\n배달의 민족으로 이동하시겠습니까?",
+                    [
+                        {
+                            text: "확인",
+                            onPress: () => {
+                                Linking.openURL(
+                                    "https://baeminkr.onelink.me/XgL8/baemincom"
+                                );
+                            },
+                        },
+                        { text: "취소" },
+                    ]
+                );
+            }
+        }
+    };
+
     // return
     return isLoading ? (
         <Loading_page />
@@ -542,9 +622,6 @@ export default function Main_page({ route, navigation }) {
             >
                 <KeyboardAvoidingView
                     behavior="padding"
-                    keyboardVerticalOffset={
-                        (height * 50) / 2000
-                    }
                     style={styles.restaurantInfoModal}
                 >
                     <View
@@ -692,18 +769,21 @@ export default function Main_page({ route, navigation }) {
                         >
                             <View
                                 style={
-                                    styles.getRestaurantInfoModal
+                                    styles.buttonContainerModal
                                 }
                             >
                                 <TouchableOpacity
-                                    onPress={() => {
-                                        Linking.openURL(
-                                            "https://baeminkr.onelink.me/XgL8/baemincom"
-                                        );
+                                    onPress={async () => {
+                                        newRestaurant_url
+                                            ? Linking.openURL(
+                                                  newRestaurant_url
+                                              )
+                                            : Linking.openURL(
+                                                  "https://baeminkr.onelink.me/XgL8/baemincom"
+                                              );
                                     }}
-                                    disabled={
-                                        newRestaurant_url !=
-                                        null
+                                    style={
+                                        styles.modalButton
                                     }
                                 >
                                     <Text
@@ -711,47 +791,38 @@ export default function Main_page({ route, navigation }) {
                                             styles.normalText,
                                         ]}
                                     >
-                                        {newRestaurant_url
-                                            ? "배달의 민족 링크"
-                                            : "배달의 민족으로 이동하기"}
+                                        {"배달의 민족 열기"}
                                     </Text>
                                 </TouchableOpacity>
 
-                                <TextInput
+                                <TouchableOpacity
                                     style={
-                                        styles.textInputBox
+                                        styles.modalButton
                                     }
-                                    placeholder={
-                                        "배달의 민족 URL 붙여넣기"
-                                    }
-                                    placeholderTextColor={
-                                        colorPack.deactivated
-                                    }
-                                    value={
-                                        newRestaurant_url
-                                    }
-                                    onChangeText={(text) =>
-                                        readClipboard(
-                                            setNewRestaurant_name,
-                                            setNewRestaurant_url,
-                                            text
-                                        )
-                                    }
-                                ></TextInput>
+                                    onPress={readClipboard}
+                                >
+                                    <Text
+                                        style={
+                                            styles.normalText
+                                        }
+                                    >
+                                        {
+                                            "배민 링크 붙여넣기"
+                                        }
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
 
                             <View
-                                style={
-                                    styles.getRestaurantInfoModal
-                                }
+                                style={[
+                                    styles.getRestaurantInfoModal,
+                                    {
+                                        height:
+                                            (height * 175) /
+                                            2000,
+                                    },
+                                ]}
                             >
-                                <Text
-                                    style={[
-                                        styles.normalText,
-                                    ]}
-                                >
-                                    {"음식점 이름"}
-                                </Text>
                                 <TextInput
                                     style={
                                         styles.textInputBox
@@ -764,7 +835,7 @@ export default function Main_page({ route, navigation }) {
                                             text
                                         )
                                     }
-                                    placeholder="URL을 붙여넣으면 자동으로 입력됩니다."
+                                    placeholder="음식점 이름"
                                     placeholderTextColor={
                                         colorPack.deactivated
                                     }
@@ -1094,56 +1165,3 @@ export default function Main_page({ route, navigation }) {
         </View>
     );
 } // return}
-
-const readClipboard = async (
-    setNewRestaurant_name,
-    setNewRestaurant_url,
-    innerText = ""
-) => {
-    // const clipboardText = await Clipboard.getStringAsync('plainText');
-    //클립보드의 내용을 가져온다
-    const clipboardText = innerText;
-    //console.log(clipboardText);
-
-    const UrlFormat =
-        /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/(.*){1,}$/g;
-
-    const restaurantTitleFormat = /\'.*\'/g;
-    const restaurantUrlFormat =
-        /https:\/\/baemin.me\/(.*){1,}/g;
-
-    const restaurantTitle = clipboardText.match(
-        restaurantTitleFormat
-    );
-    const restaurantUrl = clipboardText.match(
-        restaurantUrlFormat
-    );
-
-    //console.log(clipboardText, restaurantTitle, restaurantUrl);
-    if (restaurantTitle && restaurantUrl) {
-        //클립보드에서 가져온 문자열에 http 가 포함되어있으면 링크로 인식해 저장
-        setNewRestaurant_url(restaurantUrl[0]);
-        setNewRestaurant_name(
-            restaurantTitle[0].substring(
-                1,
-                restaurantTitle[0].length - 1
-            )
-        );
-    } else {
-        setNewRestaurant_url("");
-        setNewRestaurant_name("");
-        if (clipboardText) {
-            Alert.alert(
-                "배달앤빵",
-                `현재 복사된 링크는 배달의민족 주소가 아닙니다!`,
-                [{ text: "확인" }]
-            );
-        } else {
-            Alert.alert(
-                "배달앤빵",
-                "배달의민족 주소를 먼저 붙여넣어 주세요.",
-                [{ text: "확인" }]
-            );
-        }
-    }
-};

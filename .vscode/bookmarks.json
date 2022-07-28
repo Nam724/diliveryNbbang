@@ -4,27 +4,27 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 535,
+					"line": 617,
 					"column": 2,
 					"label": "로그 아웃"
 				},
 				{
-					"line": 588,
+					"line": 667,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 611,
+					"line": 690,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 664,
+					"line": 743,
 					"column": 2,
 					"label": "음식점 만들기"
 				},
 				{
-					"line": 739,
+					"line": 804,
 					"column": 2,
 					"label": "나의 주문 리스트 가져오기"
 				}
@@ -44,27 +44,27 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 363,
+					"line": 360,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 453,
+					"line": 450,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 480,
+					"line": 477,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 512,
+					"line": 509,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 735,
+					"line": 732,
 					"column": 4,
 					"label": "배민 바로가기"
 				}

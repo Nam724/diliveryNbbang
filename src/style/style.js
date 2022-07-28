@@ -122,6 +122,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "stretch",
+        marginVertical: (width * 30) / 1000,
     },
 
     modalButton: {

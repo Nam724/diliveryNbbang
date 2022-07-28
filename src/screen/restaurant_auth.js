@@ -355,9 +355,6 @@ export default function Restaurant_page_auth({
             >
                 <KeyboardAvoidingView
                     behavior="padding"
-                    keyboardVerticalOffset={
-                        (height * 50) / 2000
-                    }
                     style={styles.restaurantInfoModal}
                 >
                     <View

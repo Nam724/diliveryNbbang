@@ -182,9 +182,6 @@ export default function SignUp_page({ navigation }) {
 
             <KeyboardAvoidingView
                 behavior="padding"
-                keyboardVerticalOffset={
-                    (height * 50) / 2000
-                }
                 style={{ flex: 1 }}
             >
                 <ScrollView>
