@@ -8,8 +8,12 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
-import Loading_page from "./src/screen/loading_page";
 import { colorPack } from "./src/style/style";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import reducer from "./src/setting/reducer";
+
+let store = createStore(reducer);
 
 Amplify.configure(awsconfig);
 
@@ -23,49 +27,53 @@ export default function App() {
     });
 
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={"SignIn"}>
-                <Stack.Screen
-                    name="SignIn"
-                    component={SignIn_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                    }}
-                />
-                <Stack.Screen
-                    name="SignUp"
-                    component={SignUp_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                    }}
-                />
-                <Stack.Screen
-                    name="Main"
-                    component={Main_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                    }}
-                />
-                <Stack.Screen
-                    name="Restaurant"
-                    component={Restaurant_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                    }}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
+                <Stack.Navigator
+                    initialRouteName={"SignIn"}
+                >
+                    <Stack.Screen
+                        name="SignIn"
+                        component={SignIn_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="SignUp"
+                        component={SignUp_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Main"
+                        component={Main_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Restaurant"
+                        component={Restaurant_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                        }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </Provider>
     );
 }
