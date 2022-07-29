@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { darkMode1, lightMode1 } from "../style/colorpack";
+import { darkMode1, lightMode1 } from "../style/colorPack";
 import {
     map_darkStyle1,
     map_lightStyle1,
