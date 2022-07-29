@@ -1,18 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Dimensions } from "react-native";
 import Constants from "expo-constants";
+import { darkMode } from "./colorpack";
 export const height =
     Dimensions.get("screen").height -
     Constants.statusBarHeight; // 2000
 export const width = Dimensions.get("screen").width; // 1000
-export const colorPack = {
-    representative: "#17263C",
-    highlight_light: "#38414E",
-    highlight_dark: "#242F3E",
-    text_dark: "#D99066",
-    text_light: "#E4EAF2",
-    deactivated: "#8B9198",
-};
+export const colorPack = darkMode;
 
 export const styles = StyleSheet.create({
     // TEXT STYLES
