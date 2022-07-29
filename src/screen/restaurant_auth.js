@@ -17,7 +17,7 @@ import {
     styles,
     colorPack,
     height,
-    map_darkStyle,
+    mapStyle,
 } from "../style/style";
 import MapView, {
     Marker,
@@ -736,7 +736,7 @@ export default function Restaurant_page_auth({
             <View style={styles.map}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                    customMapStyle={map_darkStyle}
+                    customMapStyle={mapStyle}
                     style={styles.map}
                     initialRegion={{
                         longitude: place.longitude,

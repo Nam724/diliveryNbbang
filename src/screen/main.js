@@ -15,10 +15,10 @@ import {
 import React, { useState, useEffect } from "react";
 import {
     colorPack,
-    map_darkStyle,
     styles,
     width,
     height,
+    mapStyle,
 } from "../style/style";
 import MapView, {
     PROVIDER_GOOGLE,
@@ -728,9 +728,7 @@ export default function Main_page({ route, navigation }) {
                         >
                             <MapView
                                 provider={PROVIDER_GOOGLE}
-                                customMapStyle={
-                                    map_darkStyle
-                                }
+                                customMapStyle={mapStyle}
                                 style={[
                                     styles.map,
                                     {
@@ -1073,7 +1071,7 @@ export default function Main_page({ route, navigation }) {
             <View style={styles.mapContainer}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
-                    customMapStyle={map_darkStyle}
+                    customMapStyle={mapStyle}
                     style={styles.map}
                     initialRegion={location}
                     showsMyLocationButton={true}
