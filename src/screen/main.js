@@ -166,7 +166,7 @@ export default function Main_page({ route, navigation }) {
             await loadRestaurant(selectedMarker.key);
         } else if (id === "userOrder") {
             setSelectedMarker({
-                coordinate: {}, // {logitude: 0, latitude: 0}
+                coordinate: {}, // {longitude: 0, latitude: 0}
                 title: "나의 주문",
                 key: "userOrder",
             });
@@ -174,7 +174,7 @@ export default function Main_page({ route, navigation }) {
         } else if (id === "default") {
             setRestaurantList(restaurantList_sample);
             setSelectedMarker({
-                coordinate: {}, // {logitude: 0, latitude: 0}
+                coordinate: {}, // {longitude: 0, latitude: 0}
                 title: "",
                 key: "markers%",
             });
@@ -256,7 +256,7 @@ export default function Main_page({ route, navigation }) {
     }
 
     // get log pressed location and add marker
-    const [newmarkerCoordinate, setNewmarkerCoordinate] =
+    const [newMarkerCoordinate, setnewMarkerCoordinate] =
         useState(null);
 
     // make new marker
@@ -278,7 +278,7 @@ export default function Main_page({ route, navigation }) {
 
     // selected marker info
     const [selectedMarker, setSelectedMarker] = useState({
-        coordinate: {}, // {logitude: 0, latitude: 0}
+        coordinate: {}, // {longitude: 0, latitude: 0}
         title: "",
         key: "markers%",
     });
@@ -426,7 +426,8 @@ export default function Main_page({ route, navigation }) {
         );
         // console.log(members);
         var _orderList = [];
-        if (members !== []) {
+        console.log("members", members.length === 0);
+        if (members.length > 0) {
             // 내가 주문한 리스트가 있을 때
             // console.log('members', members)
             members.forEach(async (member, index) => {
@@ -456,7 +457,7 @@ export default function Main_page({ route, navigation }) {
 
                 if (index == members.length - 1) {
                     setSelectedMarker({
-                        coordinate: {}, // {logitude: 0, latitude: 0}
+                        coordinate: {}, // {longitude: 0, latitude: 0}
                         title: "나의 주문",
                         key: "userOrder",
                     });
@@ -465,8 +466,14 @@ export default function Main_page({ route, navigation }) {
                 }
             });
         } else {
-            // console.log('no order');
-            refreshRestaurantList("default");
+            console.log("주문한 음식점 없음");
+
+            setSelectedMarker({
+                coordinate: {}, // {longitude: 0, latitude: 0}
+                title: "내 주문 없음",
+                key: "userOrder",
+            });
+            setRestaurantList(_orderList); //console.log('orderList', _orderList);
         }
     };
 
@@ -571,7 +578,7 @@ export default function Main_page({ route, navigation }) {
                 submitInput={(title) => {
                     if (title) {
                         makeNewMarker(
-                            newmarkerCoordinate,
+                            newMarkerCoordinate,
                             title
                         );
                         setDialogVisible_marker(false);
@@ -640,12 +647,13 @@ export default function Main_page({ route, navigation }) {
                             style={{
                                 width: width * 0.5,
                                 justifyContent: "center",
-                                alignItems: "center",
+                                alignItems: "flex-start",
+                                paddingLeft: width * 0.05,
                             }}
                             onPress={async () => {
                                 await getMarkers();
                                 setSelectedMarker({
-                                    coordinate: {}, // {logitude: 0, latitude: 0}
+                                    coordinate: {}, // {longitude: 0, latitude: 0}
                                     title: "",
                                     key: "markers%",
                                 });
@@ -668,7 +676,8 @@ export default function Main_page({ route, navigation }) {
                             style={{
                                 width: width * 0.25,
                                 justifyContent: "center",
-                                alignItems: "center",
+                                alignItems: "flex-end",
+                                paddingRight: width * 0.05,
                             }}
                         >
                             <TouchableOpacity
@@ -678,7 +687,7 @@ export default function Main_page({ route, navigation }) {
                                 disabled={true}
                             >
                                 <MaterialCommunityIcons
-                                    name="clipboard-edit"
+                                    name="clipboard-edit-outline"
                                     size={width * 0.08}
                                     color={
                                         colorPack.text_light
@@ -723,7 +732,7 @@ export default function Main_page({ route, navigation }) {
                                 zoomEnabled={true}
                                 rotateEnabled={true}
                                 onLongPress={(e) => {
-                                    setNewmarkerCoordinate(
+                                    setnewMarkerCoordinate(
                                         e.nativeEvent
                                             .coordinate
                                     );
@@ -1038,7 +1047,8 @@ export default function Main_page({ route, navigation }) {
                     style={{
                         width: width * 0.25,
                         justifyContent: "center",
-                        alignItems: "center",
+                        alignItems: "flex-start",
+                        paddingLeft: width * 0.05,
                     }}
                 >
                     <TouchableOpacity
@@ -1065,7 +1075,7 @@ export default function Main_page({ route, navigation }) {
                     onPress={async () => {
                         await getMarkers();
                         setSelectedMarker({
-                            coordinate: {}, // {logitude: 0, latitude: 0}
+                            coordinate: {}, // {longitude: 0, latitude: 0}
                             title: "",
                             key: "markers%",
                         });
@@ -1087,7 +1097,8 @@ export default function Main_page({ route, navigation }) {
                     style={{
                         width: width * 0.25,
                         justifyContent: "center",
-                        alignItems: "center",
+                        alignItems: "flex-end",
+                        paddingRight: width * 0.05,
                     }}
                 >
                     <TouchableOpacity
@@ -1096,7 +1107,7 @@ export default function Main_page({ route, navigation }) {
                         }}
                     >
                         <MaterialCommunityIcons
-                            name="clipboard-edit"
+                            name="clipboard-edit-outline"
                             size={width * 0.08}
                             color={colorPack.text_light}
                         />
@@ -1116,7 +1127,7 @@ export default function Main_page({ route, navigation }) {
                     zoomEnabled={true}
                     rotateEnabled={true}
                     onLongPress={(e) => {
-                        setNewmarkerCoordinate(
+                        setnewMarkerCoordinate(
                             e.nativeEvent.coordinate
                         );
                         setDialogVisible_marker(true);
@@ -1130,38 +1141,58 @@ export default function Main_page({ route, navigation }) {
                 <View style={styles.locationInfoContainer}>
                     <View
                         style={{
-                            width: width * 0.1,
-                            alignItems: "center",
+                            width: width * 0.2,
+                            alignItems: "flex-start",
                             justifyContent: "center",
                         }}
                     >
-                        {selectedMarker.key ===
-                        "userOrder" ? (
-                            <MaterialCommunityIcons
-                                name="clipboard-edit"
-                                size={width * 0.08}
-                                color={colorPack.text_dark}
-                            />
-                        ) : (
-                            <MaterialIcons
-                                name="place"
-                                size={width * 0.08}
-                                color={
-                                    selectedMarker.key ===
-                                    "markers%"
-                                        ? colorPack.representative
-                                        : colorPack.text_dark
-                                }
-                            />
-                        )}
-                        <Text
-                            style={[
-                                styles.highlightText,
-                                { fontSize: width * 0.02 },
-                            ]}
+                        <View
+                            style={{ alignItems: "center" }}
                         >
-                            {selectedMarker.title}
-                        </Text>
+                            {selectedMarker.key ===
+                            "userOrder" ? (
+                                selectedMarker.title ===
+                                "내 주문 없음" ? (
+                                    <MaterialCommunityIcons
+                                        name="clipboard-off-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                    />
+                                ) : (
+                                    <MaterialCommunityIcons
+                                        name="clipboard-edit-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                    />
+                                )
+                            ) : (
+                                <MaterialIcons
+                                    name="place"
+                                    size={width * 0.08}
+                                    color={
+                                        selectedMarker.key ===
+                                        "markers%"
+                                            ? colorPack.representative
+                                            : colorPack.text_dark
+                                    }
+                                />
+                            )}
+                            <Text
+                                style={[
+                                    styles.highlightText,
+                                    {
+                                        fontSize:
+                                            width * 0.02,
+                                    },
+                                ]}
+                            >
+                                {selectedMarker.title}
+                            </Text>
+                        </View>
                     </View>
                     <View>
                         <TouchableOpacity
