@@ -3,13 +3,22 @@ import {
     Text,
     TouchableOpacity,
     Alert,
+    TextInput,
+    KeyboardAvoidingView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { styles } from "../style/style";
+import { colorPack, height, styles } from "../style/style";
 import { Auth } from "aws-amplify";
+import * as MailComposer from "expo-mail-composer";
+import { useState } from "react";
+import { ScrollView } from "react-native-gesture-handler";
 
-export default function Setting_page({ navigation }) {
+export default function Setting_page({
+    route,
+    navigation,
+}) {
+    const user = route.params.user;
     const setUser = (user) => {
         AsyncStorage.setItem("@user", JSON.stringify(user));
     };
@@ -85,6 +94,31 @@ export default function Setting_page({ navigation }) {
             .catch((err) => console.log(err));
     };
 
+    const [
+        isSendMsgToSupportVisible,
+        setIsSendMsgToSupportVisible,
+    ] = useState(false);
+
+    const [sendMsgToSupportText, setSendMsgToSupportText] =
+        useState("");
+
+    const sendMsgToSupport = () => {
+        console.log("sendMsgToSupport");
+        const text = sendMsgToSupportText;
+
+        MailComposer.composeAsync(
+            {
+                subject: "배달앤빵 이용지원",
+                recipients: ["guardprec@gmail.com"],
+                body: `배달앤빵 이용자의 의견입니다.\n\n${text}\n\nfrom: ${user.email}`,
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+        setIsSendMsgToSupportVisible(false);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -92,36 +126,131 @@ export default function Setting_page({ navigation }) {
                     설정
                 </Text>
             </View>
-            <View>
-                <TouchableOpacity
-                    onPress={logOut}
-                    style={styles.goToSignUpInButton}
-                >
-                    <Text style={styles.normalText}>
-                        {"로그아웃"}
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <TouchableOpacity
-                    onPress={changePassword}
-                    style={styles.goToSignUpInButton}
-                >
-                    <Text style={styles.normalText}>
-                        {"비밀번호 변경"}
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                <TouchableOpacity
-                    onPress={deleteUser}
-                    style={styles.goToSignUpInButton}
-                >
-                    <Text style={styles.normalText}>
-                        {"계정 삭제"}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+
+            <KeyboardAvoidingView
+                behavior="padding"
+                style={{
+                    justifyContent: "space-evenly",
+                    alignContent: "center",
+                }}
+            >
+                <ScrollView>
+                    <View>
+                        <View
+                            style={{
+                                height: isSendMsgToSupportVisible
+                                    ? height * 0.4
+                                    : height * 0.2,
+                                marginTop: height * 0.05,
+                            }}
+                        >
+                            <TouchableOpacity
+                                style={
+                                    styles.goToSignUpInButton
+                                }
+                                onPress={() => {
+                                    const _isVisible =
+                                        isSendMsgToSupportVisible;
+                                    setIsSendMsgToSupportVisible(
+                                        !_isVisible
+                                    );
+                                }}
+                            >
+                                <Text
+                                    style={
+                                        styles.normalText
+                                    }
+                                >
+                                    {
+                                        "개발자에게 의견 보내기"
+                                    }
+                                </Text>
+                            </TouchableOpacity>
+                            {isSendMsgToSupportVisible && (
+                                <View>
+                                    <TextInput
+                                        style={[
+                                            styles.textInputBox,
+                                            styles.normalText,
+                                            {
+                                                height:
+                                                    (height *
+                                                        400) /
+                                                    2000,
+                                            },
+                                        ]}
+                                        multiline={true}
+                                        onChangeText={(
+                                            text
+                                        ) => {
+                                            setSendMsgToSupportText(
+                                                text
+                                            );
+                                        }}
+                                        placeholder="의견을 입력하세요"
+                                        placeholderTextColor={
+                                            colorPack.deactivated
+                                        }
+                                    ></TextInput>
+                                    <TouchableOpacity
+                                        onPress={
+                                            sendMsgToSupport
+                                        }
+                                        style={
+                                            styles.goToSignUpInButton
+                                        }
+                                    >
+                                        <Text
+                                            style={
+                                                styles.normalText
+                                            }
+                                        >
+                                            {"보내기"}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+                        </View>
+
+                        <View
+                            style={{ height: height * 0.2 }}
+                        >
+                            <TouchableOpacity
+                                onPress={logOut}
+                                style={
+                                    styles.goToSignUpInButton
+                                }
+                            >
+                                <Text
+                                    style={
+                                        styles.normalText
+                                    }
+                                >
+                                    {"로그아웃"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{ height: height * 0.2 }}
+                        >
+                            <TouchableOpacity
+                                onPress={deleteUser}
+                                style={
+                                    styles.goToSignUpInButton
+                                }
+                            >
+                                <Text
+                                    style={
+                                        styles.normalText
+                                    }
+                                >
+                                    {"계정 삭제"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </View>
     );
 }

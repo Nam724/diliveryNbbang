@@ -40,6 +40,7 @@
     "react-native-dialog-input": "^1.0.8",
     "react-native-gesture-handler": "~2.2.1",
     "react-native-get-location": "^2.2.1",
+    "react-native-mail": "^6.1.1",
     "react-native-maps": "0.30.2",
     "react-native-material-design": "^0.3.7",
     "react-native-reanimated": "~2.8.0",
@@ -51,7 +52,8 @@
     "react-native-uuid": "^2.0.1",
     "react-native-web": "0.17.7",
     "react-native-webview": "11.18.1",
-    "react-ref": "^0.0.1"
+    "react-ref": "^0.0.1",
+    "expo-mail-composer": "~11.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

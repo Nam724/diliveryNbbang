@@ -620,7 +620,8 @@ export default function Main_page({ route, navigation }) {
                             <TouchableOpacity
                                 onPress={() => {
                                     navigation.navigate(
-                                        "Setting"
+                                        "Setting",
+                                        { user: user }
                                     );
                                 }}
                                 disabled={true}
@@ -1042,7 +1043,9 @@ export default function Main_page({ route, navigation }) {
                 >
                     <TouchableOpacity
                         onPress={() => {
-                            navigation.navigate("Setting");
+                            navigation.navigate("Setting", {
+                                user: user,
+                            });
                         }}
                     >
                         <MaterialIcons
