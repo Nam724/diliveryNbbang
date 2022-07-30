@@ -10,6 +10,7 @@ import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 import Loading_page from "./src/screen/loading_page";
 import { colorPack } from "./src/style/style";
+import Setting_page from "./src/screen/setting";
 
 Amplify.configure(awsconfig);
 
@@ -48,6 +49,16 @@ export default function App() {
                 <Stack.Screen
                     name="Main"
                     component={Main_page}
+                    options={{
+                        headerTransparent: true,
+                        headerTitle: "",
+                        headerTintColor:
+                            colorPack.text_light,
+                    }}
+                />
+                <Stack.Screen
+                    name="Setting"
+                    component={Setting_page}
                     options={{
                         headerTransparent: true,
                         headerTitle: "",

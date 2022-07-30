@@ -18,6 +18,7 @@ import {
     colorPack,
     height,
     mapStyle,
+    width,
 } from "../style/style";
 import MapView, {
     Marker,
@@ -758,6 +759,11 @@ export default function Restaurant_page_auth({
                         title={place.name}
                         description={`${place.num_restaurants}개의 레스토랑`}
                         key={place.id}
+                        icon={require("../../assets/marker_icon.png")}
+                        style={{
+                            width: width * 0.01,
+                            height: width * 0.012,
+                        }}
                     />
                 </MapView>
             </View>

@@ -38,6 +38,10 @@ import DialogInput from "react-native-dialog-input";
 import Loading_page from "./loading_page";
 import * as Location from "expo-location";
 import * as Clipboard from "expo-clipboard";
+import {
+    MaterialIcons,
+    MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -247,6 +251,10 @@ export default function Main_page({ route, navigation }) {
                     loadRestaurant(key);
                 }}
                 icon={require("../../assets/marker_icon.png")}
+                style={{
+                    width: width * 0.01,
+                    height: width * 0.012,
+                }}
             ></Marker>
         );
     };
@@ -636,35 +644,37 @@ export default function Main_page({ route, navigation }) {
                             },
                         ]}
                     >
-                        <View>
+                        <View
+                            style={{
+                                width: width * 0.25,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
                             <TouchableOpacity
                                 onPress={() => {
-                                    logOut();
+                                    navigation.navigate(
+                                        "Setting"
+                                    );
                                 }}
                                 disabled={true}
                             >
-                                <Text
-                                    style={[
-                                        styles.normalText,
-                                        {
-                                            width:
-                                                width * 0.3,
-                                        },
-                                    ]}
-                                    lineBreakMode="tail"
-                                    numberOfLines={1}
-                                >
-                                    {
-                                        user.email.split(
-                                            "@"
-                                        )[0]
+                                <MaterialIcons
+                                    name="account-circle"
+                                    size={width * 0.08}
+                                    color={
+                                        colorPack.text_light
                                     }
-                                </Text>
+                                />
                             </TouchableOpacity>
                         </View>
 
                         <TouchableOpacity
-                            style={{ width: width * 0.4 }}
+                            style={{
+                                width: width * 0.5,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
                             onPress={async () => {
                                 await getMarkers();
                                 setSelectedMarker({
@@ -687,24 +697,26 @@ export default function Main_page({ route, navigation }) {
                             </Text>
                         </TouchableOpacity>
 
-                        <View style={{}}>
+                        <View
+                            style={{
+                                width: width * 0.25,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
                             <TouchableOpacity
                                 onPress={() => {
                                     showUserOrderList();
                                 }}
                                 disabled={true}
                             >
-                                <Text
-                                    style={[
-                                        styles.normalText,
-                                        {
-                                            width:
-                                                width * 0.3,
-                                        },
-                                    ]}
-                                    lineBreakMode="tail"
-                                    numberOfLines={1}
-                                >{`나의 주문`}</Text>
+                                <MaterialCommunityIcons
+                                    name="clipboard-edit"
+                                    size={width * 0.08}
+                                    color={
+                                        colorPack.text_light
+                                    }
+                                />
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -834,14 +846,22 @@ export default function Main_page({ route, navigation }) {
                                             text
                                         )
                                     }
-                                    placeholder="음식점 이름"
+                                    placeholder={
+                                        Platform.OS ===
+                                        "ios"
+                                            ? "직접 입력해주세요"
+                                            : "음식점 이름"
+                                    }
                                     placeholderTextColor={
                                         colorPack.deactivated
                                     }
                                     showSoftInputOnFocus={
                                         false
                                     }
-                                    editable={false}
+                                    editable={
+                                        Platform.OS ===
+                                        "ios"
+                                    }
                                 />
                             </View>
 
@@ -1014,24 +1034,32 @@ export default function Main_page({ route, navigation }) {
                     },
                 ]}
             >
-                <View style={{ width: width * 0.25 }}>
+                <View
+                    style={{
+                        width: width * 0.25,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
                     <TouchableOpacity
                         onPress={() => {
-                            logOut();
+                            navigation.navigate("Setting");
                         }}
                     >
-                        <Text
-                            style={styles.normalText}
-                            lineBreakMode="tail"
-                            numberOfLines={1}
-                        >
-                            {user.email.split("@")[0]}
-                        </Text>
+                        <MaterialIcons
+                            name="account-circle"
+                            size={width * 0.08}
+                            color={colorPack.text_light}
+                        />
                     </TouchableOpacity>
                 </View>
 
                 <TouchableOpacity
-                    style={{ width: width * 0.25 }}
+                    style={{
+                        width: width * 0.5,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
                     onPress={async () => {
                         await getMarkers();
                         setSelectedMarker({
@@ -1053,17 +1081,23 @@ export default function Main_page({ route, navigation }) {
                     </Text>
                 </TouchableOpacity>
 
-                <View style={{ width: width * 0.25 }}>
+                <View
+                    style={{
+                        width: width * 0.25,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
                     <TouchableOpacity
                         onPress={() => {
                             showUserOrderList();
                         }}
                     >
-                        <Text
-                            style={styles.normalText}
-                            lineBreakMode="tail"
-                            numberOfLines={1}
-                        >{`나의 주문`}</Text>
+                        <MaterialCommunityIcons
+                            name="clipboard-edit"
+                            size={width * 0.08}
+                            color={colorPack.text_light}
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -1092,35 +1126,92 @@ export default function Main_page({ route, navigation }) {
 
             <View style={styles.restaurantContainer}>
                 <View style={styles.locationInfoContainer}>
-                    <Text style={styles.highlightText}>
-                        {selectedMarker.title}
-                    </Text>
-                    <TouchableOpacity
-                        style={styles.locationInfoButton}
-                        onPressOut={() => {
-                            {
-                                setDialogVisible_restaurant(
-                                    true
-                                );
-                            }
+                    <View
+                        style={{
+                            width: width * 0.1,
+                            alignItems: "center",
+                            justifyContent: "center",
                         }}
-                        disabled={
-                            selectedMarker.key ===
-                                "markers%" ||
-                            selectedMarker.key ===
-                                "userOrder"
-                        }
                     >
-                        <Text style={styles.normalText}>
-                            {selectedMarker.key ===
-                            "markers%"
-                                ? "장소를 먼저 선택하세요"
-                                : selectedMarker.key ===
-                                  "userOrder"
-                                ? ""
-                                : "이곳으로 배달할 음식점 추가하기"}
+                        {selectedMarker.key ===
+                        "userOrder" ? (
+                            <MaterialCommunityIcons
+                                name="clipboard-edit"
+                                size={width * 0.08}
+                                color={colorPack.text_dark}
+                            />
+                        ) : (
+                            <MaterialIcons
+                                name="place"
+                                size={width * 0.08}
+                                color={
+                                    selectedMarker.key ===
+                                    "markers%"
+                                        ? colorPack.representative
+                                        : colorPack.text_dark
+                                }
+                            />
+                        )}
+                        <Text
+                            style={[
+                                styles.highlightText,
+                                { fontSize: width * 0.02 },
+                            ]}
+                        >
+                            {selectedMarker.title}
                         </Text>
-                    </TouchableOpacity>
+                    </View>
+                    <View>
+                        <TouchableOpacity
+                            style={
+                                styles.locationInfoButton
+                            }
+                            onPressOut={() => {
+                                {
+                                    setDialogVisible_restaurant(
+                                        true
+                                    );
+                                }
+                            }}
+                            disabled={
+                                selectedMarker.key ===
+                                    "markers%" ||
+                                selectedMarker.key ===
+                                    "userOrder"
+                            }
+                        >
+                            {selectedMarker.key !==
+                            "userOrder" ? (
+                                <MaterialIcons
+                                    name="add-location"
+                                    size={width * 0.08}
+                                    color={
+                                        colorPack.text_light
+                                    }
+                                />
+                            ) : (
+                                <View />
+                            )}
+
+                            <Text
+                                style={[
+                                    styles.normalText,
+                                    {
+                                        fontSize:
+                                            width * 0.02,
+                                    },
+                                ]}
+                            >
+                                {selectedMarker.key ===
+                                "markers%"
+                                    ? "장소를 먼저 선택하세요"
+                                    : selectedMarker.key ===
+                                      "userOrder"
+                                    ? ""
+                                    : "이곳으로 배달할 음식점 추가하기"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
                 <SafeAreaView>

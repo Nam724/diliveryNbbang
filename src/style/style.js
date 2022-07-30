@@ -71,6 +71,10 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
     },
+    locationInfoButton: {
+        alignItems: "center",
+        justifyContent: "center",
+    },
     restaurantListContainer: {
         height: (height * 604) / 2000,
     },
