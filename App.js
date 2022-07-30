@@ -34,6 +34,7 @@ export default function App() {
                         headerTitle: "",
                         headerTintColor:
                             colorPack.text_light,
+                        headerBackTitleVisible: false,
                     }}
                 />
                 <Stack.Screen
@@ -44,6 +45,7 @@ export default function App() {
                         headerTitle: "",
                         headerTintColor:
                             colorPack.text_light,
+                        headerBackTitleVisible: false,
                     }}
                 />
                 <Stack.Screen
@@ -54,6 +56,7 @@ export default function App() {
                         headerTitle: "",
                         headerTintColor:
                             colorPack.text_light,
+                        headerBackTitleVisible: false,
                     }}
                 />
                 <Stack.Screen
@@ -64,6 +67,7 @@ export default function App() {
                         headerTitle: "",
                         headerTintColor:
                             colorPack.text_light,
+                        headerBackTitleVisible: false,
                     }}
                 />
                 <Stack.Screen
@@ -74,6 +78,7 @@ export default function App() {
                         headerTitle: "",
                         headerTintColor:
                             colorPack.text_light,
+                        headerBackTitleVisible: false,
                     }}
                 />
             </Stack.Navigator>

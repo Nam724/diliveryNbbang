@@ -30,7 +30,11 @@ export default function Setting_page({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text>SettingScreen</Text>
+            <View style={styles.header}>
+                <Text style={styles.highlightText}>
+                    설정
+                </Text>
+            </View>
         </View>
     );
 }
