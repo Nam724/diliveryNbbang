@@ -145,10 +145,6 @@ export default function Main_page({ route, navigation }) {
         }
     };
 
-    const setUser = (user) => {
-        AsyncStorage.setItem("@user", JSON.stringify(user));
-    };
-
     // const getUser = async () =>{
     //     const user = await AsyncStorage.getItem('@user');
     //     return JSON.parse(user);
@@ -189,31 +185,6 @@ export default function Main_page({ route, navigation }) {
         // alert('refreshRestaurantList is finished');
         setRefreshing(false);
         // setIsLoading(false);
-    };
-
-    const logOut = () => {
-        Alert.alert("배달앤빵", "로그아웃을 할까요?", [
-            {
-                text: "로그아웃",
-                onPress: async () => {
-                    await AsyncStorage.setItem(
-                        "@autoLogin",
-                        "false"
-                    );
-                    setUser({});
-                    await Auth.signOut();
-                    navigation.replace("SignIn", {
-                        autoLogin: false,
-                    });
-                },
-            },
-            {
-                text: "취소",
-                onPress: () => {
-                    // console.log('Cancel Pressed');
-                },
-            },
-        ]);
     };
 
     let text = "Waiting..";
