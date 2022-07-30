@@ -456,6 +456,7 @@ export default function Main_page({ route, navigation }) {
         // console.log(members);
         var _orderList = [];
         if (members !== []) {
+            // 내가 주문한 리스트가 있을 때
             // console.log('members', members)
             members.forEach(async (member, index) => {
                 let rest = await DataStore.query(
@@ -494,12 +495,7 @@ export default function Main_page({ route, navigation }) {
             });
         } else {
             // console.log('no order');
-            setSelectedMarker({
-                coordinate: {}, // {logitude: 0, latitude: 0}
-                title: "",
-                key: "markers%",
-            });
-            setRestaurantList(restaurantList_sample);
+            refreshRestaurantList("default");
         }
     };
 
