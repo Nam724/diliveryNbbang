@@ -503,26 +503,25 @@ export default function Main_page({ route, navigation }) {
         }
     };
 
-    const readClipboard = async () => {
+    const readClipboard = async (text = "") => {
         let clipboardText = "";
         if (Platform.OS === "android") {
             clipboardText =
                 await Clipboard.getStringAsync();
         } else if (Platform.OS === "ios") {
-            const _clipboardTextUrl =
-                await Clipboard.getUrlAsync();
-            const _clipboardTextName =
-                await Clipboard.getStringAsync();
-            console.log(
-                "_clipboardTextName",
-                _clipboardTextName
-            );
-            console.log(
-                "_clipboardTextUrl",
-                _clipboardTextUrl
-            );
-            clipboardText =
-                _clipboardTextName + _clipboardTextUrl;
+            // const _clipboardTextUrl =
+            //     await Clipboard.getUrlAsync();
+            // const _clipboardTextName =
+            //     await Clipboard.getStringAsync();
+            // console.log(
+            //     "_clipboardTextName",
+            //     _clipboardTextName
+            // );
+            // console.log(
+            //     "_clipboardTextUrl",
+            //     _clipboardTextUrl
+            // );
+            clipboardText = text;
         } else {
             clipboardText = "";
         }
@@ -805,23 +804,28 @@ export default function Main_page({ route, navigation }) {
                                         {"배달의 민족 열기"}
                                     </Text>
                                 </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={
-                                        styles.modalButton
-                                    }
-                                    onPress={readClipboard}
-                                >
-                                    <Text
+                                {Platform === "android" ? (
+                                    <TouchableOpacity
                                         style={
-                                            styles.normalText
+                                            styles.modalButton
+                                        }
+                                        onPress={
+                                            readClipboard
                                         }
                                     >
-                                        {
-                                            "배민 링크 붙여넣기"
-                                        }
-                                    </Text>
-                                </TouchableOpacity>
+                                        <Text
+                                            style={
+                                                styles.normalText
+                                            }
+                                        >
+                                            {
+                                                "배민 링크 붙여넣기"
+                                            }
+                                        </Text>
+                                    </TouchableOpacity>
+                                ) : (
+                                    <View />
+                                )}
                             </View>
 
                             <View
@@ -841,22 +845,50 @@ export default function Main_page({ route, navigation }) {
                                     value={
                                         newRestaurant_name
                                     }
-                                    onChangeText={(text) =>
-                                        setNewRestaurant_name(
-                                            text
-                                        )
-                                    }
+                                    onChangeText={(
+                                        text
+                                    ) => {
+                                        const UrlFormat =
+                                            /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/(.*){1,}$/g;
+
+                                        if (
+                                            text.match(
+                                                UrlFormat
+                                            )
+                                        ) {
+                                            if (
+                                                Platform.OS ===
+                                                "android"
+                                            ) {
+                                                setNewRestaurant_name(
+                                                    text
+                                                );
+                                            } else if (
+                                                Platform.OS ===
+                                                "ios"
+                                            ) {
+                                                readClipboard(
+                                                    text
+                                                );
+                                            }
+                                        } else {
+                                            setNewRestaurant_name(
+                                                text
+                                            );
+                                        }
+                                    }}
                                     placeholder={
                                         Platform.OS ===
                                         "ios"
-                                            ? "직접 입력해주세요"
-                                            : "음식점 이름"
+                                            ? "여기에 링크를 붙여넣으세요."
+                                            : "자동으로 입력됩니다."
                                     }
                                     placeholderTextColor={
                                         colorPack.deactivated
                                     }
                                     showSoftInputOnFocus={
-                                        false
+                                        Platform.OS ===
+                                        "ios"
                                     }
                                     editable={
                                         Platform.OS ===
