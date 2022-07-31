@@ -19,10 +19,12 @@
             "supportsTablet": true,
             "bundleIdentifier": "diliveryNbbang",
             "config": {
-                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I"
+                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I",
+                "googleMobileAdsAppId": "ca-app-pub-1145139773627965/8701930912"
             },
             "infoPlist": {
-                "NSLocationAlwaysUsageDescription": "This app uses location to get weather information for user`s location."
+                "NSLocationAlwaysUsageDescription": "This app uses location to get weather information for user`s location.",
+                "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
             }
         },
         "android": {
@@ -35,12 +37,14 @@
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
-                }
+                },
+                "googleMobileAdsAppId": "ca-app-pub-1145139773627965/8701930912"
             },
             "permissions": [
                 "android.permission.ACCESS_COARSE_LOCATION",
                 "android.permission.ACCESS_FINE_LOCATION",
-                "android.permission.FOREGROUND_SERVICE"
+                "android.permission.FOREGROUND_SERVICE",
+                "android.permission.INTERNET"
             ]
         },
         "web": {
