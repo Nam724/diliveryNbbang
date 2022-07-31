@@ -15,10 +15,14 @@
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
+            "buildNumber": "9",
             "supportsTablet": true,
             "bundleIdentifier": "diliveryNbbang",
             "config": {
                 "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I"
+            },
+            "infoPlist": {
+                "NSLocationAlwaysUsageDescription": "This app uses location to get weather information for user`s location."
             }
         },
         "android": {
