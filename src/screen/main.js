@@ -43,6 +43,7 @@ import {
     MaterialIcons,
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { RestaurantBannerAds } from "../../App";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -290,6 +291,8 @@ export default function Main_page({ route, navigation }) {
 
     // RESTAURANT LIST
     const restaurantList_sample = [
+        RestaurantBannerAds(), // 광고 배너
+
         Main_restaurantList_sample(
             "placeholder1",
             "장소 추가",
@@ -397,7 +400,7 @@ export default function Main_page({ route, navigation }) {
         );
         // console.log(models);
 
-        let _restaurantList = [];
+        let _restaurantList = [RestaurantBannerAds()];
 
         models
             .sort((a, b) => {
@@ -411,10 +414,7 @@ export default function Main_page({ route, navigation }) {
                         user,
                         model,
                         index,
-                        navigation,
-                        place,
-                        setRestaurantList,
-                        restaurantList
+                        navigation
                     )
                 );
             });
@@ -426,7 +426,7 @@ export default function Main_page({ route, navigation }) {
             q.username("eq", user.username)
         );
         // console.log(members);
-        var _orderList = [];
+        var _orderList = [RestaurantBannerAds()];
         console.log("members", members.length === 0);
         if (members.length > 0) {
             // 내가 주문한 리스트가 있을 때
@@ -449,10 +449,7 @@ export default function Main_page({ route, navigation }) {
                         user,
                         rest,
                         index,
-                        navigation,
-                        place,
-                        setRestaurantList,
-                        restaurantList
+                        navigation
                     )
                 );
 

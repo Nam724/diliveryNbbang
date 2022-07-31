@@ -8,9 +8,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
-import Loading_page from "./src/screen/loading_page";
 import { colorPack } from "./src/style/style";
 import Setting_page from "./src/screen/setting";
+import {
+    AdMobBanner,
+    AdMobInterstitial,
+    PublisherBanner,
+    AdMobRewarded,
+    setTestDeviceIDAsync,
+} from "expo-ads-admob";
 
 Amplify.configure(awsconfig);
 
@@ -83,5 +89,23 @@ export default function App() {
                 />
             </Stack.Navigator>
         </NavigationContainer>
+    );
+}
+
+const adBannerUnitId =
+    Platform.OS === "android"
+        ? "ca-app-pub-1145139773627965/8701930912"
+        : "ios 광고 id"; // 광고 ID 입력
+
+export function RestaurantBannerAds() {
+    return (
+        <AdMobBanner
+            bannerSize="banner"
+            adUnitID={adBannerUnitId} // Test ID, Replace with your-admob-unit-id
+            servePersonalizedAds // true or false
+            onDidFailToReceiveAdWithError={(err) => {
+                console.log(err);
+            }}
+        />
     );
 }

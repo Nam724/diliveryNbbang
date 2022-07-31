@@ -6,10 +6,7 @@ function Main_restaurantList(
     restaurant,
     num,
     navigation,
-    place,
-    setRestaurantList,
-    restaurantList,
-    refreshRestaurantList
+    place
 ) {
     const backgroundColor_odd = colorPack.highlight_dark;
     const backgroundColor_even = colorPack.highlight_light;
