@@ -11,6 +11,7 @@ import {
     Alert,
     KeyboardAvoidingView,
     Platform,
+    Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import {
@@ -256,7 +257,7 @@ export default function Main_page({ route, navigation }) {
     }
 
     // get log pressed location and add marker
-    const [newMarkerCoordinate, setnewMarkerCoordinate] =
+    const [newMarkerCoordinate, setNewMarkerCoordinate] =
         useState(null);
 
     // make new marker
@@ -732,7 +733,7 @@ export default function Main_page({ route, navigation }) {
                                 zoomEnabled={true}
                                 rotateEnabled={true}
                                 onLongPress={(e) => {
-                                    setnewMarkerCoordinate(
+                                    setNewMarkerCoordinate(
                                         e.nativeEvent
                                             .coordinate
                                     );
@@ -1084,13 +1085,13 @@ export default function Main_page({ route, navigation }) {
                         );
                     }}
                 >
-                    <Text
-                        style={styles.highlightText}
-                        lineBreakMode="tail"
-                        numberOfLines={1}
-                    >
-                        {"배달앤빵"}
-                    </Text>
+                    <Image
+                        source={require("../../assets/logo.png")}
+                        style={{
+                            width: width * 0.1,
+                            height: width * 0.1,
+                        }}
+                    />
                 </TouchableOpacity>
 
                 <View
@@ -1127,7 +1128,7 @@ export default function Main_page({ route, navigation }) {
                     zoomEnabled={true}
                     rotateEnabled={true}
                     onLongPress={(e) => {
-                        setnewMarkerCoordinate(
+                        setNewMarkerCoordinate(
                             e.nativeEvent.coordinate
                         );
                         setDialogVisible_marker(true);
