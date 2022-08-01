@@ -4,22 +4,22 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 476,
+					"line": 479,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 645,
+					"line": 648,
 					"column": 2,
 					"label": "Place 가져오기"
 				},
 				{
-					"line": 670,
+					"line": 673,
 					"column": 2,
 					"label": "새로운 장소(마커)만들기"
 				},
 				{
-					"line": 727,
+					"line": 730,
 					"column": 2,
 					"label": "음식점 만들기"
 				}

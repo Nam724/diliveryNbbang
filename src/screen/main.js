@@ -223,7 +223,11 @@ export default function Main_page({ route, navigation }) {
                     });
                     loadRestaurant(key);
                 }}
-                icon={require("../../assets/marker_icon.png")}
+                icon={
+                    Platform.OS === "ios"
+                        ? require("../../assets/marker_icon_ios.png")
+                        : require("../../assets/marker_icon_android.png")
+                }
                 style={{
                     width: width * 0.01,
                     height: width * 0.012,
@@ -429,7 +433,7 @@ export default function Main_page({ route, navigation }) {
         var _orderList = [];
         // console.log("members", members.length === 0);
         if (members.length > 0) {
-            // 내가 주문한 리스트가 있을 때
+            // 내가 주문한 리스트가 있을 때
             // console.log('members', members)
             members.forEach(async (member, index) => {
                 let rest = await DataStore.query(
