@@ -225,4 +225,12 @@ export const styles = StyleSheet.create({
     autoLoginCheckBox: {
         margin: (width * 50) / 1000,
     },
+    //광고
+    adsContainer: {
+        height: (height * 100) / 2000,
+        width: width,
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: colorPack.representative,
+    },
 });

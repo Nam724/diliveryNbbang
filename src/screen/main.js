@@ -43,7 +43,7 @@ import {
     MaterialIcons,
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { RestaurantBannerAds } from "../../App";
+import { RestaurantBannerAds } from "../../utils/Ads";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -291,7 +291,7 @@ export default function Main_page({ route, navigation }) {
 
     // RESTAURANT LIST
     const restaurantList_sample = [
-        RestaurantBannerAds(), // 광고 배너
+        // RestaurantBannerAds(), // 광고 배너
 
         Main_restaurantList_sample(
             "placeholder1",
@@ -400,7 +400,7 @@ export default function Main_page({ route, navigation }) {
         );
         // console.log(models);
 
-        let _restaurantList = [RestaurantBannerAds()];
+        let _restaurantList = [];
 
         models
             .sort((a, b) => {
@@ -426,8 +426,8 @@ export default function Main_page({ route, navigation }) {
             q.username("eq", user.username)
         );
         // console.log(members);
-        var _orderList = [RestaurantBannerAds()];
-        console.log("members", members.length === 0);
+        var _orderList = [];
+        // console.log("members", members.length === 0);
         if (members.length > 0) {
             // 내가 주문한 리스트가 있을 때
             // console.log('members', members)
@@ -1246,6 +1246,7 @@ export default function Main_page({ route, navigation }) {
                 </View>
 
                 <SafeAreaView>
+                    <RestaurantBannerAds />
                     <ScrollView
                         style={
                             styles.restaurantListContainer
