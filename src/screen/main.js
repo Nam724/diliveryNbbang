@@ -393,8 +393,8 @@ export default function Main_page({ route, navigation }) {
                     email: user.email,
                     phone_number: user.phone_number,
                     menu: ["메뉴를 추가해주세요"],
-                    fee: Number(0),
                     restaurantID: restaurant.id,
+                    price: Number(0),
                 })
             );
 
