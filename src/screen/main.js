@@ -267,19 +267,26 @@ export default function Main_page({ route, navigation }) {
 
     // make new marker
     async function makeNewMarker(coordinate, title) {
-        await DataStore.save(
-            new Place({
-                latitude: coordinate.latitude,
-                longitude: coordinate.longitude,
-                name: title,
-                Restaurants_in_a_place: [],
-                makerID: user.username,
-                num_restaurants: 0,
-            })
-        );
+        if (coordinate && title) {
+            await DataStore.save(
+                new Place({
+                    latitude: coordinate.latitude,
+                    longitude: coordinate.longitude,
+                    name: title,
+                    Restaurants_in_a_place: [],
+                    makerID: user.username,
+                    num_restaurants: 0,
+                })
+            );
 
-        refreshRestaurantList();
-        // console.log('saved');
+            refreshRestaurantList();
+            // console.log('saved');
+        } else {
+            Alert.alert(
+                "배달앤빵",
+                "모든 항목을 입력해주세요"
+            );
+        }
     }
 
     // selected marker info
@@ -335,62 +342,74 @@ export default function Main_page({ route, navigation }) {
 
     // make new restaurant
     async function saveNewRestaurant(placeID) {
-        ({
-            name: newRestaurant_name,
-            fee: newRestaurant_fee,
-            url: newRestaurant_url,
-            placeID: placeID,
-        });
-        // amplify
-        const restaurant = await DataStore.save(
-            new Restaurant({
+        if (
+            newRestaurant_name &&
+            newRestaurant_fee &&
+            newRestaurant_url
+        ) {
+            ({
                 name: newRestaurant_name,
-                fee:
-                    newRestaurant_fee == null
-                        ? 0
-                        : parseInt(newRestaurant_fee),
+                fee: newRestaurant_fee,
                 url: newRestaurant_url,
                 placeID: placeID,
-                makerID: user.username,
-                num_members: 1,
-                account: newRestaurant_account,
-                isFinishRecruiting: false,
-            })
-        );
-        setNewRestaurant_name(null);
-        setNewRestaurant_fee(null);
-        setNewRestaurant_url(null);
-        /* Models in DataStore are immutable. To update a record you must use the copyOf function
+            });
+            // amplify
+            const restaurant = await DataStore.save(
+                new Restaurant({
+                    name: newRestaurant_name,
+                    fee:
+                        newRestaurant_fee == null
+                            ? 0
+                            : parseInt(newRestaurant_fee),
+                    url: newRestaurant_url,
+                    placeID: placeID,
+                    makerID: user.username,
+                    num_members: 1,
+                    account: newRestaurant_account,
+                    isFinishRecruiting: false,
+                })
+            );
+            setNewRestaurant_name(null);
+            setNewRestaurant_fee(null);
+            setNewRestaurant_url(null);
+            /* Models in DataStore are immutable. To update a record you must use the copyOf function
     to apply updates to the item’s fields rather than mutating the instance directly */
-        const CURRENT_ITEM = await DataStore.query(
-            Place,
-            placeID
-        );
-        const place = await DataStore.save(
-            Place.copyOf(CURRENT_ITEM, (updated) => {
-                // Update the values on {item} variable to update DataStore entry
-                updated.num_restaurants =
-                    updated.num_restaurants + 1;
-            })
-        );
+            const CURRENT_ITEM = await DataStore.query(
+                Place,
+                placeID
+            );
+            const place = await DataStore.save(
+                Place.copyOf(CURRENT_ITEM, (updated) => {
+                    // Update the values on {item} variable to update DataStore entry
+                    updated.num_restaurants =
+                        updated.num_restaurants + 1;
+                })
+            );
 
-        // 자기 자신을 음식점에 추가
-        await DataStore.save(
-            new Member({
-                username: user.username,
-                email: user.email,
-                phone_number: user.phone_number,
-                menu: ["메뉴를 추가해주세요"],
-                fee: Number(0),
-                restaurantID: restaurant.id,
-            })
-        );
+            // 자기 자신을 음식점에 추가
+            await DataStore.save(
+                new Member({
+                    username: user.username,
+                    email: user.email,
+                    phone_number: user.phone_number,
+                    menu: ["메뉴를 추가해주세요"],
+                    fee: Number(0),
+                    restaurantID: restaurant.id,
+                })
+            );
 
-        navigation.navigate("Restaurant", {
-            user: user,
-            restaurant: restaurant,
-            place: place,
-        });
+            navigation.navigate("Restaurant", {
+                user: user,
+                restaurant: restaurant,
+                place: place,
+            });
+            setDialogVisible_restaurant(false);
+        } else {
+            Alert.alert(
+                "배달앤빵",
+                "모든 항목을 입력해주세요"
+            );
+        }
     }
 
     // load restaurant
@@ -1014,9 +1033,6 @@ export default function Main_page({ route, navigation }) {
                                     onPress={() => {
                                         let placeID =
                                             selectedMarker.key;
-                                        setDialogVisible_restaurant(
-                                            false
-                                        );
                                         saveNewRestaurant(
                                             placeID
                                         );
