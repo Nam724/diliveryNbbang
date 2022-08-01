@@ -10,8 +10,8 @@ import { styles } from "../src/style/style";
 
 const adBannerUnitId =
     Platform.OS === "android"
-        ? "ca-app-pub-1145139773627965/8701930912"
-        : "sample ios ads ID"; // 샘플 광고 ID
+        ? "ca-app-pub-3940256099942544/6300978111" // sample android ad unit id
+        : "ca-app-pub-3940256099942544/2934735716"; // 샘플 광고 ID
 
 export function RestaurantBannerAds() {
     return Platform.OS === "android" ? (
