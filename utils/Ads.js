@@ -14,7 +14,7 @@ const adBannerUnitId =
         : "ca-app-pub-3940256099942544/2934735716"; // 샘플 광고 ID
 
 export function RestaurantBannerAds() {
-    return (
+    return Platform.OS === "android" ? (
         <View style={styles.adsContainer}>
             <AdMobBanner
                 bannerSize="banner"
@@ -25,5 +25,7 @@ export function RestaurantBannerAds() {
                 }}
             />
         </View>
+    ) : (
+        <View></View>
     );
 }

@@ -23,8 +23,8 @@
                 "googleMobileAdsAppId": "ca-app-pub-1145139773627965/8701930912"
             },
             "infoPlist": {
-                "NSLocationAlwaysUsageDescription": "This app uses location to get weather information for user`s location.",
-                "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you."
+                "NSLocationAlwaysUsageDescription": "This app uses location to get weather information for user`s location. The user location will be diplayed on the mapView. If allowed, this app will use your location and the information will not be sent to the server or stored on the device.",
+                "NSUserTrackingUsageDescription": "This identifier will be used to deliver personalized ads to you. This add will be displayed as a banner."
             }
         },
         "android": {
