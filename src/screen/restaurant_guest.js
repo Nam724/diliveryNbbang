@@ -353,6 +353,12 @@ export default function Restaurant_page_guest({
                                     ) => {
                                         setMenuList(text);
                                     }}
+                                    defaultValue={
+                                        menuList ===
+                                        "메뉴를 추가해주세요"
+                                            ? ""
+                                            : menuList
+                                    }
                                 ></TextInput>
 
                                 <TextInput
@@ -360,6 +366,9 @@ export default function Restaurant_page_guest({
                                         styles.textInputBox_restaurant_price,
                                         styles.normalText,
                                     ]}
+                                    placeholder={
+                                        "배달료 제외"
+                                    }
                                     placeholderTextColor={
                                         colorPack.deactivated
                                     }
@@ -371,9 +380,7 @@ export default function Restaurant_page_guest({
                                             parseInt(text)
                                         );
                                     }}
-                                    placeholder={
-                                        "배달료 제외"
-                                    }
+                                    defaultValue={`${menuPrice}`}
                                 ></TextInput>
                             </View>
 

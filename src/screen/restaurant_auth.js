@@ -567,7 +567,12 @@ export default function Restaurant_page_auth({
                                     ) => {
                                         setMenuList(text);
                                     }}
-                                    defaultValue={menuList}
+                                    defaultValue={
+                                        menuList ===
+                                        "메뉴를 추가해주세요"
+                                            ? ""
+                                            : menuList
+                                    }
                                 ></TextInput>
 
                                 <TextInput
@@ -589,6 +594,7 @@ export default function Restaurant_page_auth({
                                             parseInt(text)
                                         );
                                     }}
+                                    defaultValue={`${menuPrice}`}
                                 ></TextInput>
                             </View>
 
