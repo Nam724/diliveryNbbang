@@ -249,22 +249,17 @@
 			"path": "src/screen/restaurant_finished.js",
 			"bookmarks": [
 				{
-					"line": 43,
+					"line": 44,
 					"column": 10,
 					"label": "getMembers"
 				},
 				{
-					"line": 66,
-					"column": 19,
-					"label": "sendMoney"
-				},
-				{
-					"line": 96,
+					"line": 68,
 					"column": 25,
 					"label": "sendSMStoAuthor"
 				},
 				{
-					"line": 259,
+					"line": 375,
 					"column": 16,
 					"label": "멤버 보이는 칸"
 				}

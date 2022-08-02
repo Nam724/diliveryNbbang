@@ -21,7 +21,8 @@ import MapView, {
 import * as Linking from "expo-linking";
 import * as Clipboard from "expo-clipboard";
 import { sendSMSAsync } from "expo-sms";
-
+import { SafeAreaView } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function Restaurant_page_finished({
     route,
     navigation,
@@ -64,35 +65,6 @@ export default function Restaurant_page_finished({
         setMember(members);
         // console.log('isRegistered', isRegistered);
     };
-    const sendMoney = async () => {
-        Clipboard.setString(`${estaurant.account}`);
-
-        const reg = /^(https:\/\/qr.kakaopay.com\/)(.*)+$/;
-
-        if (reg.test(restaurant.account) === true) {
-            Alert.alert(
-                "배달앤빵",
-                "보내실 주소가 복사되었습니다.",
-                [
-                    {
-                        text: "카카오페이로 이동",
-                        onPress: () => {
-                            Linking.openURL(
-                                `${restaurant.account}`
-                            );
-                        },
-                    },
-                    { text: "닫기" },
-                ]
-            );
-        } else {
-            Alert.alert(
-                "배달앤빵",
-                "보내실 주소가 복사되었습니다.",
-                [{ text: "닫기" }]
-            );
-        }
-    };
 
     const sendSMStoAuthor = async () => {
         const makerPhoneNumber = member.filter(
@@ -127,90 +99,233 @@ export default function Restaurant_page_finished({
                           )}원`}
                 </Text>
             </View>
-
-            <View style={styles.restaurantButtonContainer}>
-                <TouchableOpacity
-                    style={styles.restaurantButton_1}
-                    onPress={() => {
-                        if (restaurant.url) {
-                            Linking.openURL(restaurant.url);
-                        } else {
-                            Linking.openURL(
-                                "https://baeminkr.onelink.me/XgL8/baemincom"
-                            );
-                        }
-                    }}
-                    disabled={!isRegistered}
+            <SafeAreaView>
+                <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
                 >
-                    <Text
+                    <View
                         style={
-                            isRegistered
-                                ? styles.normalText
-                                : styles.deactivatedText
+                            styles.restaurantButtonContainer
                         }
                     >
-                        {"배민\n바로가기"}
-                    </Text>
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
+                            }
+                            onPress={() => {
+                                if (restaurant.url) {
+                                    Linking.openURL(
+                                        restaurant.url
+                                    );
+                                } else {
+                                    Linking.openURL(
+                                        "https://baeminkr.onelink.me/XgL8/baemincom"
+                                    );
+                                }
+                            }}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="motorbike"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"배달의 민족"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.restaurantButton_2}
-                    onPress={() => {
-                        Alert.alert(
-                            "배달앤빵",
-                            "준비중입니다.",
-                            [{ text: "닫기" }]
-                        );
-                    }}
-                    disabled={!isRegistered}
-                >
-                    <Text
-                        style={
-                            isRegistered
-                                ? styles.normalText
-                                : styles.deactivatedText
-                        }
-                    >
-                        {"나의주문\n메뉴보기"}
-                    </Text>
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_2
+                            }
+                            disabled={true}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="account-plus-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.deactivated
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"참여하기"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.restaurantButton_1}
-                    onPress={() => sendMoney()}
-                    disabled={!isRegistered}
-                >
-                    <Text
-                        style={
-                            isRegistered
-                                ? styles.normalText
-                                : styles.deactivatedText
-                        }
-                    >
-                        {"송금하러\n가기"}
-                    </Text>
-                </TouchableOpacity>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
+                            }
+                            disabled={true}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="application-edit-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.deactivated
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"주문하기"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.restaurantButton_2}
-                    onPress={() => {
-                        sendSMStoAuthor();
-                    }}
-                    disabled={!isRegistered}
-                >
-                    <Text
-                        style={
-                            isRegistered
-                                ? styles.normalText
-                                : styles.deactivatedText
-                        }
-                    >
-                        {"주문자에게\n문자보내기"}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_2
+                            }
+                            onPress={sendSMStoAuthor}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="message-processing-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"호스트 연락"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
+                            }
+                            onPress={() => {
+                                Alert.alert(
+                                    "배달앤빵",
+                                    "이미 모집이 끝났기 때문에 주문을 취소할 수 없습니다.\n주문을 취소하려면 호스트에게 연락해 배달을 모집중으로 바꾼 뒤 주문을 취소하십시오.",
+                                    [
+                                        { text: "취소" },
+                                        {
+                                            text: "호스트에게 연락",
+                                            onPress: () => {
+                                                sendSMStoAuthor();
+                                            },
+                                        },
+                                    ]
+                                );
+                            }}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="account-cancel-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.deactivated
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"주문취소"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
 
-            <View style={styles.mapContainer}>
+            <View style={styles.map}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     customMapStyle={mapStyle}
@@ -247,12 +362,13 @@ export default function Restaurant_page_finished({
                     />
                 </MapView>
             </View>
-
-            <ScrollView
-                style={styles.restaurantListContainer}
-            >
-                {membersList}
-            </ScrollView>
+            <SafeAreaView>
+                <ScrollView
+                    style={styles.restaurantListContainer}
+                >
+                    {membersList}
+                </ScrollView>
+            </SafeAreaView>
         </View>
     );
 }
