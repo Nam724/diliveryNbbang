@@ -18,20 +18,26 @@ export const styles = StyleSheet.create({
     // TEXT STYLES
     normalText: {
         fontFamily: "happy_sans_bold",
-        fontSize: width * 0.04, // 40
+        fontSize: width * 0.035, // 40
+        color: colorPack.text_light,
+        textAlign: "center",
+    },
+    normalText_small: {
+        fontFamily: "happy_sans_bold",
+        fontSize: width * 0.025, // 40
         color: colorPack.text_light,
         textAlign: "center",
     },
     highlightText: {
         fontFamily: "happy_sans_title",
-        fontSize: width * 0.05, // 50
+        fontSize: width * 0.045, // 50
         color: colorPack.text_dark,
         textAlign: "center",
         fontWeight: "bold",
     },
     deactivatedText: {
         fontFamily: "happy_sans_regular",
-        fontSize: width * 0.03, // 30
+        fontSize: width * 0.025, // 30
         color: colorPack.deactivated,
         textAlign: "center",
     },
@@ -149,9 +155,10 @@ export const styles = StyleSheet.create({
 
     restaurantButtonContainer: {
         flexDirection: "row",
+        height: "100%",
     },
     restaurantButton_1: {
-        width: width * 0.25,
+        width: width * 0.23,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: colorPack.highlight_dark,
@@ -163,7 +170,7 @@ export const styles = StyleSheet.create({
         marginBottom: (height * 20) / 2000,
     },
     restaurantButton_2: {
-        width: width * 0.25,
+        width: width * 0.23,
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: colorPack.highlight_light,
@@ -174,6 +181,10 @@ export const styles = StyleSheet.create({
         borderWidth: 3,
         marginBottom: (height * 20) / 2000,
     },
+    restaurantButtonIconContainer: {
+        alignItems: "center",
+    },
+    restaurantButtonIcon: {},
 
     // sign in page
     goToSignUpInButton: {

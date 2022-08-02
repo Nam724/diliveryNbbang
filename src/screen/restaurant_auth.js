@@ -9,6 +9,7 @@ import {
     SafeAreaView,
     Alert,
     KeyboardAvoidingView,
+    Image,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { DataStore } from "@aws-amplify/datastore";
@@ -27,6 +28,10 @@ import MapView, {
 import * as Linking from "expo-linking";
 import * as Clipboard from "expo-clipboard";
 import * as SMS from "expo-sms";
+import {
+    MaterialIcons,
+    MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 export default function Restaurant_page_auth({
     route,
@@ -94,7 +99,7 @@ export default function Restaurant_page_auth({
         setRefreshing(false);
     };
 
-    const sendMoney = async () => {
+    const sendMSG = async () => {
         // Clipboard.setString(restaurant.account);
         // alert('보내실 주소가 복사되었습니다.\n카카오페이로 이동합니다.');
         // Linking.openURL(restaurant.account)
@@ -136,7 +141,8 @@ export default function Restaurant_page_auth({
         } else {
             // misfortune... there's no SMS available on this device
         }
-
+    };
+    const finishRecruiting = async () => {
         const CURRENT_ITEM = await DataStore.query(
             Restaurant,
             restaurant.id
@@ -335,9 +341,9 @@ export default function Restaurant_page_auth({
                 )
             );
             setIsFinishRecruiting(false);
-            Alert.alert("배달앤빵", "모집을 시작합니다.", [
-                { text: "확인" },
-            ]);
+            // Alert.alert("배달앤빵", "모집을 시작합니다.", [
+            //     { text: "확인" },
+            // ]);
         } catch (e) {
             // console.log(e)
             alert(e);
@@ -680,71 +686,228 @@ export default function Restaurant_page_auth({
                 </Text>
             </View>
 
-            <View style={styles.restaurantButtonContainer}>
-                <TouchableOpacity
-                    style={styles.restaurantButton_1}
-                    onPress={() => {
-                        if (restaurant.url) {
-                            Linking.openURL(restaurant.url);
-                        } else {
-                            Linking.openURL(
-                                "https://baeminkr.onelink.me/XgL8/baemincom"
-                            );
-                        }
-                    }}
+            <ScrollView
+                horizontal={true}
+                style={{ height: height * 0.2 }}
+                showsHorizontalScrollIndicator={false}
+            >
+                <View
+                    style={styles.restaurantButtonContainer}
                 >
-                    <Text style={styles.normalText}>
-                        {"배민\n바로가기"}
-                    </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.restaurantButton_1}
+                        onPress={() => {
+                            if (restaurant.url) {
+                                Linking.openURL(
+                                    restaurant.url
+                                );
+                            } else {
+                                Linking.openURL(
+                                    "https://baeminkr.onelink.me/XgL8/baemincom"
+                                );
+                            }
+                        }}
+                    >
+                        <View
+                            styles={
+                                styles.restaurantButtonIconContainer
+                            }
+                        >
+                            <View
+                                style={{
+                                    alignItems: "center",
+                                }}
+                            >
+                                <MaterialCommunityIcons
+                                    name="motorbike"
+                                    size={width * 0.08}
+                                    color={
+                                        colorPack.text_dark
+                                    }
+                                    style={
+                                        styles.restaurantButtonIcon
+                                    }
+                                />
+                            </View>
+                            <Text
+                                style={
+                                    styles.normalText_small
+                                }
+                            >
+                                {"배달의 민족"}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.restaurantButton_2}
-                    onPress={() => {
-                        if (!isFinishRecruiting) {
-                            makeNewMember();
-                        } else {
-                            showAllMenu();
-                        }
-                    }}
-                >
-                    <Text style={styles.normalText}>
-                        {!isFinishRecruiting
-                            ? "주문또는\n정보수정"
-                            : "전체주문\n확인"}
-                    </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.restaurantButton_2}
+                        onPress={() => {
+                            if (!isFinishRecruiting) {
+                                makeNewMember();
+                            } else {
+                                showAllMenu();
+                            }
+                        }}
+                    >
+                        <View
+                            styles={
+                                styles.restaurantButtonIconContainer
+                            }
+                        >
+                            <View
+                                style={{
+                                    alignItems: "center",
+                                }}
+                            >
+                                <MaterialCommunityIcons
+                                    name={
+                                        !isFinishRecruiting
+                                            ? "application-edit-outline"
+                                            : "content-copy"
+                                    }
+                                    size={width * 0.08}
+                                    color={
+                                        colorPack.text_dark
+                                    }
+                                    style={
+                                        styles.restaurantButtonIcon
+                                    }
+                                />
+                            </View>
+                            <Text
+                                style={
+                                    styles.normalText_small
+                                }
+                            >
+                                {!isFinishRecruiting
+                                    ? "주문정보수정"
+                                    : "전체주문복사"}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.restaurantButton_1}
-                    onPress={() => {
-                        sendMoney();
-                    }}
-                >
-                    <Text style={styles.normalText}>
-                        {!isFinishRecruiting
-                            ? "모집종료\n송금요청"
-                            : "전체문자\n보내기"}
-                    </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.restaurantButton_1}
+                        onPress={() => {
+                            sendMSG();
+                        }}
+                    >
+                        <View
+                            styles={
+                                styles.restaurantButtonIconContainer
+                            }
+                        >
+                            <View
+                                style={{
+                                    alignItems: "center",
+                                }}
+                            >
+                                <MaterialCommunityIcons
+                                    name="message-badge-outline"
+                                    size={width * 0.08}
+                                    color={
+                                        colorPack.text_dark
+                                    }
+                                    style={
+                                        styles.restaurantButtonIcon
+                                    }
+                                />
+                            </View>
+                            <Text
+                                style={
+                                    styles.normalText_small
+                                }
+                            >
+                                {"단체문자전송"}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
 
-                <TouchableOpacity
-                    style={styles.restaurantButton_2}
-                    onPressOut={() => {
-                        if (isFinishRecruiting) {
-                            restartRecruiting();
-                        } else {
-                            deleteRestaurant();
-                        }
-                    }}
-                >
-                    <Text style={styles.normalText}>
-                        {!isFinishRecruiting
-                            ? "모집취소"
-                            : "다시\n모집하기"}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity
+                        style={styles.restaurantButton_2}
+                        onPress={() => {
+                            if (!isFinishRecruiting) {
+                                finishRecruiting();
+                            } else {
+                                restartRecruiting();
+                            }
+                        }}
+                    >
+                        <View
+                            styles={
+                                styles.restaurantButtonIconContainer
+                            }
+                        >
+                            <View
+                                style={{
+                                    alignItems: "center",
+                                }}
+                            >
+                                <MaterialCommunityIcons
+                                    name={
+                                        isFinishRecruiting
+                                            ? "lock-outline"
+                                            : "lock-open-outline"
+                                    }
+                                    size={width * 0.08}
+                                    color={
+                                        !isFinishRecruiting
+                                            ? colorPack.text_dark
+                                            : colorPack.deactivated
+                                    }
+                                    style={
+                                        styles.restaurantButtonIcon
+                                    }
+                                />
+                            </View>
+                            <Text
+                                style={
+                                    styles.normalText_small
+                                }
+                            >
+                                {"모집상태변경"}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.restaurantButton_1}
+                        onPressOut={() => {
+                            deleteRestaurant;
+                        }}
+                    >
+                        <View
+                            styles={
+                                styles.restaurantButtonIconContainer
+                            }
+                        >
+                            <View
+                                style={{
+                                    alignItems: "center",
+                                }}
+                            >
+                                <MaterialCommunityIcons
+                                    name="delete"
+                                    size={width * 0.08}
+                                    color={
+                                        colorPack.text_dark
+                                    }
+                                    style={
+                                        styles.restaurantButtonIcon
+                                    }
+                                />
+                            </View>
+                            <Text
+                                style={
+                                    styles.normalText_small
+                                }
+                            >
+                                {"삭제"}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
 
             <View style={styles.map}>
                 <MapView
@@ -869,7 +1032,7 @@ function Members(user, member, restaurant, index) {
                 </Text>
                 <Text
                     style={[
-                        styles.normalText,
+                        styles.normalText_small,
                         styles.restaurantFee,
                     ]}
                     ellipsizeMode="tail"
