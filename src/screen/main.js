@@ -107,9 +107,7 @@ export default function Main_page({ route, navigation }) {
     const [refreshing, setRefreshing] = useState(false);
     const [myOrderList, setMyOrderList] = useState([]); // 내 주문 리스트
 
-    const refreshRestaurantList = async (
-        id = "refresh"
-    ) => {
+    const refreshRestaurantList = async (id) => {
         // alert('refreshRestaurantList');
         setRefreshing(true);
 
@@ -118,9 +116,10 @@ export default function Main_page({ route, navigation }) {
         await getMarkers();
         if (id === "refresh") {
             await userOrderList("get");
-            // console.log('refreshRestaurantList_refresh');
+            console.log("refreshRestaurantList_refresh");
             await loadRestaurant(selectedMarker.key);
         } else if (id === "userOrder") {
+            console.log("refreshRestaurantList_userOrder");
             setSelectedMarker({
                 coordinate: {}, // {longitude: 0, latitude: 0}
                 title: "나의 주문",
@@ -128,17 +127,27 @@ export default function Main_page({ route, navigation }) {
             });
             userOrderList("set");
         } else if (id === "default") {
-            userOrderList("get");
-            setRestaurantList(restaurantList_sample);
-            setSelectedMarker({
-                coordinate: {}, // {longitude: 0, latitude: 0}
-                title: "",
-                key: "markers%",
-            });
+            console.log("refreshRestaurantList_default");
+            await userOrderList("get");
+            if (myOrderList.length > 0) {
+                setSelectedMarker({
+                    coordinate: {}, // {longitude: 0, latitude: 0}
+                    title: "나의 주문",
+                    key: "userOrder",
+                });
+                userOrderList("set");
+            } else {
+                setRestaurantList(restaurantList_sample);
+                setSelectedMarker({
+                    coordinate: {}, // {longitude: 0, latitude: 0}
+                    title: "",
+                    key: "markers%",
+                });
+            }
         } else {
             // 특정 키값 새로고침
             await userOrderList("get");
-            // console.log('refreshRestaurantList_with id');
+            console.log("refreshRestaurantList_with id");
             await loadRestaurant(id);
         }
         // alert('refreshRestaurantList is finished');
@@ -172,14 +181,14 @@ export default function Main_page({ route, navigation }) {
                 title={title}
                 description={`${num_restaurants}개의 음식점`}
                 key={key}
-                onPress={() => {
-                    // console.log(title)
+                onPress={async () => {
+                    console.log(title, key);
+                    await refreshRestaurantList(key);
                     setSelectedMarker({
                         coordinate: coordinate,
                         title: title,
                         key: key,
                     });
-                    loadRestaurant(key);
                 }}
                 icon={
                     Platform.OS === "ios"

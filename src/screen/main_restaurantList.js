@@ -100,7 +100,7 @@ function Main_restaurantList(
             >
                 <Text
                     style={[
-                        isRegistered
+                        user.username == restaurant.makerID
                             ? styles.highlightText
                             : styles.normalText,
                         styles.restaurantName,
