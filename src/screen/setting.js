@@ -176,10 +176,14 @@ export default function Setting_page({
     };
 
     const themeToggle = async () => {
-        const theme = await AsyncStorage.getItem("@theme");
-        AsyncStorage.setItem(
-            "@theme",
-            theme === "light" ? "dark" : "light"
+        // const theme = await AsyncStorage.getItem("@theme");
+        // AsyncStorage.setItem(
+        //     "@theme",
+        //     theme === "light" ? "dark" : "light"
+        // );
+        Alert.alert(
+            "배달앤빵",
+            "아직 지원하지 않는 기능입니다."
         );
     };
 

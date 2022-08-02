@@ -266,16 +266,6 @@
 			]
 		},
 		{
-			"path": "App.js",
-			"bookmarks": [
-				{
-					"line": 19,
-					"column": 17,
-					"label": "fontLoad"
-				}
-			]
-		},
-		{
 			"path": "src/screen/setting.js",
 			"bookmarks": [
 				{
@@ -299,7 +289,7 @@
 					"label": "changePassword"
 				},
 				{
-					"line": 193,
+					"line": 197,
 					"column": 23,
 					"label": "sendMsgToSupport"
 				}
