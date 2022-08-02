@@ -114,62 +114,62 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 71,
+					"line": 68,
 					"column": 20,
 					"label": "해당 음식점의 Member 객체 불러오기"
 				},
 				{
-					"line": 101,
+					"line": 98,
 					"column": 19,
 					"label": "송금하기 버튼"
 				},
 				{
-					"line": 166,
+					"line": 163,
 					"column": 23,
 					"label": "주문하기"
 				},
 				{
-					"line": 213,
+					"line": 210,
 					"column": 26,
 					"label": "음식점 삭제"
 				},
 				{
-					"line": 253,
+					"line": 250,
 					"column": 17,
 					"label": "메뉴 추가"
 				},
 				{
-					"line": 309,
+					"line": 306,
 					"column": 21,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 328,
+					"line": 325,
 					"column": 27,
 					"label": "모집 재시작"
 				},
 				{
-					"line": 367,
+					"line": 364,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 457,
+					"line": 454,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 484,
+					"line": 481,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 516,
+					"line": 513,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 916,
+					"line": 936,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -179,47 +179,47 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 56,
+					"line": 57,
 					"column": 20,
 					"label": "getMembers"
 				},
 				{
-					"line": 85,
+					"line": 86,
 					"column": 23,
 					"label": "makeNewMember"
 				},
 				{
-					"line": 95,
+					"line": 96,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 132,
+					"line": 130,
 					"column": 22,
 					"label": "deleteMember"
 				},
 				{
-					"line": 136,
+					"line": 134,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 208,
+					"line": 206,
 					"column": 17,
 					"label": "addMenu"
 				},
 				{
-					"line": 213,
+					"line": 211,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 251,
+					"line": 249,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 577,
+					"line": 712,
 					"column": 49,
 					"label": "Members(user, member, restaurant, index)"
 				}

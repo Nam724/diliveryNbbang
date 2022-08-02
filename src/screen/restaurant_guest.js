@@ -25,6 +25,7 @@ import MapView, {
     PROVIDER_GOOGLE,
 } from "react-native-maps";
 import * as Linking from "expo-linking";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Restaurant_page_guest({
     route,
@@ -121,12 +122,9 @@ export default function Restaurant_page_guest({
             );
             // console.log('새로운 멤버가 추가되었습니다.', updatedItem)
             setRestaurant(updatedItem);
-
-            setModalVisible(true);
             // refreshRestaurantList(id=place.id);
         } else {
             // Alert.alert('배달앤빵','이미 등록되었습니다.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
-            setModalVisible(true);
         }
     };
 
@@ -367,7 +365,9 @@ export default function Restaurant_page_guest({
                                         styles.normalText,
                                     ]}
                                     placeholder={
-                                        "배달료 제외"
+                                        menuPrice
+                                            ? menuPrice
+                                            : "배달료 제외"
                                     }
                                     placeholderTextColor={
                                         colorPack.deactivated
@@ -377,10 +377,15 @@ export default function Restaurant_page_guest({
                                         text
                                     ) => {
                                         setMenuPrice(
-                                            parseInt(text)
+                                            parseInt(
+                                                text === ""
+                                                    ? "0"
+                                                    : parseInt(
+                                                          text
+                                                      )
+                                            )
                                         );
                                     }}
-                                    defaultValue={`${menuPrice}`}
                                 ></TextInput>
                             </View>
 
@@ -463,63 +468,193 @@ export default function Restaurant_page_guest({
                           )}원`}
                 </Text>
             </View>
-
-            <View style={styles.restaurantButtonContainer}>
-                <TouchableOpacity
-                    style={styles.restaurantButton_1}
-                    onPress={() => {
-                        if (restaurant.url) {
-                            Linking.openURL(restaurant.url);
-                        } else {
-                            Linking.openURL(
-                                "https://baeminkr.onelink.me/XgL8/baemincom"
-                            );
-                        }
-                    }}
+            <SafeAreaView>
+                <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
                 >
-                    <Text style={styles.normalText}>
-                        {"배민\n바로가기"}
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.restaurantButton_2}
-                    onPress={() => makeNewMember()}
-                >
-                    <Text style={styles.normalText}>
-                        {isRegistered
-                            ? "메뉴 변경"
-                            : "주문하기"}
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.restaurantButton_1}
-                    disabled={true}
-                >
-                    <Text style={styles.deactivatedText}>
-                        {"모집종료 후\n입금가능"}
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.restaurantButton_2}
-                    onPressOut={() => deleteMember()}
-                    disabled={!isRegistered}
-                >
-                    <Text
+                    <View
                         style={
-                            !isRegistered
-                                ? styles.deactivatedText
-                                : styles.normalText
+                            styles.restaurantButtonContainer
                         }
                     >
-                        {"주문취소"}
-                    </Text>
-                </TouchableOpacity>
-            </View>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
+                            }
+                            onPress={() => {
+                                if (restaurant.url) {
+                                    Linking.openURL(
+                                        restaurant.url
+                                    );
+                                } else {
+                                    Linking.openURL(
+                                        "https://baeminkr.onelink.me/XgL8/baemincom"
+                                    );
+                                }
+                            }}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="motorbike"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"배달의 민족"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-            <View style={styles.mapContainer}>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_2
+                            }
+                            onPress={makeNewMember}
+                            disabled={isRegistered}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="motorbike"
+                                        size={width * 0.08}
+                                        color={
+                                            isRegistered
+                                                ? colorPack.deactivated
+                                                : colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"참여하기"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
+                            }
+                            onPress={() => {
+                                setModalVisible(true);
+                            }}
+                            disabled={!isRegistered}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="motorbike"
+                                        size={width * 0.08}
+                                        color={
+                                            !isRegistered
+                                                ? colorPack.deactivated
+                                                : colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"주문하기"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_2
+                            }
+                            onPressOut={() =>
+                                deleteMember()
+                            }
+                            disabled={!isRegistered}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="motorbike"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"주문취소"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+
+            <View style={styles.map}>
                 <MapView
                     provider={PROVIDER_GOOGLE}
                     customMapStyle={mapStyle}

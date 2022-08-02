@@ -28,10 +28,7 @@ import MapView, {
 import * as Linking from "expo-linking";
 import * as Clipboard from "expo-clipboard";
 import * as SMS from "expo-sms";
-import {
-    MaterialIcons,
-    MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Restaurant_page_auth({
     route,
@@ -587,7 +584,9 @@ export default function Restaurant_page_auth({
                                         styles.normalText,
                                     ]}
                                     placeholder={
-                                        "배달료 제외"
+                                        menuPrice
+                                            ? menuPrice
+                                            : "배달료 제외"
                                     }
                                     placeholderTextColor={
                                         colorPack.deactivated
@@ -597,10 +596,15 @@ export default function Restaurant_page_auth({
                                         text
                                     ) => {
                                         setMenuPrice(
-                                            parseInt(text)
+                                            parseInt(
+                                                text === ""
+                                                    ? "0"
+                                                    : parseInt(
+                                                          text
+                                                      )
+                                            )
                                         );
                                     }}
-                                    defaultValue={`${menuPrice}`}
                                 ></TextInput>
                             </View>
 
@@ -685,241 +689,258 @@ export default function Restaurant_page_auth({
                           )}원`}
                 </Text>
             </View>
-
-            <ScrollView
-                horizontal={true}
-                style={{ height: height * 0.2 }}
-                showsHorizontalScrollIndicator={false}
-            >
-                <View
-                    style={styles.restaurantButtonContainer}
+            <SafeAreaView>
+                <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
                 >
-                    <TouchableOpacity
-                        style={styles.restaurantButton_1}
-                        onPress={() => {
-                            if (restaurant.url) {
-                                Linking.openURL(
-                                    restaurant.url
-                                );
-                            } else {
-                                Linking.openURL(
-                                    "https://baeminkr.onelink.me/XgL8/baemincom"
-                                );
-                            }
-                        }}
+                    <View
+                        style={
+                            styles.restaurantButtonContainer
+                        }
                     >
-                        <View
-                            styles={
-                                styles.restaurantButtonIconContainer
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
                             }
+                            onPress={() => {
+                                if (restaurant.url) {
+                                    Linking.openURL(
+                                        restaurant.url
+                                    );
+                                } else {
+                                    Linking.openURL(
+                                        "https://baeminkr.onelink.me/XgL8/baemincom"
+                                    );
+                                }
+                            }}
                         >
                             <View
-                                style={{
-                                    alignItems: "center",
-                                }}
-                            >
-                                <MaterialCommunityIcons
-                                    name="motorbike"
-                                    size={width * 0.08}
-                                    color={
-                                        colorPack.text_dark
-                                    }
-                                    style={
-                                        styles.restaurantButtonIcon
-                                    }
-                                />
-                            </View>
-                            <Text
-                                style={
-                                    styles.normalText_small
+                                styles={
+                                    styles.restaurantButtonIconContainer
                                 }
                             >
-                                {"배달의 민족"}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="motorbike"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"배달의 민족"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.restaurantButton_2}
-                        onPress={() => {
-                            if (!isFinishRecruiting) {
-                                makeNewMember();
-                            } else {
-                                showAllMenu();
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_2
                             }
-                        }}
-                    >
-                        <View
-                            styles={
-                                styles.restaurantButtonIconContainer
-                            }
+                            onPress={() => {
+                                if (!isFinishRecruiting) {
+                                    makeNewMember();
+                                } else {
+                                    showAllMenu();
+                                }
+                            }}
                         >
                             <View
-                                style={{
-                                    alignItems: "center",
-                                }}
-                            >
-                                <MaterialCommunityIcons
-                                    name={
-                                        !isFinishRecruiting
-                                            ? "application-edit-outline"
-                                            : "content-copy"
-                                    }
-                                    size={width * 0.08}
-                                    color={
-                                        colorPack.text_dark
-                                    }
-                                    style={
-                                        styles.restaurantButtonIcon
-                                    }
-                                />
-                            </View>
-                            <Text
-                                style={
-                                    styles.normalText_small
+                                styles={
+                                    styles.restaurantButtonIconContainer
                                 }
                             >
-                                {!isFinishRecruiting
-                                    ? "주문정보수정"
-                                    : "전체주문복사"}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name={
+                                            !isFinishRecruiting
+                                                ? "application-edit-outline"
+                                                : "content-copy"
+                                        }
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {!isFinishRecruiting
+                                        ? "주문정보수정"
+                                        : "전체주문복사"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.restaurantButton_1}
-                        onPress={() => {
-                            sendMSG();
-                        }}
-                    >
-                        <View
-                            styles={
-                                styles.restaurantButtonIconContainer
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
                             }
+                            onPress={() => {
+                                sendMSG();
+                            }}
                         >
                             <View
-                                style={{
-                                    alignItems: "center",
-                                }}
-                            >
-                                <MaterialCommunityIcons
-                                    name="message-badge-outline"
-                                    size={width * 0.08}
-                                    color={
-                                        colorPack.text_dark
-                                    }
-                                    style={
-                                        styles.restaurantButtonIcon
-                                    }
-                                />
-                            </View>
-                            <Text
-                                style={
-                                    styles.normalText_small
+                                styles={
+                                    styles.restaurantButtonIconContainer
                                 }
                             >
-                                {"단체문자전송"}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="message-badge-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"단체문자전송"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.restaurantButton_2}
-                        onPress={() => {
-                            if (!isFinishRecruiting) {
-                                finishRecruiting();
-                            } else {
-                                restartRecruiting();
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_2
                             }
-                        }}
-                    >
-                        <View
-                            styles={
-                                styles.restaurantButtonIconContainer
-                            }
+                            onPress={() => {
+                                if (!isFinishRecruiting) {
+                                    finishRecruiting();
+                                } else {
+                                    restartRecruiting();
+                                }
+                            }}
                         >
                             <View
-                                style={{
-                                    alignItems: "center",
-                                }}
-                            >
-                                <MaterialCommunityIcons
-                                    name={
-                                        isFinishRecruiting
-                                            ? "lock-outline"
-                                            : "lock-open-outline"
-                                    }
-                                    size={width * 0.08}
-                                    color={
-                                        !isFinishRecruiting
-                                            ? colorPack.text_dark
-                                            : colorPack.deactivated
-                                    }
-                                    style={
-                                        styles.restaurantButtonIcon
-                                    }
-                                />
-                            </View>
-                            <Text
-                                style={
-                                    styles.normalText_small
+                                styles={
+                                    styles.restaurantButtonIconContainer
                                 }
                             >
-                                {"모집상태변경"}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name={
+                                            isFinishRecruiting
+                                                ? "lock-outline"
+                                                : "lock-open-outline"
+                                        }
+                                        size={width * 0.08}
+                                        color={
+                                            !isFinishRecruiting
+                                                ? colorPack.text_dark
+                                                : colorPack.deactivated
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"모집상태변경"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={styles.restaurantButton_1}
-                        onPress={() => {
-                            Alert.alert(
-                                "배달앤빵",
-                                "이 모집을 삭제하시겠습니까?",
-                                [
-                                    { text: "취소" },
-                                    {
-                                        text: "삭제",
-                                        onPress: () => {
-                                            deleteRestaurant();
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
+                            }
+                            onPress={() => {
+                                Alert.alert(
+                                    "배달앤빵",
+                                    "이 모집을 삭제하시겠습니까?",
+                                    [
+                                        { text: "취소" },
+                                        {
+                                            text: "삭제",
+                                            onPress: () => {
+                                                deleteRestaurant();
+                                            },
                                         },
-                                    },
-                                ]
-                            );
-                        }}
-                    >
-                        <View
-                            styles={
-                                styles.restaurantButtonIconContainer
-                            }
+                                    ]
+                                );
+                            }}
                         >
                             <View
-                                style={{
-                                    alignItems: "center",
-                                }}
-                            >
-                                <MaterialCommunityIcons
-                                    name="delete"
-                                    size={width * 0.08}
-                                    color={
-                                        colorPack.text_dark
-                                    }
-                                    style={
-                                        styles.restaurantButtonIcon
-                                    }
-                                />
-                            </View>
-                            <Text
-                                style={
-                                    styles.normalText_small
+                                styles={
+                                    styles.restaurantButtonIconContainer
                                 }
                             >
-                                {"삭제"}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="delete"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"삭제"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
 
             <View style={styles.map}>
                 <MapView
@@ -958,20 +979,21 @@ export default function Restaurant_page_auth({
                     />
                 </MapView>
             </View>
-
-            <ScrollView
-                style={styles.restaurantListContainer}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => {
-                            getMembers();
-                        }}
-                    />
-                }
-            >
-                {membersList}
-            </ScrollView>
+            <SafeAreaView>
+                <ScrollView
+                    style={styles.restaurantListContainer}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={() => {
+                                getMembers();
+                            }}
+                        />
+                    }
+                >
+                    {membersList}
+                </ScrollView>
+            </SafeAreaView>
         </View>
     );
 }
