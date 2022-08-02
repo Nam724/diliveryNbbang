@@ -881,7 +881,11 @@ function Members(user, member, restaurant, index) {
                         `${
                             member.email.split("@")[0]
                         }님이 주문하신 메뉴`,
-                        `${member.menu}\n음식값: ${
+                        `${
+                            member.menu
+                                ? member.menu
+                                : "메뉴를 입력해주세요"
+                        }\n음식값: ${
                             member.price
                         }원, 배달료: ${
                             restaurant.fee /

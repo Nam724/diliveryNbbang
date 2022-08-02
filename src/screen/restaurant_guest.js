@@ -99,7 +99,7 @@ export default function Restaurant_page_guest({
                     username: user.username,
                     email: user.email,
                     phone_number: user.phone_number,
-                    menu: ["메뉴를 먼저 추가해주세요"],
+                    menu: [""],
                     fee: Number(0),
                     restaurantID: restaurant.id,
                 })
@@ -608,7 +608,11 @@ function Members(user, member, restaurant, index) {
                         `${
                             member.email.split("@")[0]
                         }님이 주문하신 메뉴`,
-                        `${member.menu}\n음식값: ${
+                        `${
+                            member.menu
+                                ? member.menu
+                                : "메뉴를 입력해주세요"
+                        }\n음식값: ${
                             member.price
                         }원, 배달료: ${
                             restaurant.fee /

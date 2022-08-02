@@ -8,6 +8,7 @@ export default function Restaurant_page({
 }) {
     // console.log('makerID', route.params.restaurant.makerID)
     // console.log('username', route.params.user.username)
+    console.log(route.params);
     if (
         route.params.restaurant.makerID ===
         route.params.user.username

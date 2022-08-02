@@ -437,7 +437,8 @@ export default function Main_page({ route, navigation }) {
                         user,
                         model,
                         index,
-                        navigation
+                        navigation,
+                        place
                     )
                 );
             });
@@ -472,7 +473,8 @@ export default function Main_page({ route, navigation }) {
                         user,
                         rest,
                         index,
-                        navigation
+                        navigation,
+                        place
                     )
                 );
 
