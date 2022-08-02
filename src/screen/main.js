@@ -1044,11 +1044,20 @@ export default function Main_page({ route, navigation }) {
                             });
                         }}
                     >
-                        <MaterialIcons
-                            name="account-circle"
-                            size={width * 0.08}
-                            color={colorPack.text_light}
-                        />
+                        <View>
+                            <MaterialCommunityIcons
+                                name="account-outline"
+                                size={width * 0.08}
+                                color={colorPack.text_light}
+                            />
+                            <Text
+                                style={
+                                    styles.normalText_small
+                                }
+                            >
+                                {"내 정보"}
+                            </Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
 
@@ -1092,11 +1101,20 @@ export default function Main_page({ route, navigation }) {
                             userOrderList("set");
                         }}
                     >
-                        <MaterialCommunityIcons
-                            name="clipboard-edit-outline"
-                            size={width * 0.08}
-                            color={colorPack.text_light}
-                        />
+                        <View>
+                            <MaterialCommunityIcons
+                                name="clipboard-edit-outline"
+                                size={width * 0.08}
+                                color={colorPack.text_light}
+                            />
+                            <Text
+                                style={
+                                    styles.normalText_small
+                                }
+                            >
+                                {"내 주문"}
+                            </Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </View>
