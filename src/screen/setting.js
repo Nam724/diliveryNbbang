@@ -65,15 +65,15 @@ export default function Setting_page({
                         try {
                             const result =
                                 await Auth.deleteUser();
-                            console.log(result);
+                            // console.log(result);
                             navigation.replace("SignIn", {
                                 autoLogin: false,
                             });
                         } catch (error) {
-                            console.log(
-                                "Error deleting user",
-                                error
-                            );
+                            // console.log(
+                            //     "Error deleting user",
+                            //     error
+                            // );
                         }
                     },
                 },
@@ -100,7 +100,7 @@ export default function Setting_page({
                     );
                 })
                 .then((data) => {
-                    console.log(data);
+                    // console.log(data);
                     Alert.alert(
                         "배달앤빵",
                         "비밀번호 변경이 완료되었습니다. 자동 로그인 정보에 반영하시겠습니까?",
@@ -174,7 +174,7 @@ export default function Setting_page({
         useState("");
 
     const sendMsgToSupport = () => {
-        console.log("sendMsgToSupport");
+        // console.log("sendMsgToSupport");
         const text = sendMsgToSupportText;
 
         MailComposer.composeAsync(
@@ -458,9 +458,9 @@ export default function Setting_page({
                                         styles.normalText
                                     }
                                 >
-                                    {
-                                        "개발자에게 의견 보내기"
-                                    }
+                                    {isSendMsgToSupportVisible
+                                        ? "창 닫기"
+                                        : "개발자에게 의견 보내기"}
                                 </Text>
                             </TouchableOpacity>
                             {isSendMsgToSupportVisible && (

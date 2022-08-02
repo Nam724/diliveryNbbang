@@ -49,9 +49,7 @@ function Main_restaurantList(
             >
                 <Text
                     style={[
-                        isRegistered
-                            ? styles.highlightText
-                            : styles.deactivatedText,
+                        styles.deactivatedText,
                         styles.restaurantName,
                     ]}
                     numberOfLines={1}

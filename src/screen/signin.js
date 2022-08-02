@@ -208,7 +208,7 @@ export default function SignIn_page({ route, navigation }) {
             </View>
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {"배달앤빵 로그인"}
+                    {"배달앤빵"}
                 </Text>
             </View>
 

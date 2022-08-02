@@ -4,72 +4,67 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 48,
+					"line": 51,
 					"column": 19,
 					"label": "autoLogin"
 				},
 				{
-					"line": 70,
+					"line": 78,
 					"column": 21,
 					"label": "getLocation"
 				},
 				{
-					"line": 105,
+					"line": 113,
 					"column": 31,
 					"label": "refreshRestaurantList"
 				},
 				{
-					"line": 147,
+					"line": 161,
 					"column": 22,
 					"label": "마커 객체 리턴"
 				},
 				{
-					"line": 190,
+					"line": 200,
 					"column": 29,
 					"label": "해당 장소의 마커들 가져오기"
 				},
 				{
-					"line": 216,
+					"line": 226,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 251,
+					"line": 261,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 268,
+					"line": 278,
 					"column": 4,
 					"label": "새로운 마커 만들기"
 				},
 				{
-					"line": 291,
+					"line": 301,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 343,
-					"column": 4,
-					"label": "새로운 음식점 만들기"
-				},
-				{
-					"line": 359,
+					"line": 369,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 393,
+					"line": 403,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 459,
+					"line": 462,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 497,
+					"line": 500,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				}
@@ -229,17 +224,12 @@
 			"path": "src/screen/signup.js",
 			"bookmarks": [
 				{
-					"line": 37,
-					"column": 8,
-					"label": "회원가입"
-				},
-				{
-					"line": 90,
+					"line": 59,
 					"column": 4,
 					"label": "회원가입"
 				},
 				{
-					"line": 134,
+					"line": 103,
 					"column": 4,
 					"label": "인증코드 확인(회원가입 완료)"
 				}
@@ -309,7 +299,7 @@
 			"path": "src/screen/main_restaurantList.js",
 			"bookmarks": [
 				{
-					"line": 145,
+					"line": 143,
 					"column": 35,
 					"label": "Main_restaurantList_sample"
 				}

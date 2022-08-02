@@ -51,12 +51,12 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     mapContainer: {
-        height: (height * 990) / 2000,
+        height: (height * 900) / 2000,
         width: width,
         marginBottom: (height * 10) / 2000,
     },
     map: {
-        height: (height * 990) / 2000,
+        height: (height * 900) / 2000,
         width: width,
     },
     restaurantContainer: {
@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
     },
     restaurantListContainer: {
-        height: (height * 604) / 2000,
+        height: "100%",
     },
     restaurantList: {
         height: (height * 150) / 2000,

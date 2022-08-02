@@ -33,7 +33,6 @@ import {
 import { DataStore } from "@aws-amplify/datastore";
 import { Restaurant, Place, Member } from "../models";
 import * as Linking from "expo-linking";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 import DialogInput from "react-native-dialog-input";
 import Loading_page from "./loading_page";
@@ -63,7 +62,12 @@ export default function Main_page({ route, navigation }) {
 
     useFocusEffect(
         React.useCallback(() => {
-            refreshRestaurantList("userOrder");
+            console.log("selectedMarker", selectedMarker);
+            refreshRestaurantList(
+                selectedMarker.key === "markers%"
+                    ? "default"
+                    : selectedMarker.key
+            );
         }, [])
     );
 
@@ -73,9 +77,9 @@ export default function Main_page({ route, navigation }) {
 
         let { status_location_permission } =
             await Location.requestForegroundPermissionsAsync();
-        console.log(
-            "위치 정보 access " + status_location_permission
-        );
+        // console.log(
+        //     "위치 정보 access " + status_location_permission
+        // );
         //   나중에 풀어야 함!
         // if (status_location_permission !== 'granted') {
         //   alert('Permission to access location was denied');
@@ -108,10 +112,12 @@ export default function Main_page({ route, navigation }) {
     ) => {
         // alert('refreshRestaurantList');
         setRefreshing(true);
+
         // console.log('refreshRestaurantList',id==='refresh');
         // console.log(selectedMarker)
         await getMarkers();
         if (id === "refresh") {
+            await userOrderList("get");
             // console.log('refreshRestaurantList_refresh');
             await loadRestaurant(selectedMarker.key);
         } else if (id === "userOrder") {
@@ -122,6 +128,7 @@ export default function Main_page({ route, navigation }) {
             });
             userOrderList("set");
         } else if (id === "default") {
+            userOrderList("get");
             setRestaurantList(restaurantList_sample);
             setSelectedMarker({
                 coordinate: {}, // {longitude: 0, latitude: 0}
@@ -129,11 +136,14 @@ export default function Main_page({ route, navigation }) {
                 key: "markers%",
             });
         } else {
+            // 특정 키값 새로고침
+            await userOrderList("get");
             // console.log('refreshRestaurantList_with id');
             await loadRestaurant(id);
         }
         // alert('refreshRestaurantList is finished');
         setRefreshing(false);
+
         // setIsLoading(false);
     };
 
@@ -227,7 +237,7 @@ export default function Main_page({ route, navigation }) {
                 })
             );
 
-            refreshRestaurantList();
+            refreshRestaurantList({ coordinate, title });
             // console.log('saved');
         } else {
             Alert.alert(
@@ -376,7 +386,7 @@ export default function Main_page({ route, navigation }) {
                 return price1 - price2;
             })
             .forEach(async (r, index) => {
-                // console.log("userOrerList", userOrderList);
+                // console.log("userOrderList", userOrderList);
                 _restaurantList.push(
                     Main_restaurantList(
                         user,
@@ -391,7 +401,7 @@ export default function Main_page({ route, navigation }) {
         setRestaurantList(_restaurantList);
     }
 
-    const userOrderList = async (type = "set") => {
+    const userOrderList = async (type) => {
         const members = await DataStore.query(Member, (q) =>
             q.username("eq", user.username)
         );
@@ -429,31 +439,24 @@ export default function Main_page({ route, navigation }) {
                 _myOrderList.push(rest.id);
 
                 if (index == members.length - 1) {
-                    setSelectedMarker({
-                        coordinate: {}, // {longitude: 0, latitude: 0}
-                        title: "나의 주문",
-                        key: "userOrder",
-                    });
                     setMyOrderList(_myOrderList);
                     if (type === "set") {
-                        console.log("set");
+                        setSelectedMarker({
+                            coordinate: {}, // {longitude: 0, latitude: 0}
+                            title: "나의 주문",
+                            key: "userOrder",
+                        });
                         setRestaurantList(_orderList);
+                        // console.log("set");
                     }
-                    //console.log('orderList', _orderList);
                 }
             });
-        } else {
-            console.log("주문한 음식점 없음");
-            setMyOrderList([]);
 
-            setSelectedMarker({
-                coordinate: {}, // {longitude: 0, latitude: 0}
-                title: "내 주문 없음",
-                key: "userOrder",
-            });
-            if (type === "set") {
-                setRestaurantList(_orderList); //console.log('orderList', _orderList);
-            }
+            //console.log('orderList', _orderList);
+        } else {
+            // 주문한 리스트가 없을 때
+            setMyOrderList([]);
+            setRestaurantList([]);
         }
     };
 
@@ -479,7 +482,7 @@ export default function Main_page({ route, navigation }) {
         } else {
             clipboardText = "";
         }
-        console.log("clipboardText", clipboardText);
+        // console.log("clipboardText", clipboardText);
 
         const UrlFormat =
             /^\'(.*)\' 어때요\? 배달의민족 앱에서 확인해보세요.  https:\/\/baemin.me\/(.*){1,}$/g;

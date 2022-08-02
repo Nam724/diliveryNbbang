@@ -883,7 +883,7 @@ function Members(user, member, restaurant, index) {
 
             <TouchableOpacity
                 onPress={() => {
-                    console.log(member.menu[0] === "");
+                    // console.log(member.menu[0] === "");
                     Alert.alert(
                         `${
                             member.email.split("@")[0]

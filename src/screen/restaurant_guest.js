@@ -610,7 +610,7 @@ function Members(user, member, restaurant, index) {
 
             <TouchableOpacity
                 onPress={() => {
-                    console.log(member.menu);
+                    // console.log(member.menu);
                     Alert.alert(
                         `${
                             member.email.split("@")[0]

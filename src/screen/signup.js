@@ -18,37 +18,6 @@ import {
     colorPack,
 } from "../style/style";
 
-// async function sendVerificationCode(email, password, setVerification_code_sended) {
-
-//     try {
-//         const { user } = await Auth.signUp({
-//             username: email,
-//             password: password,
-//             attributes: {
-//                 email:email,          // optional
-//                 phone_number:'',   // optional - E.164 number convention
-//                 // other custom attributes
-//             }
-//         });
-//         console.log(user);
-//         setVerification_code_sended(true);
-//     } catch (error) {
-//         console.log('error signing up:', error);
-//         if(error.code === 'UsernameExistsException'){
-//             alert('User already exists');
-//             return(false);
-//         }
-//         else if(error.code === 'InvalidParameterException'){
-//             alert('Invalid parameter');
-//             return(false);
-//         }
-//         else if (error.code === 'NetworkError'){
-//             alert('Network error');
-//             return(false);
-//         }
-//     }
-// }
-
 function emailTest(setEmail, email) {
     const reg =
         /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
