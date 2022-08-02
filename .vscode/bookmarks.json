@@ -4,17 +4,72 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
+					"line": 48,
+					"column": 19,
+					"label": "autoLogin"
+				},
+				{
+					"line": 70,
+					"column": 21,
+					"label": "getLocation"
+				},
+				{
+					"line": 105,
+					"column": 31,
+					"label": "refreshRestaurantList"
+				},
+				{
+					"line": 147,
+					"column": 22,
+					"label": "마커 객체 리턴"
+				},
+				{
+					"line": 190,
+					"column": 29,
+					"label": "해당 장소의 마커들 가져오기"
+				},
+				{
 					"line": 216,
+					"column": 32,
+					"label": "makeNewMarker"
+				},
+				{
+					"line": 251,
+					"column": 31,
+					"label": "restaurantList_sample"
+				},
+				{
+					"line": 268,
 					"column": 4,
 					"label": "새로운 마커 만들기"
 				},
 				{
 					"line": 291,
+					"column": 36,
+					"label": "새로운 음식점 등록"
+				},
+				{
+					"line": 343,
 					"column": 4,
 					"label": "새로운 음식점 만들기"
 				},
 				{
-					"line": 464,
+					"line": 359,
+					"column": 33,
+					"label": "현재 장소의 음식점들 불러오기"
+				},
+				{
+					"line": 393,
+					"column": 23,
+					"label": "사용자가 주문한 리스트 불러오기(set, get)"
+				},
+				{
+					"line": 458,
+					"column": 23,
+					"label": "readClipboard"
+				},
+				{
+					"line": 496,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				}
@@ -24,15 +79,75 @@
 			"path": "src/screen/signin.js",
 			"bookmarks": [
 				{
+					"line": 22,
+					"column": 18,
+					"label": "이메일이 정규식에 맞는지 확인"
+				},
+				{
+					"line": 32,
+					"column": 28,
+					"label": "로그인 정보 저장(자동로그인)"
+				},
+				{
+					"line": 58,
+					"column": 17,
+					"label": "유저 정보 저장"
+				},
+				{
 					"line": 64,
 					"column": 23,
 					"label": "로그인 정보 저장(자동로그인 시 필요)"
+				},
+				{
+					"line": 72,
+					"column": 12,
+					"label": "자동로그인 하기"
+				},
+				{
+					"line": 98,
+					"column": 14,
+					"label": "로그인"
 				}
 			]
 		},
 		{
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
+				{
+					"line": 66,
+					"column": 20,
+					"label": "해당 음식점의 Member 객체 불러오기"
+				},
+				{
+					"line": 96,
+					"column": 19,
+					"label": "송금하기 버튼"
+				},
+				{
+					"line": 160,
+					"column": 23,
+					"label": "주문하기"
+				},
+				{
+					"line": 207,
+					"column": 26,
+					"label": "음식점 삭제"
+				},
+				{
+					"line": 247,
+					"column": 17,
+					"label": "메뉴 추가"
+				},
+				{
+					"line": 303,
+					"column": 21,
+					"label": "전체 메뉴 보여주기"
+				},
+				{
+					"line": 322,
+					"column": 27,
+					"label": "모집 재시작"
+				},
 				{
 					"line": 361,
 					"column": 4,
@@ -54,7 +169,7 @@
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 739,
+					"line": 745,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -64,14 +179,34 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
+					"line": 56,
+					"column": 20,
+					"label": "getMembers"
+				},
+				{
+					"line": 85,
+					"column": 23,
+					"label": "makeNewMember"
+				},
+				{
 					"line": 95,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
+					"line": 132,
+					"column": 22,
+					"label": "deleteMember"
+				},
+				{
 					"line": 136,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
+				},
+				{
+					"line": 208,
+					"column": 17,
+					"label": "addMenu"
 				},
 				{
 					"line": 213,
@@ -82,6 +217,11 @@
 					"line": 251,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
+				},
+				{
+					"line": 577,
+					"column": 49,
+					"label": "Members(user, member, restaurant, index)"
 				}
 			]
 		},
@@ -102,6 +242,76 @@
 					"line": 134,
 					"column": 4,
 					"label": "인증코드 확인(회원가입 완료)"
+				}
+			]
+		},
+		{
+			"path": "src/screen/restaurant_finished.js",
+			"bookmarks": [
+				{
+					"line": 43,
+					"column": 10,
+					"label": "getMembers"
+				},
+				{
+					"line": 66,
+					"column": 19,
+					"label": "sendMoney"
+				},
+				{
+					"line": 96,
+					"column": 25,
+					"label": "sendSMStoAuthor"
+				},
+				{
+					"line": 259,
+					"column": 16,
+					"label": "멤버 보이는 칸"
+				}
+			]
+		},
+		{
+			"path": "App.js",
+			"bookmarks": [
+				{
+					"line": 19,
+					"column": 17,
+					"label": "fontLoad"
+				}
+			]
+		},
+		{
+			"path": "src/screen/setting.js",
+			"bookmarks": [
+				{
+					"line": 25,
+					"column": 16,
+					"label": "로그아웃"
+				},
+				{
+					"line": 50,
+					"column": 29,
+					"label": "deleteUser"
+				},
+				{
+					"line": 91,
+					"column": 24,
+					"label": "changePassword"
+				},
+				{
+					"line": 175,
+					"column": 23,
+					"label": "sendMsgToSupport"
+				}
+			]
+		},
+		{
+			"path": "src/screen/main_restaurantList.js",
+			"bookmarks": [
+				{
+					"line": 142,
+					"column": 35,
+					"label": "Main_restaurantList_sample"
 				}
 			]
 		}

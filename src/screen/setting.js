@@ -81,17 +81,88 @@ export default function Setting_page({
         );
     }
 
+    const [
+        isPasswordChangeVisible,
+        setIsPasswordChangeVisible,
+    ] = useState(false);
+    const [oldPassword, setOldPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("");
+    const [newPassword2, setNewPassword2] = useState("");
+
     const changePassword = () => {
-        Auth.currentAuthenticatedUser()
-            .then((user) => {
-                return Auth.changePassword(
-                    user,
-                    "oldPassword",
-                    "newPassword"
-                );
-            })
-            .then((data) => console.log(data))
-            .catch((err) => console.log(err));
+        if (newPassword === newPassword2) {
+            Auth.currentAuthenticatedUser()
+                .then((user) => {
+                    return Auth.changePassword(
+                        user,
+                        oldPassword,
+                        newPassword
+                    );
+                })
+                .then((data) => {
+                    console.log(data);
+                    Alert.alert(
+                        "배달앤빵",
+                        "비밀번호 변경이 완료되었습니다. 자동 로그인 정보에 반영하시겠습니까?",
+                        [
+                            {
+                                text: "취소",
+                                onPress: () => {},
+                            },
+                            {
+                                text: "반영",
+                                onPress: () => {
+                                    const loginInfo = {
+                                        email: user.email,
+                                        password:
+                                            newPassword,
+                                    };
+                                    AsyncStorage.setItem(
+                                        "@autoLogin",
+                                        "true"
+                                    );
+                                    AsyncStorage.setItem(
+                                        "@loginInfoToken",
+                                        JSON.stringify(
+                                            loginInfo
+                                        )
+                                    );
+                                    navigation.replace(
+                                        "SignIn",
+                                        { autoLogin: true }
+                                    );
+                                },
+                            },
+                        ]
+                    );
+                })
+                .catch((err) => {
+                    console.log(err);
+                    if (
+                        err ==
+                        "Incorrect username or password."
+                    ) {
+                        Alert.alert(
+                            "배달앤빵",
+                            "현재 비밀번호가 일치하지 않습니다."
+                        );
+                        setOldPassword("");
+                        setNewPassword("");
+                        setNewPassword2("");
+                    } else if (
+                        err ==
+                        "Attempt limit exceeded, please try after some time."
+                    ) {
+                        Alert.alert(
+                            "배달앤빵",
+                            "비밀번호 현경 요청 횟수가 초과되었습니다. 잠시 후 다시 시도해주세요."
+                        );
+                        setOldPassword("");
+                        setNewPassword("");
+                        setNewPassword2("");
+                    }
+                });
+        }
     };
 
     const [
@@ -123,25 +194,251 @@ export default function Setting_page({
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    설정
+                    내 정보
                 </Text>
             </View>
 
             <KeyboardAvoidingView
                 behavior="padding"
                 style={{
-                    justifyContent: "space-evenly",
-                    alignContent: "center",
+                    justifyContent: "space-around",
+                    alignContent: "space-between",
                 }}
             >
                 <ScrollView>
-                    <View>
+                    <View
+                        style={{
+                            height: "100%",
+                        }}
+                    >
                         <View
                             style={{
-                                height: isSendMsgToSupportVisible
-                                    ? height * 0.4
-                                    : height * 0.2,
-                                marginTop: height * 0.05,
+                                flex: 1,
+                                marginVertical:
+                                    height * 0.02,
+                            }}
+                        >
+                            <Text style={styles.normalText}>
+                                {`아이디: ${user.email}`}
+                            </Text>
+                            <Text style={styles.normalText}>
+                                {`전화번호 : ${user.phone_number}`}
+                            </Text>
+                            <Text style={styles.normalText}>
+                                {`계좌번호 : ${
+                                    user.address
+                                        ? user.address
+                                        : "없음"
+                                }`}
+                            </Text>
+                            <View
+                                style={{
+                                    flex: 1,
+                                    marginVertical:
+                                        height * 0.02,
+                                    borderColor:
+                                        isPasswordChangeVisible
+                                            ? colorPack.deactivated
+                                            : colorPack.representative,
+                                    borderWidth: 1,
+                                }}
+                            >
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        const prevIsPasswordChangeVisible =
+                                            isPasswordChangeVisible;
+                                        setIsPasswordChangeVisible(
+                                            !prevIsPasswordChangeVisible
+                                        );
+                                    }}
+                                    style={
+                                        styles.goToSignUpInButton
+                                    }
+                                >
+                                    <Text
+                                        style={
+                                            styles.normalText
+                                        }
+                                    >
+                                        {isPasswordChangeVisible
+                                            ? "비밀번호 변경 창 닫기"
+                                            : "비밀번호 변경"}
+                                    </Text>
+                                </TouchableOpacity>
+                                {isPasswordChangeVisible ? (
+                                    <View>
+                                        <View>
+                                            <Text
+                                                style={
+                                                    styles.normalText
+                                                }
+                                            >
+                                                현재
+                                                비밀번호
+                                            </Text>
+                                            <TextInput
+                                                style={
+                                                    styles.textInputBox
+                                                }
+                                                onChangeText={(
+                                                    text
+                                                ) => {
+                                                    setOldPassword(
+                                                        text
+                                                    );
+                                                }}
+                                                autoComplete="password"
+                                                keyboardType="default"
+                                                maxLength={
+                                                    20
+                                                }
+                                                secureTextEntry={
+                                                    true
+                                                }
+                                            ></TextInput>
+                                            <Text
+                                                style={
+                                                    styles.normalText
+                                                }
+                                            >
+                                                새로운
+                                                비밀번호
+                                            </Text>
+                                            <TextInput
+                                                style={[
+                                                    styles.textInputBox,
+                                                ]}
+                                                onChangeText={(
+                                                    text
+                                                ) => {
+                                                    setNewPassword(
+                                                        text
+                                                    );
+                                                }}
+                                                autoComplete="password"
+                                                keyboardType="default"
+                                                maxLength={
+                                                    20
+                                                }
+                                                secureTextEntry={
+                                                    true
+                                                }
+                                            ></TextInput>
+                                            <Text
+                                                style={
+                                                    styles.normalText
+                                                }
+                                            >
+                                                새로운
+                                                비밀번호를
+                                                다시
+                                                입력해주세요.
+                                            </Text>
+                                            <TextInput
+                                                style={[
+                                                    styles.textInputBox,
+                                                    {
+                                                        borderColor:
+                                                            newPassword !==
+                                                            newPassword2
+                                                                ? "red"
+                                                                : colorPack.highlight_light,
+                                                    },
+                                                ]}
+                                                onChangeText={(
+                                                    text
+                                                ) => {
+                                                    setNewPassword2(
+                                                        text
+                                                    );
+                                                }}
+                                                autoComplete="password"
+                                                keyboardType="default"
+                                                maxLength={
+                                                    20
+                                                }
+                                                secureTextEntry={
+                                                    true
+                                                }
+                                            ></TextInput>
+                                            <TouchableOpacity
+                                                onPress={
+                                                    changePassword
+                                                }
+                                                style={
+                                                    styles.goToSignUpInButton
+                                                }
+                                            >
+                                                <Text
+                                                    style={
+                                                        styles.normalText
+                                                    }
+                                                >
+                                                    비밀번호
+                                                    변경하기
+                                                </Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                ) : (
+                                    <View></View>
+                                )}
+                            </View>
+                        </View>
+                        <View
+                            style={{
+                                flex: 1,
+                                marginVertical:
+                                    height * 0.02,
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={logOut}
+                                style={
+                                    styles.goToSignUpInButton
+                                }
+                            >
+                                <Text
+                                    style={
+                                        styles.normalText
+                                    }
+                                >
+                                    {"로그아웃"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                flex: 1,
+                                marginVertical:
+                                    height * 0.02,
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={deleteUser}
+                                style={
+                                    styles.goToSignUpInButton
+                                }
+                            >
+                                <Text
+                                    style={
+                                        styles.normalText
+                                    }
+                                >
+                                    {"계정 삭제"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                flex: 1,
+                                marginVertical:
+                                    height * 0.02,
+                                borderColor:
+                                    isSendMsgToSupportVisible
+                                        ? colorPack.deactivated
+                                        : colorPack.representative,
+                                borderWidth: 1,
                             }}
                         >
                             <TouchableOpacity
@@ -210,43 +507,6 @@ export default function Setting_page({
                                     </TouchableOpacity>
                                 </View>
                             )}
-                        </View>
-
-                        <View
-                            style={{ height: height * 0.2 }}
-                        >
-                            <TouchableOpacity
-                                onPress={logOut}
-                                style={
-                                    styles.goToSignUpInButton
-                                }
-                            >
-                                <Text
-                                    style={
-                                        styles.normalText
-                                    }
-                                >
-                                    {"로그아웃"}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View
-                            style={{ height: height * 0.2 }}
-                        >
-                            <TouchableOpacity
-                                onPress={deleteUser}
-                                style={
-                                    styles.goToSignUpInButton
-                                }
-                            >
-                                <Text
-                                    style={
-                                        styles.normalText
-                                    }
-                                >
-                                    {"계정 삭제"}
-                                </Text>
-                            </TouchableOpacity>
                         </View>
                     </View>
                 </ScrollView>

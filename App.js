@@ -60,6 +60,7 @@ export default function App() {
                             headerTintColor:
                                 colorPack.text_light,
                             headerBackTitleVisible: false,
+                            headerShown: false,
                         }}
                     />
                     <Stack.Screen
