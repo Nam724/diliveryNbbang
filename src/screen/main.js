@@ -342,11 +342,7 @@ export default function Main_page({ route, navigation }) {
 
     // make new restaurant
     async function saveNewRestaurant(placeID) {
-        if (
-            newRestaurant_name &&
-            newRestaurant_fee &&
-            newRestaurant_url
-        ) {
+        if (newRestaurant_name && newRestaurant_fee) {
             ({
                 name: newRestaurant_name,
                 fee: newRestaurant_fee,
@@ -392,7 +388,7 @@ export default function Main_page({ route, navigation }) {
                     username: user.username,
                     email: user.email,
                     phone_number: user.phone_number,
-                    menu: ["메뉴를 추가해주세요"],
+                    menu: [""],
                     restaurantID: restaurant.id,
                     price: Number(0),
                 })
@@ -833,15 +829,20 @@ export default function Main_page({ route, navigation }) {
                                     styles.getRestaurantInfoModal,
                                     {
                                         height:
-                                            (height * 175) /
+                                            (height * 215) /
                                             2000,
                                     },
                                 ]}
                             >
                                 <TextInput
-                                    style={
-                                        styles.textInputBox
-                                    }
+                                    style={[
+                                        styles.textInputBox,
+                                        {
+                                            marginBottom:
+                                                height *
+                                                0.005,
+                                        },
+                                    ]}
                                     value={
                                         newRestaurant_name
                                     }
@@ -880,21 +881,22 @@ export default function Main_page({ route, navigation }) {
                                     placeholder={
                                         Platform.OS ===
                                         "ios"
-                                            ? "여기에 링크를 붙여넣으세요."
+                                            ? "음식점 이름"
                                             : "자동으로 입력됩니다."
                                     }
                                     placeholderTextColor={
                                         colorPack.deactivated
                                     }
-                                    showSoftInputOnFocus={
-                                        Platform.OS ===
-                                        "ios"
-                                    }
-                                    editable={
-                                        Platform.OS ===
-                                        "ios"
-                                    }
                                 />
+                                <Text
+                                    style={
+                                        styles.deactivatedText
+                                    }
+                                >
+                                    {
+                                        "배민 공유 링크를 붙여넣으면 더욱 빠른 주문이 가능합니다."
+                                    }
+                                </Text>
                             </View>
 
                             <View
@@ -919,7 +921,7 @@ export default function Main_page({ route, navigation }) {
                                         )
                                     }
                                     keyboardType="numeric"
-                                    placeholder="0"
+                                    placeholder="배달료"
                                     placeholderTextColor={
                                         colorPack.deactivated
                                     }

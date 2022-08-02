@@ -132,7 +132,13 @@ export default function Restaurant_page_finished({
                 <TouchableOpacity
                     style={styles.restaurantButton_1}
                     onPress={() => {
-                        Linking.openURL(restaurant.url);
+                        if (restaurant.url) {
+                            Linking.openURL(restaurant.url);
+                        } else {
+                            Linking.openURL(
+                                "https://baeminkr.onelink.me/XgL8/baemincom"
+                            );
+                        }
                     }}
                     disabled={!isRegistered}
                 >

@@ -468,7 +468,13 @@ export default function Restaurant_page_guest({
                 <TouchableOpacity
                     style={styles.restaurantButton_1}
                     onPress={() => {
-                        Linking.openURL(restaurant.url);
+                        if (restaurant.url) {
+                            Linking.openURL(restaurant.url);
+                        } else {
+                            Linking.openURL(
+                                "https://baeminkr.onelink.me/XgL8/baemincom"
+                            );
+                        }
                     }}
                 >
                     <Text style={styles.normalText}>
@@ -604,14 +610,15 @@ function Members(user, member, restaurant, index) {
 
             <TouchableOpacity
                 onPress={() => {
+                    console.log(member.menu);
                     Alert.alert(
                         `${
                             member.email.split("@")[0]
                         }님이 주문하신 메뉴`,
                         `${
-                            member.menu
-                                ? member.menu
-                                : "메뉴를 입력해주세요"
+                            member.menu[0] === ""
+                                ? "메뉴를 입력해주세요"
+                                : member.menu
                         }\n음식값: ${
                             member.price
                         }원, 배달료: ${
@@ -627,7 +634,11 @@ function Members(user, member, restaurant, index) {
                         styles.normalText,
                         styles.restaurantName,
                     ]}
-                >{`${member.menu[0]} 등 ${member.menu.length}개`}</Text>
+                >
+                    {member.menu[0] === ""
+                        ? "메뉴를 입력해 주세요"
+                        : `${member.menu[0]} 등 ${member.menu.length}개`}
+                </Text>
             </TouchableOpacity>
 
             <Text

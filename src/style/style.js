@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     },
     deactivatedText: {
         // fontFamily:'happy_sans_regular',
-        fontSize: width * 0.04, // 30
+        fontSize: width * 0.03, // 30
         color: colorPack.deactivated,
         textAlign: "center",
     },
