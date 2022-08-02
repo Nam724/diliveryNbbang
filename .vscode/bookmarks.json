@@ -185,41 +185,46 @@
 				},
 				{
 					"line": 86,
+					"column": 32,
+					"label": "문자메세지 보내기"
+				},
+				{
+					"line": 100,
 					"column": 23,
 					"label": "makeNewMember"
 				},
 				{
-					"line": 96,
+					"line": 110,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 128,
+					"line": 142,
 					"column": 22,
 					"label": "deleteMember"
 				},
 				{
-					"line": 132,
+					"line": 146,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 204,
+					"line": 218,
 					"column": 17,
 					"label": "addMenu"
 				},
 				{
-					"line": 209,
+					"line": 223,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 247,
+					"line": 261,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 713,
+					"line": 764,
 					"column": 49,
 					"label": "Members(user, member, restaurant, index)"
 				}

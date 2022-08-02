@@ -820,7 +820,7 @@ export default function Restaurant_page_auth({
                                     }}
                                 >
                                     <MaterialCommunityIcons
-                                        name="message-badge-outline"
+                                        name="message-processing-outline"
                                         size={width * 0.08}
                                         color={
                                             colorPack.text_dark

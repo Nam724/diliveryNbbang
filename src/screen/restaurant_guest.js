@@ -26,7 +26,7 @@ import MapView, {
 } from "react-native-maps";
 import * as Linking from "expo-linking";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { sendSMSAsync } from "expo-sms";
 export default function Restaurant_page_guest({
     route,
     navigation,
@@ -38,7 +38,7 @@ export default function Restaurant_page_guest({
         route.params.restaurant
     ); //{makerID: 'test', name: '', fee: 0, num_members: 0, menu: [], isFinishRecruiting: false}
     const place = route.params.place; //{name: '', latitude: 0, longitude: 0}
-
+    const [member, setMember] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [menuList, setMenuList] =
         useState("메뉴를 먼저 추가해주세요");
@@ -81,9 +81,23 @@ export default function Restaurant_page_guest({
             num_members: members.length,
         });
         setMembersList(_membersList);
+        setMember(members);
         setRefreshing(false);
     };
+    const sendSMStoAuthor = async () => {
+        const makerPhoneNumber = member.filter(
+            (member) =>
+                member.username == restaurant.makerID
+        )[0].phone_number;
 
+        // console.log(makerPhoneNumber)
+        sendSMSAsync(
+            makerPhoneNumber,
+            `배달앤빵 주문자: ${
+                user.email.split("@")[0]
+            } 주문한 음식점: ${restaurant.name}\n`
+        );
+    };
     const makeNewMember = async () => {
         const _isRegistered = await DataStore.query(
             Member,
@@ -546,7 +560,7 @@ export default function Restaurant_page_guest({
                                     }}
                                 >
                                     <MaterialCommunityIcons
-                                        name="motorbike"
+                                        name="account-plus-outline"
                                         size={width * 0.08}
                                         color={
                                             isRegistered
@@ -589,7 +603,7 @@ export default function Restaurant_page_guest({
                                     }}
                                 >
                                     <MaterialCommunityIcons
-                                        name="motorbike"
+                                        name="application-edit-outline"
                                         size={width * 0.08}
                                         color={
                                             !isRegistered
@@ -615,9 +629,44 @@ export default function Restaurant_page_guest({
                             style={
                                 styles.restaurantButton_2
                             }
-                            onPressOut={() =>
-                                deleteMember()
+                            onPress={sendSMStoAuthor}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="message-processing-outline"
+                                        size={width * 0.08}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"호스트 연락"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
                             }
+                            onPress={() => deleteMember()}
                             disabled={!isRegistered}
                         >
                             <View
@@ -632,10 +681,12 @@ export default function Restaurant_page_guest({
                                     }}
                                 >
                                     <MaterialCommunityIcons
-                                        name="motorbike"
+                                        name="account-cancel-outline"
                                         size={width * 0.08}
                                         color={
-                                            colorPack.text_dark
+                                            !isRegistered
+                                                ? colorPack.deactivated
+                                                : colorPack.text_dark
                                         }
                                         style={
                                             styles.restaurantButtonIcon
@@ -731,19 +782,32 @@ function Members(user, member, restaurant, index) {
             key={member.id}
             disabled={true}
         >
-            <Text
-                style={[
-                    styles.highlightText,
-                    styles.restaurantFee,
-                ]}
-                ellipsizeMode="tail"
-                numberOfLines={1}
-            >
-                {member.username === user.username
-                    ? "나의 주문"
-                    : member.email.split("@")[0]}
-            </Text>
-
+            <View>
+                <Text
+                    style={[
+                        styles.highlightText,
+                        styles.restaurantFee,
+                    ]}
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                >
+                    {member.email.split("@")[0]}
+                </Text>
+                {member.username === user.username ? (
+                    <Text
+                        style={[
+                            styles.normalText_small,
+                            styles.restaurantFee,
+                        ]}
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                    >
+                        {"나의 주문"}
+                    </Text>
+                ) : (
+                    <View></View>
+                )}
+            </View>
             <TouchableOpacity
                 onPress={() => {
                     // console.log(member.menu);
