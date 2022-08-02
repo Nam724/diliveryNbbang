@@ -227,10 +227,10 @@ export const styles = StyleSheet.create({
     },
     //광고
     adsContainer: {
-        height: (height * 120) / 2000,
+        height: (height * 130) / 2000,
         width: width,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: colorPack.representative,
+        backgroundColor: colorPack.highlight_dark,
     },
 });

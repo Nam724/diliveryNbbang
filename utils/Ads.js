@@ -10,11 +10,13 @@ import { styles } from "../src/style/style";
 
 const adBannerUnitId =
     Platform.OS === "android"
-        ? "ca-app-pub-3940256099942544/6300978111" // sample android ad unit id
+        ? "ca-app-pub-1145139773627965/8701930912"
         : "ca-app-pub-3940256099942544/2934735716"; // 샘플 광고 ID
 
+const isAdsEnabled = Platform.OS === "android";
+
 export function RestaurantBannerAds() {
-    return Platform.OS === "android" ? (
+    return isAdsEnabled ? (
         <View style={styles.adsContainer}>
             <AdMobBanner
                 bannerSize="banner"
