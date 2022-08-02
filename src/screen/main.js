@@ -57,6 +57,7 @@ export default function Main_page({ route, navigation }) {
 
     useEffect(() => {
         getLocation();
+        // userOrderList("get");
         // console.log('user', user)
     }, []);
 
@@ -69,82 +70,28 @@ export default function Main_page({ route, navigation }) {
     // get location
     const getLocation = async () => {
         setIsLoading(true);
-        if (false) {
-            Alert.alert(
-                "배달앤빵",
-                "현재 위치에 따른 배달 정보를 제공하기 위해\n사용자의 위치 정보에 접근하려 합니다.\n동의하시겠습니까?",
-                [
-                    {
-                        text: "취소",
-                        onPress: () => {
-                            // console.log('Cancel Pressed')
-                            navigation.replace("SignIn");
-                        },
-                        style: "cancel",
-                    },
-                    {
-                        text: "동의",
-                        onPress: async () => {
-                            let {
-                                status_location_permission,
-                            } = await Location.requestForegroundPermissionsAsync();
-                            console.log(
-                                "위치 정보 access " +
-                                    status_location_permission
-                            );
-                            //   나중에 풀어야 함!
-                            // if (status_location_permission !== 'granted') {
-                            //   alert('Permission to access location was denied');
-                            //   // return;
-                            // }
-                            let _location =
-                                await Location.getCurrentPositionAsync(
-                                    {
-                                        accuracy:
-                                            Location
-                                                .Accuracy
-                                                .Highest,
-                                    }
-                                );
-                            setLocation({
-                                latitude:
-                                    _location.coords
-                                        .latitude,
-                                longitude:
-                                    _location.coords
-                                        .longitude,
-                                latitudeDelta: 0.003,
-                                longitudeDelta: 0.003,
-                            });
-                            setIsLoading(false);
-                        },
-                    },
-                ]
-            );
-        } else {
-            let { status_location_permission } =
-                await Location.requestForegroundPermissionsAsync();
-            console.log(
-                "위치 정보 access " +
-                    status_location_permission
-            );
-            //   나중에 풀어야 함!
-            // if (status_location_permission !== 'granted') {
-            //   alert('Permission to access location was denied');
-            //   // return;
-            // }
-            let _location =
-                await Location.getCurrentPositionAsync({
-                    accuracy: Location.Accuracy.Highest,
-                });
-            setLocation({
-                latitude: _location.coords.latitude,
-                longitude: _location.coords.longitude,
-                latitudeDelta: 0.003,
-                longitudeDelta: 0.003,
+
+        let { status_location_permission } =
+            await Location.requestForegroundPermissionsAsync();
+        console.log(
+            "위치 정보 access " + status_location_permission
+        );
+        //   나중에 풀어야 함!
+        // if (status_location_permission !== 'granted') {
+        //   alert('Permission to access location was denied');
+        //   // return;
+        // }
+        let _location =
+            await Location.getCurrentPositionAsync({
+                accuracy: Location.Accuracy.Highest,
             });
-            setIsLoading(false);
-        }
+        setLocation({
+            latitude: _location.coords.latitude,
+            longitude: _location.coords.longitude,
+            latitudeDelta: 0.003,
+            longitudeDelta: 0.003,
+        });
+        setIsLoading(false);
     };
 
     // const getUser = async () =>{
@@ -154,6 +101,7 @@ export default function Main_page({ route, navigation }) {
 
     // refresh
     const [refreshing, setRefreshing] = useState(false);
+    const [myOrderList, setMyOrderList] = useState([]); // 내 주문 리스트
 
     const refreshRestaurantList = async (
         id = "refresh"
@@ -172,7 +120,7 @@ export default function Main_page({ route, navigation }) {
                 title: "나의 주문",
                 key: "userOrder",
             });
-            showUserOrderList();
+            userOrderList("set");
         } else if (id === "default") {
             setRestaurantList(restaurantList_sample);
             setSelectedMarker({
@@ -413,40 +361,43 @@ export default function Main_page({ route, navigation }) {
         // console.log(placeID)
         const place = await DataStore.query(Place, placeID);
 
-        const models = await DataStore.query(
+        const _restaurant = await DataStore.query(
             Restaurant,
             (q) => q.placeID("eq", placeID)
         );
-        // console.log(models);
+        // console.log(_restaurant);
 
         let _restaurantList = [];
 
-        models
+        _restaurant
             .sort((a, b) => {
                 const price1 = a.fee / a.num_members;
                 const price2 = b.fee / b.num_members;
                 return price1 - price2;
             })
-            .forEach(async (model, index) => {
+            .forEach(async (r, index) => {
+                // console.log("userOrerList", userOrderList);
                 _restaurantList.push(
                     Main_restaurantList(
                         user,
-                        model,
+                        r,
                         index,
                         navigation,
-                        place
+                        place,
+                        myOrderList.includes(r.id)
                     )
                 );
             });
         setRestaurantList(_restaurantList);
     }
 
-    const showUserOrderList = async () => {
+    const userOrderList = async (type) => {
         const members = await DataStore.query(Member, (q) =>
             q.username("eq", user.username)
         );
         // console.log(members);
         var _orderList = [];
+        let _userOrderList = []; // 유저 주문 목록, 음식점 id 값의 리스트
         // console.log("members", members.length === 0);
         if (members.length > 0) {
             // 내가 주문한 리스트가 있을 때
@@ -470,9 +421,12 @@ export default function Main_page({ route, navigation }) {
                         rest,
                         index,
                         navigation,
-                        place
+                        place,
+                        true
                     )
                 );
+
+                _userOrderList.push(rest.id);
 
                 if (index == members.length - 1) {
                     setSelectedMarker({
@@ -480,19 +434,25 @@ export default function Main_page({ route, navigation }) {
                         title: "나의 주문",
                         key: "userOrder",
                     });
-                    setRestaurantList(_orderList);
+                    setMyOrderList(_orderList);
+                    if (type === "set") {
+                        setMyOrderList(_orderList);
+                    }
                     //console.log('orderList', _orderList);
                 }
             });
         } else {
             console.log("주문한 음식점 없음");
+            setMyOrderList([]);
 
             setSelectedMarker({
                 coordinate: {}, // {longitude: 0, latitude: 0}
                 title: "내 주문 없음",
                 key: "userOrder",
             });
-            setRestaurantList(_orderList); //console.log('orderList', _orderList);
+            if (type === "set") {
+                setRestaurantList(_orderList); //console.log('orderList', _orderList);
+            }
         }
     };
 
@@ -701,7 +661,7 @@ export default function Main_page({ route, navigation }) {
                         >
                             <TouchableOpacity
                                 onPress={() => {
-                                    showUserOrderList();
+                                    userOrderList("set");
                                 }}
                                 disabled={true}
                             >
@@ -1125,7 +1085,7 @@ export default function Main_page({ route, navigation }) {
                 >
                     <TouchableOpacity
                         onPress={() => {
-                            showUserOrderList();
+                            userOrderList("set");
                         }}
                     >
                         <MaterialCommunityIcons

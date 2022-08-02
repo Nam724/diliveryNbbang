@@ -6,11 +6,14 @@ function Main_restaurantList(
     restaurant,
     num,
     navigation,
-    place
+    place,
+    isRegistered // boolean
 ) {
     const backgroundColor_odd = colorPack.highlight_dark;
     const backgroundColor_even = colorPack.highlight_light;
     var myBackgroundColor;
+
+    console.log("isRegistered: " + isRegistered);
 
     // console.log('Main_restaurantList', user, restaurant)
     if (Number(num) % 2 == 0) {
@@ -43,7 +46,9 @@ function Main_restaurantList(
             >
                 <Text
                     style={[
-                        styles.deactivatedText,
+                        isRegistered
+                            ? styles.highlightText
+                            : styles.deactivatedText,
                         styles.restaurantName,
                     ]}
                     numberOfLines={1}
@@ -94,7 +99,9 @@ function Main_restaurantList(
             >
                 <Text
                     style={[
-                        styles.highlightText,
+                        isRegistered
+                            ? styles.highlightText
+                            : styles.normalText,
                         styles.restaurantName,
                     ]}
                     numberOfLines={1}

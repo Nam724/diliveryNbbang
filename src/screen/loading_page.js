@@ -5,8 +5,6 @@ import {
     Text,
     Image,
 } from "react-native";
-import { useState, useEffect } from "react";
-import * as Location from "expo-location";
 
 export default function Loading_page({
     route,

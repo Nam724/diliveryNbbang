@@ -4,17 +4,17 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 268,
+					"line": 216,
 					"column": 4,
 					"label": "새로운 마커 만들기"
 				},
 				{
-					"line": 343,
+					"line": 291,
 					"column": 4,
 					"label": "새로운 음식점 만들기"
 				},
 				{
-					"line": 496,
+					"line": 464,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				}
@@ -54,7 +54,7 @@
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 745,
+					"line": 739,
 					"column": 4,
 					"label": "배민 바로가기"
 				}

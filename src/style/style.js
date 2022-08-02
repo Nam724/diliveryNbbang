@@ -17,20 +17,20 @@ export const mapStyle = map_darkStyle1;
 export const styles = StyleSheet.create({
     // TEXT STYLES
     normalText: {
-        // fontFamily:'happy_sans_bold',
-        fontSize: width * 0.04, // 30
+        fontFamily: "happy_sans_bold",
+        fontSize: width * 0.04, // 40
         color: colorPack.text_light,
         textAlign: "center",
     },
     highlightText: {
-        // fontFamily:'happy_sans_title',
-        fontSize: width * 0.05, // 40
+        fontFamily: "happy_sans_title",
+        fontSize: width * 0.05, // 50
         color: colorPack.text_dark,
         textAlign: "center",
         fontWeight: "bold",
     },
     deactivatedText: {
-        // fontFamily:'happy_sans_regular',
+        fontFamily: "happy_sans_regular",
         fontSize: width * 0.03, // 30
         color: colorPack.deactivated,
         textAlign: "center",

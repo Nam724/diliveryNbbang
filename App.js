@@ -10,6 +10,7 @@ import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 import { colorPack } from "./src/style/style";
 import Setting_page from "./src/screen/setting";
+import Loading_page_onlyPicture from "./src/screen/loading_page_onlyPicture";
 
 Amplify.configure(awsconfig);
 
@@ -21,66 +22,71 @@ export default function App() {
         happy_sans_regular: require("./assets/font/Happiness-Sans-Regular.ttf"),
         happy_sans_title: require("./assets/font/Happiness-Sans-Title.ttf"),
     });
-
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={"SignIn"}>
-                <Stack.Screen
-                    name="SignIn"
-                    component={SignIn_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                        headerBackTitleVisible: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="SignUp"
-                    component={SignUp_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                        headerBackTitleVisible: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="Main"
-                    component={Main_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                        headerBackTitleVisible: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="Setting"
-                    component={Setting_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                        headerBackTitleVisible: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="Restaurant"
-                    component={Restaurant_page}
-                    options={{
-                        headerTransparent: true,
-                        headerTitle: "",
-                        headerTintColor:
-                            colorPack.text_light,
-                        headerBackTitleVisible: false,
-                    }}
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
+    if (!fontLoaded) {
+        return (
+            <NavigationContainer>
+                <Stack.Navigator
+                    initialRouteName={"SignIn"}
+                >
+                    <Stack.Screen
+                        name="SignIn"
+                        component={SignIn_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                            headerBackTitleVisible: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="SignUp"
+                        component={SignUp_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                            headerBackTitleVisible: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Main"
+                        component={Main_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                            headerBackTitleVisible: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Setting"
+                        component={Setting_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                            headerBackTitleVisible: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="Restaurant"
+                        component={Restaurant_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                            headerBackTitleVisible: false,
+                        }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        );
+    } else {
+        return <Loading_page_onlyPicture />;
+    }
 }

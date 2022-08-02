@@ -162,6 +162,7 @@ export default function Restaurant_page_finished({
                             [{ text: "닫기" }]
                         );
                     }}
+                    disabled={!isRegistered}
                 >
                     <Text
                         style={
