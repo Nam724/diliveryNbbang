@@ -279,22 +279,27 @@
 			"path": "src/screen/setting.js",
 			"bookmarks": [
 				{
-					"line": 25,
+					"line": 23,
+					"column": 23,
+					"label": "세팅화면 버전"
+				},
+				{
+					"line": 34,
 					"column": 16,
 					"label": "로그아웃"
 				},
 				{
-					"line": 50,
+					"line": 59,
 					"column": 29,
 					"label": "deleteUser"
 				},
 				{
-					"line": 91,
+					"line": 100,
 					"column": 24,
 					"label": "changePassword"
 				},
 				{
-					"line": 175,
+					"line": 184,
 					"column": 23,
 					"label": "sendMsgToSupport"
 				}

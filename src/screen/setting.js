@@ -8,11 +8,20 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { colorPack, height, styles } from "../style/style";
+import {
+    colorPack,
+    height,
+    styles,
+    width,
+} from "../style/style";
 import { Auth } from "aws-amplify";
 import * as MailComposer from "expo-mail-composer";
 import { useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
+import * as Linking from "expo-linking";
+import { Image } from "react-native";
+
+const version = "1.0.10";
 
 export default function Setting_page({
     route,
@@ -216,21 +225,26 @@ export default function Setting_page({
                                 flex: 1,
                                 marginVertical:
                                     height * 0.02,
+                                alignItems: "center",
                             }}
                         >
-                            <Text style={styles.normalText}>
-                                {`아이디: ${user.email}`}
-                            </Text>
-                            <Text style={styles.normalText}>
-                                {`전화번호 : ${user.phone_number}`}
-                            </Text>
-                            <Text style={styles.normalText}>
-                                {`계좌번호 : ${
+                            <Text
+                                style={[
+                                    styles.normalText,
+                                    { textAlign: "left" },
+                                ]}
+                            >
+                                {`아이디 : ${
+                                    user.email
+                                }\n\n전화번호 : ${
+                                    user.phone_number
+                                }\n\n계좌번호 : ${
                                     user.address
                                         ? user.address
                                         : "없음"
                                 }`}
                             </Text>
+
                             <View
                                 style={{
                                     flex: 1,
@@ -407,28 +421,7 @@ export default function Setting_page({
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <View
-                            style={{
-                                flex: 1,
-                                marginVertical:
-                                    height * 0.02,
-                            }}
-                        >
-                            <TouchableOpacity
-                                onPress={deleteUser}
-                                style={
-                                    styles.goToSignUpInButton
-                                }
-                            >
-                                <Text
-                                    style={
-                                        styles.normalText
-                                    }
-                                >
-                                    {"계정 삭제"}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+
                         <View
                             style={{
                                 flex: 1,
@@ -507,6 +500,73 @@ export default function Setting_page({
                                     </TouchableOpacity>
                                 </View>
                             )}
+                        </View>
+                        <View
+                            style={{
+                                flex: 1,
+                                marginVertical:
+                                    height * 0.02,
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={() => {
+                                    Linking.openURL(
+                                        "https://nam724.github.io/homepage/%EB%B0%B0%EB%8B%AC%EC%95%A4%EB%B9%B5.html"
+                                    );
+                                }}
+                                style={
+                                    styles.goToSignUpInButton
+                                }
+                            >
+                                <Text
+                                    style={
+                                        styles.normalText
+                                    }
+                                >
+                                    {"개인정보처리방침"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                flex: 1,
+                                marginVertical:
+                                    height * 0.02,
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={deleteUser}
+                                style={
+                                    styles.goToSignUpInButton
+                                }
+                            >
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"계정 삭제"}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={{
+                                flex: 1,
+                                paddingVertical:
+                                    height * 0.02,
+                                alignItems: "center",
+                            }}
+                        >
+                            <Image
+                                source={require("../../assets/배달앤빵.png")}
+                                style={{
+                                    width: width * 0.3,
+                                    height: width * 0.3,
+                                }}
+                            ></Image>
+                            <Text style={styles.normalText}>
+                                {`버전: ${version}\n제작자: 남상현  \n제작자 이메일: guardprec@gmail.com\nthank you for using this app!`}
+                            </Text>
                         </View>
                     </View>
                 </ScrollView>
