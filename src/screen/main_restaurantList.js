@@ -13,7 +13,10 @@ function Main_restaurantList(
     const backgroundColor_even = colorPack.highlight_light;
     var myBackgroundColor;
 
-    console.log("isRegistered: " + isRegistered);
+    // console.log("isRegistered: " + isRegistered);
+    // console.log(
+    //     "isFinishRecruiting" + restaurant.isFinishRecruiting
+    // );
 
     // console.log('Main_restaurantList', user, restaurant)
     if (Number(num) % 2 == 0) {

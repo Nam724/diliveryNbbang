@@ -391,13 +391,13 @@ export default function Main_page({ route, navigation }) {
         setRestaurantList(_restaurantList);
     }
 
-    const userOrderList = async (type) => {
+    const userOrderList = async (type = "set") => {
         const members = await DataStore.query(Member, (q) =>
             q.username("eq", user.username)
         );
         // console.log(members);
         var _orderList = [];
-        let _userOrderList = []; // 유저 주문 목록, 음식점 id 값의 리스트
+        let _myOrderList = []; // 유저 주문 목록, 음식점 id 값의 리스트
         // console.log("members", members.length === 0);
         if (members.length > 0) {
             // 내가 주문한 리스트가 있을 때
@@ -426,7 +426,7 @@ export default function Main_page({ route, navigation }) {
                     )
                 );
 
-                _userOrderList.push(rest.id);
+                _myOrderList.push(rest.id);
 
                 if (index == members.length - 1) {
                     setSelectedMarker({
@@ -434,9 +434,10 @@ export default function Main_page({ route, navigation }) {
                         title: "나의 주문",
                         key: "userOrder",
                     });
-                    setMyOrderList(_orderList);
+                    setMyOrderList(_myOrderList);
                     if (type === "set") {
-                        setMyOrderList(_orderList);
+                        console.log("set");
+                        setRestaurantList(_orderList);
                     }
                     //console.log('orderList', _orderList);
                 }
@@ -1123,9 +1124,9 @@ export default function Main_page({ route, navigation }) {
                 <View style={styles.locationInfoContainer}>
                     <View
                         style={{
-                            width: width * 0.2,
                             alignItems: "flex-start",
                             justifyContent: "center",
+                            flex: 1,
                         }}
                     >
                         <View
@@ -1176,7 +1177,59 @@ export default function Main_page({ route, navigation }) {
                             </Text>
                         </View>
                     </View>
-                    <View>
+                    <View style={{ flex: 1 }}>
+                        <Text
+                            style={[
+                                styles.highlightText,
+                                {
+                                    fontSize:
+                                        (height * 30) /
+                                        2000,
+                                },
+                            ]}
+                        >
+                            {`"호스트"`}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.highlightText,
+                                {
+                                    fontSize:
+                                        (height * 30) /
+                                        2000,
+                                },
+                            ]}
+                        >
+                            {`게스트`}
+                        </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <Text
+                            style={[
+                                styles.normalText,
+                                {
+                                    fontSize:
+                                        (height * 30) /
+                                        2000,
+                                },
+                            ]}
+                        >
+                            {`모집중`}
+                        </Text>
+                        <Text
+                            style={[
+                                styles.deactivatedText,
+                                {
+                                    fontSize:
+                                        (height * 30) /
+                                        2000,
+                                },
+                            ]}
+                        >
+                            {`모집끝`}
+                        </Text>
+                    </View>
+                    <View style={{ flex: 1 }}>
                         <TouchableOpacity
                             style={
                                 styles.locationInfoButton
@@ -1219,11 +1272,11 @@ export default function Main_page({ route, navigation }) {
                             >
                                 {selectedMarker.key ===
                                 "markers%"
-                                    ? "장소를 먼저 선택하세요"
+                                    ? "장소"
                                     : selectedMarker.key ===
                                       "userOrder"
                                     ? ""
-                                    : "이곳으로 배달할 음식점 추가하기"}
+                                    : "이곳에 배달 추가"}
                             </Text>
                         </TouchableOpacity>
                     </View>
