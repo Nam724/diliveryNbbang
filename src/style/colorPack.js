@@ -1,4 +1,4 @@
-export const darkMode1 = {
+export const darkMode = {
     representative: "#17263C",
     highlight_light: "#38414E",
     highlight_dark: "#242F3E",
@@ -7,7 +7,7 @@ export const darkMode1 = {
     deactivated: "#8B9198",
 };
 
-export const lightMode1 = {
+export const lightMode = {
     representative: "#ffffff",
     highlight_light: "#F2EFDC",
     highlight_dark: "#F2CDA0",

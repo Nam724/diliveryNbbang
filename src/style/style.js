@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 import Constants from "expo-constants";
-import { darkMode1, lightMode1 } from "./colorPack";
+import { darkMode, lightMode } from "./colorPack";
 // import { getStyle } from "../setting/setting_style";
 import { map_darkStyle1 } from "./mapStyle";
 
@@ -10,7 +10,7 @@ export const height =
     Constants.statusBarHeight; // 2000
 export const width = Dimensions.get("screen").width; // 1000
 
-export const colorPack = darkMode1;
+export const colorPack = darkMode;
 
 export const mapStyle = map_darkStyle1;
 
