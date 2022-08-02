@@ -644,7 +644,8 @@ export default function Main_page({ route, navigation }) {
                             style={{
                                 width: width * 0.25,
                                 justifyContent: "center",
-                                alignItems: "center",
+                                alignItems: "flex-start",
+                                paddingLeft: width * 0.05,
                             }}
                         >
                             <TouchableOpacity
@@ -670,8 +671,7 @@ export default function Main_page({ route, navigation }) {
                             style={{
                                 width: width * 0.5,
                                 justifyContent: "center",
-                                alignItems: "flex-start",
-                                paddingLeft: width * 0.05,
+                                alignItems: "center",
                             }}
                             onPress={async () => {
                                 await getMarkers();
@@ -686,13 +686,13 @@ export default function Main_page({ route, navigation }) {
                             }}
                             disabled={true}
                         >
-                            <Text
-                                style={styles.highlightText}
-                                lineBreakMode="tail"
-                                numberOfLines={1}
-                            >
-                                {"배달앤빵"}
-                            </Text>
+                            <Image
+                                source={require("../../assets/logo.png")}
+                                style={{
+                                    width: width * 0.1,
+                                    height: width * 0.1,
+                                }}
+                            />
                         </TouchableOpacity>
 
                         <View
