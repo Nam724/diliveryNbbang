@@ -169,7 +169,7 @@
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 936,
+					"line": 939,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -194,32 +194,32 @@
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 130,
+					"line": 128,
 					"column": 22,
 					"label": "deleteMember"
 				},
 				{
-					"line": 134,
+					"line": 132,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 206,
+					"line": 204,
 					"column": 17,
 					"label": "addMenu"
 				},
 				{
-					"line": 211,
+					"line": 209,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 249,
+					"line": 247,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 712,
+					"line": 713,
 					"column": 49,
 					"label": "Members(user, member, restaurant, index)"
 				}

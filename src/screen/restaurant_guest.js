@@ -94,38 +94,36 @@ export default function Restaurant_page_guest({
         );
         // console.log(_isRegistered)
         setIsRegistered(_isRegistered.length > 0);
-        if (!isRegistered) {
-            await DataStore.save(
-                new Member({
-                    username: user.username,
-                    email: user.email,
-                    phone_number: user.phone_number,
-                    menu: [""],
-                    fee: Number(0),
-                    restaurantID: restaurant.id,
-                })
-            );
 
-            const CURRENT_ITEM = await DataStore.query(
-                Restaurant,
-                restaurant.id
-            );
-            const updatedItem = await DataStore.save(
-                Restaurant.copyOf(
-                    CURRENT_ITEM,
-                    (updated) => {
-                        // Update the values on {item} variable to update DataStore entry
-                        updated.num_members =
-                            updated.num_members + 1;
-                    }
-                )
-            );
-            // console.log('새로운 멤버가 추가되었습니다.', updatedItem)
-            setRestaurant(updatedItem);
-            // refreshRestaurantList(id=place.id);
-        } else {
-            // Alert.alert('배달앤빵','이미 등록되었습니다.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
-        }
+        await DataStore.save(
+            new Member({
+                username: user.username,
+                email: user.email,
+                phone_number: user.phone_number,
+                menu: [""],
+                fee: Number(0),
+                restaurantID: restaurant.id,
+                price: Number(0),
+            })
+        );
+
+        const CURRENT_ITEM = await DataStore.query(
+            Restaurant,
+            restaurant.id
+        );
+        const updatedItem = await DataStore.save(
+            Restaurant.copyOf(CURRENT_ITEM, (updated) => {
+                // Update the values on {item} variable to update DataStore entry
+                updated.num_members =
+                    updated.num_members + 1;
+            })
+        );
+        // console.log('새로운 멤버가 추가되었습니다.', updatedItem)
+        setRestaurant(updatedItem);
+        getMembers();
+        // refreshRestaurantList(id=place.id);
+
+        // Alert.alert('배달앤빵','이미 등록되었습니다.',[{text:'메뉴추가', onPress:()=>{setModalVisible(true)}},{text:'닫기', onPress:()=>{}}])
     };
 
     const deleteMember = async () => {
@@ -365,9 +363,7 @@ export default function Restaurant_page_guest({
                                         styles.normalText,
                                     ]}
                                     placeholder={
-                                        menuPrice
-                                            ? menuPrice
-                                            : "배달료 제외"
+                                        "배달료 제외"
                                     }
                                     placeholderTextColor={
                                         colorPack.deactivated
@@ -386,6 +382,11 @@ export default function Restaurant_page_guest({
                                             )
                                         );
                                     }}
+                                    defaultValue={
+                                        !menuPrice
+                                            ? ""
+                                            : `${menuPrice}`
+                                    }
                                 ></TextInput>
                             </View>
 

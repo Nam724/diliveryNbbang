@@ -574,7 +574,7 @@ export default function Restaurant_page_auth({
                                         menuList ===
                                         "메뉴를 추가해주세요"
                                             ? ""
-                                            : menuList
+                                            : `${menuList}`
                                     }
                                 ></TextInput>
 
@@ -584,9 +584,7 @@ export default function Restaurant_page_auth({
                                         styles.normalText,
                                     ]}
                                     placeholder={
-                                        menuPrice
-                                            ? menuPrice
-                                            : "배달료 제외"
+                                        "배달료 제외"
                                     }
                                     placeholderTextColor={
                                         colorPack.deactivated
@@ -605,6 +603,11 @@ export default function Restaurant_page_auth({
                                             )
                                         );
                                     }}
+                                    defaultValue={
+                                        !menuPrice
+                                            ? ""
+                                            : `${menuPrice}`
+                                    }
                                 ></TextInput>
                             </View>
 
