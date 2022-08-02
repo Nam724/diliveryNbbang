@@ -22,7 +22,8 @@ export default function App() {
         happy_sans_regular: require("./assets/font/Happiness-Sans-Regular.ttf"),
         happy_sans_title: require("./assets/font/Happiness-Sans-Title.ttf"),
     });
-    if (!fontLoaded) {
+    if (fontLoaded) {
+        console.log(fontLoaded);
         return (
             <NavigationContainer>
                 <Stack.Navigator
@@ -87,6 +88,7 @@ export default function App() {
             </NavigationContainer>
         );
     } else {
+        console.log(fontLoaded);
         return <Loading_page_onlyPicture />;
     }
 }
