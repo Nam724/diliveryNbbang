@@ -414,7 +414,7 @@ export default function Setting_page({
                             >
                                 <Text
                                     style={
-                                        styles.normalText
+                                        styles.highlightText
                                     }
                                 >
                                     {"로그아웃"}

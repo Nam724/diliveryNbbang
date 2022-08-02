@@ -872,8 +872,20 @@ export default function Restaurant_page_auth({
 
                     <TouchableOpacity
                         style={styles.restaurantButton_1}
-                        onPressOut={() => {
-                            deleteRestaurant;
+                        onPress={() => {
+                            Alert.alert(
+                                "배달앤빵",
+                                "이 모집을 삭제하시겠습니까?",
+                                [
+                                    { text: "취소" },
+                                    {
+                                        text: "삭제",
+                                        onPress: () => {
+                                            deleteRestaurant();
+                                        },
+                                    },
+                                ]
+                            );
                         }}
                     >
                         <View
