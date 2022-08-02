@@ -22,7 +22,8 @@ import * as Linking from "expo-linking";
 import { Image } from "react-native";
 import { SafeAreaView } from "react-native";
 
-const version = "1.0.10";
+// 버전 정보 꼭 바꾸기
+const version = "1.0.11";
 
 export default function Setting_page({
     route,
