@@ -15,12 +15,11 @@
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
-            "buildNumber": "13",
+            "buildNumber": "15",
             "supportsTablet": true,
             "bundleIdentifier": "diliveryNbbang",
             "config": {
-                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I",
-                "googleMobileAdsAppId": "ca-app-pub-1145139773627965/8701930912"
+                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I"
             },
             "infoPlist": {
                 "NSLocationAlwaysUsageDescription": "This app uses location to get weather information for user`s location. The user location will be diplayed on the mapView. If allowed, this app will use your location and the information will not be sent to the server or stored on the device.",
@@ -33,7 +32,7 @@
                 "backgroundColor": "#17263C"
             },
             "package": "expo.eject.BTS_PseudoTesla",
-            "versionCode": 13,
+            "versionCode": 15,
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
