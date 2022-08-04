@@ -89,6 +89,8 @@ export default function Main_page({ route, navigation }) {
         let _location =
             await Location.getCurrentPositionAsync({
                 accuracy: Location.Accuracy.Highest,
+                enableHighAccuracy: true,
+                timeout: 10000,
             });
         setLocation({
             latitude: _location.coords.latitude,
