@@ -58,7 +58,7 @@ export default function Main_page({ route, navigation }) {
     useEffect(() => {
         getLocation();
         // userOrderList("get");
-        // console.log('user', user)
+        console.log("user", user);
     }, []);
 
     useFocusEffect(
@@ -930,9 +930,9 @@ export default function Main_page({ route, navigation }) {
                                             },
                                         ]}
                                     >
-                                        {newRestaurant_account
-                                            ? "입금받을 본인 계좌"
-                                            : " 카카오페이 송금주소를 복사하는 방법 보기."}
+                                        {
+                                            "입금받을 본인 계좌"
+                                        }
                                     </Text>
                                 </TouchableOpacity>
                                 <TextInput
@@ -950,8 +950,8 @@ export default function Main_page({ route, navigation }) {
                                     placeholderTextColor={
                                         colorPack.text_light
                                     }
-                                    editable={
-                                        newRestaurant_account ==
+                                    disabled={
+                                        user.address ===
                                         null
                                     }
                                     onKeyPress={(e) => {

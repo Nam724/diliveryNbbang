@@ -232,7 +232,6 @@ export const styles = StyleSheet.create({
 
     textInputBox_restaurant_menu: {
         width: (width * 600) / 1000,
-
         borderRadius: (height * 30) / 2000,
         borderColor: colorPack.highlight_light,
         borderWidth: (width * 10) / 2000,
@@ -240,7 +239,6 @@ export const styles = StyleSheet.create({
         marginHorizontal: (width * 50) / 1000,
         textAlign: "center",
         textAlignVertical: "center",
-        lineHeight: (height * 50) / 2000,
         padding: (width * 20) / 1000,
     },
     textInputBox_restaurant_price: {

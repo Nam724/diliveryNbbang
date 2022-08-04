@@ -115,6 +115,12 @@ export default function SignUp_page({ navigation }) {
                     return false;
                 }
             }
+        } else {
+            Alert.alert(
+                "배달앤빵",
+                "정보를 전부 입력해주세요.",
+                [{ text: "확인" }]
+            );
         }
     };
 
@@ -455,9 +461,6 @@ export default function SignUp_page({ navigation }) {
                                                     ""
                                                 );
                                             setAccount(
-                                                _account
-                                            );
-                                            console.log(
                                                 _account
                                             );
                                         }}

@@ -454,24 +454,12 @@ export default function Restaurant_page_auth({
                                     style={[
                                         styles.textInputBox_restaurant_menu,
                                         styles.normalText,
-                                        {
-                                            textAlign:
-                                                "left",
-                                        },
                                     ]}
                                     defaultValue={account}
                                     onChangeText={(
                                         text
                                     ) => {
-                                        if (text) {
-                                            setAccount(
-                                                text
-                                            );
-                                        } else {
-                                            setAccount(
-                                                restaurant.account
-                                            );
-                                        }
+                                        setAccount(text);
                                     }}
                                 ></TextInput>
 
