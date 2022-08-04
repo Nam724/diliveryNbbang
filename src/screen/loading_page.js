@@ -1,4 +1,9 @@
-import { colorPack, styles, width } from "../style/style";
+import {
+    colorPack,
+    styles,
+    width,
+    iconSize,
+} from "../style/style";
 import {
     View,
     ActivityIndicator,

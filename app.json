@@ -36,8 +36,7 @@
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
-                },
-                "googleMobileAdsAppId": "ca-app-pub-1145139773627965/8701930912"
+                }
             },
             "permissions": [
                 "android.permission.ACCESS_COARSE_LOCATION",

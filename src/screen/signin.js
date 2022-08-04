@@ -16,6 +16,7 @@ import {
     width,
     height,
     colorPack,
+    iconSize,
 } from "../style/style";
 import Checkbox from "expo-checkbox";
 import { useFocusEffect } from "@react-navigation/native";

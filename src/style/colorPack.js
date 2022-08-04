@@ -5,6 +5,7 @@ export const darkMode = {
     text_dark: "#D99066",
     text_light: "#E4EAF2",
     deactivated: "#8B9198",
+    warning: "red",
 };
 
 export const lightMode = {
@@ -14,4 +15,5 @@ export const lightMode = {
     text_dark: "#000000",
     text_light: "#404040",
     deactivated: "#8B9198",
+    warning: "red",
 };

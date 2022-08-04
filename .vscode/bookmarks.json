@@ -4,72 +4,72 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 51,
+					"line": 52,
 					"column": 19,
 					"label": "autoLogin"
 				},
 				{
-					"line": 78,
+					"line": 79,
 					"column": 21,
 					"label": "getLocation"
 				},
 				{
-					"line": 111,
+					"line": 112,
 					"column": 31,
 					"label": "refreshRestaurantList"
 				},
 				{
-					"line": 178,
+					"line": 179,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 209,
+					"line": 210,
 					"column": 29,
 					"label": "해당 장소의 마커들 가져오기"
 				},
 				{
-					"line": 235,
+					"line": 236,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 270,
+					"line": 271,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 287,
+					"line": 288,
 					"column": 4,
 					"label": "새로운 마커 만들기"
 				},
 				{
-					"line": 310,
+					"line": 311,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 378,
+					"line": 379,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 412,
+					"line": 413,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 471,
+					"line": 472,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 509,
+					"line": 510,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1031,
+					"line": 1032,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
@@ -234,12 +234,12 @@
 			"path": "src/screen/signup.js",
 			"bookmarks": [
 				{
-					"line": 59,
+					"line": 62,
 					"column": 4,
 					"label": "회원가입"
 				},
 				{
-					"line": 103,
+					"line": 111,
 					"column": 4,
 					"label": "인증코드 확인(회원가입 완료)"
 				}
@@ -266,40 +266,10 @@
 			]
 		},
 		{
-			"path": "src/screen/setting.js",
-			"bookmarks": [
-				{
-					"line": 24,
-					"column": 23,
-					"label": "세팅화면 버전"
-				},
-				{
-					"line": 35,
-					"column": 16,
-					"label": "로그아웃"
-				},
-				{
-					"line": 60,
-					"column": 29,
-					"label": "deleteUser"
-				},
-				{
-					"line": 101,
-					"column": 24,
-					"label": "changePassword"
-				},
-				{
-					"line": 197,
-					"column": 23,
-					"label": "sendMsgToSupport"
-				}
-			]
-		},
-		{
 			"path": "src/screen/main_restaurantList.js",
 			"bookmarks": [
 				{
-					"line": 143,
+					"line": 148,
 					"column": 35,
 					"label": "Main_restaurantList_sample"
 				}

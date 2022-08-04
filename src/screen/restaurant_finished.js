@@ -13,6 +13,7 @@ import {
     colorPack,
     mapStyle,
     width,
+    iconSize,
 } from "../style/style";
 import MapView, {
     Marker,
@@ -138,7 +139,7 @@ export default function Restaurant_page_finished({
                                 >
                                     <MaterialCommunityIcons
                                         name="motorbike"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }
@@ -176,7 +177,7 @@ export default function Restaurant_page_finished({
                                 >
                                     <MaterialCommunityIcons
                                         name="account-plus-outline"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.deactivated
                                         }
@@ -214,7 +215,7 @@ export default function Restaurant_page_finished({
                                 >
                                     <MaterialCommunityIcons
                                         name="application-edit-outline"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.deactivated
                                         }
@@ -252,7 +253,7 @@ export default function Restaurant_page_finished({
                                 >
                                     <MaterialCommunityIcons
                                         name="message-processing-outline"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }
@@ -303,7 +304,7 @@ export default function Restaurant_page_finished({
                                 >
                                     <MaterialCommunityIcons
                                         name="account-cancel-outline"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.deactivated
                                         }

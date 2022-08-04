@@ -1,18 +1,21 @@
 import { StyleSheet } from "react-native";
 import { Dimensions } from "react-native";
 import Constants from "expo-constants";
-import { darkMode, lightMode } from "./colorPack";
-// import { getStyle } from "../setting/setting_style";
-import { map_darkStyle1 } from "./mapStyle";
+
+import { getStyle } from "../setting/setting_style";
 
 export const height =
     Dimensions.get("screen").height -
     Constants.statusBarHeight; // 2000
 export const width = Dimensions.get("screen").width; // 1000
 
-export const colorPack = darkMode;
+const stylePack = getStyle();
 
-export const mapStyle = map_darkStyle1;
+export const colorPack = stylePack.colorPack;
+
+export const mapStyle = stylePack.mapStyle;
+
+export const iconSize = width * 0.05;
 
 export const styles = StyleSheet.create({
     // TEXT STYLES
@@ -41,6 +44,7 @@ export const styles = StyleSheet.create({
         color: colorPack.deactivated,
         textAlign: "center",
     },
+
     // CONTAINER STYLES
     container: {
         width: width,
@@ -208,6 +212,24 @@ export const styles = StyleSheet.create({
         color: colorPack.text_light,
         paddingHorizontal: (width * 20) / 1000,
     },
+    dropdownButton: {
+        width: (width * 200) / 1000,
+        height: (height * 100) / 2000,
+        borderRadius: (height * 30) / 2000,
+        borderColor: colorPack.highlight_light,
+        borderWidth: (width * 10) / 2000,
+        marginVertical: (height * 35) / 2000,
+        marginHorizontal: (width * 150) / 1000,
+        backgroundColor: colorPack.representative,
+        paddingHorizontal: (width * 20) / 1000,
+    },
+    dropdown: {
+        borderRadius: (height * 15) / 2000,
+        borderColor: colorPack.highlight_light,
+        borderWidth: (width * 5) / 2000,
+        backgroundColor: colorPack.representative,
+    },
+
     textInputBox_restaurant_menu: {
         width: (width * 600) / 1000,
 

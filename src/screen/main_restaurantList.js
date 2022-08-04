@@ -1,5 +1,10 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import { colorPack, styles, width } from "../style/style";
+import {
+    colorPack,
+    styles,
+    width,
+    iconSize,
+} from "../style/style";
 
 function Main_restaurantList(
     user,

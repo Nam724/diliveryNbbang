@@ -1,4 +1,4 @@
-export const map_darkStyle1 = [
+export const map_darkStyle = [
     {
         elementType: "geometry",
         stylers: [
@@ -160,4 +160,4 @@ export const map_darkStyle1 = [
     },
 ];
 
-export const map_lightStyle1 = [];
+export const map_lightStyle = [];

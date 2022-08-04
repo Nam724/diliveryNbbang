@@ -20,6 +20,7 @@ import {
     height,
     mapStyle,
     width,
+    iconSize,
 } from "../style/style";
 import MapView, {
     Marker,
@@ -731,7 +732,7 @@ export default function Restaurant_page_auth({
                                 >
                                     <MaterialCommunityIcons
                                         name="motorbike"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }
@@ -779,7 +780,7 @@ export default function Restaurant_page_auth({
                                                 ? "application-edit-outline"
                                                 : "content-copy"
                                         }
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }
@@ -821,7 +822,7 @@ export default function Restaurant_page_auth({
                                 >
                                     <MaterialCommunityIcons
                                         name="message-processing-outline"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }
@@ -869,7 +870,7 @@ export default function Restaurant_page_auth({
                                                 ? "lock-outline"
                                                 : "lock-open-outline"
                                         }
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             !isFinishRecruiting
                                                 ? colorPack.text_dark
@@ -923,7 +924,7 @@ export default function Restaurant_page_auth({
                                 >
                                     <MaterialCommunityIcons
                                         name="delete"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }

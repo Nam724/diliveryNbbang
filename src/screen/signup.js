@@ -1,4 +1,5 @@
 import { Auth } from "@aws-amplify/auth";
+
 import { useEffect, useState } from "react";
 import {
     TextInput,
@@ -8,15 +9,18 @@ import {
     Alert,
     ScrollView,
     Keyboard,
-    Linking,
     KeyboardAvoidingView,
+    SafeAreaView,
 } from "react-native";
+import SelectDropdown from "react-native-select-dropdown";
 import {
     styles,
     height,
     width,
     colorPack,
+    iconSize,
 } from "../style/style";
+import { BankList } from "../setting/banks";
 
 function emailTest(setEmail, email) {
     const reg =
@@ -65,45 +69,51 @@ export default function SignUp_page({ navigation }) {
     }, [verification_code_sended, password, email]);
 
     const sendVerificationCode = async () => {
-        try {
-            const { user } = await Auth.signUp({
-                username: email,
-                password: password,
-                attributes: {
-                    email: email, // optional
-                    phone_number:
-                        "+82" + phoneNumber.substring(1), // optional - E.164 number convention
-                    // other custom attributes
-                    address: account,
-                },
-            });
-            // console.log(user);
-            setVerification_code_sended(true);
-        } catch (error) {
-            // console.log('error signing up:', error);
-            if (error.code === "UsernameExistsException") {
-                Alert.alert(
-                    "배달앤빵",
-                    "이미 존재하는 이메일입니다.",
-                    [{ text: "확인" }]
-                );
-                return false;
-            } else if (
-                error.code === "InvalidParameterException"
-            ) {
-                Alert.alert(
-                    "배달앤빵",
-                    "잘못된 이메일입니다.",
-                    [{ text: "확인" }]
-                );
-                return false;
-            } else if (error.code === "NetworkError") {
-                Alert.alert(
-                    "배달앤빵",
-                    "네트워크 오류입니다.",
-                    [{ text: "확인" }]
-                );
-                return false;
+        if (email && password && phoneNumber) {
+            try {
+                const { user } = await Auth.signUp({
+                    username: email,
+                    password: password,
+                    attributes: {
+                        email: email, // optional
+                        phone_number:
+                            "+82" +
+                            phoneNumber.substring(1), // optional - E.164 number convention
+                        // other custom attributes
+                        address: `${bank} ${account}`,
+                    },
+                });
+                // console.log(user);
+                setVerification_code_sended(true);
+            } catch (error) {
+                // console.log('error signing up:', error);
+                if (
+                    error.code === "UsernameExistsException"
+                ) {
+                    Alert.alert(
+                        "배달앤빵",
+                        "이미 존재하는 이메일입니다.",
+                        [{ text: "확인" }]
+                    );
+                    return false;
+                } else if (
+                    error.code ===
+                    "InvalidParameterException"
+                ) {
+                    Alert.alert(
+                        "배달앤빵",
+                        "잘못된 이메일입니다.",
+                        [{ text: "확인" }]
+                    );
+                    return false;
+                } else if (error.code === "NetworkError") {
+                    Alert.alert(
+                        "배달앤빵",
+                        "네트워크 오류입니다.",
+                        [{ text: "확인" }]
+                    );
+                    return false;
+                }
             }
         }
     };
@@ -141,170 +151,32 @@ export default function SignUp_page({ navigation }) {
         }
     };
 
+    const [bank, setBank] = useState("");
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {"배달앤빵 회원가입"}
+                    {"회원가입"}
                 </Text>
             </View>
 
             <KeyboardAvoidingView
                 behavior="padding"
-                style={{ flex: 1 }}
+                style={{
+                    marginBottom: (height * 150) / 2000,
+                    justifyContent: "center",
+                }}
             >
-                <ScrollView>
-                    <View>
-                        <View
-                            style={{
-                                marginTop:
-                                    (height * 50) / 2000,
-                                height:
-                                    (height * 180) / 2000,
-                            }}
-                        >
-                            <Text
-                                style={styles.highlightText}
-                            >
-                                {"아이디(이메일)"}
-                            </Text>
-                            <TextInput
-                                keyboardType="email-address"
-                                style={[
-                                    styles.textInputBox,
-                                    styles.normalText,
-                                ]}
-                                onChangeText={(email) => {
-                                    setIsEmailValid(
-                                        emailTest(
-                                            setEmail,
-                                            email
-                                        )
-                                    );
-                                }}
-                            />
-                        </View>
-                        <View
-                            style={{
-                                marginTop:
-                                    (height * 50) / 2000,
-                                height:
-                                    (height * 180) / 2000,
-                            }}
-                        >
-                            <Text
-                                style={styles.highlightText}
-                            >
-                                {"전화번호"}
-                            </Text>
-                            <TextInput
-                                keyboardType="phone-pad"
-                                style={[
-                                    styles.textInputBox,
-                                    styles.normalText,
-                                ]}
-                                onChangeText={(num) => {
-                                    setPhoneNumber(num);
-                                }}
-                                placeholderTextColor={
-                                    colorPack.deactivated
-                                }
-                                placeholder={"01012345678"}
-                            />
-                        </View>
-
-                        <View
-                            style={{
-                                marginTop:
-                                    (height * 50) / 2000,
-                                height:
-                                    (height * 180) / 2000,
-                            }}
-                        >
-                            <Text
-                                style={styles.highlightText}
-                            >
-                                비밀번호
-                            </Text>
-                            <TextInput
-                                secureTextEntry={true}
-                                keyboardType="default"
-                                style={[
-                                    styles.textInputBox,
-                                    styles.normalText,
-                                ]}
-                                maxLength={20}
-                                onChangeText={(pw) => {
-                                    const reg =
-                                        /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
-                                    if (reg.test(pw)) {
-                                        setPassword1(pw);
-                                    } else {
-                                        setPassword1("");
-                                    }
-                                }}
-                            />
-                        </View>
-
-                        <View
-                            style={{
-                                marginTop:
-                                    (height * 50) / 2000,
-                                height: password1
-                                    ? (height * 180) / 2000
-                                    : 0,
-                            }}
-                        >
-                            <Text
-                                style={
-                                    password === password1
-                                        ? styles.highlightText
-                                        : styles.deactivatedText
-                                }
-                            >
-                                {password === password1
-                                    ? "비밀번호 일치"
-                                    : "비밀번호 불일치"}
-                            </Text>
-                            <TextInput
-                                secureTextEntry={true}
-                                keyboardType="default"
-                                style={
-                                    password1
-                                        ? [
-                                              styles.textInputBox,
-                                              styles.normalText,
-                                          ]
-                                        : { height: 0 }
-                                }
-                                maxLength={20}
-                                onChangeText={(pw) => {
-                                    if (pw === password1) {
-                                        setPassword(pw);
-                                    } else {
-                                        setPassword("");
-                                    }
-                                }}
-                                editable={
-                                    password1 ? true : false
-                                }
-                            />
-                        </View>
-
-                        <View
-                            style={{
-                                marginTop:
-                                    (height * 50) / 2000,
-                                height:
-                                    (height * 260) / 2000,
-                            }}
-                        >
-                            <TouchableOpacity
-                                onPress={() => {
-                                    Alert.alert(
-                                        "배달앤빵",
-                                        "카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요."
-                                    );
+                <SafeAreaView>
+                    <ScrollView>
+                        <View>
+                            <View
+                                style={{
+                                    marginTop:
+                                        (height * 50) /
+                                        2000,
+                                    flex: 1,
                                 }}
                             >
                                 <Text
@@ -312,117 +184,388 @@ export default function SignUp_page({ navigation }) {
                                         styles.highlightText
                                     }
                                 >
-                                    {!account
-                                        ? "계좌번호 또는 카카오페이 송금코드"
-                                        : "계좌번호"}
+                                    {"아이디(이메일)"}
                                 </Text>
-                            </TouchableOpacity>
-
-                            <TextInput
-                                keyboardType="default"
-                                style={[
-                                    styles.textInputBox,
-                                    styles.normalText,
-                                    !account
-                                        ? {
-                                              height:
-                                                  width *
-                                                  0.15,
-                                          }
-                                        : {},
-                                ]}
-                                onChangeText={(text) => {
-                                    const _account =
-                                        text.replaceAll(
-                                            "-",
-                                            ""
+                                <TextInput
+                                    keyboardType="email-address"
+                                    style={[
+                                        styles.textInputBox,
+                                        styles.normalText,
+                                    ]}
+                                    onChangeText={(
+                                        email
+                                    ) => {
+                                        setIsEmailValid(
+                                            emailTest(
+                                                setEmail,
+                                                email
+                                            )
                                         );
-                                    setAccount(_account);
-                                    console.log(_account);
+                                    }}
+                                />
+                            </View>
+                            <View
+                                style={{
+                                    marginTop:
+                                        (height * 50) /
+                                        2000,
+                                    flex: 1,
                                 }}
-                                numberOfLines={2}
-                                editable={true}
-                                placeholderTextColor={
-                                    colorPack.deactivated
-                                }
-                                placeholder={
-                                    "카카오뱅크 3333047718018\n또는 카카오페이 송금코드"
-                                }
-                            />
-                        </View>
-
-                        <View>
-                            <TouchableOpacity
-                                onPressOut={() =>
-                                    sendVerificationCode()
-                                }
-                                disabled={
-                                    !sendVerificationCodeBtn
-                                }
-                                style={[
-                                    styles.goToSignUpInButton,
-                                    {
-                                        marginTop:
-                                            (height * 100) /
-                                            2000,
-                                    },
-                                ]}
                             >
                                 <Text
                                     style={
-                                        sendVerificationCodeBtn
-                                            ? styles.highlightText
-                                            : styles.deactivatedText
+                                        styles.highlightText
                                     }
                                 >
-                                    {!verification_code_sended
-                                        ? "인증코드 보내기(이메일)"
-                                        : "인증코드를 입력하세요"}
+                                    {"전화번호"}
                                 </Text>
-                            </TouchableOpacity>
-                            <TextInput
-                                autoComplete="off"
-                                keyboardType="number-pad"
-                                style={[
-                                    styles.textInputBox,
-                                    styles.normalText,
-                                ]}
-                                maxLength={6}
-                                onChangeText={(
-                                    verification_code
-                                ) => {
-                                    setVerification_code(
-                                        verification_code
-                                    );
-                                    if (
-                                        verification_code.length ===
-                                        6
-                                    ) {
-                                        Keyboard.dismiss();
+                                <TextInput
+                                    keyboardType="phone-pad"
+                                    style={[
+                                        styles.textInputBox,
+                                        styles.normalText,
+                                    ]}
+                                    onChangeText={(num) => {
+                                        setPhoneNumber(num);
+                                    }}
+                                    placeholderTextColor={
+                                        colorPack.deactivated
                                     }
+                                    placeholder={
+                                        "01012345678"
+                                    }
+                                    maxLength={11}
+                                />
+                            </View>
+                            <View
+                                style={{
+                                    marginTop:
+                                        (height * 50) /
+                                        2000,
+                                    flex: 1,
                                 }}
-                                editable={
-                                    verification_code_sended
-                                }
-                            />
-                        </View>
-                        <TouchableOpacity
-                            onPressOut={() =>
-                                confirmSignUp()
-                            }
-                            disabled={!verification_code}
-                            style={[
-                                styles.goToSignUpInButton,
-                            ]}
-                        >
-                            <Text
-                                style={styles.highlightText}
                             >
-                                {"회원가입"}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
+                                <Text
+                                    style={
+                                        styles.highlightText
+                                    }
+                                >
+                                    비밀번호
+                                </Text>
+                                <TextInput
+                                    secureTextEntry={true}
+                                    keyboardType="default"
+                                    style={[
+                                        styles.textInputBox,
+                                        styles.normalText,
+                                    ]}
+                                    maxLength={20}
+                                    onChangeText={(pw) => {
+                                        const reg =
+                                            /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
+                                        if (reg.test(pw)) {
+                                            setPassword1(
+                                                pw
+                                            );
+                                        } else {
+                                            setPassword1(
+                                                ""
+                                            );
+                                        }
+                                    }}
+                                    placeholderTextColor={
+                                        colorPack.deactivated
+                                    }
+                                    placeholder={
+                                        "영문 숫자 포함 6~20자리"
+                                    }
+                                />
+                            </View>
+                            {password1 ? (
+                                <View
+                                    style={{
+                                        marginTop:
+                                            (height * 50) /
+                                            2000,
+                                        flex: 1,
+                                    }}
+                                >
+                                    <Text
+                                        style={
+                                            styles.highlightText
+                                        }
+                                    >
+                                        {"비밀번호 확인"}
+                                    </Text>
+                                    <TextInput
+                                        secureTextEntry={
+                                            true
+                                        }
+                                        keyboardType="default"
+                                        style={[
+                                            styles.textInputBox,
+                                            styles.normalText,
+                                            {
+                                                borderColor:
+                                                    password ===
+                                                    password1
+                                                        ? colorPack.highlight_light
+                                                        : colorPack.warning,
+                                            },
+                                        ]}
+                                        maxLength={20}
+                                        onChangeText={(
+                                            pw
+                                        ) => {
+                                            if (
+                                                pw ===
+                                                password1
+                                            ) {
+                                                setPassword(
+                                                    pw
+                                                );
+                                            } else {
+                                                setPassword(
+                                                    ""
+                                                );
+                                            }
+                                        }}
+                                        editable={
+                                            password1
+                                                ? true
+                                                : false
+                                        }
+                                        placeholderTextColor={
+                                            colorPack.deactivated
+                                        }
+                                        placeholder={
+                                            "비밀번호를 다시 입력해주세요"
+                                        }
+                                    />
+                                </View>
+                            ) : (
+                                <View />
+                            )}
+                            <View
+                                style={{
+                                    marginTop:
+                                        (height * 50) /
+                                        2000,
+                                    flex: 1,
+                                }}
+                            >
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        Alert.alert(
+                                            "배달앤빵",
+                                            "카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요."
+                                        );
+                                    }}
+                                >
+                                    <Text
+                                        style={
+                                            styles.highlightText
+                                        }
+                                    >
+                                        {
+                                            "입금받을 계좌번호(선택)"
+                                        }
+                                    </Text>
+                                    <Text
+                                        style={
+                                            styles.normalText_small
+                                        }
+                                    >
+                                        {
+                                            "배달앤빵에서는 호스트가 게스트에게 송금을 받고 직접 주문을 하게 됩니다.\n이때 호스트로서 입금받을 계좌를 입력해주세요."
+                                        }
+                                    </Text>
+                                </TouchableOpacity>
+                                <View
+                                    style={{
+                                        flexDirection:
+                                            "row",
+                                        width: width * 0.8,
+                                        marginHorizontal:
+                                            width * 0.1,
+                                        justifyContent:
+                                            "space-around",
+                                    }}
+                                >
+                                    <SelectDropdown
+                                        data={BankList}
+                                        onSelect={(
+                                            selectedItem,
+                                            index
+                                        ) => {
+                                            setBank(
+                                                selectedItem
+                                            );
+                                        }}
+                                        defaultButtonText={
+                                            "은행선택"
+                                        }
+                                        buttonStyle={
+                                            styles.dropdownButton
+                                        }
+                                        buttonTextStyle={
+                                            styles.normalText_small
+                                        }
+                                        dropdownStyle={
+                                            styles.dropdown
+                                        }
+                                        rowTextStyle={
+                                            styles.deactivatedText
+                                        }
+                                        buttonTextAfterSelection={(
+                                            selectedItem,
+                                            index
+                                        ) => {
+                                            // text represented after item is selected
+                                            // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                            return selectedItem;
+                                        }}
+                                        rowTextForSelection={(
+                                            item,
+                                            index
+                                        ) => {
+                                            // text represented for each item in dropdown
+                                            // if data array is an array of objects then return item.property to represent item in dropdown
+                                            return item;
+                                        }}
+                                    />
+                                    <TextInput
+                                        keyboardType="number-pad"
+                                        style={[
+                                            styles.textInputBox,
+                                            styles.normalText,
+                                            {
+                                                width:
+                                                    width *
+                                                    0.5,
+                                            },
+                                        ]}
+                                        onChangeText={(
+                                            text
+                                        ) => {
+                                            const _account =
+                                                bank +
+                                                text.replaceAll(
+                                                    "-",
+                                                    ""
+                                                );
+                                            setAccount(
+                                                _account
+                                            );
+                                            console.log(
+                                                _account
+                                            );
+                                        }}
+                                        numberOfLines={1}
+                                        editable={true}
+                                        placeholderTextColor={
+                                            colorPack.deactivated
+                                        }
+                                        placeholder={
+                                            "계좌번호를 입력해주세요"
+                                        }
+                                    />
+                                </View>
+                            </View>
+
+                            {password === password1 &&
+                            password1 !== "" ? (
+                                <View>
+                                    <TouchableOpacity
+                                        onPressOut={() =>
+                                            sendVerificationCode()
+                                        }
+                                        disabled={
+                                            !sendVerificationCodeBtn
+                                        }
+                                        style={[
+                                            styles.goToSignUpInButton,
+                                            {
+                                                marginTop:
+                                                    (height *
+                                                        50) /
+                                                    2000,
+                                                flex: 1,
+                                            },
+                                        ]}
+                                    >
+                                        <Text
+                                            style={
+                                                sendVerificationCodeBtn
+                                                    ? styles.highlightText
+                                                    : styles.deactivatedText
+                                            }
+                                        >
+                                            {!verification_code_sended
+                                                ? "인증코드 보내기(이메일)"
+                                                : "인증코드를 입력하세요"}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TextInput
+                                        autoComplete="off"
+                                        keyboardType="number-pad"
+                                        style={[
+                                            styles.textInputBox,
+                                            styles.normalText,
+                                        ]}
+                                        maxLength={6}
+                                        onChangeText={(
+                                            verification_code
+                                        ) => {
+                                            setVerification_code(
+                                                verification_code
+                                            );
+                                            if (
+                                                verification_code.length ===
+                                                6
+                                            ) {
+                                                Keyboard.dismiss();
+                                            }
+                                        }}
+                                        editable={
+                                            verification_code_sended
+                                        }
+                                    />
+                                </View>
+                            ) : (
+                                <View></View>
+                            )}
+                            <View
+                                style={{
+                                    marginTop:
+                                        (height * 50) /
+                                        2000,
+                                    flex: 1,
+                                }}
+                            >
+                                <TouchableOpacity
+                                    onPressOut={() =>
+                                        confirmSignUp()
+                                    }
+                                    disabled={
+                                        !verification_code
+                                    }
+                                    style={[
+                                        styles.goToSignUpInButton,
+                                    ]}
+                                >
+                                    <Text
+                                        style={
+                                            styles.highlightText
+                                        }
+                                    >
+                                        {"회원가입"}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
             </KeyboardAvoidingView>
         </View>
     );

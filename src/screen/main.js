@@ -20,6 +20,7 @@ import {
     width,
     height,
     mapStyle,
+    iconSize,
 } from "../style/style";
 import MapView, {
     PROVIDER_GOOGLE,
@@ -628,7 +629,7 @@ export default function Main_page({ route, navigation }) {
                             >
                                 <MaterialIcons
                                     name="account-circle"
-                                    size={width * 0.08}
+                                    size={iconSize}
                                     color={
                                         colorPack.text_light
                                     }
@@ -680,7 +681,7 @@ export default function Main_page({ route, navigation }) {
                             >
                                 <MaterialCommunityIcons
                                     name="clipboard-edit-outline"
-                                    size={width * 0.08}
+                                    size={iconSize}
                                     color={
                                         colorPack.text_light
                                     }
@@ -1056,7 +1057,7 @@ export default function Main_page({ route, navigation }) {
                         <View>
                             <MaterialCommunityIcons
                                 name="account-outline"
-                                size={width * 0.08}
+                                size={iconSize}
                                 color={colorPack.text_light}
                             />
                             <Text
@@ -1113,7 +1114,7 @@ export default function Main_page({ route, navigation }) {
                         <View>
                             <MaterialCommunityIcons
                                 name="clipboard-edit-outline"
-                                size={width * 0.08}
+                                size={iconSize}
                                 color={colorPack.text_light}
                             />
                             <Text
@@ -1168,7 +1169,7 @@ export default function Main_page({ route, navigation }) {
                                 "내 주문 없음" ? (
                                     <MaterialCommunityIcons
                                         name="clipboard-off-outline"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }
@@ -1176,7 +1177,7 @@ export default function Main_page({ route, navigation }) {
                                 ) : (
                                     <MaterialCommunityIcons
                                         name="clipboard-edit-outline"
-                                        size={width * 0.08}
+                                        size={iconSize}
                                         color={
                                             colorPack.text_dark
                                         }
@@ -1185,7 +1186,7 @@ export default function Main_page({ route, navigation }) {
                             ) : (
                                 <MaterialIcons
                                     name="place"
-                                    size={width * 0.08}
+                                    size={iconSize}
                                     color={
                                         selectedMarker.key ===
                                         "markers%"
@@ -1282,7 +1283,7 @@ export default function Main_page({ route, navigation }) {
                             "userOrder" ? (
                                 <MaterialIcons
                                     name="add-location"
-                                    size={width * 0.08}
+                                    size={iconSize}
                                     color={
                                         colorPack.text_light
                                     }

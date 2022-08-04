@@ -13,6 +13,7 @@ import {
     height,
     styles,
     width,
+    iconSize,
 } from "../style/style";
 import { Auth } from "aws-amplify";
 import * as MailComposer from "expo-mail-composer";
@@ -383,7 +384,7 @@ export default function Setting_page({
                                                             borderColor:
                                                                 newPassword !==
                                                                 newPassword2
-                                                                    ? "red"
+                                                                    ? colorPack.warning
                                                                     : colorPack.highlight_light,
                                                         },
                                                     ]}
