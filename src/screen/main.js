@@ -1056,7 +1056,9 @@ export default function Main_page({ route, navigation }) {
                             });
                         }}
                     >
-                        <View>
+                        <View
+                            style={{ alignItems: "center" }}
+                        >
                             <MaterialCommunityIcons
                                 name="account-outline"
                                 size={iconSize}
@@ -1113,7 +1115,9 @@ export default function Main_page({ route, navigation }) {
                             userOrderList("set");
                         }}
                     >
-                        <View>
+                        <View
+                            style={{ alignItems: "center" }}
+                        >
                             <MaterialCommunityIcons
                                 name="clipboard-edit-outline"
                                 size={iconSize}
