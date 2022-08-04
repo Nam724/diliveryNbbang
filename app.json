@@ -15,7 +15,7 @@
         },
         "assetBundlePatterns": ["**/*"],
         "ios": {
-            "buildNumber": "15",
+            "buildNumber": "16",
             "supportsTablet": true,
             "bundleIdentifier": "diliveryNbbang",
             "config": {
@@ -32,7 +32,7 @@
                 "backgroundColor": "#17263C"
             },
             "package": "expo.eject.BTS_PseudoTesla",
-            "versionCode": 15,
+            "versionCode": 16,
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
