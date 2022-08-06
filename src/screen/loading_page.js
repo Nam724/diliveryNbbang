@@ -10,6 +10,7 @@ import {
     Text,
     Image,
 } from "react-native";
+import { RestaurantBannerAds } from "../../utils/Ads";
 
 export default function Loading_page({
     route,
@@ -22,6 +23,15 @@ export default function Loading_page({
                 { justifyContent: "center" },
             ]}
         >
+            {" "}
+            <View style={styles.header}>
+                <Text style={styles.highlightText}>
+                    {"개발자를 위해 광고 한편 봐주세요"}
+                </Text>
+            </View>
+            <RestaurantBannerAds />
+            <RestaurantBannerAds />
+            <RestaurantBannerAds />
             <View
                 style={{
                     alignContent: "center",
@@ -31,19 +41,17 @@ export default function Loading_page({
                 <Image
                     source={require("../../assets/icon.png")}
                     style={{
-                        width: width * 0.8,
-                        height: width * 0.8,
+                        width: width * 0.5,
+                        height: width * 0.5,
                         marginLeft: width * 0.1,
                     }}
                 />
             </View>
-
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
-                    {"배달 앤빵 정보를 불러오는 중입니다."}
+                    {"정보를 불러오는 중입니다."}
                 </Text>
             </View>
-
             <ActivityIndicator
                 size="large"
                 animating={true}
