@@ -23,7 +23,6 @@ export default function Loading_page({
                 { justifyContent: "center" },
             ]}
         >
-            {" "}
             <View style={styles.header}>
                 <Text style={styles.highlightText}>
                     {"개발자를 위해 광고 한편 봐주세요"}
@@ -43,7 +42,7 @@ export default function Loading_page({
                     style={{
                         width: width * 0.5,
                         height: width * 0.5,
-                        marginLeft: width * 0.1,
+                        marginLeft: width * 0.25,
                     }}
                 />
             </View>
