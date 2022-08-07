@@ -23,14 +23,6 @@ export default function Loading_page({
                 { justifyContent: "center" },
             ]}
         >
-            <View style={styles.header}>
-                <Text style={styles.highlightText}>
-                    {"개발자를 위해 광고 한편 봐주세요"}
-                </Text>
-            </View>
-            <RestaurantBannerAds />
-            <RestaurantBannerAds />
-            <RestaurantBannerAds />
             <View
                 style={{
                     alignContent: "center",
