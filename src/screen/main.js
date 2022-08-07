@@ -395,21 +395,16 @@ export default function Main_page({ route, navigation }) {
 
     // make new restaurant
     async function saveNewRestaurant(placeID) {
-        if (newRestaurant_name && newRestaurant_fee) {
-            ({
-                name: newRestaurant_name,
-                fee: newRestaurant_fee,
-                url: newRestaurant_url,
-                placeID: placeID,
-            });
+        if (
+            newRestaurant_name &&
+            newRestaurant_fee &&
+            newRestaurant_account
+        ) {
             // amplify
             const restaurant = await DataStore.save(
                 new Restaurant({
                     name: newRestaurant_name,
-                    fee:
-                        newRestaurant_fee == null
-                            ? 0
-                            : parseInt(newRestaurant_fee),
+                    fee: parseInt(newRestaurant_fee),
                     url: newRestaurant_url,
                     placeID: placeID,
                     makerID: user.username,

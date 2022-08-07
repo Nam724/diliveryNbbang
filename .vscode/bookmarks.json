@@ -49,27 +49,27 @@
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 464,
+					"line": 459,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 498,
+					"line": 493,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 557,
+					"line": 552,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 595,
+					"line": 590,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1117,
+					"line": 1112,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
