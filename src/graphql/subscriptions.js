@@ -62,122 +62,23 @@ export const onDeleteMember = /* GraphQL */ `
     }
 `;
 export const onCreateRestaurant = /* GraphQL */ `
-    subscription OnCreateRestaurant(
-        $filter: ModelSubscriptionRestaurantFilterInput
-    ) {
-        onCreateRestaurant(filter: $filter) {
-            id
-            name
-            fee
-            url
-            makerID
+    subscription onCreateRestaurant {
+        onCreateRestaurant {
             placeID
-            Members_in_restaurant {
-                items {
-                    id
-                    username
-                    email
-                    menu
-                    price
-                    restaurantID
-                    phone_number
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                }
-                nextToken
-                startedAt
-            }
-            num_members
-            account
-            isFinishRecruiting
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
         }
     }
 `;
 export const onUpdateRestaurant = /* GraphQL */ `
-    subscription OnUpdateRestaurant(
-        $filter: ModelSubscriptionRestaurantFilterInput
-    ) {
-        onUpdateRestaurant(filter: $filter) {
-            id
-            name
-            fee
-            url
-            makerID
+    subscription onUpdateRestaurant {
+        onUpdateRestaurant {
             placeID
-            Members_in_restaurant {
-                items {
-                    id
-                    username
-                    email
-                    menu
-                    price
-                    restaurantID
-                    phone_number
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                }
-                nextToken
-                startedAt
-            }
-            num_members
-            account
-            isFinishRecruiting
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
         }
     }
 `;
 export const onDeleteRestaurant = /* GraphQL */ `
-    subscription OnDeleteRestaurant(
-        $filter: ModelSubscriptionRestaurantFilterInput
-    ) {
-        onDeleteRestaurant(filter: $filter) {
-            id
-            name
-            fee
-            url
-            makerID
+    subscription onDeleteRestaurant {
+        onDeleteRestaurant {
             placeID
-            Members_in_restaurant {
-                items {
-                    id
-                    username
-                    email
-                    menu
-                    price
-                    restaurantID
-                    phone_number
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                }
-                nextToken
-                startedAt
-            }
-            num_members
-            account
-            isFinishRecruiting
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
         }
     }
 `;

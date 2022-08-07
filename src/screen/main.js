@@ -47,6 +47,8 @@ import { RestaurantBannerAds } from "../../utils/Ads";
 import {
     onCreatePlace,
     onCreateRestaurant,
+    onDeleteRestaurant,
+    onUpdateRestaurant,
 } from "../graphql/subscriptions";
 
 export default function Main_page({ route, navigation }) {
@@ -61,10 +63,10 @@ export default function Main_page({ route, navigation }) {
 
     useEffect(() => {
         realTime_Markers();
-        // realTime_Restaurant();
+        realTime_Restaurant();
         getLocation();
         // userOrderList("get");
-        console.log("user 입니다: ", user);
+        // console.log("user 입니다: ", user);
     }, []);
 
     useFocusEffect(
@@ -173,6 +175,10 @@ export default function Main_page({ route, navigation }) {
     }
     // console.log(location)
 
+    const deletePlace = (placeID) => {
+        DataStore.delete(Place, placeID);
+    };
+
     const returnMarker = (data) => {
         // data should contain id, name, latitude, longitude
         // console.log('makeMarker')
@@ -220,11 +226,8 @@ export default function Main_page({ route, navigation }) {
         let _markerList = [];
         // console.log('location', location);
         try {
-            const models = await DataStore.query(
-                Place,
-                (place) => {}
-            );
-            // console.log(models)
+            const models = await DataStore.query(Place);
+            console.log("markers: ", models);
             models.forEach((model, index) => {
                 _markerList.push(returnMarker(model));
 
@@ -242,16 +245,16 @@ export default function Main_page({ route, navigation }) {
             graphqlOperation(onCreatePlace)
         ).subscribe({
             next: ({ value: { data } }) => {
-                console.log(
-                    "realTime_getMarkers",
-                    data.onCreatePlace
-                );
+                // console.log(
+                //     "realTime_getMarkers",
+                //     data.onCreatePlace
+                // );
                 let newMarker = returnMarker(
                     data.onCreatePlace
                 );
-                console.log("newMarker", newMarker);
+                // console.log("newMarker", newMarker);
                 const newMarkers = [...markers, newMarker];
-                console.log("newMarkers", newMarkers);
+                // console.log("newMarkers", newMarkers);
                 setMarkers(newMarkers);
             },
         });
@@ -259,10 +262,54 @@ export default function Main_page({ route, navigation }) {
 
     const realTime_Restaurant = async () => {
         API.graphql(
+            // 음식점 추가될 때마다 새로고침
             graphqlOperation(onCreateRestaurant)
         ).subscribe({
             next: ({ value: { data } }) => {
                 console.log("realTime_Restaurant", data);
+                let newRestaurant = data.onCreateRestaurant;
+                if (
+                    newRestaurant.placeID ===
+                    selectedMarker.key
+                ) {
+                    refreshRestaurantList("refresh");
+                }
+            },
+        });
+
+        API.graphql(
+            // 음식점 업데이트 될 때 새로고침
+            graphqlOperation(onUpdateRestaurant)
+        ).subscribe({
+            next: ({ value: { data } }) => {
+                console.log("realTime_Restaurant", data);
+                let newRestaurant = data.onUpdateRestaurant;
+                // console.log(
+                //     newRestaurant.placeID ===
+                //         selectedMarker.key
+                // );
+                if (
+                    newRestaurant.placeID ===
+                    selectedMarker.key
+                ) {
+                    refreshRestaurantList("refresh");
+                }
+            },
+        });
+
+        API.graphql(
+            //  음식점 삭제될 때 새로고침
+            graphqlOperation(onDeleteRestaurant)
+        ).subscribe({
+            next: ({ value: { data } }) => {
+                console.log("realTime_Restaurant", data);
+                let newRestaurant = data.onDeleteRestaurant;
+                if (
+                    newRestaurant.placeID ===
+                    selectedMarker.key
+                ) {
+                    refreshRestaurantList("refresh");
+                }
             },
         });
     };

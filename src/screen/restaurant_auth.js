@@ -265,6 +265,28 @@ export default function Restaurant_page_auth({
                     .restaurantID("eq", restaurant.id)
         );
         // console.log('current member', CURRENT_Member[0])
+        if (
+            restaurant.account !== account ||
+            restaurant.fee !== fee
+        ) {
+            const CURRENT_RESTAURANT =
+                await DataStore.query(
+                    Restaurant,
+                    restaurant.id
+                );
+            await DataStore.save(
+                Restaurant.copyOf(
+                    CURRENT_RESTAURANT,
+                    (updated) => {
+                        // Update the values on {item} variable to update DataStore entry
+                        updated.account = account;
+                        updated.fee = fee;
+                    }
+                )
+            );
+            setAccount(account);
+            setFee(fee);
+        }
         try {
             await DataStore.save(
                 Member.copyOf(
@@ -276,31 +298,10 @@ export default function Restaurant_page_auth({
                     }
                 )
             );
-
-            if (
-                restaurant.account === account ||
-                restaurant.fee === fee
-            ) {
-                const CURRENT_RESTAURANT =
-                    await DataStore.query(
-                        Restaurant,
-                        restaurant.id
-                    );
-                await DataStore.save(
-                    Restaurant.copyOf(
-                        CURRENT_RESTAURANT,
-                        (updated) => {
-                            // Update the values on {item} variable to update DataStore entry
-                            updated.account = account;
-                            updated.fee = fee;
-                        }
-                    )
-                );
-            }
-
             setModalVisible(false);
         } catch (error) {
             // console.log(error)
+            setModalVisible(false);
         }
     };
 
@@ -482,10 +483,6 @@ export default function Restaurant_page_auth({
                                                 parseInt(
                                                     text
                                                 )
-                                            );
-                                        } else {
-                                            setFee(
-                                                restaurant.fee
                                             );
                                         }
                                     }}

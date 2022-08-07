@@ -4,67 +4,72 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 56,
+					"line": 58,
 					"column": 19,
 					"label": "autoLogin"
 				},
 				{
-					"line": 120,
+					"line": 122,
 					"column": 31,
 					"label": "refreshRestaurantList"
 				},
 				{
-					"line": 187,
+					"line": 193,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 239,
+					"line": 242,
 					"column": 4,
 					"label": "realTime_markers"
 				},
 				{
-					"line": 274,
+					"line": 262,
+					"column": 29,
+					"label": "realTime_Restaurant"
+				},
+				{
+					"line": 321,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 309,
+					"line": 356,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 326,
+					"line": 373,
 					"column": 4,
 					"label": "새로운 마커 만들기"
 				},
 				{
-					"line": 349,
+					"line": 396,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 417,
+					"line": 464,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 451,
+					"line": 498,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 510,
+					"line": 557,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 548,
+					"line": 595,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1070,
+					"line": 1117,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
@@ -134,37 +139,37 @@
 					"label": "메뉴 추가"
 				},
 				{
-					"line": 307,
+					"line": 308,
 					"column": 21,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 326,
+					"line": 327,
 					"column": 27,
 					"label": "모집 재시작"
 				},
 				{
-					"line": 365,
+					"line": 366,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 455,
+					"line": 456,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 470,
+					"line": 471,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 502,
+					"line": 499,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 929,
+					"line": 926,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
