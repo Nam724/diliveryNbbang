@@ -106,7 +106,7 @@ export default function SignIn_page({ route, navigation }) {
                 email,
                 password
             );
-            // console.log('user', _user);
+            console.log("user", _user);
             setUser(_user);
             if (autoLogin) {
                 saveLoginInfo(email, password);

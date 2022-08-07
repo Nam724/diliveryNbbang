@@ -1,4 +1,4 @@
-import { Auth } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import {
     View,
     Text,
@@ -44,6 +44,10 @@ import {
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { RestaurantBannerAds } from "../../utils/Ads";
+import {
+    onCreatePlace,
+    onCreateRestaurant,
+} from "../graphql/subscriptions";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -56,14 +60,16 @@ export default function Main_page({ route, navigation }) {
     // const mapRef = createRef();
 
     useEffect(() => {
+        realTime_Markers();
+        // realTime_Restaurant();
         getLocation();
         // userOrderList("get");
-        console.log("user", user);
+        console.log("user 입니다: ", user);
     }, []);
 
     useFocusEffect(
         React.useCallback(() => {
-            console.log("selectedMarker", selectedMarker);
+            // console.log("selectedMarker", selectedMarker);
             refreshRestaurantList(
                 selectedMarker.key === "markers%"
                     ? "default"
@@ -119,10 +125,10 @@ export default function Main_page({ route, navigation }) {
         await getMarkers();
         if (id === "refresh") {
             await userOrderList("get");
-            console.log("refreshRestaurantList_refresh");
+            // console.log("refreshRestaurantList_refresh");
             await loadRestaurant(selectedMarker.key);
         } else if (id === "userOrder") {
-            console.log("refreshRestaurantList_userOrder");
+            // console.log("refreshRestaurantList_userOrder");
             setSelectedMarker({
                 coordinate: {}, // {longitude: 0, latitude: 0}
                 title: "나의 주문",
@@ -130,7 +136,7 @@ export default function Main_page({ route, navigation }) {
             });
             userOrderList("set");
         } else if (id === "default") {
-            console.log("refreshRestaurantList_default");
+            // console.log("refreshRestaurantList_default");
             await userOrderList("get");
             if (myOrderList.length > 0) {
                 setSelectedMarker({
@@ -150,7 +156,7 @@ export default function Main_page({ route, navigation }) {
         } else {
             // 특정 키값 새로고침
             await userOrderList("get");
-            console.log("refreshRestaurantList_with id");
+            // console.log("refreshRestaurantList_with id");
             await loadRestaurant(id);
         }
         // alert('refreshRestaurantList is finished');
@@ -185,7 +191,7 @@ export default function Main_page({ route, navigation }) {
                 description={`${num_restaurants}개의 음식점`}
                 key={key}
                 onPress={async () => {
-                    console.log(title, key);
+                    // console.log(title, key);
                     await refreshRestaurantList(key);
                     setSelectedMarker({
                         coordinate: coordinate,
@@ -230,6 +236,36 @@ export default function Main_page({ route, navigation }) {
             return error;
         }
     }
+
+    const realTime_Markers = async () => {
+        API.graphql(
+            graphqlOperation(onCreatePlace)
+        ).subscribe({
+            next: ({ value: { data } }) => {
+                console.log(
+                    "realTime_getMarkers",
+                    data.onCreatePlace
+                );
+                let newMarker = returnMarker(
+                    data.onCreatePlace
+                );
+                console.log("newMarker", newMarker);
+                const newMarkers = [...markers, newMarker];
+                console.log("newMarkers", newMarkers);
+                setMarkers(newMarkers);
+            },
+        });
+    };
+
+    const realTime_Restaurant = async () => {
+        API.graphql(
+            graphqlOperation(onCreateRestaurant)
+        ).subscribe({
+            next: ({ value: { data } }) => {
+                console.log("realTime_Restaurant", data);
+            },
+        });
+    };
 
     // get log pressed location and add marker
     const [newMarkerCoordinate, setNewMarkerCoordinate] =
