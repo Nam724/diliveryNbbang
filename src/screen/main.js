@@ -104,6 +104,12 @@ export default function Main_page({ route, navigation }) {
             latitudeDelta: 0.003,
             longitudeDelta: 0.003,
         });
+        setMapLocation({
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude,
+            latitudeDelta: 0.003,
+            longitudeDelta: 0.003,
+        });
         setIsLoading(false);
     };
 
@@ -221,9 +227,13 @@ export default function Main_page({ route, navigation }) {
     // current markers
     const [markers, setMarkers] = useState([]); // use makeMarker(data)
 
-    async function getMarkers(
-        locationParam = location ? location : initialRegion
-    ) {
+    const [mapLocation, setMapLocation] = useState({
+        latitude: 37.56,
+        longitude: 126.97,
+        latitudeDelta: 0.003,
+        longitudeDelta: 0.003,
+    });
+    async function getMarkers(locationParam = mapLocation) {
         let _markerList = [];
         console.log("location", locationParam);
         try {
@@ -403,9 +413,8 @@ export default function Main_page({ route, navigation }) {
                     num_restaurants: 0,
                 })
             );
-
-            refreshRestaurantList({ coordinate, title });
-            // console.log('saved');
+            getMarkers();
+            console.log("saved");
         } else {
             Alert.alert(
                 "배달앤빵",
@@ -1304,7 +1313,8 @@ export default function Main_page({ route, navigation }) {
                     }}
                     onRegionChangeComplete={(e) => {
                         console.log(e);
-                        getMarkers(e);
+                        setMapLocation(e);
+                        getMarkers();
                     }}
                 >
                     {markers}

@@ -9,62 +9,57 @@
 					"label": "autoLogin"
 				},
 				{
-					"line": 115,
+					"line": 121,
 					"column": 31,
 					"label": "refreshRestaurantList"
 				},
 				{
-					"line": 186,
+					"line": 192,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 255,
+					"line": 265,
 					"column": 4,
 					"label": "realTime_markers"
 				},
 				{
-					"line": 393,
+					"line": 403,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 428,
+					"line": 437,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 445,
-					"column": 4,
-					"label": "새로운 마커 만들기"
-				},
-				{
-					"line": 468,
+					"line": 477,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 531,
+					"line": 540,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 565,
+					"line": 574,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 624,
+					"line": 633,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 662,
+					"line": 671,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1184,
+					"line": 1193,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
