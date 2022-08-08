@@ -4,16 +4,6 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 54,
-					"column": 19,
-					"label": "autoLogin"
-				},
-				{
-					"line": 121,
-					"column": 31,
-					"label": "refreshRestaurantList"
-				},
-				{
 					"line": 192,
 					"column": 12,
 					"label": "마커 객체"
@@ -59,7 +49,7 @@
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1193,
+					"line": 1198,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
@@ -159,7 +149,7 @@
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 926,
+					"line": 970,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -214,7 +204,7 @@
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 764,
+					"line": 809,
 					"column": 49,
 					"label": "Members(user, member, restaurant, index)"
 				}
@@ -249,7 +239,7 @@
 					"label": "sendSMStoAuthor"
 				},
 				{
-					"line": 375,
+					"line": 420,
 					"column": 16,
 					"label": "멤버 보이는 칸"
 				}

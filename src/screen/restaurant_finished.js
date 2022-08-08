@@ -157,10 +157,55 @@ export default function Restaurant_page_finished({
                                 </Text>
                             </View>
                         </TouchableOpacity>
-
                         <TouchableOpacity
                             style={
                                 styles.restaurantButton_2
+                            }
+                            onPress={() => {
+                                navigation.navigate(
+                                    "Chat",
+                                    {
+                                        restaurant:
+                                            restaurant,
+                                    }
+                                );
+                            }}
+                        >
+                            <View
+                                styles={
+                                    styles.restaurantButtonIconContainer
+                                }
+                            >
+                                <View
+                                    style={{
+                                        alignItems:
+                                            "center",
+                                    }}
+                                >
+                                    <MaterialCommunityIcons
+                                        name="message"
+                                        size={iconSize}
+                                        color={
+                                            colorPack.text_dark
+                                        }
+                                        style={
+                                            styles.restaurantButtonIcon
+                                        }
+                                    />
+                                </View>
+                                <Text
+                                    style={
+                                        styles.normalText_small
+                                    }
+                                >
+                                    {"채팅하기"}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={
+                                styles.restaurantButton_1
                             }
                             disabled={true}
                         >
@@ -198,7 +243,7 @@ export default function Restaurant_page_finished({
 
                         <TouchableOpacity
                             style={
-                                styles.restaurantButton_1
+                                styles.restaurantButton_2
                             }
                             disabled={true}
                         >
@@ -236,7 +281,7 @@ export default function Restaurant_page_finished({
 
                         <TouchableOpacity
                             style={
-                                styles.restaurantButton_2
+                                styles.restaurantButton_1
                             }
                             onPress={sendSMStoAuthor}
                         >
@@ -252,7 +297,7 @@ export default function Restaurant_page_finished({
                                     }}
                                 >
                                     <MaterialCommunityIcons
-                                        name="message-processing-outline"
+                                        name="cellphone-message"
                                         size={iconSize}
                                         color={
                                             colorPack.text_dark
@@ -273,7 +318,7 @@ export default function Restaurant_page_finished({
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={
-                                styles.restaurantButton_1
+                                styles.restaurantButton_2
                             }
                             onPress={() => {
                                 Alert.alert(

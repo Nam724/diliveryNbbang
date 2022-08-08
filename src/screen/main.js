@@ -479,7 +479,7 @@ export default function Main_page({ route, navigation }) {
         if (
             newRestaurant_name &&
             newRestaurant_fee &&
-            newRestaurant_account !== " "
+            newRestaurant_account
         ) {
             // amplify
             const restaurant = await DataStore.save(
@@ -935,7 +935,8 @@ export default function Main_page({ route, navigation }) {
                                         {"배달의 민족 열기"}
                                     </Text>
                                 </TouchableOpacity>
-                                {Platform === "android" ? (
+                                {Platform.OS ===
+                                "android" ? (
                                     <TouchableOpacity
                                         style={
                                             styles.modalButton
@@ -1105,12 +1106,16 @@ export default function Main_page({ route, navigation }) {
                                     }
                                     placeholder={
                                         user.address
+                                            ? user.address
+                                            : "예) 카카오뱅크 3333047718018"
                                     }
                                     placeholderTextColor={
-                                        colorPack.text_light
+                                        user.address
+                                            ? colorPack.text_light
+                                            : colorPack.deactivated
                                     }
                                     editable={
-                                        user.address ===
+                                        user.address !==
                                         null
                                     }
                                     onKeyPress={(e) => {
