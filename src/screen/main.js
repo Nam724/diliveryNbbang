@@ -50,6 +50,7 @@ import {
     onDeleteRestaurant,
     onUpdateRestaurant,
 } from "../graphql/subscriptions";
+import { listPlaces } from "../graphql/queries";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -63,8 +64,7 @@ export default function Main_page({ route, navigation }) {
 
     useEffect(() => {
         getLocation();
-        getMarkers();
-        realTime_Place();
+        // realTime_Place();
         // userOrderList("get");
         // console.log("user 입니다: ", user);
     }, []);
@@ -96,8 +96,7 @@ export default function Main_page({ route, navigation }) {
         // }
         const userLocation =
             await Location.getCurrentPositionAsync({
-                accuracy: Location.Accuracy.Highest,
-                maximumAge: 10000,
+                accuracy: Location.Accuracy.Balanced,
             });
         setLocation({
             latitude: userLocation.coords.latitude,
@@ -222,21 +221,40 @@ export default function Main_page({ route, navigation }) {
     // current markers
     const [markers, setMarkers] = useState([]); // use makeMarker(data)
 
-    async function getMarkers() {
+    async function getMarkers(
+        locationParam = location ? location : initialRegion
+    ) {
         let _markerList = [];
-        // console.log('location', location);
+        console.log("location", locationParam);
         try {
-            const models = await DataStore.query(Place);
-            console.log("markers: ", models);
-            models.forEach((model, index) => {
-                _markerList.push(returnMarker(model));
+            const places = await DataStore.query(
+                Place,
+                (q) =>
+                    q
+                        .latitude("between", [
+                            locationParam.latitude -
+                                locationParam.latitudeDelta,
+                            locationParam.latitude +
+                                locationParam.latitudeDelta,
+                        ])
+                        .longitude("between", [
+                            locationParam.longitude -
+                                locationParam.longitudeDelta,
+                            locationParam.longitude +
+                                locationParam.longitudeDelta,
+                        ])
+            );
 
-                if (index == models.length - 1) {
+            console.log("markers!: ", places);
+            places.forEach((place, index) => {
+                _markerList.push(returnMarker(place));
+
+                if (index == places.length - 1) {
                     setMarkers(_markerList);
                 }
             });
         } catch (error) {
-            return error;
+            console.log("error: ", error);
         }
     }
 
@@ -263,21 +281,21 @@ export default function Main_page({ route, navigation }) {
                         location.longitude -
                             location.longitudeDelta
                 ) {
-                    console.log(
-                        "과연?" +
-                            data.onCreatePlace.latitude <=
-                            location.latitude +
-                                location.latitudeDelta &&
-                            data.onCreatePlace.latitude >=
-                                location.latitude -
-                                    location.latitudeDelta &&
-                            data.onCreatePlace.longitude <=
-                                location.longitude +
-                                    location.longitudeDelta &&
-                            data.onCreatePlace.longitude >=
-                                location.longitude -
-                                    location.longitudeDelta
-                    );
+                    // console.log(
+                    //     "과연?" +
+                    //         data.onCreatePlace.latitude <=
+                    //         location.latitude +
+                    //             location.latitudeDelta &&
+                    //         data.onCreatePlace.latitude >=
+                    //             location.latitude -
+                    //                 location.latitudeDelta &&
+                    //         data.onCreatePlace.longitude <=
+                    //             location.longitude +
+                    //                 location.longitudeDelta &&
+                    //         data.onCreatePlace.longitude >=
+                    //             location.longitude -
+                    //                 location.longitudeDelta
+                    // );
                     getMarkers();
                 }
             },
@@ -1283,6 +1301,10 @@ export default function Main_page({ route, navigation }) {
                             e.nativeEvent.coordinate
                         );
                         setDialogVisible_marker(true);
+                    }}
+                    onRegionChangeComplete={(e) => {
+                        console.log(e);
+                        getMarkers(e);
                     }}
                 >
                     {markers}

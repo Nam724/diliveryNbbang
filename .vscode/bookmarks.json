@@ -4,67 +4,67 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 53,
+					"line": 54,
 					"column": 19,
 					"label": "autoLogin"
 				},
 				{
-					"line": 116,
+					"line": 115,
 					"column": 31,
 					"label": "refreshRestaurantList"
 				},
 				{
-					"line": 187,
+					"line": 186,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 237,
+					"line": 255,
 					"column": 4,
 					"label": "realTime_markers"
 				},
 				{
-					"line": 375,
+					"line": 393,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 410,
+					"line": 428,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 427,
+					"line": 445,
 					"column": 4,
 					"label": "새로운 마커 만들기"
 				},
 				{
-					"line": 450,
+					"line": 468,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 513,
+					"line": 531,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 547,
+					"line": 565,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 606,
+					"line": 624,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 644,
+					"line": 662,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1166,
+					"line": 1184,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
