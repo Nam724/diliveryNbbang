@@ -71,22 +71,24 @@ export default function SignUp_page({ navigation }) {
     const sendVerificationCode = async () => {
         if (email && password && phoneNumber) {
             try {
+                const _address = `${bank} ${account}`;
+
                 const { user } = await Auth.signUp({
-                    username: email,
-                    password: password,
+                    username: email.replace(" ", ""),
+                    password: password.replace(" ", ""),
                     attributes: {
-                        email: email, // optional
+                        email: email.replace(" ", ""), // optional
                         phone_number:
                             "+82" +
                             phoneNumber.substring(1), // optional - E.164 number convention
                         // other custom attributes
-                        address: `${bank} ${account}`,
+                        address: account ? _address : null,
                     },
                 });
                 // console.log(user);
                 setVerification_code_sended(true);
             } catch (error) {
-                // console.log('error signing up:', error);
+                console.log("error signing up:", error);
                 if (
                     error.code === "UsernameExistsException"
                 ) {
@@ -139,17 +141,27 @@ export default function SignUp_page({ navigation }) {
             return true;
         } catch (error) {
             // console.log('error confirming sign up', error);
-            if (error === "NetworkError") {
+            if (error == "NetworkError") {
                 Alert.alert(
                     "배달앤빵",
                     "네트워크 오류입니다.",
                     [{ text: "확인" }]
                 );
                 return false;
-            } else if (error === "CodeMismatchException") {
+            } else if (
+                error ==
+                "CodeMismatchException: Invalid verification code provided, please try again."
+            ) {
                 Alert.alert(
                     "배달앤빵",
                     "코드가 일치하지 않습니다.",
+                    [{ text: "확인" }]
+                );
+                return false;
+            } else {
+                Alert.alert(
+                    "배달앤빵",
+                    `오류가 발생했습니다.\n${error}`,
                     [{ text: "확인" }]
                 );
                 return false;
@@ -454,14 +466,8 @@ export default function SignUp_page({ navigation }) {
                                         onChangeText={(
                                             text
                                         ) => {
-                                            const _account =
-                                                bank +
-                                                text.replaceAll(
-                                                    "-",
-                                                    ""
-                                                );
                                             setAccount(
-                                                _account
+                                                text
                                             );
                                         }}
                                         numberOfLines={1}
@@ -506,7 +512,7 @@ export default function SignUp_page({ navigation }) {
                                         >
                                             {!verification_code_sended
                                                 ? "인증코드 보내기(이메일)"
-                                                : "인증코드를 입력하세요"}
+                                                : "인증코드가 이메일로 전송됐습니다."}
                                         </Text>
                                     </TouchableOpacity>
                                     <TextInput
@@ -516,6 +522,12 @@ export default function SignUp_page({ navigation }) {
                                             styles.textInputBox,
                                             styles.normalText,
                                         ]}
+                                        placeholderTextColor={
+                                            colorPack.deactivated
+                                        }
+                                        placeholder={
+                                            "인증코드를 6자리를 입력해주세요"
+                                        }
                                         maxLength={6}
                                         onChangeText={(
                                             verification_code

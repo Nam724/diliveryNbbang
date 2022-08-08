@@ -62,9 +62,9 @@ export default function Main_page({ route, navigation }) {
     // const mapRef = createRef();
 
     useEffect(() => {
-        realTime_Markers();
-        realTime_Restaurant();
+        realTime_Place();
         getLocation();
+        getMarkers();
         // userOrderList("get");
         // console.log("user 입니다: ", user);
     }, []);
@@ -124,7 +124,7 @@ export default function Main_page({ route, navigation }) {
 
         // console.log('refreshRestaurantList',id==='refresh');
         // console.log(selectedMarker)
-        await getMarkers();
+        // await getMarkers();
         if (id === "refresh") {
             await userOrderList("get");
             // console.log("refreshRestaurantList_refresh");
@@ -199,6 +199,7 @@ export default function Main_page({ route, navigation }) {
                 onPress={async () => {
                     // console.log(title, key);
                     await refreshRestaurantList(key);
+                    await realTime_Restaurant(key);
                     setSelectedMarker({
                         coordinate: coordinate,
                         title: title,
@@ -240,8 +241,8 @@ export default function Main_page({ route, navigation }) {
         }
     }
 
-    const realTime_Markers = async () => {
-        API.graphql(
+    const realTime_Place = async () => {
+        await API.graphql(
             graphqlOperation(onCreatePlace)
         ).subscribe({
             next: ({ value: { data } }) => {
@@ -253,65 +254,95 @@ export default function Main_page({ route, navigation }) {
                     data.onCreatePlace
                 );
                 // console.log("newMarker", newMarker);
-                const newMarkers = [...markers, newMarker];
+                let newMarkers = [...markers, newMarker];
                 // console.log("newMarkers", newMarkers);
                 setMarkers(newMarkers);
             },
         });
     };
 
-    const realTime_Restaurant = async () => {
-        API.graphql(
+    const [subCreateRestaurant, setSubCreateRestaurant] =
+        useState();
+
+    const [subUpdateRestaurant, setSubUpdateRestaurant] =
+        useState();
+
+    const [subDeleteRestaurant, setSubDeleteRestaurant] =
+        useState();
+
+    const realTime_Restaurant = async (newPlaceID) => {
+        if (
+            subCreateRestaurant &&
+            subDeleteRestaurant &&
+            subUpdateRestaurant
+        ) {
+            subCreateRestaurant.unsubscribe();
+            subDeleteRestaurant.unsubscribe();
+            subUpdateRestaurant.unsubscribe();
+        }
+        console.log(
+            "realTime_Restaurant, NewPlaceID: ",
+            newPlaceID
+        );
+        const newCreateRestaurant = API.graphql(
             // 음식점 추가될 때마다 새로고침
-            graphqlOperation(onCreateRestaurant)
+            {
+                query: onCreateRestaurant,
+                variables: {
+                    eq: newPlaceID,
+                },
+            }
         ).subscribe({
             next: ({ value: { data } }) => {
-                console.log("realTime_Restaurant", data);
                 let newRestaurant = data.onCreateRestaurant;
-                if (
-                    newRestaurant.placeID ===
-                    selectedMarker.key
-                ) {
-                    refreshRestaurantList("refresh");
-                }
+                console.log(
+                    "realTime_Restaurant_onCreateRestaurant: ",
+                    newRestaurant
+                );
+                refreshRestaurantList(newPlaceID);
             },
         });
 
-        API.graphql(
+        const newUpdateRestaurant = API.graphql(
             // 음식점 업데이트 될 때 새로고침
-            graphqlOperation(onUpdateRestaurant)
+            {
+                query: onCreateRestaurant,
+                variables: {
+                    eq: newPlaceID,
+                },
+            }
         ).subscribe({
             next: ({ value: { data } }) => {
-                console.log("realTime_Restaurant", data);
+                console.log(
+                    "realTime_Restaurant_onUpdateRestaurant: ",
+                    data
+                );
                 let newRestaurant = data.onUpdateRestaurant;
-                // console.log(
-                //     newRestaurant.placeID ===
-                //         selectedMarker.key
-                // );
-                if (
-                    newRestaurant.placeID ===
-                    selectedMarker.key
-                ) {
-                    refreshRestaurantList("refresh");
-                }
+                refreshRestaurantList(newPlaceID);
             },
         });
 
-        API.graphql(
+        const newDeleteRestaurant = API.graphql(
             //  음식점 삭제될 때 새로고침
-            graphqlOperation(onDeleteRestaurant)
+            {
+                query: onCreateRestaurant,
+                variables: {
+                    eq: newPlaceID,
+                },
+            }
         ).subscribe({
             next: ({ value: { data } }) => {
-                console.log("realTime_Restaurant", data);
+                console.log(
+                    "realTime_Restaurant_onDeleteRestaurant: ",
+                    data
+                );
                 let newRestaurant = data.onDeleteRestaurant;
-                if (
-                    newRestaurant.placeID ===
-                    selectedMarker.key
-                ) {
-                    refreshRestaurantList("refresh");
-                }
+                refreshRestaurantList(newPlaceID);
             },
         });
+        setSubCreateRestaurant(newCreateRestaurant);
+        setSubUpdateRestaurant(newUpdateRestaurant);
+        setSubDeleteRestaurant(newDeleteRestaurant);
     };
 
     // get log pressed location and add marker
@@ -398,7 +429,7 @@ export default function Main_page({ route, navigation }) {
         if (
             newRestaurant_name &&
             newRestaurant_fee &&
-            newRestaurant_account
+            newRestaurant_account !== " "
         ) {
             // amplify
             const restaurant = await DataStore.save(
@@ -991,7 +1022,7 @@ export default function Main_page({ route, navigation }) {
                                     onPress={() => {
                                         Alert.alert(
                                             "배달앤빵",
-                                            "카카오톡 프로필 상단 우측의 QR코드 버튼을 누른 뒤 QR코드 밑에 있는 링크 아이콘을 클릭하세요."
+                                            "이미 입력된 계좌는 음식점 등록 후에 바꿀 수 있습니다."
                                         );
                                     }}
                                     disabled={
@@ -1028,7 +1059,7 @@ export default function Main_page({ route, navigation }) {
                                     placeholderTextColor={
                                         colorPack.text_light
                                     }
-                                    disabled={
+                                    editable={
                                         user.address ===
                                         null
                                     }

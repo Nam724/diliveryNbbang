@@ -268,7 +268,7 @@ export default function Setting_page({
                                     }\n\n전화번호 : ${
                                         user.phone_number
                                     }\n\n계좌번호 : ${
-                                        user.address !== " "
+                                        user.address
                                             ? user.address
                                             : "없음"
                                     }`}

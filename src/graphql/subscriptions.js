@@ -2,10 +2,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateMember = /* GraphQL */ `
-    subscription OnCreateMember(
-        $filter: ModelSubscriptionMemberFilterInput
-    ) {
-        onCreateMember(filter: $filter) {
+    subscription OnCreateMember {
+        onCreateMember {
             id
             username
             email
@@ -22,10 +20,8 @@ export const onCreateMember = /* GraphQL */ `
     }
 `;
 export const onUpdateMember = /* GraphQL */ `
-    subscription OnUpdateMember(
-        $filter: ModelSubscriptionMemberFilterInput
-    ) {
-        onUpdateMember(filter: $filter) {
+    subscription OnUpdateMember {
+        onUpdateMember {
             id
             username
             email
@@ -42,10 +38,8 @@ export const onUpdateMember = /* GraphQL */ `
     }
 `;
 export const onDeleteMember = /* GraphQL */ `
-    subscription OnDeleteMember(
-        $filter: ModelSubscriptionMemberFilterInput
-    ) {
-        onDeleteMember(filter: $filter) {
+    subscription OnDeleteMember {
+        onDeleteMember {
             id
             username
             email
@@ -61,23 +55,30 @@ export const onDeleteMember = /* GraphQL */ `
         }
     }
 `;
+
 export const onCreateRestaurant = /* GraphQL */ `
-    subscription onCreateRestaurant {
-        onCreateRestaurant {
+    subscription onCreateRestaurant($eq: ID) {
+        onCreateRestaurant(
+            filter: { placeID: { eq: $eq } }
+        ) {
             placeID
         }
     }
 `;
 export const onUpdateRestaurant = /* GraphQL */ `
-    subscription onUpdateRestaurant {
-        onUpdateRestaurant {
+    subscription onUpdateRestaurant($eq: ID) {
+        onUpdateRestaurant(
+            filter: { placeID: { eq: $eq } }
+        ) {
             placeID
         }
     }
 `;
 export const onDeleteRestaurant = /* GraphQL */ `
-    subscription onDeleteRestaurant {
-        onDeleteRestaurant {
+    subscription onDeleteRestaurant($eq: ID) {
+        onDeleteRestaurant(
+            filter: { placeID: { eq: $eq } }
+        ) {
             placeID
         }
     }
@@ -97,80 +98,34 @@ export const onCreatePlace = /* GraphQL */ `
     }
 `;
 export const onUpdatePlace = /* GraphQL */ `
-    subscription OnUpdatePlace(
-        $filter: ModelSubscriptionPlaceFilterInput
-    ) {
-        onUpdatePlace(filter: $filter) {
+    subscription OnUpdatePlace {
+        onUpdatePlace {
+            createdAt
             id
             latitude
             longitude
-            name
-            Restaurants_in_a_place {
-                items {
-                    id
-                    name
-                    fee
-                    url
-                    makerID
-                    placeID
-                    num_members
-                    account
-                    isFinishRecruiting
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                }
-                nextToken
-                startedAt
-            }
             makerID
+            name
             num_restaurants
-            createdAt
             updatedAt
-            _version
-            _deleted
-            _lastChangedAt
         }
     }
 `;
 export const onDeletePlace = /* GraphQL */ `
-    subscription OnDeletePlace(
-        $filter: ModelSubscriptionPlaceFilterInput
-    ) {
-        onDeletePlace(filter: $filter) {
+    subscription OnDeletePlace {
+        onDeletePlace {
             id
             latitude
             longitude
             name
-            Restaurants_in_a_place {
-                items {
-                    id
-                    name
-                    fee
-                    url
-                    makerID
-                    placeID
-                    num_members
-                    account
-                    isFinishRecruiting
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                }
-                nextToken
-                startedAt
-            }
-            makerID
-            num_restaurants
             createdAt
+            id
+            latitude
+            longitude
+            makerID
+            name
+            num_restaurants
             updatedAt
-            _version
-            _deleted
-            _lastChangedAt
         }
     }
 `;

@@ -4,72 +4,67 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 58,
+					"line": 53,
 					"column": 19,
 					"label": "autoLogin"
 				},
 				{
-					"line": 122,
+					"line": 117,
 					"column": 31,
 					"label": "refreshRestaurantList"
 				},
 				{
-					"line": 193,
+					"line": 188,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 242,
+					"line": 238,
 					"column": 4,
 					"label": "realTime_markers"
 				},
 				{
-					"line": 262,
-					"column": 29,
-					"label": "realTime_Restaurant"
-				},
-				{
-					"line": 321,
+					"line": 352,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 356,
+					"line": 387,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 373,
+					"line": 404,
 					"column": 4,
 					"label": "새로운 마커 만들기"
 				},
 				{
-					"line": 396,
+					"line": 427,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 459,
+					"line": 490,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 493,
+					"line": 524,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 552,
+					"line": 583,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 590,
+					"line": 621,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1112,
+					"line": 1143,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
@@ -234,14 +229,14 @@
 			"path": "src/screen/signup.js",
 			"bookmarks": [
 				{
-					"line": 62,
-					"column": 4,
-					"label": "회원가입"
+					"line": 70,
+					"column": 24,
+					"label": "인증번호 보내기"
 				},
 				{
-					"line": 111,
-					"column": 4,
-					"label": "인증코드 확인(회원가입 완료)"
+					"line": 128,
+					"column": 20,
+					"label": "인증번호 확인 후 회원가입 완료"
 				}
 			]
 		},
