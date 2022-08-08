@@ -198,7 +198,7 @@ export default function Main_page({ route, navigation }) {
             <Marker
                 coordinate={coordinate}
                 title={title}
-                description={`${num_restaurants}개의 음식점`}
+                // description={`${num_restaurants}개의 음식점`}
                 key={key}
                 onPress={async () => {
                     // console.log(title, key);
