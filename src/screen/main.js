@@ -32,7 +32,7 @@ import {
     Main_restaurantList_sample,
 } from "./main_restaurantList";
 import { DataStore } from "@aws-amplify/datastore";
-import { Restaurant, Place, Member } from "../models";
+import { Restaurant, Place, Member, Chat } from "../models";
 import * as Linking from "expo-linking";
 import { useFocusEffect } from "@react-navigation/native";
 import DialogInput from "react-native-dialog-input";
@@ -403,12 +403,16 @@ export default function Main_page({ route, navigation }) {
     // make new marker
     async function makeNewMarker(coordinate, title) {
         if (coordinate && title) {
+            console.log(
+                "makeNewMarker: ",
+                coordinate,
+                title
+            );
             await DataStore.save(
                 new Place({
                     latitude: coordinate.latitude,
                     longitude: coordinate.longitude,
                     name: title,
-                    Restaurants_in_a_place: [],
                     makerID: user.username,
                     num_restaurants: 0,
                 })
@@ -494,6 +498,7 @@ export default function Main_page({ route, navigation }) {
                     isFinishRecruiting: false,
                 })
             );
+
             setNewRestaurant_name(null);
             setNewRestaurant_fee(null);
             setNewRestaurant_url(null);

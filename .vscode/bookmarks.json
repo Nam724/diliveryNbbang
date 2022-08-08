@@ -19,37 +19,37 @@
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 437,
+					"line": 441,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 477,
+					"line": 481,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 540,
+					"line": 545,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 574,
+					"line": 579,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 633,
+					"line": 638,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 671,
+					"line": 676,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1198,
+					"line": 1203,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}

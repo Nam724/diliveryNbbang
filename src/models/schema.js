@@ -1,5 +1,87 @@
 export const schema = {
     "models": {
+        "Chat": {
+            "name": "Chat",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "message": {
+                    "name": "message",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "creator": {
+                    "name": "creator",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "restaurantID": {
+                    "name": "restaurantID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Chats",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byRestaurant",
+                        "fields": [
+                            "restaurantID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Member": {
             "name": "Member",
             "fields": {
@@ -39,18 +121,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "restaurantID": {
-                    "name": "restaurantID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "phone_number": {
                     "name": "phone_number",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
+                    "attributes": []
+                },
+                "restaurantID": {
+                    "name": "restaurantID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -139,7 +221,7 @@ export const schema = {
                     "name": "makerID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "placeID": {
@@ -181,8 +263,22 @@ export const schema = {
                     "name": "isFinishRecruiting",
                     "isArray": false,
                     "type": "Boolean",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
+                },
+                "Chats": {
+                    "name": "Chats",
+                    "isArray": true,
+                    "type": {
+                        "model": "Chat"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "restaurantID"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -249,21 +345,21 @@ export const schema = {
                     "name": "latitude",
                     "isArray": false,
                     "type": "Float",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "longitude": {
                     "name": "longitude",
                     "isArray": false,
                     "type": "Float",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "name": {
                     "name": "name",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "Restaurants_in_a_place": {
@@ -339,5 +435,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "3950013f7e56c76964ac7fc260914bf0"
+    "version": "23ead6b687deefd737adaa6a45c21751"
 };

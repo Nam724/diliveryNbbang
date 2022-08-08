@@ -4,6 +4,10 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+type ChatMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type MemberMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -16,14 +20,25 @@ type PlaceMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
+export declare class Chat {
+  readonly id: string;
+  readonly message?: string | null;
+  readonly creator?: string | null;
+  readonly restaurantID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Chat, ChatMetaData>);
+  static copyOf(source: Chat, mutator: (draft: MutableModel<Chat, ChatMetaData>) => MutableModel<Chat, ChatMetaData> | void): Chat;
+}
+
 export declare class Member {
   readonly id: string;
   readonly username?: string | null;
   readonly email?: string | null;
   readonly menu?: (string | null)[] | null;
   readonly price?: number | null;
-  readonly restaurantID: string;
   readonly phone_number?: string | null;
+  readonly restaurantID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Member, MemberMetaData>);
@@ -35,12 +50,13 @@ export declare class Restaurant {
   readonly name?: string | null;
   readonly fee?: number | null;
   readonly url?: string | null;
-  readonly makerID?: string | null;
+  readonly makerID: string;
   readonly placeID: string;
   readonly Members_in_restaurant?: (Member | null)[] | null;
   readonly num_members?: number | null;
   readonly account?: string | null;
-  readonly isFinishRecruiting?: boolean | null;
+  readonly isFinishRecruiting: boolean;
+  readonly Chats?: (Chat | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Restaurant, RestaurantMetaData>);
@@ -49,9 +65,9 @@ export declare class Restaurant {
 
 export declare class Place {
   readonly id: string;
-  readonly latitude: number;
-  readonly longitude: number;
-  readonly name: string;
+  readonly latitude?: number | null;
+  readonly longitude?: number | null;
+  readonly name?: string | null;
   readonly Restaurants_in_a_place?: (Restaurant | null)[] | null;
   readonly makerID?: string | null;
   readonly num_restaurants?: number | null;
