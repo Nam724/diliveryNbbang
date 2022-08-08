@@ -61,16 +61,16 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     mapContainer: {
-        height: (height * 900) / 2000,
+        height: (height * 800) / 2000,
         width: width,
         marginBottom: (height * 10) / 2000,
     },
     map: {
-        height: (height * 900) / 2000,
+        height: (height * 800) / 2000,
         width: width,
     },
     restaurantContainer: {
-        height: (height * 710) / 2000,
+        height: (height * 750) / 2000,
         width: width,
     },
     locationInfoContainer: {

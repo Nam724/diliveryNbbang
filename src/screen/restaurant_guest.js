@@ -551,9 +551,11 @@ export default function Restaurant_page_guest({
                                     {
                                         restaurant:
                                             restaurant,
+                                        user: user,
                                     }
                                 );
                             }}
+                            disabled={!isRegistered}
                         >
                             <View
                                 styles={
@@ -570,7 +572,9 @@ export default function Restaurant_page_guest({
                                         name="message"
                                         size={iconSize}
                                         color={
-                                            colorPack.text_dark
+                                            isRegistered
+                                                ? colorPack.text_dark
+                                                : colorPack.deactivated
                                         }
                                         style={
                                             styles.restaurantButtonIcon

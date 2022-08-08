@@ -747,6 +747,7 @@ export default function Restaurant_page_auth({
                                     {
                                         restaurant:
                                             restaurant,
+                                        user: user,
                                     }
                                 );
                             }}

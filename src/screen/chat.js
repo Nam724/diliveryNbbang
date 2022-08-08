@@ -19,103 +19,83 @@ import {
 } from "../style/style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function Chat_page({ navigation, route }) {
-    // const restaurant = route.params.restaurant;
+    const restaurant = route.params.restaurant;
+    const user = route.params.user;
+    console.log("user", user);
+    console.log("restaurant", restaurant);
+    let observeChat = null;
     useEffect(() => {
-        // realTime_Chat();
+        observeChat = DataStore.observeQuery(Chat, (c) =>
+            c.restaurantID("eq", restaurant.id)
+        ).subscribe((snapshot) => {
+            const { items, isSync } = snapshot;
+            console.log("items", items);
+            let prevChat = [];
+            items.forEach((item) => {
+                const newChat = Message({
+                    chat: item,
+                    user: user,
+                });
+
+                prevChat.push(newChat);
+            });
+            setMessages(prevChat);
+            console.log("messages", messages);
+        });
+        return () => {
+            observeChat.unsubscribe();
+        };
     }, []);
 
-    // const realTime_Chat = DataStore.observeQuery(
-    //     Chat,
-    //     (q) => {
-    //         q.restaurantID("eq", restaurant.id);
-    //     }
-    // ).subscribe(({ items, isSynced }) => {
-    //     console.log(
-    //         `[Snapshot] item count: ${items.length}, isSynced: ${isSynced}`
-    //     );
-    // });
+    const [inputMessage, setInputMessage] = useState("");
 
-    const [messages, setMessages] = useState([
-        Message({
-            text: "123123asdfgasdgqkjhewf ;asdfh ;aowifh;oaisdhflakiuhfqwiuehrf;asdoigfhao;sdigh",
-            creator: "데모",
-            id: "1",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "2",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "3",
-        }),
-        MyMessage({
-            text: "123123",
-            creator: "데모",
-            id: "4",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "5",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "3",
-        }),
-        MyMessage({
-            text: "123123",
-            creator: "데모",
-            id: "4",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "5",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "3",
-        }),
-        MyMessage({
-            text: "123123",
-            creator: "데모",
-            id: "4",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "5",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "3",
-        }),
-        MyMessage({
-            text: "123123",
-            creator: "데모",
-            id: "4",
-        }),
-        Message({
-            text: "123123",
-            creator: "데모",
-            id: "5",
-        }),
-    ]);
+    const sendMessage = async () => {
+        await DataStore.save(
+            new Chat({
+                message: inputMessage,
+                creatorID: user.email,
+                creatorUsername: user.username,
+                restaurantID: restaurant.id,
+            })
+        );
+        setInputMessage("");
+    };
+    const restaurantID = restaurant.id;
+    const getMessages = async () => {
+        const _messages = await DataStore.query(
+            Chat,
+            (c) => {
+                c.restaurantID("eq", restaurantID);
+            }
+        );
+        console.log("_messages", _messages);
+        let newMessages = [];
+        _messages.forEach((m) => {
+            newMessages.push(Message(m, user));
+        });
+        setMessages(newMessages);
+        console.log("newMessages", newMessages);
+    };
+
+    const [messages, setMessages] = useState([]);
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text
                     style={styles.highlightText}
-                >{`음식점 주문자들의 채팅방입니다.`}</Text>
+                >{`${restaurant.name} 주문자들의 채팅방입니다.`}</Text>
             </View>
-            <ScrollView>
+            <ScrollView
+                ref={(ref) => {
+                    this.scrollView = ref;
+                }}
+                onContentSizeChange={() => {
+                    this.scrollView.scrollToEnd({
+                        animated: true,
+                    });
+                }}
+            >
                 <View style={styles.chatContainer}>
                     {messages}
                 </View>
@@ -134,10 +114,15 @@ export default function Chat_page({ navigation, route }) {
                         placeholderTextColor={
                             colorPack.deactivated
                         }
+                        onChangeText={(text) =>
+                            setInputMessage(text)
+                        }
+                        value={inputMessage}
                     />
 
                     <TouchableOpacity
                         style={styles.chatSendButton}
+                        onPress={sendMessage}
                     >
                         <MaterialCommunityIcons
                             name="send"
@@ -151,12 +136,37 @@ export default function Chat_page({ navigation, route }) {
     );
 }
 
-function Message({ text, creator, id }) {
-    return (
+function Message({ chat, user }) {
+    // console.log("chat", chat);
+    const creator = chat.creatorUsername;
+    const creatorEmail = chat.creatorID.split("@")[0];
+    const text = chat.message;
+    const id = chat.id;
+    return creator === user.username ? (
+        <View style={styles.myMessageContainer} key={id}>
+            <View style={styles.creator}>
+                <Text style={styles.deactivatedText}></Text>
+            </View>
+
+            <View style={styles.myMessage}>
+                <Text
+                    style={[
+                        styles.normalText,
+                        {
+                            textAlignVertical: "center",
+                            textAlign: "right",
+                        },
+                    ]}
+                >
+                    {text}
+                </Text>
+            </View>
+        </View>
+    ) : (
         <View style={styles.messageContainer} key={id}>
             <View style={styles.creator}>
                 <Text style={styles.deactivatedText}>
-                    {creator}
+                    {creatorEmail}
                 </Text>
             </View>
 
@@ -167,32 +177,6 @@ function Message({ text, creator, id }) {
                         {
                             textAlignVertical: "center",
                             textAlign: "left",
-                        },
-                    ]}
-                >
-                    {text}
-                </Text>
-            </View>
-        </View>
-    );
-}
-
-function MyMessage({ text, creator, id }) {
-    return (
-        <View style={styles.myMessageContainer} key={id}>
-            <View style={styles.creator}>
-                <Text style={styles.deactivatedText}>
-                    {creator}
-                </Text>
-            </View>
-
-            <View style={styles.message}>
-                <Text
-                    style={[
-                        styles.normalText,
-                        {
-                            textAlignVertical: "center",
-                            textAlign: "right",
                         },
                     ]}
                 >

@@ -23,8 +23,9 @@ type PlaceMetaData = {
 export declare class Chat {
   readonly id: string;
   readonly message?: string | null;
-  readonly creator?: string | null;
+  readonly creatorID?: string | null;
   readonly restaurantID: string;
+  readonly creatorUsername?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Chat, ChatMetaData>);

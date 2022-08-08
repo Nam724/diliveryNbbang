@@ -1,8 +1,9 @@
 type Chat @model @auth(rules: [{allow: public}]) {
   id: ID!
   message: String
-  creator: String
+  creatorID: String
   restaurantID: ID! @index(name: "byRestaurant")
+  creatorUsername: String
 }
 
 type Member @model @auth(rules: [{allow: public}]) {
