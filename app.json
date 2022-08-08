@@ -2,7 +2,7 @@
     "expo": {
         "name": "배달앤빵",
         "slug": "bts",
-        "version": "1.0.11",
+        "version": "1.0.12",
         "orientation": "portrait",
         "icon": "./assets/icon.png",
         "splash": {
@@ -23,7 +23,7 @@
             ]
         ],
         "ios": {
-            "buildNumber": "19",
+            "buildNumber": "21",
             "supportsTablet": true,
             "bundleIdentifier": "diliveryNbbang",
             "config": {
@@ -40,7 +40,7 @@
                 "backgroundColor": "#17263C"
             },
             "package": "expo.eject.BTS_PseudoTesla",
-            "versionCode": 19,
+            "versionCode": 21,
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
