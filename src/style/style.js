@@ -264,4 +264,71 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: colorPack.highlight_dark,
     },
+    // 채팅방
+    chatContainer: {
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        flexDirection: "column",
+    },
+    chatInputContainer: {
+        flexDirection: "row",
+    },
+    messageContainer: {
+        justifyContent: "center",
+        alignItems: "flex-start",
+        width: width * 0.9,
+        marginHorizontal: width * 0.05,
+        marginVertical: (height * 10) / 2000,
+    },
+    myMessageContainer: {
+        justifyContent: "center",
+        alignItems: "flex-end",
+        width: width * 0.9,
+        marginHorizontal: width * 0.05,
+        marginVertical: (height * 10) / 2000,
+    },
+    message: {
+        backgroundColor: colorPack.highlight_dark,
+        maxWidth: width * 0.6,
+        borderRadius: width * 0.025,
+        padding: width * 0.03,
+        justifyContent: "center",
+        alignItems: "flex-start",
+    },
+    myMessage: {
+        backgroundColor: colorPack.highlight_light,
+        maxWidth: width * 0.6,
+        borderRadius: width * 0.025,
+        padding: width * 0.03,
+        justifyContent: "center",
+        alignItems: "flex-end",
+    },
+    creator: {
+        paddingHorizontal: width * 0.025,
+    },
+    chatInputContainer: {
+        flexDirection: "row",
+        width: width,
+        borderColor: colorPack.highlight_light,
+
+        alignItems: "center",
+        justifyContent: "space-around",
+        height: (height * 150) / 2000,
+    },
+    chatInput: {
+        width: width * 0.8,
+        height: (height * 100) / 2000,
+        borderRadius: (height * 25) / 2000,
+        borderColor: colorPack.highlight_dark,
+        borderWidth: (width * 10) / 2000,
+        marginVertical: (height * 35) / 2000,
+        color: colorPack.text_dark,
+        paddingHorizontal: (width * 20) / 1000,
+    },
+    chatSendButton: {
+        alignItems: "center",
+        justifyContent: "center",
+        width: (width * 100) / 1000,
+        height: (height * 100) / 2000,
+    },
 });
