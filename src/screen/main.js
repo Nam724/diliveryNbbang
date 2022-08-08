@@ -62,9 +62,9 @@ export default function Main_page({ route, navigation }) {
     // const mapRef = createRef();
 
     useEffect(() => {
-        realTime_Place();
         getLocation();
         getMarkers();
+        realTime_Place();
         // userOrderList("get");
         // console.log("user 입니다: ", user);
     }, []);
@@ -94,15 +94,14 @@ export default function Main_page({ route, navigation }) {
         //   alert('Permission to access location was denied');
         //   // return;
         // }
-        let _location =
+        const userLocation =
             await Location.getCurrentPositionAsync({
                 accuracy: Location.Accuracy.Highest,
-                enableHighAccuracy: true,
-                timeout: 10000,
+                maximumAge: 10000,
             });
         setLocation({
-            latitude: _location.coords.latitude,
-            longitude: _location.coords.longitude,
+            latitude: userLocation.coords.latitude,
+            longitude: userLocation.coords.longitude,
             latitudeDelta: 0.003,
             longitudeDelta: 0.003,
         });
@@ -246,17 +245,41 @@ export default function Main_page({ route, navigation }) {
             graphqlOperation(onCreatePlace)
         ).subscribe({
             next: ({ value: { data } }) => {
-                // console.log(
-                //     "realTime_getMarkers",
-                //     data.onCreatePlace
-                // );
-                let newMarker = returnMarker(
-                    data.onCreatePlace
-                );
-                // console.log("newMarker", newMarker);
-                let newMarkers = [...markers, newMarker];
-                // console.log("newMarkers", newMarkers);
-                setMarkers(newMarkers);
+                console.log(data);
+                console.log(location);
+
+                if (
+                    location &&
+                    data.onCreatePlace.latitude <=
+                        location.latitude +
+                            location.latitudeDelta &&
+                    data.onCreatePlace.latitude >=
+                        location.latitude -
+                            location.latitudeDelta &&
+                    data.onCreatePlace.longitude <=
+                        location.longitude +
+                            location.longitudeDelta &&
+                    data.onCreatePlace.longitude >=
+                        location.longitude -
+                            location.longitudeDelta
+                ) {
+                    console.log(
+                        "과연?" +
+                            data.onCreatePlace.latitude <=
+                            location.latitude +
+                                location.latitudeDelta &&
+                            data.onCreatePlace.latitude >=
+                                location.latitude -
+                                    location.latitudeDelta &&
+                            data.onCreatePlace.longitude <=
+                                location.longitude +
+                                    location.longitudeDelta &&
+                            data.onCreatePlace.longitude >=
+                                location.longitude -
+                                    location.longitudeDelta
+                    );
+                    getMarkers();
+                }
             },
         });
     };
