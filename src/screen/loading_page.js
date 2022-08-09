@@ -10,7 +10,6 @@ import {
     Text,
     Image,
 } from "react-native";
-import { RestaurantBannerAds } from "../../utils/Ads";
 
 export default function Loading_page({
     route,
@@ -43,9 +42,6 @@ export default function Loading_page({
                     {"정보를 불러오는 중입니다."}
                 </Text>
             </View>
-            <RestaurantBannerAds />
-            <RestaurantBannerAds />
-            <RestaurantBannerAds />
             <ActivityIndicator
                 size="large"
                 animating={true}

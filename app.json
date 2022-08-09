@@ -23,11 +23,12 @@
             ]
         ],
         "ios": {
-            "buildNumber": "21",
+            "buildNumber": "23",
             "supportsTablet": true,
             "bundleIdentifier": "diliveryNbbang",
             "config": {
-                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I"
+                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I",
+                "googleMobileAdsAppId": "ca-app-pub-1145139773627965~6690861155"
             },
             "infoPlist": {
                 "NSLocationWhenInUseUsageDescription": " 위치 정보 사용을 허가해주세요. 위치 정보는 현재 위치 기반 등록된 마커 장소를 얻는데 필요합니다. 현재 위치 근처에 있는 마커들을 골라내서 마커에 있는 음식점들을 불러올 수 있습니다. 위치 정보는 사용자가 앱을 종료하면 삭제됩니다.",
@@ -40,12 +41,12 @@
                 "backgroundColor": "#17263C"
             },
             "package": "expo.eject.BTS_PseudoTesla",
-            "versionCode": 21,
+            "versionCode": 23,
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
                 },
-                "googleMobileAdsAppId": "ca-app-pub-1145139773627965/8701930912"
+                "googleMobileAdsAppId": "ca-app-pub-1145139773627965~9303462498"
             },
             "permissions": [
                 "android.permission.ACCESS_COARSE_LOCATION",
@@ -53,9 +54,6 @@
                 "android.permission.FOREGROUND_SERVICE",
                 "android.permission.INTERNET"
             ]
-        },
-        "web": {
-            "favicon": "./assets/favicon.png"
         }
     }
 }

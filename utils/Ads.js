@@ -6,13 +6,13 @@ import {
     getPermissionsAsync,
 } from "expo-ads-admob";
 import { useEffect, useState } from "react";
-import { Platform, View } from "react-native";
+import { Alert, Platform, View } from "react-native";
 import { styles } from "../src/style/style";
 
-const adBannerUnitId =
-    Platform.OS === "android"
-        ? "ca-app-pub-1145139773627965/8701930912"
-        : "ca-app-pub-3940256099942544/2934735716"; // 샘플 광고 ID
+const adBannerUnitId = Platform.select({
+    ios: "ca-app-pub-1145139773627965/9125452802",
+    android: "ca-app-pub-1145139773627965/8701930912",
+});
 
 export function RestaurantBannerAds() {
     useEffect(() => {
@@ -24,18 +24,12 @@ export function RestaurantBannerAds() {
     const getPermissions = async () => {
         let { status } = true;
         await setTestDeviceIDAsync("EMULATOR");
-
-        status = await requestPermissionsAsync();
-        status = await getPermissionsAsync();
         await AdMobInterstitial.setAdUnitID(adBannerUnitId); // Test ID, Replace with your-admob-unit-id
-        if (status === "granted") {
-            await AdMobInterstitial.requestAdAsync({
-                servePersonalizedAds: true,
-            });
-            await AdMobInterstitial.showAdAsync();
-
-            setIsAdsEnabled(true);
-        }
+        await AdMobInterstitial.requestAdAsync({
+            servePersonalizedAds: true,
+        });
+        await AdMobInterstitial.showAdAsync();
+        setIsAdsEnabled(true);
     };
 
     return isAdsEnabled ? (
@@ -45,7 +39,8 @@ export function RestaurantBannerAds() {
                 adUnitID={adBannerUnitId} // Test ID, Replace with your-admob-unit-id
                 servePersonalizedAds={true} // true or false
                 onDidFailToReceiveAdWithError={(err) => {
-                    console.log(err);
+                    setIsAdsEnabled(false);
+                    alert(err);
                 }}
             />
         </View>

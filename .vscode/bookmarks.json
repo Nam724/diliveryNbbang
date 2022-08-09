@@ -94,62 +94,62 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 69,
+					"line": 68,
 					"column": 20,
 					"label": "해당 음식점의 Member 객체 불러오기"
 				},
 				{
-					"line": 99,
+					"line": 98,
 					"column": 19,
 					"label": "송금하기 버튼"
 				},
 				{
-					"line": 164,
+					"line": 163,
 					"column": 23,
 					"label": "주문하기"
 				},
 				{
-					"line": 211,
+					"line": 210,
 					"column": 26,
 					"label": "음식점 삭제"
 				},
 				{
-					"line": 251,
+					"line": 250,
 					"column": 17,
 					"label": "메뉴 추가"
 				},
 				{
-					"line": 308,
+					"line": 307,
 					"column": 21,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 327,
+					"line": 326,
 					"column": 27,
 					"label": "모집 재시작"
 				},
 				{
-					"line": 366,
+					"line": 365,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 456,
+					"line": 455,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 471,
+					"line": 470,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 499,
+					"line": 498,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 971,
+					"line": 969,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
