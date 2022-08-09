@@ -1,10 +1,9 @@
 import {
     AdMobBanner,
     AdMobInterstitial,
-    PublisherBanner,
-    AdMobRewarded,
     setTestDeviceIDAsync,
     requestPermissionsAsync,
+    getPermissionsAsync,
 } from "expo-ads-admob";
 import { useEffect, useState } from "react";
 import { Platform, View } from "react-native";
@@ -24,10 +23,19 @@ export function RestaurantBannerAds() {
     );
     const getPermissions = async () => {
         let { status } = true;
-        if (Platform.OS === "ios") {
-            status = await requestPermissionsAsync();
+        await setTestDeviceIDAsync("EMULATOR");
+
+        status = await requestPermissionsAsync();
+        status = await getPermissionsAsync();
+        await AdMobInterstitial.setAdUnitID(adBannerUnitId); // Test ID, Replace with your-admob-unit-id
+        if (status === "granted") {
+            await AdMobInterstitial.requestAdAsync({
+                servePersonalizedAds: true,
+            });
+            await AdMobInterstitial.showAdAsync();
+
+            setIsAdsEnabled(true);
         }
-        setIsAdsEnabled(true);
     };
 
     return isAdsEnabled ? (
