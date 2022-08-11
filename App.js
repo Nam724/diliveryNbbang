@@ -3,6 +3,9 @@ import SignUp_page from "./src/screen/signup";
 import SignIn_page from "./src/screen/signin";
 import Restaurant_page from "./src/screen/restaurant";
 import { Amplify } from "aws-amplify";
+import PushNotification from "@aws-amplify/pushnotification/lib/PushNotification";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+
 import awsconfig from "./src/aws-exports";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,7 +18,12 @@ import Chat_page from "./src/screen/chat";
 import { useEffect } from "react";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 
-Amplify.configure(awsconfig);
+Amplify.configure({
+    awsconfig,
+    PushNotification: {
+        requestIOSPermissions: true,
+    },
+});
 
 const Stack = createStackNavigator();
 
