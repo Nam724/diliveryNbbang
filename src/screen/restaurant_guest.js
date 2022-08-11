@@ -28,6 +28,7 @@ import MapView, {
 import * as Linking from "expo-linking";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { sendSMSAsync } from "expo-sms";
+import { RestaurantGuestBannerAds } from "../../utils/Ads";
 export default function Restaurant_page_guest({
     route,
     navigation,
@@ -485,6 +486,7 @@ export default function Restaurant_page_guest({
                 </Text>
             </View>
             <SafeAreaView>
+                <RestaurantGuestBannerAds />
                 <ScrollView
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}

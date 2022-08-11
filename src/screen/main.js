@@ -1,4 +1,3 @@
-import { API, graphqlOperation } from "aws-amplify";
 import {
     View,
     Text,
@@ -43,14 +42,7 @@ import {
     MaterialIcons,
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { RestaurantBannerAds } from "../../utils/Ads";
-import {
-    onCreatePlace,
-    onCreateRestaurant,
-    onDeleteRestaurant,
-    onUpdateRestaurant,
-} from "../graphql/subscriptions";
-import { listPlaces } from "../graphql/queries";
+import { MainBannerAds } from "../../utils/Ads";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -63,7 +55,7 @@ export default function Main_page({ route, navigation }) {
     // const mapRef = createRef();
 
     useEffect(() => {
-        getLocation();
+        getPermissions();
         // realTime_Place();
         // userOrderList("get");
         // console.log("user 입니다: ", user);
@@ -80,10 +72,10 @@ export default function Main_page({ route, navigation }) {
         }, [])
     );
 
-    // get location
-    const getLocation = async () => {
+    const getPermissions = async () => {
         setIsLoading(true);
 
+        // get location
         let { status_location_permission } =
             await Location.requestForegroundPermissionsAsync();
         // console.log(
@@ -268,50 +260,6 @@ export default function Main_page({ route, navigation }) {
         }
     }
 
-    const realTime_Place = async () => {
-        await API.graphql(
-            graphqlOperation(onCreatePlace)
-        ).subscribe({
-            next: ({ value: { data } }) => {
-                console.log(data);
-                console.log(location);
-
-                if (
-                    location &&
-                    data.onCreatePlace.latitude <=
-                        location.latitude +
-                            location.latitudeDelta &&
-                    data.onCreatePlace.latitude >=
-                        location.latitude -
-                            location.latitudeDelta &&
-                    data.onCreatePlace.longitude <=
-                        location.longitude +
-                            location.longitudeDelta &&
-                    data.onCreatePlace.longitude >=
-                        location.longitude -
-                            location.longitudeDelta
-                ) {
-                    // console.log(
-                    //     "과연?" +
-                    //         data.onCreatePlace.latitude <=
-                    //         location.latitude +
-                    //             location.latitudeDelta &&
-                    //         data.onCreatePlace.latitude >=
-                    //             location.latitude -
-                    //                 location.latitudeDelta &&
-                    //         data.onCreatePlace.longitude <=
-                    //             location.longitude +
-                    //                 location.longitudeDelta &&
-                    //         data.onCreatePlace.longitude >=
-                    //             location.longitude -
-                    //                 location.longitudeDelta
-                    // );
-                    getMarkers();
-                }
-            },
-        });
-    };
-
     const [subCreateRestaurant, setSubCreateRestaurant] =
         useState();
 
@@ -322,80 +270,56 @@ export default function Main_page({ route, navigation }) {
         useState();
 
     const realTime_Restaurant = async (newPlaceID) => {
-        if (
-            subCreateRestaurant &&
-            subDeleteRestaurant &&
-            subUpdateRestaurant
-        ) {
+        if (subCreateRestaurant) {
             subCreateRestaurant.unsubscribe();
-            subDeleteRestaurant.unsubscribe();
-            subUpdateRestaurant.unsubscribe();
         }
         console.log(
             "realTime_Restaurant, NewPlaceID: ",
             newPlaceID
         );
-        const newCreateRestaurant = API.graphql(
-            // 음식점 추가될 때마다 새로고침
-            {
-                query: onCreateRestaurant,
-                variables: {
-                    eq: newPlaceID,
-                },
-            }
-        ).subscribe({
-            next: ({ value: { data } }) => {
-                let newRestaurant = data.onCreateRestaurant;
-                console.log(
-                    "realTime_Restaurant_onCreateRestaurant: ",
-                    newRestaurant
-                );
-                refreshRestaurantList(newPlaceID);
-            },
-        });
 
-        const newUpdateRestaurant = API.graphql(
-            // 음식점 업데이트 될 때 새로고침
-            {
-                query: onCreateRestaurant,
-                variables: {
-                    eq: newPlaceID,
-                },
-            }
-        ).subscribe({
-            next: ({ value: { data } }) => {
-                console.log(
-                    "realTime_Restaurant_onUpdateRestaurant: ",
-                    data
-                );
-                let newRestaurant = data.onUpdateRestaurant;
-                refreshRestaurantList(newPlaceID);
-            },
-        });
+        const newCreateRestaurant = DataStore.observeQuery(
+            Restaurant,
+            (r) =>
+                r
+                    .placeID("eq", newPlaceID)
+                    .subscribe((snapshot) => {
+                        const { items, isSync } = snapshot;
 
-        const newDeleteRestaurant = API.graphql(
-            //  음식점 삭제될 때 새로고침
-            {
-                query: onCreateRestaurant,
-                variables: {
-                    eq: newPlaceID,
-                },
-            }
-        ).subscribe({
-            next: ({ value: { data } }) => {
-                console.log(
-                    "realTime_Restaurant_onDeleteRestaurant: ",
-                    data
-                );
-                let newRestaurant = data.onDeleteRestaurant;
-                refreshRestaurantList(newPlaceID);
-            },
-        });
+                        console.log(
+                            "realTime_Restaurant_onCreateRestaurant: ",
+                            snapshot
+                        );
+                        let _restaurantList = [];
+                        items
+                            .sort((a, b) => {
+                                const price1 =
+                                    a.fee / a.num_members;
+                                const price2 =
+                                    b.fee / b.num_members;
+                                return price1 - price2;
+                            })
+                            .forEach(async (r, index) => {
+                                // console.log("userOrderList", userOrderList);
+                                _restaurantList.push(
+                                    Main_restaurantList(
+                                        user,
+                                        r,
+                                        index,
+                                        navigation,
+                                        place,
+                                        myOrderList.includes(
+                                            r.id
+                                        )
+                                    )
+                                );
+                            });
+                        setRestaurantList(_restaurantList);
+                    })
+        );
+
         setSubCreateRestaurant(newCreateRestaurant);
-        setSubUpdateRestaurant(newUpdateRestaurant);
-        setSubDeleteRestaurant(newDeleteRestaurant);
     };
-
     // get log pressed location and add marker
     const [newMarkerCoordinate, setNewMarkerCoordinate] =
         useState(null);
@@ -1494,7 +1418,7 @@ export default function Main_page({ route, navigation }) {
                 </View>
 
                 <SafeAreaView>
-                    <RestaurantBannerAds />
+                    <MainBannerAds />
                     <ScrollView
                         style={
                             styles.restaurantListContainer

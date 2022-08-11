@@ -4,52 +4,47 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 192,
+					"line": 106,
+					"column": 31,
+					"label": "refreshRestaurantList"
+				},
+				{
+					"line": 173,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 265,
-					"column": 4,
-					"label": "realTime_markers"
+					"line": 204,
+					"column": 29,
+					"label": "해당 장소의 마커들 가져오기"
 				},
 				{
-					"line": 403,
+					"line": 230,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 441,
-					"column": 31,
-					"label": "restaurantList_sample"
-				},
-				{
-					"line": 481,
-					"column": 36,
-					"label": "새로운 음식점 등록"
-				},
-				{
-					"line": 545,
+					"line": 305,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 579,
+					"line": 339,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 638,
+					"line": 398,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 676,
+					"line": 436,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1203,
+					"line": 958,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
@@ -94,62 +89,62 @@
 			"path": "src/screen/restaurant_auth.js",
 			"bookmarks": [
 				{
-					"line": 68,
+					"line": 70,
 					"column": 20,
 					"label": "해당 음식점의 Member 객체 불러오기"
 				},
 				{
-					"line": 98,
+					"line": 100,
 					"column": 19,
 					"label": "송금하기 버튼"
 				},
 				{
-					"line": 163,
+					"line": 165,
 					"column": 23,
 					"label": "주문하기"
 				},
 				{
-					"line": 210,
+					"line": 212,
 					"column": 26,
 					"label": "음식점 삭제"
 				},
 				{
-					"line": 250,
+					"line": 252,
 					"column": 17,
 					"label": "메뉴 추가"
 				},
 				{
-					"line": 307,
+					"line": 308,
 					"column": 21,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 326,
+					"line": 327,
 					"column": 27,
 					"label": "모집 재시작"
 				},
 				{
-					"line": 365,
+					"line": 366,
 					"column": 4,
 					"label": "송금요청 메세지 보내기"
 				},
 				{
-					"line": 455,
+					"line": 456,
 					"column": 4,
 					"label": "모집취소"
 				},
 				{
-					"line": 470,
+					"line": 471,
 					"column": 4,
 					"label": "메뉴 추가 및 정보 수정"
 				},
 				{
-					"line": 498,
+					"line": 503,
 					"column": 4,
 					"label": "전체 메뉴 보여주기"
 				},
 				{
-					"line": 969,
+					"line": 931,
 					"column": 4,
 					"label": "배민 바로가기"
 				}
@@ -159,52 +154,52 @@
 			"path": "src/screen/restaurant_guest.js",
 			"bookmarks": [
 				{
-					"line": 57,
+					"line": 58,
 					"column": 20,
 					"label": "getMembers"
 				},
 				{
-					"line": 86,
+					"line": 87,
 					"column": 32,
 					"label": "문자메세지 보내기"
 				},
 				{
-					"line": 100,
+					"line": 101,
 					"column": 23,
 					"label": "makeNewMember"
 				},
 				{
-					"line": 110,
+					"line": 111,
 					"column": 4,
 					"label": "새로운 멤버로 등록하기"
 				},
 				{
-					"line": 142,
+					"line": 143,
 					"column": 22,
 					"label": "deleteMember"
 				},
 				{
-					"line": 146,
+					"line": 147,
 					"column": 4,
 					"label": "이 식당에서 나를 삭제"
 				},
 				{
-					"line": 218,
+					"line": 219,
 					"column": 17,
 					"label": "addMenu"
 				},
 				{
-					"line": 223,
+					"line": 224,
 					"column": 4,
 					"label": "메뉴 추가(기존에서 업데이트)"
 				},
 				{
-					"line": 261,
+					"line": 262,
 					"column": 8,
 					"label": "정보 입력하는 모달창"
 				},
 				{
-					"line": 813,
+					"line": 766,
 					"column": 49,
 					"label": "Members(user, member, restaurant, index)"
 				}
@@ -214,14 +209,14 @@
 			"path": "src/screen/signup.js",
 			"bookmarks": [
 				{
-					"line": 70,
-					"column": 24,
-					"label": "인증번호 보내기"
+					"line": 62,
+					"column": 4,
+					"label": "회원가입"
 				},
 				{
-					"line": 128,
-					"column": 20,
-					"label": "인증번호 확인 후 회원가입 완료"
+					"line": 111,
+					"column": 4,
+					"label": "인증코드 확인(회원가입 완료)"
 				}
 			]
 		},
@@ -229,17 +224,17 @@
 			"path": "src/screen/restaurant_finished.js",
 			"bookmarks": [
 				{
-					"line": 44,
+					"line": 45,
 					"column": 10,
 					"label": "getMembers"
 				},
 				{
-					"line": 68,
+					"line": 69,
 					"column": 25,
 					"label": "sendSMStoAuthor"
 				},
 				{
-					"line": 424,
+					"line": 376,
 					"column": 16,
 					"label": "멤버 보이는 칸"
 				}

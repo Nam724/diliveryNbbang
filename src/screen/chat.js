@@ -18,6 +18,7 @@ import {
     width,
 } from "../style/style";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ChatBannerAds } from "../../utils/Ads";
 export default function Chat_page({ navigation, route }) {
     const restaurant = route.params.restaurant;
     const user = route.params.user;
@@ -86,6 +87,7 @@ export default function Chat_page({ navigation, route }) {
                     style={styles.highlightText}
                 >{`${restaurant.name} 주문자들의 채팅방입니다.`}</Text>
             </View>
+            <ChatBannerAds />
             <ScrollView
                 ref={(ref) => {
                     this.scrollView = ref;

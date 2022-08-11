@@ -12,12 +12,25 @@ import { colorPack } from "./src/style/style";
 import Setting_page from "./src/screen/setting";
 import Loading_page_onlyPicture from "./src/screen/loading_page_onlyPicture";
 import Chat_page from "./src/screen/chat";
+import { useEffect } from "react";
+import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 
 Amplify.configure(awsconfig);
 
 const Stack = createStackNavigator();
 
 export default function App() {
+    useEffect(() => {
+        (async () => {
+            const { status } =
+                await requestTrackingPermissionsAsync();
+            if (status === "granted") {
+                console.log(
+                    "Yay! I have user permission to track data"
+                );
+            }
+        })();
+    }, []);
     let [fontLoaded] = useFonts({
         happy_sans_bold: require("./assets/font/Happiness-Sans-Bold.ttf"),
         happy_sans_regular: require("./assets/font/Happiness-Sans-Regular.ttf"),

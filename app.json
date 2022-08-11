@@ -16,14 +16,14 @@
         "assetBundlePatterns": ["**/*"],
         "plugins": [
             [
-                "expo-ads-admob",
+                "expo-tracking-transparency",
                 {
-                    "userTrackingPermission": "이 앱은 사용자의 정보를 활용해 그에 알맞는 광고를 제공합니다. 사용자 정보를 추적하도록 허용하시겠습니까?"
+                    "userTrackingPermission": "This identifier will be used to deliver personalized ads to you. please enable this feature in your settings."
                 }
             ]
         ],
         "ios": {
-            "buildNumber": "23",
+            "buildNumber": "29",
             "supportsTablet": true,
             "bundleIdentifier": "diliveryNbbang",
             "config": {
@@ -41,7 +41,7 @@
                 "backgroundColor": "#17263C"
             },
             "package": "expo.eject.BTS_PseudoTesla",
-            "versionCode": 23,
+            "versionCode": 29,
             "config": {
                 "googleMaps": {
                     "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"

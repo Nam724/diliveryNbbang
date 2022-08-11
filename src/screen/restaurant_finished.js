@@ -24,6 +24,7 @@ import * as Clipboard from "expo-clipboard";
 import { sendSMSAsync } from "expo-sms";
 import { SafeAreaView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { RestaurantFinishedBannerAds } from "../../utils/Ads";
 export default function Restaurant_page_finished({
     route,
     navigation,
@@ -413,6 +414,7 @@ export default function Restaurant_page_finished({
                 </MapView>
             </View>
             <SafeAreaView>
+                <RestaurantFinishedBannerAds />
                 <ScrollView
                     style={styles.restaurantListContainer}
                 >

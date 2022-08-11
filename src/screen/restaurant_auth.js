@@ -30,6 +30,7 @@ import * as Linking from "expo-linking";
 import * as Clipboard from "expo-clipboard";
 import * as SMS from "expo-sms";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { RestaurantAuthBannerAds } from "../../utils/Ads";
 
 export default function Restaurant_page_auth({
     route,
@@ -679,6 +680,7 @@ export default function Restaurant_page_auth({
                 </Text>
             </View>
             <SafeAreaView>
+                <RestaurantAuthBannerAds />
                 <ScrollView
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}

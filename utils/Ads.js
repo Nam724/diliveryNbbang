@@ -21,40 +21,6 @@ export function MainBannerAds() {
         android: "ca-app-pub-1145139773627965/8701930912",
     });
 
-    useEffect(() => {
-        async () => {
-            let { status } = await getPermissionsAsync();
-            if (status !== "granted") {
-                let { statusRequested } =
-                    await requestPermissionsAsync();
-                if (statusRequested === "granted") {
-                    isAdsEnabled = true;
-                } else {
-                    Alert.alert(
-                        "배달앤빵",
-                        "앱이 광고를 사용하기 위해서는 권한이 필요합니다.\n설정에서 권한을 허용해주세요.",
-                        [
-                            {
-                                text: "확인",
-                                onPress: () => {
-                                    Linking.openSettings();
-                                },
-                            },
-                            {
-                                text: "취소",
-                                onPress: () => {
-                                    servePersonalizedAds = false;
-                                },
-                            },
-                        ]
-                    );
-                }
-            } else {
-                isAdsEnabled = true;
-            }
-        };
-    });
-
     return isAdsEnabled ? (
         <View style={styles.adsContainer}>
             <AdMobBanner
