@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1019446242388",
+    "project_id": "sanghyun-349810",
+    "storage_bucket": "sanghyun-349810.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019446242388:android:f90773b9a76e1b40fbd1c1",
+        "android_client_info": {
+          "package_name": "expo.eject.BTS_PseudoTesla"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019446242388-2f1i3lchonsokki3ncj0it5db1f8226k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1019446242388-2f1i3lchonsokki3ncj0it5db1f8226k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
