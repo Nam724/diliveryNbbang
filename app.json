@@ -20,6 +20,13 @@
                 {
                     "userTrackingPermission": "This identifier will be used to deliver personalized ads to you. please enable this feature in your settings."
                 }
+            ],
+            [
+                "expo-notifications",
+                {
+                    "icon": "./assets/icon.png",
+                    "color": "#17263C"
+                }
             ]
         ],
         "ios": {
@@ -41,6 +48,8 @@
                 "backgroundColor": "#17263C"
             },
             "package": "expo.eject.BTS_PseudoTesla",
+            "useNextNotificationsApi": true,
+            "googleServicesFile": "./google-services.json",
             "versionCode": 29,
             "config": {
                 "googleMaps": {
@@ -54,8 +63,7 @@
                 "android.permission.FOREGROUND_SERVICE",
                 "android.permission.INTERNET",
                 "NOTIFICATIONS"
-            ],
-            "useNextNotificationsApi": true,
-            "googleServicesFile": "./google-services.json"
+            ]
+        }
     }
 }

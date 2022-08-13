@@ -4,52 +4,52 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 187,
+					"line": 195,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 260,
+					"line": 268,
 					"column": 4,
 					"label": "realTime_markers"
 				},
 				{
-					"line": 325,
+					"line": 333,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 363,
+					"line": 371,
 					"column": 31,
 					"label": "restaurantList_sample"
 				},
 				{
-					"line": 403,
+					"line": 411,
 					"column": 36,
 					"label": "새로운 음식점 등록"
 				},
 				{
-					"line": 467,
+					"line": 475,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 501,
+					"line": 509,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 560,
+					"line": 568,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 598,
+					"line": 606,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 1125,
+					"line": 1133,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
@@ -252,6 +252,16 @@
 					"line": 149,
 					"column": 35,
 					"label": "Main_restaurantList_sample"
+				}
+			]
+		},
+		{
+			"path": "src/screen/chat.js",
+			"bookmarks": [
+				{
+					"line": 52,
+					"column": 37,
+					"label": "채팅 메세지 보내기"
 				}
 			]
 		}

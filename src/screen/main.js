@@ -43,6 +43,7 @@ import {
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { MainBannerAds } from "../../utils/Ads";
+import * as Notifications from "expo-notifications";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -59,6 +60,13 @@ export default function Main_page({ route, navigation }) {
         // realTime_Place();
         // userOrderList("get");
         // console.log("user 입니다: ", user);
+        const subscription =
+            Notifications.addNotificationReceivedListener(
+                (notification) => {
+                    console.log(notification);
+                }
+            );
+        // return () => subscription.remove();
     }, []);
 
     useFocusEffect(
