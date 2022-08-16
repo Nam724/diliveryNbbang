@@ -56,12 +56,13 @@ export const onDeleteMember = /* GraphQL */ `
     }
 `;
 
-export const onCreateRestaurant = /* GraphQL */ `
-    subscription onCreateRestaurant($eq: ID) {
+export const onCreateRestaurant = (id) => /* GraphQL */ `
+    subscription onCreateRestaurant($eq: ID = "${id}") {
         onCreateRestaurant(
             filter: { placeID: { eq: $eq } }
         ) {
             placeID
+            name
         }
     }
 `;
@@ -71,6 +72,7 @@ export const onUpdateRestaurant = /* GraphQL */ `
             filter: { placeID: { eq: $eq } }
         ) {
             placeID
+            name
         }
     }
 `;

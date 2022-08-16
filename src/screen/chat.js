@@ -26,25 +26,25 @@ export default function Chat_page({ navigation, route }) {
     console.log("restaurant", restaurant);
     let observeChat = null;
     useEffect(() => {
-        observeChat = DataStore.observeQuery(Chat, (c) =>
-            c.restaurantID("eq", restaurant.id)
-        ).subscribe((snapshot) => {
-            const { items, isSync } = snapshot;
-            console.log("items", items);
-            let prevChat = [];
-            items.forEach((item) => {
-                const newChat = Message({
-                    chat: item,
-                    user: user,
-                });
+        // observeChat = DataStore.observeQuery(Chat, (c) =>
+        //     c.restaurantID("eq", restaurant.id)
+        // ).subscribe((snapshot) => {
+        //     const { items, isSync } = snapshot;
+        //     console.log("items", items);
+        //     let prevChat = [];
+        //     items.forEach((item) => {
+        //         const newChat = Message({
+        //             chat: item,
+        //             user: user,
+        //         });
 
-                prevChat.push(newChat);
-            });
-            setMessages(prevChat);
-            console.log("messages", messages);
-        });
+        //         prevChat.push(newChat);
+        //     });
+        //     setMessages(prevChat);
+        //     console.log("messages", messages);
+        // });
         return () => {
-            observeChat.unsubscribe();
+            // observeChat.unsubscribe();
         };
     }, []);
 

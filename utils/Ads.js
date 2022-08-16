@@ -28,7 +28,7 @@ export function MainBannerAds() {
                 adUnitID={adBannerUnitId} // Test ID, Replace with your-admob-unit-id
                 servePersonalizedAds={servePersonalizedAds} // true or false
                 onDidFailToReceiveAdWithError={(err) => {
-                    setIsAdsEnabled(false);
+                    isAdsEnabled = false;
                     alert(err);
                 }}
             />

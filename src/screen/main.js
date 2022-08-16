@@ -31,7 +31,7 @@ import {
     Main_restaurantList_sample,
 } from "./main_restaurantList";
 import { DataStore } from "@aws-amplify/datastore";
-import { Restaurant, Place, Member, Chat } from "../models";
+import { Restaurant, Place, Member } from "../models";
 import * as Linking from "expo-linking";
 import { useFocusEffect } from "@react-navigation/native";
 import DialogInput from "react-native-dialog-input";
@@ -43,6 +43,8 @@ import {
     MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { MainBannerAds } from "../../utils/Ads";
+import { API, graphqlOperation } from "aws-amplify";
+import * as subscriptions from "../graphql/subscriptions";
 
 export default function Main_page({ route, navigation }) {
     const autoLogin = route.params.autoLogin;
@@ -56,6 +58,7 @@ export default function Main_page({ route, navigation }) {
 
     useEffect(() => {
         getPermissions();
+        // realTime_Restaurant();
         // realTime_Place();
         // userOrderList("get");
         // console.log("user 입니다: ", user);
@@ -194,8 +197,8 @@ export default function Main_page({ route, navigation }) {
                 key={key}
                 onPress={async () => {
                     // console.log(title, key);
-                    await refreshRestaurantList(key);
                     await realTime_Restaurant(key);
+                    await refreshRestaurantList(key);
                     setSelectedMarker({
                         coordinate: coordinate,
                         title: title,
@@ -269,56 +272,92 @@ export default function Main_page({ route, navigation }) {
     const [subDeleteRestaurant, setSubDeleteRestaurant] =
         useState();
 
-    const realTime_Restaurant = async (newPlaceID) => {
+    const realTime_Restaurant = async (key) => {
         if (subCreateRestaurant) {
             subCreateRestaurant.unsubscribe();
         }
         console.log(
             "realTime_Restaurant, NewPlaceID: ",
-            newPlaceID
+            key
         );
 
-        const newCreateRestaurant = DataStore.observeQuery(
-            Restaurant,
-            (r) =>
-                r
-                    .placeID("eq", newPlaceID)
-                    .subscribe((snapshot) => {
-                        const { items, isSync } = snapshot;
+        // const newCreateRestaurant = DataStore.observeQuery(
+        //     Restaurant,
+        //     (r) =>
+        //         r
+        //             .placeID("eq", newPlaceID)
+        //             .subscribe((snapshot) => {
+        //                 const { items, isSync } = snapshot;
 
-                        console.log(
-                            "realTime_Restaurant_onCreateRestaurant: ",
-                            snapshot
-                        );
-                        let _restaurantList = [];
-                        items
-                            .sort((a, b) => {
-                                const price1 =
-                                    a.fee / a.num_members;
-                                const price2 =
-                                    b.fee / b.num_members;
-                                return price1 - price2;
-                            })
-                            .forEach(async (r, index) => {
-                                // console.log("userOrderList", userOrderList);
-                                _restaurantList.push(
-                                    Main_restaurantList(
-                                        user,
-                                        r,
-                                        index,
-                                        navigation,
-                                        place,
-                                        myOrderList.includes(
-                                            r.id
-                                        )
-                                    )
-                                );
-                            });
-                        setRestaurantList(_restaurantList);
+        //                 console.log(
+        //                     "realTime_Restaurant_onCreateRestaurant: ",
+        //                     snapshot
+        //                 );
+
+        //                 let _restaurantList = [];
+        //                 items
+        //                     .sort((a, b) => {
+        //                         const price1 =
+        //                             a.fee / a.num_members;
+        //                         const price2 =
+        //                             b.fee / b.num_members;
+        //                         return price1 - price2;
+        //                     })
+        //                     .forEach(async (r, index) => {
+        //                         // console.log("userOrderList", userOrderList);
+        //                         _restaurantList.push(
+        //                             Main_restaurantList(
+        //                                 user,
+        //                                 r,
+        //                                 index,
+        //                                 navigation,
+        //                                 place,
+        //                                 myOrderList.includes(
+        //                                     r.id
+        //                                 )
+        //                             )
+        //                         );
+        //                     });
+        //                 setRestaurantList(_restaurantList);
+        //             })
+        // );
+
+        const updateRestaurant = API.graphql(
+            // 음식점 추가될 때마다 새로고침
+            graphqlOperation(
+                subscriptions.onCreateRestaurant(key)
+            )
+        ).subscribe({
+            next: ({ value: { data } }) => {
+                console.log("realTime_Restaurant", data);
+                let items = data.onCreateRestaurant;
+                let _restaurantList = [];
+                items
+                    .sort((a, b) => {
+                        const price1 =
+                            a.fee / a.num_members;
+                        const price2 =
+                            b.fee / b.num_members;
+                        return price1 - price2;
                     })
-        );
+                    .forEach(async (r, index) => {
+                        // console.log("userOrderList", userOrderList);
+                        _restaurantList.push(
+                            Main_restaurantList(
+                                user,
+                                r,
+                                index,
+                                navigation,
+                                place,
+                                myOrderList.includes(r.id)
+                            )
+                        );
+                    });
+            },
+        });
+        setSubUpdateRestaurant(updateRestaurant);
 
-        setSubCreateRestaurant(newCreateRestaurant);
+        // setSubCreateRestaurant(newCreateRestaurant);
     };
     // get log pressed location and add marker
     const [newMarkerCoordinate, setNewMarkerCoordinate] =
