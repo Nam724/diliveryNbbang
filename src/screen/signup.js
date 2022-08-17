@@ -276,18 +276,24 @@ export default function SignUp_page({ navigation }) {
                                     style={[
                                         styles.textInputBox,
                                         styles.normalText,
+                                        {
+                                            borderColor:
+                                                password1
+                                                    ? colorPack.highlight_light
+                                                    : colorPack.warning,
+                                        },
                                     ]}
                                     maxLength={20}
                                     onChangeText={(pw) => {
                                         const reg =
-                                            /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{6,20}$/;
+                                            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
                                         if (reg.test(pw)) {
                                             setPassword1(
                                                 pw
                                             );
                                         } else {
                                             setPassword1(
-                                                ""
+                                                null
                                             );
                                         }
                                     }}
