@@ -2,6 +2,7 @@ import Main_page from "./src/screen/main";
 import SignUp_page from "./src/screen/signup";
 import SignIn_page from "./src/screen/signin";
 import Restaurant_page from "./src/screen/restaurant";
+import Scout_mini_page from "./src/screen/scoutMini";
 import { Amplify } from "aws-amplify";
 import awsconfig from "./src/aws-exports";
 import { NavigationContainer } from "@react-navigation/native";

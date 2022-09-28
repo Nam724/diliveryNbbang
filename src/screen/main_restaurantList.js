@@ -1,4 +1,6 @@
+import { DataStore } from "aws-amplify";
 import { View, Text, TouchableOpacity } from "react-native";
+import { Ros } from "../models";
 import {
     colorPack,
     styles,
@@ -147,14 +149,7 @@ function Main_restaurantList(
 }
 
 function Main_restaurantList_sample(id, name, fee, num) {
-    const backgroundColor_odd = colorPack.highlight_dark;
-    const backgroundColor_even = colorPack.highlight_light;
-    var myBackgroundColor;
-    if (Number(num) % 2 == 0) {
-        myBackgroundColor = backgroundColor_even;
-    } else {
-        myBackgroundColor = backgroundColor_odd;
-    }
+    const myBackgroundColor = colorPack.highlight_dark;
     // return
     return (
         <TouchableOpacity
@@ -184,4 +179,57 @@ function Main_restaurantList_sample(id, name, fee, num) {
     ); // return
 }
 
-export { Main_restaurantList, Main_restaurantList_sample };
+function Main_restaurantList_ScoutMini(id, name, fee, num) {
+    const backgroundColor_odd = colorPack.highlight_dark;
+    const backgroundColor_even = colorPack.highlight_light;
+    var myBackgroundColor;
+    if (Number(num) % 2 == 0) {
+        myBackgroundColor = backgroundColor_even;
+    } else {
+        myBackgroundColor = backgroundColor_odd;
+    }
+
+    const deliver_start = async () => {
+        alert("배달시작");
+        await DataStore.save(
+            new Ros({
+                posNum: 1,
+                started: false,
+                arrived: false,
+            })
+        );
+    };
+
+    // return
+    return (
+        <TouchableOpacity
+            style={[
+                styles.restaurantList,
+                { backgroundColor: myBackgroundColor },
+            ]}
+            key={id}
+            onPress={deliver_start}
+        >
+            <Text
+                style={[
+                    styles.normalText,
+                    styles.restaurantName,
+                ]}
+            >
+                {name}
+            </Text>
+            <Text
+                style={[
+                    styles.deactivatedText,
+                    styles.restaurantFee,
+                ]}
+            >{`${fee}`}</Text>
+        </TouchableOpacity>
+    ); // return
+}
+
+export {
+    Main_restaurantList,
+    Main_restaurantList_sample,
+    Main_restaurantList_ScoutMini,
+};

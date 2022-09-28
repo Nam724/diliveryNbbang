@@ -62,6 +62,8 @@
         "btsPe3O8": {
             "service": "Pinpoint",
             "channels": [
+                "APNS",
+                "FCM",
                 "Email"
             ]
         }

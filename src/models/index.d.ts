@@ -4,6 +4,10 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+type RosMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type ChatMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -18,6 +22,17 @@ type RestaurantMetaData = {
 
 type PlaceMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class Ros {
+  readonly id: string;
+  readonly posNum?: number | null;
+  readonly started?: boolean | null;
+  readonly arrived?: boolean | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Ros, RosMetaData>);
+  static copyOf(source: Ros, mutator: (draft: MutableModel<Ros, RosMetaData>) => MutableModel<Ros, RosMetaData> | void): Ros;
 }
 
 export declare class Chat {

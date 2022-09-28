@@ -29,6 +29,7 @@ import MapView, {
 import {
     Main_restaurantList,
     Main_restaurantList_sample,
+    Main_restaurantList_ScoutMini,
 } from "./main_restaurantList";
 import { DataStore } from "@aws-amplify/datastore";
 import { Restaurant, Place, Member } from "../models";
@@ -125,7 +126,6 @@ export default function Main_page({ route, navigation }) {
         // console.log(selectedMarker)
         // await getMarkers();
         if (id === "refresh") {
-            await userOrderList("get");
             // console.log("refreshRestaurantList_refresh");
             await loadRestaurant(selectedMarker.key);
         } else if (id === "userOrder") {
@@ -197,7 +197,7 @@ export default function Main_page({ route, navigation }) {
                 key={key}
                 onPress={async () => {
                     // console.log(title, key);
-                    await realTime_Restaurant(key);
+                    // await realTime_Restaurant(key);
                     await refreshRestaurantList(key);
                     setSelectedMarker({
                         coordinate: coordinate,
@@ -273,90 +273,85 @@ export default function Main_page({ route, navigation }) {
         useState();
 
     const realTime_Restaurant = async (key) => {
-        if (subCreateRestaurant) {
-            subCreateRestaurant.unsubscribe();
-        }
-        console.log(
-            "realTime_Restaurant, NewPlaceID: ",
-            key
-        );
-
-        // const newCreateRestaurant = DataStore.observeQuery(
-        //     Restaurant,
-        //     (r) =>
-        //         r
-        //             .placeID("eq", newPlaceID)
-        //             .subscribe((snapshot) => {
-        //                 const { items, isSync } = snapshot;
-
-        //                 console.log(
-        //                     "realTime_Restaurant_onCreateRestaurant: ",
-        //                     snapshot
-        //                 );
-
-        //                 let _restaurantList = [];
-        //                 items
-        //                     .sort((a, b) => {
-        //                         const price1 =
-        //                             a.fee / a.num_members;
-        //                         const price2 =
-        //                             b.fee / b.num_members;
-        //                         return price1 - price2;
-        //                     })
-        //                     .forEach(async (r, index) => {
-        //                         // console.log("userOrderList", userOrderList);
-        //                         _restaurantList.push(
-        //                             Main_restaurantList(
-        //                                 user,
-        //                                 r,
-        //                                 index,
-        //                                 navigation,
-        //                                 place,
-        //                                 myOrderList.includes(
-        //                                     r.id
-        //                                 )
-        //                             )
-        //                         );
-        //                     });
-        //                 setRestaurantList(_restaurantList);
-        //             })
+        // if (subCreateRestaurant) {
+        //     subCreateRestaurant.unsubscribe();
+        // }
+        // console.log(
+        //     "realTime_Restaurant, NewPlaceID: ",
+        //     key
         // );
-
-        const updateRestaurant = API.graphql(
-            // 음식점 추가될 때마다 새로고침
-            graphqlOperation(
-                subscriptions.onCreateRestaurant(key)
-            )
-        ).subscribe({
-            next: ({ value: { data } }) => {
-                console.log("realTime_Restaurant", data);
-                let items = data.onCreateRestaurant;
-                let _restaurantList = [];
-                items
-                    .sort((a, b) => {
-                        const price1 =
-                            a.fee / a.num_members;
-                        const price2 =
-                            b.fee / b.num_members;
-                        return price1 - price2;
-                    })
-                    .forEach(async (r, index) => {
-                        // console.log("userOrderList", userOrderList);
-                        _restaurantList.push(
-                            Main_restaurantList(
-                                user,
-                                r,
-                                index,
-                                navigation,
-                                place,
-                                myOrderList.includes(r.id)
-                            )
-                        );
-                    });
-            },
-        });
-        setSubUpdateRestaurant(updateRestaurant);
-
+        // // const newCreateRestaurant = DataStore.observeQuery(
+        // //     Restaurant,
+        // //     (r) =>
+        // //         r
+        // //             .placeID("eq", newPlaceID)
+        // //             .subscribe((snapshot) => {
+        // //                 const { items, isSync } = snapshot;
+        // //                 console.log(
+        // //                     "realTime_Restaurant_onCreateRestaurant: ",
+        // //                     snapshot
+        // //                 );
+        // //                 let _restaurantList = [];
+        // //                 items
+        // //                     .sort((a, b) => {
+        // //                         const price1 =
+        // //                             a.fee / a.num_members;
+        // //                         const price2 =
+        // //                             b.fee / b.num_members;
+        // //                         return price1 - price2;
+        // //                     })
+        // //                     .forEach(async (r, index) => {
+        // //                         // console.log("userOrderList", userOrderList);
+        // //                         _restaurantList.push(
+        // //                             Main_restaurantList(
+        // //                                 user,
+        // //                                 r,
+        // //                                 index,
+        // //                                 navigation,
+        // //                                 place,
+        // //                                 myOrderList.includes(
+        // //                                     r.id
+        // //                                 )
+        // //                             )
+        // //                         );
+        // //                     });
+        // //                 setRestaurantList(_restaurantList);
+        // //             })
+        // // );
+        // const updateRestaurant = API.graphql(
+        //     // 음식점 추가될 때마다 새로고침
+        //     graphqlOperation(
+        //         subscriptions.onCreateRestaurant(key)
+        //     )
+        // ).subscribe({
+        //     next: ({ value: { data } }) => {
+        //         console.log("realTime_Restaurant", data);
+        //         let items = data.onCreateRestaurant;
+        //         let _restaurantList = [];
+        //         items
+        //             .sort((a, b) => {
+        //                 const price1 =
+        //                     a.fee / a.num_members;
+        //                 const price2 =
+        //                     b.fee / b.num_members;
+        //                 return price1 - price2;
+        //             })
+        //             .forEach(async (r, index) => {
+        //                 // console.log("userOrderList", userOrderList);
+        //                 _restaurantList.push(
+        //                     Main_restaurantList(
+        //                         user,
+        //                         r,
+        //                         index,
+        //                         navigation,
+        //                         place,
+        //                         myOrderList.includes(r.id)
+        //                     )
+        //                 );
+        //             });
+        //     },
+        // });
+        // setSubUpdateRestaurant(updateRestaurant);
         // setSubCreateRestaurant(newCreateRestaurant);
     };
     // get log pressed location and add marker
@@ -416,6 +411,15 @@ export default function Main_page({ route, navigation }) {
             "장소 선택",
             "핀 누르기",
             "1"
+        ),
+    ];
+
+    const restaurantList_scoutMini = [
+        Main_restaurantList_ScoutMini(
+            "scoutMini",
+            "스카우트 미니",
+            "로봇이 배달합니다.",
+            "0"
         ),
     ];
 
@@ -540,7 +544,7 @@ export default function Main_page({ route, navigation }) {
         setRestaurantList(_restaurantList);
     }
 
-    const userOrderList = async (type) => {
+    const userOrderList = async () => {
         const members = await DataStore.query(Member, (q) =>
             q.username("eq", user.username)
         );
@@ -579,15 +583,6 @@ export default function Main_page({ route, navigation }) {
 
                 if (index == members.length - 1) {
                     setMyOrderList(_myOrderList);
-                    if (type === "set") {
-                        setSelectedMarker({
-                            coordinate: {}, // {longitude: 0, latitude: 0}
-                            title: "나의 주문",
-                            key: "userOrder",
-                        });
-                        setRestaurantList(_orderList);
-                        // console.log("set");
-                    }
                 }
             });
 
@@ -804,7 +799,12 @@ export default function Main_page({ route, navigation }) {
                         >
                             <TouchableOpacity
                                 onPress={() => {
-                                    userOrderList("set");
+                                    userOrderList();
+                                    setSelectedMarker({
+                                        coordinate: {}, // {longitude: 0, latitude: 0}
+                                        title: "나의 주문",
+                                        key: "userOrder",
+                                    });
                                 }}
                                 disabled={true}
                             >
@@ -1491,6 +1491,7 @@ export default function Main_page({ route, navigation }) {
                             />
                         }
                     >
+                        {restaurantList_scoutMini}
                         {restaurantList}
                     </ScrollView>
                 </SafeAreaView>
