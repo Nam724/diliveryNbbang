@@ -34,17 +34,17 @@
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 440,
+					"line": 441,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 478,
+					"line": 479,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 996,
+					"line": 997,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}

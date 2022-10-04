@@ -15,6 +15,7 @@ import Loading_page_onlyPicture from "./src/screen/loading_page_onlyPicture";
 import Chat_page from "./src/screen/chat";
 import { useEffect } from "react";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+import ScoutMini_page from "./src/screen/scoutMini";
 
 Amplify.configure(awsconfig);
 
@@ -103,6 +104,17 @@ export default function App() {
                     <Stack.Screen
                         name="Chat"
                         component={Chat_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                            headerBackTitleVisible: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="ScoutMini"
+                        component={ScoutMini_page}
                         options={{
                             headerTransparent: true,
                             headerTitle: "",

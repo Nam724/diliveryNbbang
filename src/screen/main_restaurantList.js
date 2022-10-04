@@ -179,7 +179,13 @@ function Main_restaurantList_sample(id, name, fee, num) {
     ); // return
 }
 
-function Main_restaurantList_ScoutMini(id, name, fee, num) {
+function Main_restaurantList_ScoutMini(
+    navigation,
+    id,
+    name,
+    fee,
+    num
+) {
     const backgroundColor_odd = colorPack.highlight_dark;
     const backgroundColor_even = colorPack.highlight_light;
     var myBackgroundColor;
@@ -190,14 +196,8 @@ function Main_restaurantList_ScoutMini(id, name, fee, num) {
     }
 
     const deliver_start = async () => {
-        alert("배달시작");
-        await DataStore.save(
-            new Ros({
-                posNum: 1,
-                started: false,
-                arrived: false,
-            })
-        );
+        // alert("자율주행 배달 시스템으로 이동합니다.");
+        navigation.navigate("ScoutMini");
     };
 
     // return

@@ -416,9 +416,10 @@ export default function Main_page({ route, navigation }) {
 
     const restaurantList_scoutMini = [
         Main_restaurantList_ScoutMini(
+            navigation,
             "scoutMini",
-            "스카우트 미니",
-            "로봇이 배달합니다.",
+            "스카우트 미니 배달 페이지",
+            "로봇 배달 페이지로 이동",
             "0"
         ),
     ];

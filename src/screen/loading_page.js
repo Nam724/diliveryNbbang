@@ -11,7 +11,7 @@ import {
     Image,
 } from "react-native";
 
-export default function ScoutMini_page({}) {
+export default function Loading_page({}) {
     return (
         <View
             style={[
