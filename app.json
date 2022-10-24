@@ -1,59 +1,62 @@
 {
-    "expo": {
-        "name": "배달앤빵",
-        "slug": "bts",
-        "version": "1.0.13",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#17263C"
-        },
-        "updates": {
-            "fallbackToCacheTimeout": 0
-        },
-        "assetBundlePatterns": ["**/*"],
-        "plugins": [
-            [
-                "expo-tracking-transparency",
-                {
-                    "userTrackingPermission": "This identifier will be used to deliver personalized ads to you. please enable this feature in your settings."
-                }
-            ]
-        ],
-        "ios": {
-            "buildNumber": "30",
-            "supportsTablet": true,
-            "bundleIdentifier": "diliveryNbbang",
-            "config": {
-                "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I",
-                "googleMobileAdsAppId": "ca-app-pub-1145139773627965~6690861155"
-            },
-            "infoPlist": {
-                "NSLocationWhenInUseUsageDescription": " 위치 정보 사용을 허가해주세요. 위치 정보는 현재 위치 기반 등록된 마커 장소를 얻는데 필요합니다. 현재 위치 근처에 있는 마커들을 골라내서 마커에 있는 음식점들을 불러올 수 있습니다. 위치 정보는 사용자가 앱을 종료하면 삭제됩니다.",
-                "NSUserTrackingUsageDescription": "이 앱은 사용자의 정보를 활용해 그에 알맞는 광고를 제공합니다. 사용자 정보를 추적하도록 허용하시겠습니까?"
-            }
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#17263C"
-            },
-            "package": "expo.eject.BTS_PseudoTesla",
-            "versionCode": 30,
-            "config": {
-                "googleMaps": {
-                    "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
-                },
-                "googleMobileAdsAppId": "ca-app-pub-1145139773627965~9303462498"
-            },
-            "permissions": [
-                "android.permission.ACCESS_COARSE_LOCATION",
-                "android.permission.ACCESS_FINE_LOCATION",
-                "android.permission.FOREGROUND_SERVICE",
-                "android.permission.INTERNET"
-            ]
+  "expo": {
+    "name": "배달앤빵",
+    "slug": "bts",
+    "version": "1.0.13",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#17263C"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "This identifier will be used to deliver personalized ads to you. please enable this feature in your settings."
         }
-    }
+      ]
+    ],
+    "ios": {
+      "buildNumber": "30",
+      "supportsTablet": true,
+      "bundleIdentifier": "diliveryNbbang",
+      "config": {
+        "googleMapsApiKey": "AIzaSyATraGKcx13EFIVcxOf5-DKqBZPIsZ7E1I",
+        "googleMobileAdsAppId": "ca-app-pub-1145139773627965~6690861155"
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": " 위치 정보 사용을 허가해주세요. 위치 정보는 현재 위치 기반 등록된 마커 장소를 얻는데 필요합니다. 현재 위치 근처에 있는 마커들을 골라내서 마커에 있는 음식점들을 불러올 수 있습니다. 위치 정보는 사용자가 앱을 종료하면 삭제됩니다.",
+        "NSUserTrackingUsageDescription": "이 앱은 사용자의 정보를 활용해 그에 알맞는 광고를 제공합니다. 사용자 정보를 추적하도록 허용하시겠습니까?"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#17263C"
+      },
+      "package": "expo.eject.BTS_PseudoTesla",
+      "versionCode": 30,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCsYCs4CcURj5NaHCN5T2av_fcZRDAKhtM"
+        },
+        "googleMobileAdsAppId": "ca-app-pub-1145139773627965~9303462498"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.INTERNET"
+      ]
+    },
+    "description": ""
+  }
 }
