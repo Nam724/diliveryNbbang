@@ -1,6 +1,139 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getRos = /* GraphQL */ `
+  query GetRos($id: ID!) {
+    getRos(id: $id) {
+      id
+      posNum
+      started
+      arrived
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listRos = /* GraphQL */ `
+  query ListRos($filter: ModelRosFilterInput, $limit: Int, $nextToken: String) {
+    listRos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        posNum
+        started
+        arrived
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRos = /* GraphQL */ `
+  query SyncRos(
+    $filter: ModelRosFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRos(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        posNum
+        started
+        arrived
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getChat = /* GraphQL */ `
+  query GetChat($id: ID!) {
+    getChat(id: $id) {
+      id
+      message
+      creatorID
+      restaurantID
+      creatorUsername
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listChats = /* GraphQL */ `
+  query ListChats(
+    $filter: ModelChatFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        message
+        creatorID
+        restaurantID
+        creatorUsername
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncChats = /* GraphQL */ `
+  query SyncChats(
+    $filter: ModelChatFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncChats(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        message
+        creatorID
+        restaurantID
+        creatorUsername
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getMember = /* GraphQL */ `
   query GetMember($id: ID!) {
     getMember(id: $id) {
@@ -9,8 +142,8 @@ export const getMember = /* GraphQL */ `
       email
       menu
       price
-      restaurantID
       phone_number
+      restaurantID
       createdAt
       updatedAt
       _version
@@ -32,8 +165,8 @@ export const listMembers = /* GraphQL */ `
         email
         menu
         price
-        restaurantID
         phone_number
+        restaurantID
         createdAt
         updatedAt
         _version
@@ -64,8 +197,8 @@ export const syncMembers = /* GraphQL */ `
         email
         menu
         price
-        restaurantID
         phone_number
+        restaurantID
         createdAt
         updatedAt
         _version
@@ -93,8 +226,8 @@ export const getRestaurant = /* GraphQL */ `
           email
           menu
           price
-          restaurantID
           phone_number
+          restaurantID
           createdAt
           updatedAt
           _version
@@ -107,6 +240,22 @@ export const getRestaurant = /* GraphQL */ `
       num_members
       account
       isFinishRecruiting
+      Chats {
+        items {
+          id
+          message
+          creatorID
+          restaurantID
+          creatorUsername
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -136,6 +285,10 @@ export const listRestaurants = /* GraphQL */ `
         num_members
         account
         isFinishRecruiting
+        Chats {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -174,6 +327,10 @@ export const syncRestaurants = /* GraphQL */ `
         num_members
         account
         isFinishRecruiting
+        Chats {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version

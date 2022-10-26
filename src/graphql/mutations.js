@@ -1,6 +1,117 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createRos = /* GraphQL */ `
+  mutation CreateRos(
+    $input: CreateRosInput!
+    $condition: ModelRosConditionInput
+  ) {
+    createRos(input: $input, condition: $condition) {
+      id
+      posNum
+      started
+      arrived
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateRos = /* GraphQL */ `
+  mutation UpdateRos(
+    $input: UpdateRosInput!
+    $condition: ModelRosConditionInput
+  ) {
+    updateRos(input: $input, condition: $condition) {
+      id
+      posNum
+      started
+      arrived
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteRos = /* GraphQL */ `
+  mutation DeleteRos(
+    $input: DeleteRosInput!
+    $condition: ModelRosConditionInput
+  ) {
+    deleteRos(input: $input, condition: $condition) {
+      id
+      posNum
+      started
+      arrived
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const createChat = /* GraphQL */ `
+  mutation CreateChat(
+    $input: CreateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    createChat(input: $input, condition: $condition) {
+      id
+      message
+      creatorID
+      restaurantID
+      creatorUsername
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateChat = /* GraphQL */ `
+  mutation UpdateChat(
+    $input: UpdateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    updateChat(input: $input, condition: $condition) {
+      id
+      message
+      creatorID
+      restaurantID
+      creatorUsername
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteChat = /* GraphQL */ `
+  mutation DeleteChat(
+    $input: DeleteChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    deleteChat(input: $input, condition: $condition) {
+      id
+      message
+      creatorID
+      restaurantID
+      creatorUsername
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createMember = /* GraphQL */ `
   mutation CreateMember(
     $input: CreateMemberInput!
@@ -12,8 +123,8 @@ export const createMember = /* GraphQL */ `
       email
       menu
       price
-      restaurantID
       phone_number
+      restaurantID
       createdAt
       updatedAt
       _version
@@ -33,8 +144,8 @@ export const updateMember = /* GraphQL */ `
       email
       menu
       price
-      restaurantID
       phone_number
+      restaurantID
       createdAt
       updatedAt
       _version
@@ -54,8 +165,8 @@ export const deleteMember = /* GraphQL */ `
       email
       menu
       price
-      restaurantID
       phone_number
+      restaurantID
       createdAt
       updatedAt
       _version
@@ -83,8 +194,8 @@ export const createRestaurant = /* GraphQL */ `
           email
           menu
           price
-          restaurantID
           phone_number
+          restaurantID
           createdAt
           updatedAt
           _version
@@ -97,6 +208,22 @@ export const createRestaurant = /* GraphQL */ `
       num_members
       account
       isFinishRecruiting
+      Chats {
+        items {
+          id
+          message
+          creatorID
+          restaurantID
+          creatorUsername
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -124,8 +251,8 @@ export const updateRestaurant = /* GraphQL */ `
           email
           menu
           price
-          restaurantID
           phone_number
+          restaurantID
           createdAt
           updatedAt
           _version
@@ -138,6 +265,22 @@ export const updateRestaurant = /* GraphQL */ `
       num_members
       account
       isFinishRecruiting
+      Chats {
+        items {
+          id
+          message
+          creatorID
+          restaurantID
+          creatorUsername
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -165,8 +308,8 @@ export const deleteRestaurant = /* GraphQL */ `
           email
           menu
           price
-          restaurantID
           phone_number
+          restaurantID
           createdAt
           updatedAt
           _version
@@ -179,6 +322,22 @@ export const deleteRestaurant = /* GraphQL */ `
       num_members
       account
       isFinishRecruiting
+      Chats {
+        items {
+          id
+          message
+          creatorID
+          restaurantID
+          creatorUsername
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version

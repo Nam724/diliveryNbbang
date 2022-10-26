@@ -16,13 +16,14 @@ import {
     iconSize,
     height,
 } from "../style/style";
-import { Ros } from "../models";
+import { Chat, Ros } from "../models";
 
 import { SafeAreaView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { RestaurantFinishedBannerAds } from "../../utils/Ads";
 import { color, set } from "react-native-reanimated";
-
+import { API, graphqlOperation } from "aws-amplify";
+import * as subscriptions from "../graphql/subscriptions";
 export default function ScoutMini_page({
     route,
     navigation,
@@ -31,27 +32,56 @@ export default function ScoutMini_page({
     const [isRegistered, setIsRegistered] = useState(false);
 
     // const user = route.params.user; //{username: 'test', email: ''}
-    useEffect(() => {}, []);
+    useEffect(() => {
+        // setInterval(() => {
+        //     setScout_mini_pos({
+        //         pos_x: 5,
+        //         pos_y: 10,
+        //     });
+        //     console.log("scout_mini_pos: ", scout_mini_pos);
+        // }, 1000);
+        getPos();
+    }, []);
     const scout_mini = [
         Main_restaurantList_ScoutMini(
-            "GoalPoint1",
+            "632fc8e2-90cf-480c-9574-276a4dc348c6",
             "GoalPoint1",
             1,
             "1"
         ),
         Main_restaurantList_ScoutMini(
-            "GoalPoint2",
+            "53160c3a-ea6b-4d91-a800-a34112866437",
             "GoalPoint2",
             2,
             "2"
         ),
         Main_restaurantList_ScoutMini(
-            "GoalPoint3",
+            "b06d6812-afbf-4a7a-afa6-c4784b94c1ab",
             "GoalPoint3",
             3,
             "1"
         ),
     ];
+    const [scout_mini_pos, setScout_mini_pos] = useState({
+        pos_x: 5,
+        pos_y: 10,
+    });
+
+    const getPos = async () => {
+        const _pos = await DataStore.query(
+            Chat,
+            "83236c00-e0e1-46ee-8563-7bceada246a3"
+        );
+        // console.log("_messages", _pos);
+
+        const observePos = DataStore.observe(
+            Chat,
+            "83236c00-e0e1-46ee-8563-7bceada246a3"
+        ).subscribe((msg) => {
+            // console.log("msg: ", msg);
+        });
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -112,8 +142,13 @@ export default function ScoutMini_page({
                     source={require("../../assets/scoutMini_red.png")}
                     style={{
                         position: "absolute",
-                        top: (height * 150) / 2000,
-                        left: (width * 230) / 2000,
+                        left:
+                            (width * scout_mini_pos.pos_x) /
+                            2000,
+                        top:
+                            (height *
+                                scout_mini_pos.pos_y) /
+                            2000,
                         height: 30,
                         width: 35,
                     }}
@@ -156,7 +191,8 @@ function Main_restaurantList_ScoutMini(
     const [CURRENT_ROS, setCURRENT_ROS] = useState(null);
     useEffect(() => {
         getCurrentRos();
-        console.log(CURRENT_ROS);
+        observeStatus();
+        // console.log(CURRENT_ROS);
     }, []);
 
     const [subTitle, setSubTitle] = useState("배달 대기중");
@@ -164,22 +200,9 @@ function Main_restaurantList_ScoutMini(
     //* 현재 로스를 가져온다.
     const getCurrentRos = async () => {
         let _CURRENT_ROS = "";
-        if (posNum === 1) {
-            _CURRENT_ROS = await DataStore.query(
-                Ros,
-                "632fc8e2-90cf-480c-9574-276a4dc348c6"
-            );
-        } else if (posNum === 2) {
-            _CURRENT_ROS = await DataStore.query(
-                Ros,
-                "53160c3a-ea6b-4d91-a800-a34112866437"
-            );
-        } else if (posNum === 3) {
-            _CURRENT_ROS = await DataStore.query(
-                Ros,
-                "b06d6812-afbf-4a7a-afa6-c4784b94c1ab"
-            );
-        }
+
+        _CURRENT_ROS = await DataStore.query(Ros, id);
+
         if (_CURRENT_ROS.started === true) {
             setSubTitle("배달 중");
         } else if (_CURRENT_ROS.arrived === true) {
@@ -188,9 +211,36 @@ function Main_restaurantList_ScoutMini(
             setSubTitle("배달 대기중");
         }
         setCURRENT_ROS(_CURRENT_ROS);
-        console.log("current_ros: ", _CURRENT_ROS);
+        // console.log("current_ros: ", _CURRENT_ROS);
     };
 
+    const observeStatus = () => {
+        // console.log("observeStatus of " + id);
+        // let observeRos = DataStore.observeQuery(Ros, (r) =>
+        //     r.id("eq", id)
+        // ).subscribe((snapshot) => {
+        //     const { items, isSync } = snapshot;
+        //     console.log("items", items[0]);
+        // });
+        // let observeRos = DataStore.observe(
+        //     Ros,
+        //     id
+        // ).subscribe((msg) => {
+        //     console.log("msg: ", msg);
+        // });
+        console.log("observeStatus of " + id);
+        // const observeRos = API.graphql({
+        //     query: subscriptions.onUpdateRos,
+        //     variables: {
+        //         eq: id,
+        //     },
+        // }).subscribe({
+        //     next: ({ value: { data } }) => {
+        //         let newRos = data;
+        //         console.log("realTime_Ros: ", newRos);
+        //     },
+        // });
+    };
     /**
      *
      * @param {*Int} posNum, 1 또는 2 또는 3

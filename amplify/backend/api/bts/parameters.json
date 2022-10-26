@@ -2,5 +2,5 @@
   "AppSyncApiName": "bts",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
-  "AuthModeLastUpdated": "2022-08-08T14:37:40.079Z"
+  "AuthModeLastUpdated": "2022-10-26T09:29:28.266Z"
 }
