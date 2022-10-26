@@ -2,6 +2,7 @@ import Main_page from "./src/screen/main";
 import SignUp_page from "./src/screen/signup";
 import SignIn_page from "./src/screen/signin";
 import Restaurant_page from "./src/screen/restaurant";
+import Scout_mini_page from "./src/screen/scoutMini";
 import { Amplify } from "aws-amplify";
 import awsconfig from "./src/aws-exports";
 import { NavigationContainer } from "@react-navigation/native";
@@ -14,6 +15,7 @@ import Loading_page_onlyPicture from "./src/screen/loading_page_onlyPicture";
 import Chat_page from "./src/screen/chat";
 import { useEffect } from "react";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
+import ScoutMini_page from "./src/screen/scoutMini";
 
 Amplify.configure(awsconfig);
 
@@ -102,6 +104,17 @@ export default function App() {
                     <Stack.Screen
                         name="Chat"
                         component={Chat_page}
+                        options={{
+                            headerTransparent: true,
+                            headerTitle: "",
+                            headerTintColor:
+                                colorPack.text_light,
+                            headerBackTitleVisible: false,
+                        }}
+                    />
+                    <Stack.Screen
+                        name="ScoutMini"
+                        component={ScoutMini_page}
                         options={{
                             headerTransparent: true,
                             headerTitle: "",

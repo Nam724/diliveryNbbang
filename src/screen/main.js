@@ -29,6 +29,7 @@ import MapView, {
 import {
     Main_restaurantList,
     Main_restaurantList_sample,
+    Main_restaurantList_ScoutMini,
 } from "./main_restaurantList";
 import { DataStore } from "@aws-amplify/datastore";
 import { Restaurant, Place, Member, Chat } from "../models";
@@ -377,6 +378,16 @@ export default function Main_page({ route, navigation }) {
             "장소 선택",
             "핀 누르기",
             "1"
+        ),
+    ];
+
+    const restaurantList_scoutMini = [
+        Main_restaurantList_ScoutMini(
+            navigation,
+            "scoutMini",
+            "스카우트 미니 배달 페이지",
+            "로봇 배달 페이지로 이동",
+            "0"
         ),
     ];
 
@@ -1452,6 +1463,7 @@ export default function Main_page({ route, navigation }) {
                             />
                         }
                     >
+                        {restaurantList_scoutMini}
                         {restaurantList}
                     </ScrollView>
                 </SafeAreaView>

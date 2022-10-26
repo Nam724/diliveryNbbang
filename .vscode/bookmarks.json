@@ -4,47 +4,47 @@
 			"path": "src/screen/main.js",
 			"bookmarks": [
 				{
-					"line": 106,
+					"line": 111,
 					"column": 31,
 					"label": "refreshRestaurantList"
 				},
 				{
-					"line": 173,
+					"line": 177,
 					"column": 12,
 					"label": "마커 객체"
 				},
 				{
-					"line": 204,
+					"line": 208,
 					"column": 29,
 					"label": "해당 장소의 마커들 가져오기"
 				},
 				{
-					"line": 230,
+					"line": 234,
 					"column": 32,
 					"label": "makeNewMarker"
 				},
 				{
-					"line": 305,
+					"line": 306,
 					"column": 33,
 					"label": "현재 장소의 음식점들 불러오기"
 				},
 				{
-					"line": 339,
+					"line": 372,
 					"column": 23,
 					"label": "사용자가 주문한 리스트 불러오기(set, get)"
 				},
 				{
-					"line": 398,
+					"line": 451,
 					"column": 23,
 					"label": "readClipboard"
 				},
 				{
-					"line": 436,
+					"line": 489,
 					"column": 4,
 					"label": "배민 링크 붙여넣기"
 				},
 				{
-					"line": 958,
+					"line": 1007,
 					"column": 12,
 					"label": "메인 화면 시작"
 				}
@@ -244,7 +244,7 @@
 			"path": "src/screen/main_restaurantList.js",
 			"bookmarks": [
 				{
-					"line": 148,
+					"line": 197,
 					"column": 35,
 					"label": "Main_restaurantList_sample"
 				}

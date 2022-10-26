@@ -13,13 +13,15 @@ import {
 import { styles } from "../src/style/style";
 
 let servePersonalizedAds = true;
-let isAdsEnabled =
+let _isAdsEnabled =
     Platform.OS === "android" || Platform.OS === "ios";
 export function MainBannerAds() {
     const adBannerUnitId = Platform.select({
         ios: "ca-app-pub-1145139773627965/9125452802",
         android: "ca-app-pub-1145139773627965/8701930912",
     });
+    const [isAdsEnabled, setIsAdsEnabled] =
+        useState(_isAdsEnabled);
 
     return isAdsEnabled ? (
         <View style={styles.adsContainer}>
@@ -29,7 +31,7 @@ export function MainBannerAds() {
                 servePersonalizedAds={servePersonalizedAds} // true or false
                 onDidFailToReceiveAdWithError={(err) => {
                     setIsAdsEnabled(false);
-                    alert(err);
+                    // alert(err);
                 }}
             />
         </View>
@@ -43,6 +45,8 @@ export function RestaurantAuthBannerAds() {
         ios: "ca-app-pub-1145139773627965/5219336115",
         android: "ca-app-pub-1145139773627965/9836140498",
     });
+    const [isAdsEnabled, setIsAdsEnabled] =
+        useState(_isAdsEnabled);
 
     return isAdsEnabled ? (
         <View style={styles.adsContainer}>
@@ -52,7 +56,7 @@ export function RestaurantAuthBannerAds() {
                 servePersonalizedAds={servePersonalizedAds} // true or false
                 onDidFailToReceiveAdWithError={(err) => {
                     setIsAdsEnabled(false);
-                    alert(err);
+                    // alert(err);
                 }}
             />
         </View>
@@ -66,6 +70,9 @@ export function RestaurantGuestBannerAds() {
         ios: "ca-app-pub-1145139773627965/9825080947",
         android: "ca-app-pub-1145139773627965/1391771748",
     });
+    const [isAdsEnabled, setIsAdsEnabled] =
+        useState(_isAdsEnabled);
+
     return isAdsEnabled ? (
         <View style={styles.adsContainer}>
             <AdMobBanner
@@ -74,7 +81,7 @@ export function RestaurantGuestBannerAds() {
                 servePersonalizedAds={servePersonalizedAds} // true or false
                 onDidFailToReceiveAdWithError={(err) => {
                     setIsAdsEnabled(false);
-                    alert(err);
+                    // alert(err);
                 }}
             />
         </View>
@@ -88,6 +95,8 @@ export function RestaurantFinishedBannerAds() {
         ios: "ca-app-pub-1145139773627965/7462356079",
         android: "ca-app-pub-1145139773627965/9078690071",
     });
+    const [isAdsEnabled, setIsAdsEnabled] =
+        useState(_isAdsEnabled);
 
     return isAdsEnabled ? (
         <View style={styles.adsContainer}>
@@ -97,7 +106,7 @@ export function RestaurantFinishedBannerAds() {
                 servePersonalizedAds={servePersonalizedAds} // true or false
                 onDidFailToReceiveAdWithError={(err) => {
                     setIsAdsEnabled(false);
-                    alert(err);
+                    // alert(err);
                 }}
             />
         </View>
@@ -111,6 +120,8 @@ export function ChatBannerAds() {
         ios: "ca-app-pub-1145139773627965/7665821460",
         android: "ca-app-pub-1145139773627965/1471662793",
     });
+    const [isAdsEnabled, setIsAdsEnabled] =
+        useState(_isAdsEnabled);
 
     return isAdsEnabled ? (
         <View style={styles.adsContainer}>
@@ -120,7 +131,7 @@ export function ChatBannerAds() {
                 servePersonalizedAds={servePersonalizedAds} // true or false
                 onDidFailToReceiveAdWithError={(err) => {
                     setIsAdsEnabled(false);
-                    alert(err);
+                    // alert(err);
                 }}
             />
         </View>
